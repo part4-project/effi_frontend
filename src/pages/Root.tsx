@@ -1,17 +1,50 @@
+import NavBar from '@pages/nav-bar';
+import SideBar from '@pages/side-bar';
+import { device } from '@styles/breakpoints';
 import GlobalStyle from '@styles/global';
-import { Outlet } from 'react-router-dom';
+import { navBarHeight, sideBarWidth } from '@styles/subsection-size';
+import { Outlet, useLocation } from 'react-router-dom';
+import styled from 'styled-components';
 
 const Root = () => {
+  const location = useLocation();
+
+  const nonSubSectionArray = ['/login', '/meeting-room'];
+  const isSubSection = !nonSubSectionArray.includes(location.pathname);
+
   return (
     <>
-      {/* Nar bar */}
-      {/* Side bar */}
+      {isSubSection && (
+        <>
+          <NavBar />
+          <SideBar />
+        </>
+      )}
       <GlobalStyle />
-      <main>
+      <S.Main isSubSection={isSubSection}>
         <Outlet />
-      </main>
+      </S.Main>
     </>
   );
 };
 
 export default Root;
+
+const S = {
+  Main: styled.main<{ isSubSection: boolean }>`
+    ${({ isSubSection }) =>
+      isSubSection &&
+      `
+      margin: ${navBarHeight.desktop} 0 0 ${sideBarWidth.desktop};
+      min-height: calc(100vh - ${navBarHeight.desktop});
+      @media ${device.tablet} {
+        margin: ${navBarHeight.tablet} 0 0 ${sideBarWidth.tablet};
+        min-height: calc(100vh - ${navBarHeight.tablet});
+      }
+      @media ${device.mobile} {
+        margin: ${navBarHeight.mobile} 0 0 ${sideBarWidth.mobile};
+        min-height: calc(100vh - ${navBarHeight.mobile});
+      }
+    `}
+  `,
+};
