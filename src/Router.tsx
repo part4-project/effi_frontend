@@ -7,6 +7,7 @@ const Router = () => {
       <Routes>
         <Route path="/" element={<Page.Root />}>
           <Route index element={<Page.Lobby />}></Route>
+          <Route path="meeting-room" element={<Page.MeetingRoom />} />
         </Route>
       </Routes>
     </BrowserRouter>
