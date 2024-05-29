@@ -24,7 +24,7 @@ export default Lobby;
 const S = {
   LobbyPageWrapper: styled.div`
     border: 1px solid black;
-    margin: 76px 0 0 360px; // nav, side 가정
+    /* margin: 76px 0 0 360px; // nav, side 가정 */
     padding: 20px;
     display: flex;
   `,
