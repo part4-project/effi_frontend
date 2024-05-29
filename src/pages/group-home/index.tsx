@@ -1,0 +1,64 @@
+import arrowRight from '@assets/icons/arrow-left.svg';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import MeetingNotes from './components/meeting-notes';
+import Meetings from './components/meetings';
+
+const GroupHome = () => {
+  const navigate = useNavigate();
+
+  const handleBackButtonClick = () => {
+    navigate('/');
+  };
+
+  return (
+    <S.Container>
+      <S.GroupHomeHeader>
+        <S.BackButton onClick={handleBackButtonClick} />
+        <S.ManageButtons>
+          <button>그룹 관리</button>
+          <button>회의 생성</button>
+        </S.ManageButtons>
+      </S.GroupHomeHeader>
+
+      <Meetings />
+      <MeetingNotes />
+    </S.Container>
+  );
+};
+
+export default GroupHome;
+
+const S = {
+  Container: styled.div`
+    /* margin-left: 360px; */
+    padding: 30px;
+    button {
+      background-color: rgba(0, 0, 0, 0.1);
+      padding: 10px 15px;
+      border-radius: 6px;
+      transition: background-color 0.2s ease;
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.14);
+      }
+    }
+  `,
+
+  GroupHomeHeader: styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  `,
+
+  BackButton: styled.img.attrs({
+    src: arrowRight,
+  })`
+    width: 15px;
+    cursor: pointer;
+  `,
+
+  ManageButtons: styled.div`
+    display: flex;
+    gap: 20px;
+  `,
+};
