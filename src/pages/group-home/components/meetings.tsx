@@ -1,3 +1,4 @@
+import MeetingModal from '@components/modal/meeting-modal';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -12,7 +13,9 @@ const Meetings = () => {
     <S.Container>
       <S.Meetings>
         <div onClick={handleMeetingClick}>회의중</div>
-        <div>회의 예정</div>
+        <MeetingModal>
+          <div>회의 예정</div>
+        </MeetingModal>
       </S.Meetings>
     </S.Container>
   );

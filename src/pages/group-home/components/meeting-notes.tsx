@@ -1,3 +1,4 @@
+import ReportModal from '@components/modal/report-modal';
 import styled from 'styled-components';
 
 const NOTES_DATAS = [
@@ -51,10 +52,12 @@ const MeetingNotes = () => {
 
       <S.MeetingNotesLists>
         {NOTES_DATAS.map((note) => (
-          <S.MeetingNotesList key={note.id}>
-            <S.NoteTitle>{note.title}</S.NoteTitle>
-            <S.NoteCreatedAt>{note.createdAt}</S.NoteCreatedAt>
-          </S.MeetingNotesList>
+          <ReportModal>
+            <S.MeetingNotesList key={note.id}>
+              <S.NoteTitle>{note.title}</S.NoteTitle>
+              <S.NoteCreatedAt>{note.createdAt}</S.NoteCreatedAt>
+            </S.MeetingNotesList>
+          </ReportModal>
         ))}
       </S.MeetingNotesLists>
     </S.Container>

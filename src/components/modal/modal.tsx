@@ -52,10 +52,4 @@ const S = {
     background: #ffffff;
     border-radius: 8px;
   `,
-
-  CloseButton: styled.button`
-    padding: 8px;
-    border: 1px solid #000000;
-    border-radius: 8px;
-  `,
 };
