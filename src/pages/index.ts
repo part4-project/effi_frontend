@@ -1,5 +1,6 @@
-import Lobby from './lobby';
-import Login from './login';
-import Root from './Root';
+import Login from '@pages/login';
+import GroupHome from '@pages/group-home';
+import Lobby from '@pages/lobby';
+import Root from '@pages/Root';
 
-export { Lobby, Login, Root };
+export { Login, GroupHome, Lobby, Root };
