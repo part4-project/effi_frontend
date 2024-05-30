@@ -14,7 +14,7 @@ const GroupHomeSideBar = () => {
 
       <S.GroupMemberLists>
         {GROUP_MEMBER.member_list.map((member) => (
-          <S.GroupMemberList>
+          <S.GroupMemberList key={member.id}>
             <span>{member.name}</span>
             {member.is_admin && <S.AdminIcon>그룹장</S.AdminIcon>}
           </S.GroupMemberList>

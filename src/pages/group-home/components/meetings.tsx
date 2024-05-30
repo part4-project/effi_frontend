@@ -1,3 +1,5 @@
+import { MEETING_ROOM, TOPIC } from '@constants/mockdata';
+import MeetingModal from '@pages/group-home/components/meeting-modal/meeting-modal';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -12,7 +14,12 @@ const Meetings = () => {
     <S.Container>
       <S.Meetings>
         <div onClick={handleMeetingClick}>회의중</div>
-        <div>회의 예정</div>
+        <div>
+          회의 예정
+          <MeetingModal title="회의 수정" buttons={['삭제', '수정']} data={MEETING_ROOM} topicData={TOPIC}>
+            수정
+          </MeetingModal>
+        </div>
       </S.Meetings>
     </S.Container>
   );

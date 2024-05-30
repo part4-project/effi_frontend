@@ -1,5 +1,5 @@
 import React, { ReactNode, useState, useRef } from 'react';
-import MeetingModal from '@components/modal/meeting-modal';
+import MeetingModal from '@pages/group-home/components/meeting-modal/meeting-modal';
 import styled from 'styled-components';
 import QuickButton from './quick-button';
 import useOutsideClick from '../hooks/use-outside-click';
@@ -29,7 +29,7 @@ const DropdownButton: React.FC<DropdownButtonProps> = ({ children }) => {
       <QuickButton onClick={handleButtonClick}>{children}</QuickButton>
       <S.DropdownBox $isOpen={isDropdownOpen}>
         {groupList.map((item) => (
-          <MeetingModal>
+          <MeetingModal title="회의 생성" buttons={['취소', '생성']} key={item}>
             <S.DropdownList key={item} onClick={handleDropdownClose}>
               {item}
             </S.DropdownList>

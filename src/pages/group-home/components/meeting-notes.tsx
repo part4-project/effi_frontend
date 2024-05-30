@@ -1,43 +1,6 @@
 import ReportModal from '@components/modal/report-modal';
+import { NOTES_DATAS } from '@constants/mockdata';
 import styled from 'styled-components';
-
-const NOTES_DATAS = [
-  {
-    id: 1,
-    title: '프론트 회의',
-    createdAt: '24-05-29',
-  },
-  {
-    id: 2,
-    title: '주간 회의',
-    createdAt: '24-05-29',
-  },
-  {
-    id: 3,
-    title: '백엔드 회의',
-    createdAt: '24-05-29',
-  },
-  {
-    id: 4,
-    title: '프론트 회의',
-    createdAt: '24-05-29',
-  },
-  {
-    id: 5,
-    title: '주간 회의',
-    createdAt: '24-05-29',
-  },
-  {
-    id: 6,
-    title: '회식날짜 정하기',
-    createdAt: '24-05-29',
-  },
-  {
-    id: 7,
-    title: '백엔드 회의',
-    createdAt: '24-05-29',
-  },
-];
 
 const MeetingNotes = () => {
   return (
@@ -52,7 +15,7 @@ const MeetingNotes = () => {
 
       <S.MeetingNotesLists>
         {NOTES_DATAS.map((note) => (
-          <ReportModal>
+          <ReportModal key={note.id}>
             <S.MeetingNotesList key={note.id}>
               <S.NoteTitle>{note.title}</S.NoteTitle>
               <S.NoteCreatedAt>{note.createdAt}</S.NoteCreatedAt>

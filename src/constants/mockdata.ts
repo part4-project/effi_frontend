@@ -48,9 +48,9 @@ export const MEETING_ROOM = {
   id: 3,
   group_id: 2,
   title: '프론트엔드 R&R 논의',
-  start_date: '24-05-30 12:00',
-  expected_end_date: '24-05-30 14:00',
-  actual_end_date: '24-05-30 14:18',
+  start_date: '2024. 5. 30. 오후 13:00',
+  expected_end_date: '2024. 5. 30. 오후 14:00',
+  actual_end_date: '2024. 5. 30. 오후 14:18',
 };
 
 export const TOPIC = {
@@ -59,21 +59,58 @@ export const TOPIC = {
   topic_list: [
     {
       id: 1,
-      topic_name: '- R&R 분배',
+      topic_name: 'R&R 분배',
       is_completed: true,
     },
     {
       id: 2,
-      topic_name: '- 회식 장소 정하기',
+      topic_name: '회식 장소 정하기',
       is_completed: true,
     },
     {
       id: 3,
-      topic_name: '- 분배한 작업 끝내기',
+      topic_name: '분배한 작업 끝내기',
       is_completed: false,
     },
   ],
 };
+export const NOTES_DATAS = [
+  {
+    id: 1,
+    title: '프론트 회의',
+    createdAt: '24-05-29',
+  },
+  {
+    id: 2,
+    title: '주간 회의',
+    createdAt: '24-05-29',
+  },
+  {
+    id: 3,
+    title: '백엔드 회의',
+    createdAt: '24-05-29',
+  },
+  {
+    id: 4,
+    title: '프론트 회의',
+    createdAt: '24-05-29',
+  },
+  {
+    id: 5,
+    title: '주간 회의',
+    createdAt: '24-05-29',
+  },
+  {
+    id: 6,
+    title: '회식날짜 정하기',
+    createdAt: '24-05-29',
+  },
+  {
+    id: 7,
+    title: '백엔드 회의',
+    createdAt: '24-05-29',
+  },
+];
 
 export const MY_SCHEDULE_LIST = [
   {
