@@ -74,3 +74,48 @@ export const TOPIC = {
     },
   ],
 };
+
+export const MY_SCHEDULE_LIST = [
+  {
+    id: 1,
+    group: '그룹1',
+    start_date: '24-05-30 12:00',
+    expected_end_date: '24-05-30 14:00',
+    title: '프론트회의',
+  },
+  {
+    id: 2,
+    group: '그룹2',
+    start_date: '24-05-30 15:00',
+    expected_end_date: '24-05-30 16:00',
+    title: '백엔드회의',
+  },
+  {
+    id: 3,
+    group: '그룹3',
+    start_date: '24-05-30 17:00',
+    expected_end_date: '24-05-30 20:00',
+    title: '전체회의',
+  },
+  {
+    id: 4,
+    group: '그룹4',
+    start_date: '24-05-31 16:00',
+    expected_end_date: '24-05-31 18:00',
+    title: 'webRTC 자료 공유',
+  },
+  {
+    id: 5,
+    group: '그룹5',
+    start_date: '24-06-01 16:00',
+    expected_end_date: '24-06-01 18:00',
+    title: 'webSocket 자료 공유',
+  },
+  {
+    id: 6,
+    group: '그룹6',
+    start_date: '24-06-01 20:00',
+    expected_end_date: '24-06-01 22:00',
+    title: 'API 회의',
+  },
+];

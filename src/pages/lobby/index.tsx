@@ -1,11 +1,15 @@
+import { useState } from 'react';
 import UserInfoModal from '@components/modal/user-info-modal';
 import styled from 'styled-components';
 import DropdownButton from './components/dropdown-button';
 import MyCalendar from './components/my-calendar';
 import MyScheduleList from './components/my-schedule-list';
 import QuickButton from './components/quick-button';
+import { CalendarValue } from './types/type';
 
 const Lobby = () => {
+  const today = new Date();
+  const [selectedDate, setSelectedDate] = useState<CalendarValue>(today);
   return (
     <S.LobbyPageWrapper>
       <S.QuickButtonBox>
@@ -15,8 +19,8 @@ const Lobby = () => {
         </UserInfoModal>
       </S.QuickButtonBox>
       <S.MyScheduleBox>
-        <MyCalendar />
-        <MyScheduleList />
+        <MyCalendar DateValue={selectedDate} onChangeDate={setSelectedDate} />
+        <MyScheduleList selectedDate={selectedDate} />
       </S.MyScheduleBox>
     </S.LobbyPageWrapper>
   );
@@ -26,20 +30,21 @@ export default Lobby;
 
 const S = {
   LobbyPageWrapper: styled.div`
+    width: 100%;
     border: 1px solid black;
-    /* margin: 76px 0 0 360px; // nav, side 가정 */
     padding: 20px;
     display: flex;
   `,
   QuickButtonBox: styled.div`
+    width: 70%;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 50px;
-    flex-grow: 3;
     border: 1px solid black;
   `,
   MyScheduleBox: styled.div`
+    width: 30%;
     display: flex;
     flex-direction: column;
     gap: 10px;
