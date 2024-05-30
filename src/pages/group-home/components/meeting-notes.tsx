@@ -1,5 +1,5 @@
-import ReportModal from '@components/modal/report-modal';
 import styled from 'styled-components';
+import ReportModal from './report-modal/report-modal';
 
 const NOTES_DATAS = [
   {
@@ -52,12 +52,12 @@ const MeetingNotes = () => {
 
       <S.MeetingNotesLists>
         {NOTES_DATAS.map((note) => (
-          <ReportModal>
-            <S.MeetingNotesList key={note.id}>
+          <S.MeetingNotesList key={note.id}>
+            <ReportModal>
               <S.NoteTitle>{note.title}</S.NoteTitle>
               <S.NoteCreatedAt>{note.createdAt}</S.NoteCreatedAt>
-            </S.MeetingNotesList>
-          </ReportModal>
+            </ReportModal>
+          </S.MeetingNotesList>
         ))}
       </S.MeetingNotesLists>
     </S.Container>
@@ -103,13 +103,15 @@ const S = {
   `,
 
   MeetingNotesList: styled.li`
-    background-color: rgba(0, 0, 0, 0.05);
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    padding: 20px 50px;
-    cursor: pointer;
     transition: background-color 0.1s ease;
     &:hover {
       background-color: rgba(0, 0, 0, 0.07);
+    }
+    button {
+      padding: 20px 50px;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(0, 0, 0, 0.1);
     }
   `,
 
