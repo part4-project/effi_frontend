@@ -67,7 +67,12 @@ const MeetingNotes = () => {
 export default MeetingNotes;
 
 const S = {
-  Container: styled.div``,
+  Container: styled.div`
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  `,
 
   MeetingNotesHeader: styled.div`
     display: flex;
@@ -94,7 +99,6 @@ const S = {
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 6px;
     padding: 10px;
-    height: 200px;
     overflow-y: auto;
   `,
 
