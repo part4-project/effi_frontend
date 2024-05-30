@@ -1,6 +1,7 @@
 import arrowRight from '@assets/icons/arrow-left.svg';
-import GroupModal from '@components/modal/group-modal';
+// import GroupModal from '@components/modal/group-modal';
 import MeetingModal from '@components/modal/meeting-modal';
+import GroupModal from '@pages/group-home/components/modal/group-modal';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
