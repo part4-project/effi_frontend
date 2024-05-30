@@ -1,4 +1,5 @@
 import React, { ReactNode, useState, useRef } from 'react';
+import MeetingModal from '@components/modal/meeting-modal';
 import styled from 'styled-components';
 import QuickButton from './quick-button';
 import useOutsideClick from '../hooks/use-outside-click';
@@ -28,9 +29,11 @@ const DropdownButton: React.FC<DropdownButtonProps> = ({ children }) => {
       <QuickButton onClick={handleButtonClick}>{children}</QuickButton>
       <S.DropdownBox $isOpen={isDropdownOpen}>
         {groupList.map((item) => (
-          <S.DropdownList key={item} onClick={handleDropdownClose}>
-            {item}
-          </S.DropdownList>
+          <MeetingModal>
+            <S.DropdownList key={item} onClick={handleDropdownClose}>
+              {item}
+            </S.DropdownList>
+          </MeetingModal>
         ))}
       </S.DropdownBox>
     </S.DropdownButtonWrapper>
@@ -42,18 +45,17 @@ const S = {
     position: relative;
   `,
   DropdownBox: styled.ul<{ $isOpen: boolean }>`
+    display: ${({ $isOpen }) => ($isOpen ? 'flex' : 'none')};
+    flex-direction: column;
     position: absolute;
     border: 1px solid black;
     border-top: none;
     border-bottom: none;
     width: 100%;
-    display: ${({ $isOpen }) => ($isOpen ? 'block' : 'none')};
   `,
   DropdownList: styled.li`
     border-bottom: 1px solid black;
     padding: 2px;
-    cursor: pointer;
-
     &:hover {
       background-color: #f0f0f0;
     }

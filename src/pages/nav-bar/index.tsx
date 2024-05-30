@@ -1,3 +1,4 @@
+import UserInfoModal from '@components/modal/user-info-modal';
 import { device } from '@styles/breakpoints';
 import { navBarHeight } from '@styles/subsection-size';
 import styled from 'styled-components';
@@ -12,7 +13,9 @@ const NavBar = () => {
         <S.FlexRightBox>
           <S.SearchBarBox>검색</S.SearchBarBox>
           <S.AlarmBox>알림</S.AlarmBox>
-          <S.ProfileBox>프로필</S.ProfileBox>
+          <UserInfoModal>
+            <S.ProfileBox>프로필</S.ProfileBox>
+          </UserInfoModal>
         </S.FlexRightBox>
       </S.NavContainer>
     </S.NavWrap>

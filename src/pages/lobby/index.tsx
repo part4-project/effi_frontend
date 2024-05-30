@@ -1,3 +1,4 @@
+import UserInfoModal from '@components/modal/user-info-modal';
 import styled from 'styled-components';
 import DropdownButton from './components/dropdown-button';
 import MyCalendar from './components/my-calendar';
@@ -9,7 +10,9 @@ const Lobby = () => {
     <S.LobbyPageWrapper>
       <S.QuickButtonBox>
         <DropdownButton>회의 생성</DropdownButton>
-        <QuickButton>내 정보</QuickButton>
+        <UserInfoModal>
+          <QuickButton>내 정보</QuickButton>
+        </UserInfoModal>
       </S.QuickButtonBox>
       <S.MyScheduleBox>
         <MyCalendar />

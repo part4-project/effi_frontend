@@ -1,4 +1,6 @@
 import arrowRight from '@assets/icons/arrow-left.svg';
+import GroupModal from '@components/modal/group-modal';
+import MeetingModal from '@components/modal/meeting-modal';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import MeetingNotes from './components/meeting-notes';
@@ -16,8 +18,12 @@ const GroupHome = () => {
       <S.GroupHomeHeader>
         <S.BackButton onClick={handleBackButtonClick} />
         <S.ManageButtons>
-          <button>그룹 관리</button>
-          <button>회의 생성</button>
+          <GroupModal>
+            <div>그룹 관리</div>
+          </GroupModal>
+          <MeetingModal>
+            <div>회의 생성</div>
+          </MeetingModal>
         </S.ManageButtons>
       </S.GroupHomeHeader>
 
