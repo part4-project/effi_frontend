@@ -1,4 +1,3 @@
-import MeetingModal from '@components/modal/meeting-modal';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -13,9 +12,7 @@ const Meetings = () => {
     <S.Container>
       <S.Meetings>
         <div onClick={handleMeetingClick}>회의중</div>
-        <MeetingModal>
-          <div>회의 예정</div>
-        </MeetingModal>
+        <div>회의 예정</div>
       </S.Meetings>
     </S.Container>
   );
@@ -36,8 +33,8 @@ const S = {
     div {
       background-color: rgba(0, 0, 0, 0.04);
       border-radius: 6px;
-      width: 500px;
-      height: 340px;
+      width: 400px;
+      aspect-ratio: 1.3/1;
       box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
       display: flex;
       align-items: center;
