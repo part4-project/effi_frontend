@@ -61,7 +61,9 @@ const S = {
   `,
   LeftSection: styled.div`
     width: 1491px;
+    position: relative;
     display: flex;
+    align-items: center;
     flex-direction: column;
     &:hover {
       & > div:first-child,
@@ -75,20 +77,21 @@ const S = {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    padding: 43px 47px 59px 53px;
+    padding: 40px;
     visibility: hidden;
     opacity: 0;
     transition:
       visibility 0s,
       opacity 0.3s linear;
+    position: absolute;
+    top: 0;
   `,
   RoomCameraContainer: styled.div`
     display: flex;
     align-items: center;
     width: 100%;
     height: 100%;
-    padding-left: 101px;
-    padding-right: 47px;
+    padding: 40px;
   `,
   RoomCameraBox: styled.div`
     display: flex;
@@ -102,18 +105,20 @@ const S = {
     justify-content: center;
     align-items: center;
     gap: 4px;
-    padding: 59px 47px 48px 101px;
+    padding: 40px;
     visibility: hidden;
     opacity: 0;
     transition:
       visibility 0s,
       opacity 0.3s linear;
+    position: absolute;
+    bottom: 0;
   `,
   RightSection: styled.div`
     width: 429px;
     display: flex;
     flex-direction: column;
     gap: 35px;
-    margin: 30px 21px 24px 0;
+    margin: 30px;
   `,
 };
