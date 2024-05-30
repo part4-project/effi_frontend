@@ -1,6 +1,7 @@
 import UserInfoModal from '@components/modal/user-info-modal';
 import { device } from '@styles/breakpoints';
 import { navBarHeight } from '@styles/subsection-size';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 const NavBar = () => {
@@ -8,7 +9,9 @@ const NavBar = () => {
     <S.NavWrap>
       <S.NavContainer>
         <S.FlexLeftBox>
-          <S.LogoBox>로고</S.LogoBox>
+          <S.LogoBox>
+            <Link to={'/'}>로고</Link>
+          </S.LogoBox>
         </S.FlexLeftBox>
         <S.FlexRightBox>
           <S.SearchBarBox>검색</S.SearchBarBox>

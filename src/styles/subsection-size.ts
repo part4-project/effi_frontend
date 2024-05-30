@@ -1,7 +1,7 @@
 const sideBarWidth = {
-  mobile: `200px`,
-  tablet: `280px`,
-  desktop: `360px`,
+  mobile: `120px`,
+  tablet: `200px`,
+  desktop: `260px`,
 };
 
 const navBarHeight = {
@@ -9,5 +9,19 @@ const navBarHeight = {
   tablet: `60px`,
   desktop: `76px`,
 };
+
+/*
+const sideBarWidth = {
+  mobile: `29.2%`,
+  tablet: `34.1%`,
+  desktop: `18.9%`,
+};
+
+const navBarHeight = {
+  mobile: `7.5%`,
+  tablet: `9%`,
+  desktop: `8.2%`,
+};
+*/
 
 export { sideBarWidth, navBarHeight };

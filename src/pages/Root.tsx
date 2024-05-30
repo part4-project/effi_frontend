@@ -21,7 +21,7 @@ const Root = () => {
         </>
       )}
       <GlobalStyle />
-      <S.Main isSubSection={isSubSection}>
+      <S.Main $isSubSection={isSubSection}>
         <Outlet />
       </S.Main>
     </>
@@ -31,9 +31,9 @@ const Root = () => {
 export default Root;
 
 const S = {
-  Main: styled.main<{ isSubSection: boolean }>`
-    ${({ isSubSection }) =>
-      isSubSection &&
+  Main: styled.main<{ $isSubSection: boolean }>`
+    ${({ $isSubSection }) =>
+      $isSubSection &&
       `
       margin: ${navBarHeight.desktop} 0 0 ${sideBarWidth.desktop};
       min-height: calc(100vh - ${navBarHeight.desktop});
