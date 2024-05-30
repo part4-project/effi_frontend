@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import { MEETING_ROOM, TOPIC } from '@constants/mockdata';
 import styled from 'styled-components';
 import Chatting from './components/chatting';
 import RoomButton from './components/room-button';
@@ -10,17 +12,30 @@ const BUTTONS = [{ type: '카메라' }, { type: '마이크' }, { type: '나가�
 const CAMERAS = [{ user: 1 }, { user: 2 }, { user: 3 }, { user: 4 }, { user: 5 }];
 
 const MeetingRoom = () => {
+  const [cameras, setCameras] = useState(CAMERAS);
+
+  const handleAddCamButtonClick = () => {
+    setCameras([...cameras, { user: 1 }]);
+  };
+
+  const handleRemoveCamButtonClick = () => {
+    setCameras(cameras.slice(0, cameras.length - 1));
+  };
   return (
     <S.Container>
       <S.LeftSection>
         <S.Nav>
-          <Title />
+          <Title title={MEETING_ROOM.title} />
+          <button onClick={handleAddCamButtonClick}>AddCam +</button>
+          <button onClick={handleRemoveCamButtonClick}>RemoveCam -</button>
           <Timer />
         </S.Nav>
         <S.RoomCameraContainer>
-          {CAMERAS.map((_, idx) => (
-            <RoomCamera key={idx} cameraCount={CAMERAS.length} />
-          ))}
+          <S.RoomCameraBox>
+            {cameras.map((_, idx) => (
+              <RoomCamera key={idx} cameraCount={cameras.length} />
+            ))}
+          </S.RoomCameraBox>
         </S.RoomCameraContainer>
         <S.RoomButtonContainer>
           {BUTTONS.map((BUTTON, idx) => (
@@ -29,7 +44,7 @@ const MeetingRoom = () => {
         </S.RoomButtonContainer>
       </S.LeftSection>
       <S.RightSection>
-        <Topics />
+        <Topics topicList={TOPIC.topic_list} />
         <Chatting />
       </S.RightSection>
     </S.Container>
@@ -69,14 +84,18 @@ const S = {
   `,
   RoomCameraContainer: styled.div`
     display: flex;
-    flex-wrap: wrap-reverse;
-    justify-content: center;
     align-items: center;
     width: 100%;
     height: 100%;
-    gap: 30px;
     padding-left: 101px;
     padding-right: 47px;
+  `,
+  RoomCameraBox: styled.div`
+    display: flex;
+    flex-wrap: wrap-reverse;
+    justify-content: center;
+    width: 100%;
+    gap: 10px;
   `,
   RoomButtonContainer: styled.div`
     display: flex;
