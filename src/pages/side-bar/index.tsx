@@ -1,4 +1,4 @@
-import CreateGroupModal from '@components/modal/create-group-modal ';
+import GroupCreateModal from '@pages/side-bar/components/modal/group-create-modal';
 import { device } from '@styles/breakpoints';
 import { navBarHeight, sideBarWidth } from '@styles/subsection-size';
 import styled from 'styled-components';
@@ -9,9 +9,7 @@ const SideBar = () => {
       SideBar입니다!
       <S.AddGroup>
         <p>그룹</p>
-        <CreateGroupModal>
-          <div>+</div>
-        </CreateGroupModal>
+        <GroupCreateModal>+</GroupCreateModal>
       </S.AddGroup>
     </S.SideWrap>
   );
