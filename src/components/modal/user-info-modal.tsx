@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { createRandomNickName } from '@utils/createRandomNickname';
 import styled from 'styled-components';
 import Modal from './modal';
 
@@ -7,11 +8,16 @@ interface GroupModalProps {
 }
 
 const UserInfoModal = ({ children }: GroupModalProps) => {
+  const [nickName, setNickName] = useState('');
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOpenClick = () => {
     setIsOpen(true);
   };
+
+  useEffect(() => {
+    setNickName(createRandomNickName());
+  }, []);
 
   return (
     <button onClick={handleOpenClick}>
@@ -23,7 +29,7 @@ const UserInfoModal = ({ children }: GroupModalProps) => {
             <S.ProfileImg src="" alt="프로필이미지" />
             <S.NicknameAndLogoutBox>
               <S.Nickname>
-                닉네임
+                {nickName}
                 <S.SaveButton>저장하기</S.SaveButton>
               </S.Nickname>
               <S.LogoutButton>로그아웃</S.LogoutButton>
@@ -84,8 +90,7 @@ const S = {
   SaveButton: styled.button`
     width: 149px;
     height: 40px;
-    opacity: 0.4;
-    background: #c1c1c1;
+    background-color: #c1c1c1;
   `,
   LogoutButton: styled.button`
     width: 100%;
