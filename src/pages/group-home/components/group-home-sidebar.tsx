@@ -1,7 +1,12 @@
 import { GROUP, GROUP_MEMBER } from '@constants/mockdata';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const GroupHomeSideBar = () => {
+  const navigate = useNavigate();
+  const handleLeaveGroupButtonClick = () => {
+    navigate('/');
+  };
   return (
     <S.Container>
       <S.GroupName>{GROUP.room_name}</S.GroupName>
@@ -15,6 +20,8 @@ const GroupHomeSideBar = () => {
           </S.GroupMemberList>
         ))}
       </S.GroupMemberLists>
+
+      <S.LeaveGroupButton onClick={handleLeaveGroupButtonClick}>그룹 나가기</S.LeaveGroupButton>
     </S.Container>
   );
 };
@@ -26,6 +33,7 @@ const S = {
     background-color: rgba(0, 0, 0, 0.1);
     width: 260px;
     padding: 20px 10px;
+    position: relative;
   `,
 
   GroupName: styled.span`
@@ -51,5 +59,15 @@ const S = {
     padding-left: 10px;
     font-size: 13px;
     color: orange;
+  `,
+
+  LeaveGroupButton: styled.button`
+    background-color: rgba(0, 0, 0, 0.2);
+    width: 100px;
+    height: 40px;
+    border-radius: 6px;
+    position: absolute;
+    bottom: 40px;
+    left: calc(50% - 50px);
   `,
 };
