@@ -41,7 +41,7 @@ export default MyCalendar;
 const S = {
   MyCalender: styled.div`
     width: 100%;
-    height: 400px;
+    height: 100%;
     border: 1px solid black;
 
     // 전체 캘린더
@@ -70,7 +70,7 @@ const S = {
     // 일자 타일 커스텀
     .react-calendar__tile {
       font-size: 16px;
-      padding: 15px;
+      padding: 20px;
       position: relative;
     }
 
