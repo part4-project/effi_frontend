@@ -46,9 +46,7 @@ const S = {
     justify-content: center;
     align-items: center;
     margin: 24px;
-    padding: 24px;
-    max-width: 800px;
-    width: 100%;
+    padding: 24px 48px;
     background: #ffffff;
     border-radius: 8px;
   `,
