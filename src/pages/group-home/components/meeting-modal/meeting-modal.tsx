@@ -7,28 +7,46 @@ import MeetingForm from './meeting-form';
 interface GroupModalProps {
   children: React.ReactNode;
   title: string;
-  buttons: string[];
   data?: TMeetingRoom;
   topicData?: TTopic;
 }
 
-const MeetingModal = ({ children, title, buttons, data, topicData }: GroupModalProps) => {
+const MeetingModal = ({ children, title, data, topicData }: GroupModalProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleOpenClick = () => {
+  const handleModalClose = () => {
+    setIsOpen(false);
+  };
+
+  const handleOpenButtonClick = () => {
     setIsOpen(true);
   };
 
+  const handleCloseButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    setIsOpen(false);
+  };
+
   return (
-    <button onClick={handleOpenClick}>
+    <button onClick={handleOpenButtonClick}>
       {children}
-      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+      <Modal isOpen={isOpen} onClose={handleModalClose}>
         <S.Title>{title}</S.Title>
         <MeetingForm data={data} topicData={topicData} />
 
+        {/* 다른 handleClick함수 들어올 수 있음 */}
         <S.ButtonContainer>
-          <button>{buttons[0]}</button>
-          <button onClick={() => setIsOpen(true)}>{buttons[1]}</button>
+          {title == '회의 생성' ? (
+            <>
+              <button onClick={handleCloseButtonClick}>취소</button>
+              <button onClick={handleCloseButtonClick}>생성</button>
+            </>
+          ) : (
+            <>
+              <button onClick={handleCloseButtonClick}>삭제</button>
+              <button onClick={handleCloseButtonClick}>수정</button>
+            </>
+          )}
         </S.ButtonContainer>
       </Modal>
     </button>

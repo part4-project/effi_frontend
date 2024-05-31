@@ -29,7 +29,7 @@ const DropdownButton: React.FC<DropdownButtonProps> = ({ children }) => {
       <QuickButton onClick={handleButtonClick}>{children}</QuickButton>
       <S.DropdownBox $isOpen={isDropdownOpen}>
         {groupList.map((item) => (
-          <MeetingModal title="회의 생성" buttons={['취소', '생성']} key={item}>
+          <MeetingModal title="회의 생성" key={item}>
             <S.DropdownList key={item} onClick={handleDropdownClose}>
               {item}
             </S.DropdownList>
