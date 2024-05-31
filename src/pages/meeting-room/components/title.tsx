@@ -2,13 +2,17 @@ import arrowLeft from '@assets/icons/arrow-left.svg';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-const Title = () => {
+interface TitleProps {
+  title: string;
+}
+
+const Title = ({ title }: TitleProps) => {
   return (
     <S.Container>
       <S.Link as={Link} to="/">
         <img src={arrowLeft} alt="뒤로가기" />
       </S.Link>
-      <S.Title>제목</S.Title>
+      <S.Title>{title}</S.Title>
     </S.Container>
   );
 };
@@ -29,9 +33,12 @@ const S = {
     justify-content: center;
   `,
   Title: styled.div`
-    width: 149px;
+    width: 180px;
     height: 40px;
     opacity: 0.4;
     background: #c1c1c1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   `,
 };
