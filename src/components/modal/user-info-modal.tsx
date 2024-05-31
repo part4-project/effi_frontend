@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { createRandomNickName } from '@utils/createRandomNickname';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Modal from './modal';
 
@@ -32,7 +33,9 @@ const UserInfoModal = ({ children }: GroupModalProps) => {
                 {nickName}
                 <S.SaveButton>저장하기</S.SaveButton>
               </S.Nickname>
-              <S.LogoutButton>로그아웃</S.LogoutButton>
+              <S.LogoutButton>
+                <Link to={'/login'}>로그아웃</Link>
+              </S.LogoutButton>
             </S.NicknameAndLogoutBox>
           </S.UserInfoContainer>
           <S.InviteList>초대목록</S.InviteList>
