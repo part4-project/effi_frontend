@@ -47,7 +47,7 @@ const S = {
     align-items: center;
     margin: 24px;
     padding: 24px;
-    max-width: 600px;
+    max-width: 800px;
     width: 100%;
     background: #ffffff;
     border-radius: 8px;

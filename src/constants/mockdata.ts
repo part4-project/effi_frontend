@@ -112,6 +112,30 @@ export const NOTES_DATAS = [
   },
 ];
 
+//ERD 설계에는 안보입니다 ㅜㅠ
+export const CHAT = {
+  chat: [
+    {
+      id: 1,
+      nickname: '경수',
+      email: 'effi@naver.com',
+      chat: '안녕하세요!',
+    },
+    {
+      id: 2,
+      nickname: '승구',
+      email: 'skoo@naver.com',
+      chat: '반갑습니다 ㅎ',
+    },
+    {
+      id: 3,
+      nickname: '재성',
+      email: 'js@naver.com',
+      chat: '하이요!',
+    },
+  ],
+};
+
 export const MY_SCHEDULE_LIST = [
   {
     id: 1,

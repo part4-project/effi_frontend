@@ -65,7 +65,7 @@ const S = {
     overflow-y: auto;
   `,
 
-  MeetingNotesList: styled.li`
+   MeetingNotesList: styled.li`
     background-color: rgba(0, 0, 0, 0.05);
     border: 1px solid rgba(0, 0, 0, 0.1);
     padding: 20px 50px;
