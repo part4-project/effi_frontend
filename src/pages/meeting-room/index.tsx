@@ -1,18 +1,31 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { MEETING_ROOM, TOPIC } from '@constants/mockdata';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Chatting from './components/chatting';
 import RoomButton from './components/room-button';
 import RoomCamera from './components/room-camera';
 import Timer from './components/timer';
-import Title from './components/title';
 import Topics from './components/topics';
 
-const BUTTONS = [{ type: '카메라' }, { type: '마이크' }, { type: '나가기' }];
 const CAMERAS = [{ user: 1 }, { user: 2 }, { user: 3 }, { user: 4 }, { user: 5 }];
 
 const MeetingRoom = () => {
+  const navigate = useNavigate();
   const [cameras, setCameras] = useState(CAMERAS);
+  const BUTTONS = useMemo(
+    () => [
+      { type: '카메라', handleClick: () => {} },
+      { type: '마이크', handleClick: () => {} },
+      {
+        type: '나가기',
+        handleClick: () => {
+          navigate('/group-home');
+        },
+      },
+    ],
+    [navigate],
+  );
 
   const handleAddCamButtonClick = () => {
     setCameras([...cameras, { user: 1 }]);
@@ -25,7 +38,7 @@ const MeetingRoom = () => {
     <S.Container>
       <S.LeftSection>
         <S.Nav>
-          <Title title={MEETING_ROOM.title} />
+          <S.Title>{MEETING_ROOM.title}</S.Title>
           <button onClick={handleAddCamButtonClick}>AddCam +</button>
           <button onClick={handleRemoveCamButtonClick}>RemoveCam -</button>
           <Timer />
@@ -39,7 +52,7 @@ const MeetingRoom = () => {
         </S.RoomCameraContainer>
         <S.RoomButtonContainer>
           {BUTTONS.map((BUTTON, idx) => (
-            <RoomButton key={idx} type={BUTTON.type} />
+            <RoomButton key={idx} type={BUTTON.type} onClick={BUTTON.handleClick} />
           ))}
         </S.RoomButtonContainer>
       </S.LeftSection>
@@ -85,6 +98,15 @@ const S = {
       opacity 0.3s linear;
     position: absolute;
     top: 0;
+  `,
+  Title: styled.div`
+    width: 180px;
+    height: 40px;
+    opacity: 0.4;
+    background: #c1c1c1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   `,
   RoomCameraContainer: styled.div`
     display: flex;
