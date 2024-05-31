@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import UserInfoModal from '@components/modal/user-info-modal';
+import { navBarHeight } from '@styles/subsection-size';
 import styled from 'styled-components';
 import DropdownButton from './components/dropdown-button';
 import MyCalendar from './components/my-calendar';
@@ -34,6 +35,7 @@ const S = {
     border: 1px solid black;
     padding: 20px;
     display: flex;
+    height: calc(100vh - ${navBarHeight.desktop});
   `,
   QuickButtonBox: styled.div`
     width: 70%;

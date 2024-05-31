@@ -32,7 +32,7 @@ export default MyScheduleList;
 const S = {
   MyScheduleList: styled.div`
     width: 100%;
-    height: 470px;
+    height: 100%;
     border: 1px solid black;
   `,
 };
