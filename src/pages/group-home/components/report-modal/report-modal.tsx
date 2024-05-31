@@ -13,20 +13,23 @@ interface GroupModalProps {
 const ReportModal = ({ children }: GroupModalProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleOpenClick = () => {
+  const handleModalClose = () => {
+    setIsOpen(false);
+  };
+
+  const handleOpenButtonClick = () => {
     setIsOpen(true);
   };
 
-  const handleCloseClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    //이벤트 버블링 <button onClick={handleOpenClick}> 이벤트 방지
+  const handleCloseButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     setIsOpen(false);
   };
 
   return (
-    <button onClick={handleOpenClick}>
+    <button onClick={handleOpenButtonClick}>
       {children}
-      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+      <Modal isOpen={isOpen} onClose={handleModalClose}>
         <S.ReportContent>
           <S.ReportArea>
             <ReportTopic />
@@ -37,7 +40,7 @@ const ReportModal = ({ children }: GroupModalProps) => {
             <ReportChatHistory />
           </S.ReportArea>
         </S.ReportContent>
-        <S.Button onClick={handleCloseClick}>확인</S.Button>
+        <S.Button onClick={handleCloseButtonClick}>확인</S.Button>
       </Modal>
     </button>
   );
@@ -52,6 +55,8 @@ const S = {
     align-items: center;
     gap: 64px;
     margin: 8px;
+    max-width: 600px;
+    width: 100%;
   `,
   ReportArea: styled.div`
     display: flex;
@@ -59,7 +64,6 @@ const S = {
     justify-content: center;
     align-items: center;
     gap: 16px;
-    width: 300px;
   `,
 
   Button: styled.button`

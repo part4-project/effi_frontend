@@ -1,13 +1,13 @@
 import { MEETING_ROOM } from '@constants/mockdata';
-import { TimeCaculate, DateSetUp } from '@pages/group-home/utils/time-calculate';
+import { DateSetUpMock, TimeCaculate, TimeString } from '@pages/group-home/utils/time-calculate';
 import styled from 'styled-components';
 
 const ReportTime = () => {
-  const startDate = DateSetUp(MEETING_ROOM.start_date);
-  const endDateAct = DateSetUp(MEETING_ROOM.actual_end_date);
-  const endDateExp = DateSetUp(MEETING_ROOM.expected_end_date);
-  const allTime = TimeCaculate(startDate, endDateAct);
-  const overTime = TimeCaculate(endDateExp, endDateAct);
+  const startDate = DateSetUpMock(MEETING_ROOM.start_date);
+  const endDateAct = DateSetUpMock(MEETING_ROOM.actual_end_date);
+  const endDateExp = DateSetUpMock(MEETING_ROOM.expected_end_date);
+  const allTime = TimeString(TimeCaculate(startDate, endDateAct));
+  const overTime = TimeString(TimeCaculate(endDateExp, endDateAct));
 
   return (
     <>
@@ -18,7 +18,7 @@ const ReportTime = () => {
           <S.TimeTitle>전체 회의 시간</S.TimeTitle>
         </S.TimeBox>
         <S.TimeBox>
-          {overTime ? <S.Timer>{overTime}</S.Timer> : <S.Timer>X</S.Timer>}
+          {overTime === '' ? <S.Timer>{overTime}</S.Timer> : <S.Timer>X</S.Timer>}
           <S.TimeTitle>초과된 시간</S.TimeTitle>
         </S.TimeBox>
       </S.TimeContent>
