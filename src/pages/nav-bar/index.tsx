@@ -1,6 +1,7 @@
 import UserInfoModal from '@components/modal/user-info-modal';
 import { device } from '@styles/breakpoints';
 import { navBarHeight } from '@styles/subsection-size';
+import { zIndex } from '@styles/z-index';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -35,7 +36,7 @@ const S = {
     left: 0;
     height: ${navBarHeight.desktop};
     background-color: #c1c1c1;
-    z-index: 98;
+    z-index: ${zIndex.navBar};
     @media ${device.tablet} {
       height: ${navBarHeight.tablet};
     }

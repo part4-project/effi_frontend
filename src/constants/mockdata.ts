@@ -12,6 +12,21 @@ export const GROUP = {
   code: 'a2f8',
 };
 
+export const GROUP_LIST = [
+  {
+    id: 2,
+    room_name: '에피의 회의실',
+  },
+  {
+    id: 3,
+    room_name: '에피소드의 회의실',
+  },
+  {
+    id: 4,
+    room_name: 'EFFI의 회의실',
+  },
+];
+
 export const GROUP_MEMBER = {
   group_id: 2,
   count: 5,
@@ -112,7 +127,6 @@ export const NOTES_DATAS = [
   },
 ];
 
-//ERD 설계에는 안보입니다 ㅜㅠ
 export const CHAT = {
   chat: [
     {
