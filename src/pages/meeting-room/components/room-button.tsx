@@ -2,16 +2,17 @@ import styled from 'styled-components';
 
 interface RoomButtonProps {
   type: string;
+  onClick: () => void;
 }
 
-const RoomButton = ({ type }: RoomButtonProps) => {
-  return <S.Container>{type}</S.Container>;
+const RoomButton = ({ type, onClick }: RoomButtonProps) => {
+  return <S.RoomButton onClick={onClick}>{type}</S.RoomButton>;
 };
 
 export default RoomButton;
 
 const S = {
-  Container: styled.div`
+  RoomButton: styled.button`
     width: 91px;
     height: 76px;
     opacity: 0.4;

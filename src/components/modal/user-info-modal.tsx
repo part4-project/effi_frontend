@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import closeBtn from '@assets/icons/close-btn.svg';
 import { createRandomNickName } from '@utils/createRandomNickname';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -16,6 +17,11 @@ const UserInfoModal = ({ children }: GroupModalProps) => {
     setIsOpen(true);
   };
 
+  const handleCloseButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    setIsOpen(false);
+  };
+
   useEffect(() => {
     setNickName(createRandomNickName());
   }, []);
@@ -25,7 +31,9 @@ const UserInfoModal = ({ children }: GroupModalProps) => {
       {children}
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)}>
         <S.Container>
-          <S.CloseButton>{/* TODO: close img 추가후 닫기 구현하기 */}</S.CloseButton>
+          <S.CloseButton onClick={handleCloseButtonClick}>
+            <img src={closeBtn} alt="닫기 버튼" />
+          </S.CloseButton>
           <S.UserInfoContainer>
             <S.ProfileImg src="" alt="프로필이미지" />
             <S.NicknameAndLogoutBox>
@@ -52,17 +60,18 @@ const S = {
   Container: styled.div`
     display: flex;
     flex-direction: column;
-    width: 100%;
+    width: 606px;
+    height: 560px;
     gap: 11px;
-    padding-top: 20px;
+    padding-top: 80px;
     position: relative;
   `,
   CloseButton: styled.button`
     width: 20px;
     height: 20px;
     position: absolute;
-    top: -10px;
-    right: -10px;
+    top: 15px;
+    right: -20px;
   `,
   UserInfoContainer: styled.div`
     display: flex;
