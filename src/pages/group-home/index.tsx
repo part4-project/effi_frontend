@@ -1,3 +1,4 @@
+import { device } from '@styles/breakpoints';
 import { navBarHeight } from '@styles/subsection-size';
 import styled from 'styled-components';
 import GroupHomeHeader from './components/group-home-header';
@@ -32,7 +33,6 @@ const S = {
 
   GroupHomeMain: styled.div`
     width: 100%;
-
     height: calc(100vh - ${navBarHeight.desktop});
     padding: 30px;
     overflow: hidden;
@@ -46,6 +46,12 @@ const S = {
       &:hover {
         background-color: rgba(0, 0, 0, 0.14);
       }
+    }
+    @media ${device.tablet} {
+      height: calc(100vh - ${navBarHeight.tablet});
+    }
+    @media ${device.mobile} {
+      height: calc(100vh - ${navBarHeight.mobile});
     }
   `,
 };

@@ -16,7 +16,7 @@ const Meetings = () => {
         <div onClick={handleMeetingClick}>회의중</div>
         <div>
           회의 예정
-          <MeetingModal title="회의 수정" buttons={['삭제', '수정']} data={MEETING_ROOM} topicData={TOPIC}>
+          <MeetingModal title="회의 수정" data={MEETING_ROOM} topicData={TOPIC}>
             수정
           </MeetingModal>
         </div>

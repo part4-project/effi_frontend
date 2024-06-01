@@ -1,31 +1,20 @@
 import { useEffect, useState } from 'react';
 import { TMeetingRoom, TTopic } from '@constants/mockdata.type';
-import Calendar from 'react-calendar';
+// import Calendar from 'react-calendar';
+import DatePicker from 'react-datepicker';
 import styled from 'styled-components';
+import 'react-datepicker/dist/react-datepicker.css';
 
-type ValuePiece = Date | null;
-type Value = ValuePiece | [ValuePiece, ValuePiece];
 interface TMeetingFormProps {
   data?: TMeetingRoom;
   topicData?: TTopic;
 }
 
 const MeetingForm = ({ data, topicData }: TMeetingFormProps) => {
-  const [calenderDrop, setCalenderDrop] = useState(false);
-  const [selectedDate, setSelectedDate] = useState<Value>(new Date());
-  const [date, setDate] = useState('');
+  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
   const [name, setName] = useState('');
   const [topic, setTopic] = useState('');
   const [topicList, setTopicList] = useState<string[]>([]);
-
-  const handleChangeCalender = (e: Value) => {
-    setSelectedDate(e);
-    if (e instanceof Date) {
-      setDate(e.toLocaleString());
-    } else if (Array.isArray(e) && e[0] instanceof Date) {
-      setDate(e[0].toLocaleString());
-    }
-  };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && topic.trim()) {
@@ -34,9 +23,12 @@ const MeetingForm = ({ data, topicData }: TMeetingFormProps) => {
     }
   };
 
+  const currentDateTime = new Date();
+  const currentHour = currentDateTime.getHours();
+  const currentMinute = currentDateTime.getMinutes();
+
   useEffect(() => {
     if (data) {
-      setDate(data.start_date || '');
       setName(data.title || '');
     }
     if (topicData) {
@@ -47,20 +39,21 @@ const MeetingForm = ({ data, topicData }: TMeetingFormProps) => {
   return (
     <S.Container>
       <label>시작 일자</label>
-      <S.StyledInput
-        type="text"
-        placeholder="시작 일자를 선택하세요"
-        value={date}
-        onChange={(e) => setDate(e.target.value)}
-        onClick={() => setCalenderDrop(true)}
-        readOnly
+
+      <S.StyledDatePicker
+        selected={selectedDate}
+        dateFormat="yyyy/MM/dd - aa h:mm"
+        onChange={(date) => {
+          if (date instanceof Date || date === null) {
+            setSelectedDate(date);
+          }
+        }}
+        showTimeSelect
+        timeIntervals={15}
+        minDate={new Date()}
+        minTime={currentHour === 23 ? new Date() : new Date(currentDateTime.setHours(currentHour, currentMinute))}
+        maxTime={new Date(currentDateTime.setHours(23, 59))}
       />
-      {calenderDrop && (
-        <S.CalenderContainer>
-          <Calendar onChange={handleChangeCalender} value={selectedDate} />
-          <S.DateConfirmButton onClick={() => setCalenderDrop(false)}>확인</S.DateConfirmButton>
-        </S.CalenderContainer>
-      )}
 
       <label>회의실 이름</label>
       <S.StyledInput
@@ -96,12 +89,34 @@ const S = {
     flex-direction: column;
   `,
 
+  StyledDatePicker: styled(DatePicker)`
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 6px;
+    margin: 10px 0 20px;
+    padding: 10px;
+    min-width: 300px;
+  `,
+
+  CalenderInput: styled.div`
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 6px;
+    margin: 10px 0 20px;
+    padding: 10px;
+    min-width: 300px;
+  `,
+
   CalenderContainer: styled.div`
     display: flex;
     flex-direction: column;
+    position: absolute;
+    top: 50px;
+    /* left: 180px; */
   `,
+
   DateConfirmButton: styled.button`
-    background-color: rgba(0, 0, 0, 0.1);
+    background-color: #c1c1c1;
     padding: 6px;
   `,
 
