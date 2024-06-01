@@ -39,8 +39,12 @@ const MeetingRoom = () => {
       <S.LeftSection>
         <S.Nav>
           <S.Title>{MEETING_ROOM.title}</S.Title>
-          <button onClick={handleAddCamButtonClick}>AddCam +</button>
-          <button onClick={handleRemoveCamButtonClick}>RemoveCam -</button>
+          <button onClick={handleAddCamButtonClick} style={{ zIndex: 99 }}>
+            AddCam +
+          </button>
+          <button onClick={handleRemoveCamButtonClick} style={{ zIndex: 99 }}>
+            RemoveCam -
+          </button>
           <Timer />
         </S.Nav>
         <S.RoomCameraContainer>
@@ -69,11 +73,12 @@ export default MeetingRoom;
 const S = {
   Container: styled.div`
     display: flex;
+    max-width: 1920px;
     width: 100%;
     height: 100vh;
   `,
   LeftSection: styled.div`
-    width: 1491px;
+    flex: 1 1 80%;
     position: relative;
     display: flex;
     align-items: center;
@@ -117,7 +122,7 @@ const S = {
   `,
   RoomCameraBox: styled.div`
     display: flex;
-    flex-wrap: wrap-reverse;
+    flex-wrap: wrap;
     justify-content: center;
     width: 100%;
     gap: 10px;
@@ -137,7 +142,7 @@ const S = {
     bottom: 0;
   `,
   RightSection: styled.div`
-    width: 429px;
+    flex: 1 1 20%;
     display: flex;
     flex-direction: column;
     gap: 35px;
