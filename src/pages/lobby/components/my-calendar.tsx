@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { MY_SCHEDULE_LIST } from '@constants/mockdata';
 import Calendar from 'react-calendar';
 import styled from 'styled-components';
@@ -21,7 +22,7 @@ const MyCalendar = ({ DateValue, onChangeDate }: MyCalendarProps) => {
         prev2Label={null} // 이전년도 이동 화살표 제거
         onChange={onChangeDate}
         value={DateValue}
-        tileContent={({ date, view }) => {
+        tileContent={({ date }) => {
           const html = [];
           // if (view === 'month' && date.getMonth() === today.getMonth() && date.getDate() === today.getDate()) {
           //   html.push(<S.StyledToday key={'today'}>오늘</S.StyledToday>);
