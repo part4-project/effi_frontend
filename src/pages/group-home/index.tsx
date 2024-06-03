@@ -26,7 +26,7 @@ export default GroupHome;
 const S = {
   Container: styled.div`
     display: flex;
-    background-color: #d2ede8;
+    background-color: var(--blue02);
   `,
 
   GroupHomeMain: styled.div`

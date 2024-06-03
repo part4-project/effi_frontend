@@ -35,7 +35,7 @@ export default GroupHomeSideBar;
 const S = {
   Container: styled.div`
     background-color: white;
-    border-left: 4px solid #edf7f8;
+    border-left: 4px solid var(--blue03);
     width: 180px;
     padding: 33px 28px;
     position: relative;
@@ -80,8 +80,8 @@ const S = {
   `,
 
   LeaveGroupButton: styled.button`
-    background-color: #c7e4df;
-    color: #367262;
+    background-color: var(--blue02);
+    color: var(--blue01);
     font-size: 12px;
     font-weight: bold;
     width: 125px;

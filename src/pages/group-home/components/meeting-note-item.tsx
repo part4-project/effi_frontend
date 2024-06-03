@@ -66,13 +66,13 @@ const S = {
   NoteTitle: styled.span`
     font-size: 20px;
     margin-right: 17px;
-    color: #367262;
+    color: var(--blue01);
     font-weight: bold;
   `,
 
   NoteCreatedAt: styled.span`
     font-size: 14px;
-    color: #367262;
+    color: var(--blue01);
   `,
 
   PercentageContainer: styled.div`
@@ -82,13 +82,13 @@ const S = {
 
   PercentageTitle: styled.span`
     margin-right: 10px;
-    color: #9e9e9e;
+    color: var(--blue05);
     font-weight: 500;
     font-size: 20px;
   `,
 
   PercentageBar: styled.div`
-    background-color: #d9d9d9;
+    background-color: var(--blue04);
     display: flex;
     width: 365px;
     height: 15px;
@@ -96,7 +96,7 @@ const S = {
   `,
 
   CompletedPercentage: styled.div<{ $percentage: string }>`
-    background-color: #367262;
+    background-color: var(--blue01);
     display: flex;
     width: ${({ $percentage }) => `${$percentage}%`};
     height: 15px;
@@ -105,7 +105,7 @@ const S = {
 
   Percentage: styled.span`
     margin-left: 23px;
-    color: #9e9e9e;
+    color: var(--blue05);
     font-weight: 500;
     font-size: 20px;
   `,

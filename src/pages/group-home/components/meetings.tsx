@@ -105,7 +105,7 @@ const S = {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #367262;
+    background-color: var(--blue01);
     border-radius: 10px;
     font-size: 26px;
     font-weight: 900;

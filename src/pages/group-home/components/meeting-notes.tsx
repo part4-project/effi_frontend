@@ -51,7 +51,7 @@ const S = {
 
   DateRangeButton: styled.button`
     background-color: white;
-    color: #367262;
+    color: var(--blue01);
     font-size: 14px;
     border: medium;
     border-radius: 10px;

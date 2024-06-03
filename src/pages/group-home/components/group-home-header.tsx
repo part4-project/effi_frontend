@@ -60,7 +60,7 @@ const S = {
     left: 50%;
     transform: translateX(-50%);
 
-    background: #367262;
+    background: var(--blue01);
     color: white;
     font-size: 14px;
     border-radius: 10px;
@@ -68,7 +68,7 @@ const S = {
     padding-top: 2px;
 
     &:after {
-      border-bottom: 15px solid #367262;
+      border-bottom: 15px solid var(--blue01);
       border-left: 8px solid transparent;
       border-right: 8px solid transparent;
       border-top: 0px solid transparent;
