@@ -1,23 +1,26 @@
-import arrowRight from '@assets/icons/arrow-left.svg';
+import createMeetingButton from '@assets/icons/plus-monitor.svg';
+import groupManageButton from '@assets/icons/setting.svg';
 import GroupModal from '@pages/group-home/components/group-modal/group-modal';
 import MeetingModal from '@pages/group-home/components/meeting-modal/meeting-modal';
-import { useNavigate } from 'react-router-dom';
+import { zIndex } from '@styles/z-index';
 import styled from 'styled-components';
 
 const GroupHomeHeader = () => {
-  const navigate = useNavigate();
-
-  const handleBackButtonClick = () => {
-    navigate('/');
-  };
-
   return (
     <S.Container>
-      <S.BackButton onClick={handleBackButtonClick} />
-      <S.ManageButtons>
-        <GroupModal>그룹 관리</GroupModal>
-        <MeetingModal title="회의 생성">회의 생성</MeetingModal>
-      </S.ManageButtons>
+      <MeetingModal title="회의 생성">
+        <S.Trigger>
+          <S.Balloon>회의 생성</S.Balloon>
+          <img src={createMeetingButton} />
+        </S.Trigger>
+      </MeetingModal>
+
+      <GroupModal>
+        <S.Trigger>
+          <S.Balloon>그룹 관리</S.Balloon>
+          <img src={groupManageButton} />
+        </S.Trigger>
+      </GroupModal>
     </S.Container>
   );
 };
@@ -27,19 +30,53 @@ export default GroupHomeHeader;
 const S = {
   Container: styled.div`
     display: flex;
-    justify-content: space-between;
+    justify-content: end;
     align-items: center;
+    gap: 14px;
+    position: absolute;
+    right: 47px;
+    top: 33px;
   `,
 
-  BackButton: styled.img.attrs({
-    src: arrowRight,
-  })`
-    width: 20px;
-    cursor: pointer;
+  Trigger: styled.div`
+    position: relative;
+    display: inline-block;
+
+    &:hover > div {
+      opacity: 1;
+    }
   `,
 
-  ManageButtons: styled.div`
+  Balloon: styled.div`
+    opacity: 0;
+    transition: opacity 0.2s ease;
     display: flex;
-    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    width: 81px;
+    height: 30px;
+    top: 55px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    background: #367262;
+    color: white;
+    font-size: 14px;
+    border-radius: 10px;
+    z-index: ${zIndex.balloon};
+    padding-top: 2px;
+
+    &:after {
+      border-bottom: 15px solid #367262;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-top: 0px solid transparent;
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: 50%;
+      transform: translateX(-50%);
+    }
   `,
 };

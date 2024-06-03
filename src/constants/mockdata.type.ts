@@ -18,3 +18,18 @@ export interface TTopic {
   count: number;
   topic_list: Topic[];
 }
+
+export interface TMyScheduleItem {
+  id: number;
+  group: string;
+  start_date: string;
+  expected_end_date: string;
+  title: string;
+}
+
+export interface TNoteItem {
+  id: number;
+  title: string;
+  createdAt: string;
+  topic_list: Topic[];
+}
