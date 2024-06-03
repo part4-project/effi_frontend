@@ -1,31 +1,17 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { MEETING_ROOM, TOPIC } from '@constants/mockdata';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Chatting from './components/chatting';
 import RoomButton from './components/room-button';
 import RoomCamera from './components/room-camera';
 import Timer from './components/timer';
 import Topics from './components/topics';
+import { ROOM_BUTTONS } from './constants';
 
 const CAMERAS = [{ user: 1 }, { user: 2 }, { user: 3 }, { user: 4 }, { user: 5 }];
 
 const MeetingRoom = () => {
-  const navigate = useNavigate();
   const [cameras, setCameras] = useState(CAMERAS);
-  const BUTTONS = useMemo(
-    () => [
-      { type: '카메라', handleClick: () => {} },
-      { type: '마이크', handleClick: () => {} },
-      {
-        type: '나가기',
-        handleClick: () => {
-          navigate('/group-home');
-        },
-      },
-    ],
-    [navigate],
-  );
 
   const handleAddCamButtonClick = () => {
     setCameras([...cameras, { user: 1 }]);
@@ -39,10 +25,10 @@ const MeetingRoom = () => {
       <S.LeftSection>
         <S.Nav>
           <S.Title>{MEETING_ROOM.title}</S.Title>
-          <button onClick={handleAddCamButtonClick} style={{ zIndex: 99 }}>
+          <button onClick={handleAddCamButtonClick} style={{ zIndex: 99, color: '#a6a6a6' }}>
             AddCam +
           </button>
-          <button onClick={handleRemoveCamButtonClick} style={{ zIndex: 99 }}>
+          <button onClick={handleRemoveCamButtonClick} style={{ zIndex: 99, color: '#a6a6a6' }}>
             RemoveCam -
           </button>
           <Timer />
@@ -55,8 +41,8 @@ const MeetingRoom = () => {
           </S.RoomCameraBox>
         </S.RoomCameraContainer>
         <S.RoomButtonContainer>
-          {BUTTONS.map((BUTTON, idx) => (
-            <RoomButton key={idx} type={BUTTON.type} onClick={BUTTON.handleClick} />
+          {ROOM_BUTTONS.map((btn, idx) => (
+            <RoomButton key={idx} type={btn.type} initialImg={btn.initialImg} changedImg={btn.changedImg} />
           ))}
         </S.RoomButtonContainer>
       </S.LeftSection>
@@ -76,6 +62,7 @@ const S = {
     max-width: 1920px;
     width: 100%;
     height: 100vh;
+    background-color: #212322;
   `,
   LeftSection: styled.div`
     flex: 1 1 80%;
@@ -105,13 +92,17 @@ const S = {
     top: 0;
   `,
   Title: styled.div`
-    width: 180px;
+    max-width: 400px;
     height: 40px;
-    opacity: 0.4;
-    background: #c1c1c1;
     display: flex;
     justify-content: center;
     align-items: center;
+    color: #a6a6a6;
+    font-family: Pretendard;
+    font-size: 26px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: 35px;
   `,
   RoomCameraContainer: styled.div`
     display: flex;

@@ -18,7 +18,7 @@ const S = {
     width: ${({ $cameraCount }) => CalculateCameraWidth($cameraCount)};
     min-width: 350px;
     border-radius: 10px;
-    background: #f1f1f1;
+    background-color: black;
     @media ${device.tablet} {
       width: ${({ $cameraCount }) => ($cameraCount === 1 ? 'calc(70% - 10px)' : 'calc(40% - 10px)')};
       min-width: 330px;
