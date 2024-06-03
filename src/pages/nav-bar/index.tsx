@@ -1,9 +1,12 @@
-import UserInfoModal from '@components/modal/user-info-modal';
+import Logo from '@assets/text-logo.svg';
 import { device } from '@styles/breakpoints';
 import { navBarHeight } from '@styles/subsection-size';
 import { zIndex } from '@styles/z-index';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import Alarm from './components/alarm';
+import Profile from './components/profile';
+import SearchBar from './components/search-bar';
 
 const NavBar = () => {
   return (
@@ -11,15 +14,15 @@ const NavBar = () => {
       <S.NavContainer>
         <S.FlexLeftBox>
           <S.LogoBox>
-            <Link to={'/'}>로고</Link>
+            <Link to={'/'}>
+              <img src={Logo} alt="text-logo" />
+            </Link>
           </S.LogoBox>
         </S.FlexLeftBox>
         <S.FlexRightBox>
-          <S.SearchBarBox>검색</S.SearchBarBox>
-          <S.AlarmBox>알림</S.AlarmBox>
-          <UserInfoModal>
-            <S.ProfileBox>프로필</S.ProfileBox>
-          </UserInfoModal>
+          <SearchBar />
+          <Alarm />
+          <Profile />
         </S.FlexRightBox>
       </S.NavContainer>
     </S.NavWrap>
@@ -35,7 +38,7 @@ const S = {
     top: 0;
     left: 0;
     height: ${navBarHeight.desktop};
-    background-color: #c1c1c1;
+    background-color: #a6d5cd;
     z-index: ${zIndex.navBar};
     @media ${device.tablet} {
       height: ${navBarHeight.tablet};
@@ -49,15 +52,12 @@ const S = {
     justify-content: space-between;
     align-items: center;
     height: 100%;
-    padding: 13px;
+    padding-inline: 22px 27px;
   `,
   FlexLeftBox: styled.div``,
   FlexRightBox: styled.div`
     display: flex;
-    gap: 8px;
+    gap: 25px;
   `,
   LogoBox: styled.div``,
-  SearchBarBox: styled.div``,
-  AlarmBox: styled.div``,
-  ProfileBox: styled.div``,
 };

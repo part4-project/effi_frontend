@@ -20,7 +20,7 @@ const SideBar = () => {
 export default SideBar;
 
 const S = {
-  SideWrap: styled.div`
+  SideWrap: styled.aside`
     width: ${sideBarWidth.desktop};
     padding: 24px;
     position: fixed;
