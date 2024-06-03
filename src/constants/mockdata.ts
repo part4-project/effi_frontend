@@ -94,36 +94,155 @@ export const NOTES_DATAS = [
     id: 1,
     title: '프론트 회의',
     createdAt: '24-05-29',
+    topic_list: [
+      {
+        id: 1,
+        topic_name: 'R&R 분배',
+        is_completed: true,
+      },
+      {
+        id: 2,
+        topic_name: '회식 장소 정하기',
+        is_completed: true,
+      },
+      {
+        id: 3,
+        topic_name: '분배한 작업 끝내기',
+        is_completed: true,
+      },
+    ],
   },
   {
     id: 2,
     title: '주간 회의',
     createdAt: '24-05-29',
+    topic_list: [
+      {
+        id: 1,
+        topic_name: 'R&R 분배',
+        is_completed: false,
+      },
+      {
+        id: 2,
+        topic_name: '회식 장소 정하기',
+        is_completed: true,
+      },
+      {
+        id: 3,
+        topic_name: '분배한 작업 끝내기',
+        is_completed: false,
+      },
+    ],
   },
   {
     id: 3,
     title: '백엔드 회의',
     createdAt: '24-05-29',
+    topic_list: [
+      {
+        id: 1,
+        topic_name: 'R&R 분배',
+        is_completed: true,
+      },
+      {
+        id: 2,
+        topic_name: '회식 장소 정하기',
+        is_completed: true,
+      },
+      {
+        id: 3,
+        topic_name: '분배한 작업 끝내기',
+        is_completed: false,
+      },
+    ],
   },
   {
     id: 4,
     title: '프론트 회의',
     createdAt: '24-05-29',
+    topic_list: [
+      {
+        id: 1,
+        topic_name: 'R&R 분배',
+        is_completed: true,
+      },
+      {
+        id: 2,
+        topic_name: '회식 장소 정하기',
+        is_completed: true,
+      },
+      {
+        id: 3,
+        topic_name: '분배한 작업 끝내기',
+        is_completed: false,
+      },
+    ],
   },
   {
     id: 5,
     title: '주간 회의',
     createdAt: '24-05-29',
+    topic_list: [
+      {
+        id: 1,
+        topic_name: 'R&R 분배',
+        is_completed: true,
+      },
+      {
+        id: 2,
+        topic_name: '회식 장소 정하기',
+        is_completed: true,
+      },
+      {
+        id: 3,
+        topic_name: '분배한 작업 끝내기',
+        is_completed: false,
+      },
+    ],
   },
   {
     id: 6,
     title: '회식날짜 정하기',
     createdAt: '24-05-29',
+    topic_list: [
+      {
+        id: 1,
+        topic_name: 'R&R 분배',
+        is_completed: true,
+      },
+      {
+        id: 2,
+        topic_name: '회식 장소 정하기',
+        is_completed: true,
+      },
+      {
+        id: 3,
+        topic_name: '분배한 작업 끝내기',
+        is_completed: false,
+      },
+    ],
   },
   {
     id: 7,
     title: '백엔드 회의',
     createdAt: '24-05-29',
+    topic_list: [
+      {
+        id: 1,
+        topic_name: 'R&R 분배',
+        is_completed: true,
+      },
+      {
+        id: 2,
+        topic_name: '회식 장소 정하기',
+        is_completed: true,
+      },
+      {
+        id: 3,
+        topic_name: '분배한 작업 끝내기',
+        is_completed: false,
+      },
+    ],
   },
 ];
 
