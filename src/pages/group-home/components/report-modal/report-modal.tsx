@@ -1,10 +1,11 @@
 import { useState } from 'react';
+import ChattingBox from '@components/meeting/chatting-box';
+import TopicList from '@components/meeting/topic-list';
 import Modal from '@components/modal/modal';
+import ModalHeader from '@components/modal/modal-header';
 import styled from 'styled-components';
-import ReportChatHistory from './report-chat-history';
 import ReportMember from './report-member';
 import ReportTime from './report-time';
-import ReportTopic from './report-topic';
 
 interface GroupModalProps {
   children: React.ReactNode;
@@ -30,17 +31,13 @@ const ReportModal = ({ children }: GroupModalProps) => {
     <button onClick={handleOpenButtonClick}>
       {children}
       <Modal isOpen={isOpen} onClose={handleModalClose}>
+        <ModalHeader headerTitle="회의주제" onClose={handleCloseButtonClick} />
         <S.ReportContent>
-          <S.ReportArea>
-            <ReportTopic />
-            <ReportMember />
-          </S.ReportArea>
-          <S.ReportArea>
-            <ReportTime />
-            <ReportChatHistory />
-          </S.ReportArea>
+          <TopicList />
+          <ReportMember />
+          <ReportTime />
+          <ChattingBox />
         </S.ReportContent>
-        <S.Button onClick={handleCloseButtonClick}>확인</S.Button>
       </Modal>
     </button>
   );
@@ -50,25 +47,16 @@ export default ReportModal;
 
 const S = {
   ReportContent: styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 64px;
-    margin: 8px;
-    max-width: 600px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+      'topic chat'
+      'member chat'
+      'time chat';
+    max-width: 962px;
     width: 100%;
-  `,
-  ReportArea: styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 16px;
-  `,
-
-  Button: styled.button`
-    padding: 8px 12px;
-    border-radius: 8px;
-    background-color: #cccccc;
+    gap: 20px;
+    margin: 10px;
   `,
 };
