@@ -1,29 +1,55 @@
-import { useState } from 'react';
-import { MEETING_ROOM, TOPIC } from '@constants/mockdata';
+/* eslint-disable no-console */
+import { useEffect, useState } from 'react';
+import { MEETING_ROOM, TOPIC, GROUP_MEMBER } from '@constants/mockdata';
 import styled from 'styled-components';
 import Chatting from './components/chatting';
+import ForceQuitToast from './components/force-quit-toast';
 import RoomButton from './components/room-button';
 import RoomCamera from './components/room-camera';
 import Timer from './components/timer';
 import Topics from './components/topics';
 import { ROOM_BUTTONS } from './constants';
+import useForceQuitToast from './hooks/use-force-quit-toast';
+import { calculateDurationInSeconds } from './utils/calculate-duration-in-seconds';
 
-const CAMERAS = [{ user: 1 }, { user: 2 }, { user: 3 }, { user: 4 }, { user: 5 }];
+const PARTICIPATED_MEMBER = [...GROUP_MEMBER.member_list];
 
 const MeetingRoom = () => {
-  const [cameras, setCameras] = useState(CAMERAS);
+  const [participatedMember, setParticipatedMember] = useState(PARTICIPATED_MEMBER);
+  const [meetingTotalTime, setMeetingTotalTime] = useState('');
+  const [meetingOverTime, setMeetingOverTime] = useState('');
+  const [isMeetingFinished, setIsMeetingFinished] = useState(false);
+  const { isToastOpen, handleToastChange, isToastAnimClose, handleToastClose } = useForceQuitToast();
 
   const handleAddCamButtonClick = () => {
-    setCameras([...cameras, { user: 1 }]);
+    setParticipatedMember([...participatedMember, { id: 1, name: '홍길동', is_admin: false }]);
   };
 
   const handleRemoveCamButtonClick = () => {
-    setCameras(cameras.slice(0, cameras.length - 1));
+    setParticipatedMember(participatedMember.slice(0, participatedMember.length - 1));
   };
+
+  const handleMeetingTotalTimeChange = (time: string) => {
+    setMeetingTotalTime(time);
+  };
+  const handleMeetingOverTimeChange = (time: string) => {
+    setMeetingOverTime(time);
+  };
+
+  console.log(meetingTotalTime, meetingOverTime);
+
+  useEffect(() => {
+    if (participatedMember.length === 1) handleToastChange(true);
+  }, [participatedMember.length, handleToastChange]);
+
+  useEffect(() => {
+    if (isToastOpen && participatedMember.length !== 1) handleToastClose();
+  }, [participatedMember.length, isToastOpen, handleToastClose]);
+
   return (
     <S.Container>
       <S.LeftSection>
-        <S.Nav>
+        <S.Nav className="nav">
           <S.Title>{MEETING_ROOM.title}</S.Title>
           <button onClick={handleAddCamButtonClick} style={{ zIndex: 99, color: '#a6a6a6' }}>
             AddCam +
@@ -31,20 +57,32 @@ const MeetingRoom = () => {
           <button onClick={handleRemoveCamButtonClick} style={{ zIndex: 99, color: '#a6a6a6' }}>
             RemoveCam -
           </button>
-          <Timer />
+          <button onClick={() => setIsMeetingFinished(true)} style={{ zIndex: 99, color: '#a6a6a6' }}>
+            Meeting Finish
+          </button>
+          <Timer
+            targetDurationInSeconds={calculateDurationInSeconds(
+              MEETING_ROOM.start_date,
+              MEETING_ROOM.expected_end_date,
+            )}
+            isMeetingFinished={isMeetingFinished}
+            onMeetingTotalTimeChange={handleMeetingTotalTimeChange}
+            onMeetingOverTimeChange={handleMeetingOverTimeChange}
+          />
         </S.Nav>
         <S.RoomCameraContainer>
           <S.RoomCameraBox>
-            {cameras.map((_, idx) => (
-              <RoomCamera key={idx} cameraCount={cameras.length} />
+            {participatedMember.map((member, idx) => (
+              <RoomCamera key={idx} name={member.name} cameraCount={participatedMember.length} />
             ))}
           </S.RoomCameraBox>
         </S.RoomCameraContainer>
-        <S.RoomButtonContainer>
+        <S.RoomButtonContainer className="room-button-container">
           {ROOM_BUTTONS.map((btn, idx) => (
             <RoomButton key={idx} type={btn.type} initialImg={btn.initialImg} changedImg={btn.changedImg} />
           ))}
         </S.RoomButtonContainer>
+        <ForceQuitToast isToastOpen={isToastOpen} isToastAnimClose={isToastAnimClose} />
       </S.LeftSection>
       <S.RightSection>
         <Topics topicList={TOPIC.topic_list} />
@@ -71,8 +109,8 @@ const S = {
     align-items: center;
     flex-direction: column;
     &:hover {
-      & > div:first-child,
-      & > div:last-child {
+      & > .nav,
+      & > .room-button-container {
         visibility: visible;
         opacity: 1;
       }
@@ -122,7 +160,7 @@ const S = {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 4px;
+    gap: 34px;
     padding: 40px;
     visibility: hidden;
     opacity: 0;
