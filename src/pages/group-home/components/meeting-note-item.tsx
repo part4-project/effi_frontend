@@ -21,7 +21,7 @@ const MeetingNoteItem = ({ note }: TMeetingNoteItemProps) => {
           </S.MeetingTitleAndTimeContainer>
 
           <S.PercentageContainer>
-            <S.PercentageTitle>회의 달성률</S.PercentageTitle>
+            <S.PercentageTitle>진행률</S.PercentageTitle>
             <S.PercentageBar>
               <S.CompletedPercentageBar $percentage={percentageCompleted}></S.CompletedPercentageBar>
             </S.PercentageBar>
