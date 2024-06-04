@@ -37,7 +37,7 @@ const S = {
     align-items: center;
     gap: 50px;
     height: 100vh;
-    background-color: #f4f8f7;
+    background-color: var(--blue02);
   `,
   TopBox: styled.div`
     display: flex;
@@ -51,11 +51,11 @@ const S = {
     font-weight: 400;
     font-size: 30px;
     margin: 0;
-    color: #1e1f22;
+    color: var(--blue05);
   `,
   Caption: styled.p`
     font-weight: 700;
-    color: #1e1f22;
+    color: var(--blue05);
   `,
   SocialLogoBox: styled.div`
     position: absolute;
@@ -64,16 +64,15 @@ const S = {
   `,
   SocialLoginButton: styled.button`
     position: relative;
-    background-color: #ffffff;
+    background-color: var(--white);
     border-radius: 100px;
-    border: 10px solid #000000;
     font-weight: 700;
     line-height: 19px;
     width: 320px;
     padding-block: 18px;
     p {
       font-size: 16px;
-      color: #1e1f22;
+      color: var(--blue05);
     }
   `,
 };
