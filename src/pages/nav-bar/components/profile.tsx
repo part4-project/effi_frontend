@@ -25,12 +25,12 @@ const S = {
     gap: 10px;
   `,
   NickNameBox: styled.div`
-    color: #367262;
+    color: #343c49;
     font-weight: 500;
   `,
   ProfileImgBox: styled.div`
     overflow: hidden;
-    border: 0.1px solid #367262;
+    border: 0.1px solid var(--blue01);
     width: 20px;
     border-radius: 100%;
   `,

@@ -1,4 +1,5 @@
 import dropDownArrow from '@assets/icons/arrow-down.svg';
+import SearchIcon from '@assets/icons/search.svg';
 import { NOTES_DATAS } from '@constants/mockdata';
 import styled from 'styled-components';
 import MeetingNoteItem from './meeting-note-item';
@@ -15,7 +16,12 @@ const MeetingNotes = () => {
             종료 일자 <img src={dropDownArrow} />
           </S.DateRangeButton>
         </S.DateRangeButtons>
-        <S.NotesSearchBar type="text" placeholder="일자 또는 회의 이름으로 검색" />
+        <S.NotesSearchBarBox>
+          <S.NotesSearchBar type="text" placeholder="일자 또는 회의 이름으로 검색" />
+          <S.NotesSearchIcon>
+            <img src={SearchIcon} alt="search" />
+          </S.NotesSearchIcon>
+        </S.NotesSearchBarBox>
       </S.MeetingNotesHeader>
 
       <S.MeetingNotesLists>
@@ -66,7 +72,7 @@ const S = {
 
   NotesSearchBar: styled.input`
     width: 260px;
-    padding: 10px;
+    padding: 10px 35px 10px 10px;
     border-radius: 10px;
   `,
 
@@ -81,5 +87,14 @@ const S = {
 
   MeetingNoteItem: styled.li`
     scroll-snap-align: start;
+  `,
+
+  NotesSearchBarBox: styled.div`
+    position: relative;
+  `,
+  NotesSearchIcon: styled.div`
+    position: absolute;
+    top: 18%;
+    right: 4%;
   `,
 };

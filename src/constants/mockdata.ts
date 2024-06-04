@@ -15,15 +15,23 @@ export const GROUP = {
 export const GROUP_LIST = [
   {
     id: 2,
-    room_name: '에피의 회의실',
+    room_name: '에피',
   },
   {
     id: 3,
-    room_name: '에피소드의 회의실',
+    room_name: '회의실',
   },
   {
     id: 4,
-    room_name: 'EFFI의 회의실',
+    room_name: 'EFFI',
+  },
+  {
+    id: 5,
+    room_name: '에피의 회의실',
+  },
+  {
+    id: 6,
+    room_name: '에피의 회의실 & 줄넘김 테스트',
   },
 ];
 

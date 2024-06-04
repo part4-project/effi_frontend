@@ -38,7 +38,7 @@ const S = {
     top: 0;
     left: 0;
     height: ${navBarHeight.desktop};
-    background-color: #a6d5cd;
+    background-color: var(--blue04);
     z-index: ${zIndex.navBar};
     @media ${device.tablet} {
       height: ${navBarHeight.tablet};

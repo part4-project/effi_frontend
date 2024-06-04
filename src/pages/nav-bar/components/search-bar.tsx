@@ -17,7 +17,7 @@ export default SearchBar;
 const S = {
   SearchBarBox: styled.div`
     border-radius: 10px;
-    background-color: #ffffff;
+    background-color: var(--white);
     width: 260px;
     position: relative;
     padding-block: 8px;
