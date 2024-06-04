@@ -1,10 +1,61 @@
-export const USER = [
-  {
-    id: 1,
-    nickname: '경수',
-    email: 'effi@naver.com',
-  },
-];
+import defaultProfileImg from '@assets/default-profile.png';
+
+export const USER = {
+  id: 1,
+  nickname: '경수',
+  email: 'effi@naver.com',
+  profile_img: defaultProfileImg,
+  invited_group: [
+    {
+      id: 1,
+      room_name: 'A그룹',
+      code: 'a2f8',
+      leader: '홍길동',
+    },
+    {
+      id: 2,
+      room_name: 'EFFI 프론트엔드',
+      code: 'a2f8',
+      leader: '홍길동',
+    },
+    {
+      id: 3,
+      room_name: 'EFFI 백엔드',
+      code: 'a2f8',
+      leader: '홍길동',
+    },
+    {
+      id: 4,
+      room_name: 'B그룹',
+      code: 'a2f8',
+      leader: '홍길동',
+    },
+    {
+      id: 5,
+      room_name: '이름이 매우 긴 그룹 테스트용 그룹 이름 제한 몇자로 할껀지?',
+      code: 'a2f8',
+      leader: '홍길동',
+    },
+    {
+      id: 6,
+      room_name: 'EFFI 프론트엔드',
+      code: 'a2f8',
+      leader: '홍길동',
+    },
+    {
+      id: 7,
+      room_name: 'EFFI 백엔드',
+      code: 'a2f8',
+      leader: '홍길동',
+    },
+    {
+      id: 8,
+      room_name: 'C그룹',
+      code: 'a2f8',
+      leader: '홍길동',
+    },
+  ],
+};
 
 export const GROUP = {
   id: 2,
@@ -46,7 +97,7 @@ export const GROUP_MEMBER = {
     },
     {
       id: 2,
-      name: '작은재성',
+      name: '작은재성입니다',
       is_admin: false,
     },
     {
@@ -62,6 +113,41 @@ export const GROUP_MEMBER = {
     {
       id: 5,
       name: '큰재성',
+      is_admin: false,
+    },
+    {
+      id: 6,
+      name: '경수',
+      is_admin: false,
+    },
+    {
+      id: 7,
+      name: 'test1',
+      is_admin: false,
+    },
+    {
+      id: 8,
+      name: 'test2',
+      is_admin: false,
+    },
+    {
+      id: 9,
+      name: 'test3',
+      is_admin: false,
+    },
+    {
+      id: 10,
+      name: 'test4',
+      is_admin: false,
+    },
+    {
+      id: 11,
+      name: 'test5',
+      is_admin: false,
+    },
+    {
+      id: 12,
+      name: 'test6',
       is_admin: false,
     },
   ],
@@ -93,15 +179,31 @@ export const TOPIC = {
     {
       id: 3,
       topic_name: '분배한 작업 끝내기',
+      is_completed: true,
+    },
+    {
+      id: 4,
+      topic_name: 'test',
+      is_completed: false,
+    },
+    {
+      id: 5,
+      topic_name: 'test1',
+      is_completed: false,
+    },
+    {
+      id: 6,
+      topic_name: 'test2',
       is_completed: false,
     },
   ],
 };
+
 export const NOTES_DATAS = [
   {
     id: 1,
     title: '프론트 회의',
-    createdAt: '24-05-29',
+    createdAt: '24-03-29',
     topic_list: [
       {
         id: 1,
@@ -123,7 +225,7 @@ export const NOTES_DATAS = [
   {
     id: 2,
     title: '주간 회의',
-    createdAt: '24-05-29',
+    createdAt: '24-03-29',
     topic_list: [
       {
         id: 1,
@@ -145,7 +247,7 @@ export const NOTES_DATAS = [
   {
     id: 3,
     title: '백엔드 회의',
-    createdAt: '24-05-29',
+    createdAt: '24-04-12',
     topic_list: [
       {
         id: 1,
@@ -167,7 +269,7 @@ export const NOTES_DATAS = [
   {
     id: 4,
     title: '프론트 회의',
-    createdAt: '24-05-29',
+    createdAt: '24-04-20',
     topic_list: [
       {
         id: 1,
@@ -189,7 +291,7 @@ export const NOTES_DATAS = [
   {
     id: 5,
     title: '주간 회의',
-    createdAt: '24-05-29',
+    createdAt: '24-04-21',
     topic_list: [
       {
         id: 1,
@@ -211,7 +313,7 @@ export const NOTES_DATAS = [
   {
     id: 6,
     title: '회식날짜 정하기',
-    createdAt: '24-05-29',
+    createdAt: '24-05-01',
     topic_list: [
       {
         id: 1,
@@ -233,7 +335,7 @@ export const NOTES_DATAS = [
   {
     id: 7,
     title: '백엔드 회의',
-    createdAt: '24-05-29',
+    createdAt: '24-05-10',
     topic_list: [
       {
         id: 1,
@@ -261,18 +363,140 @@ export const CHAT = {
       nickname: '경수',
       email: 'effi@naver.com',
       chat: '안녕하세요!',
+      sentTime: '2024-06-04 11:25:48',
     },
     {
       id: 2,
-      nickname: '승구',
-      email: 'skoo@naver.com',
-      chat: '반갑습니다 ㅎ',
+      nickname: '경수',
+      email: 'effi@naver.com',
+      chat: '반갑습니다 여러분!',
+      sentTime: '2024-06-04 11:25:58',
     },
     {
       id: 3,
+      nickname: '승구',
+      email: 'skoo@naver.com',
+      chat: '안녕하세요 ㅎㅎ',
+      sentTime: '2024-06-04 11:26:10',
+    },
+    {
+      id: 4,
       nickname: '재성',
       email: 'js@naver.com',
       chat: '하이요!',
+      sentTime: '2024-06-04 11:26:30',
+    },
+    {
+      id: 5,
+      nickname: '원석',
+      email: 'js@naver.com',
+      chat: '인사가 늦었습니다. 저도 반갑습니다.인사가 늦었습니다. 저도 반갑습니다.인사가 늦었습니다. 저도 반갑습니다.',
+      sentTime: '2024-06-04 12:00:20',
+    },
+    {
+      id: 6,
+      nickname: '경수',
+      email: 'effi@naver.com',
+      chat: '안녕하세요!',
+      sentTime: '2024-06-04 11:25:48',
+    },
+    {
+      id: 7,
+      nickname: '경수',
+      email: 'effi@naver.com',
+      chat: '반갑습니다 여러분!',
+      sentTime: '2024-06-04 11:25:58',
+    },
+    {
+      id: 8,
+      nickname: '승구',
+      email: 'skoo@naver.com',
+      chat: '안녕하세요 ㅎㅎ',
+      sentTime: '2024-06-04 11:26:10',
+    },
+    {
+      id: 9,
+      nickname: '재성',
+      email: 'js@naver.com',
+      chat: '하이요!',
+      sentTime: '2024-06-04 11:26:30',
+    },
+    {
+      id: 10,
+      nickname: '원석',
+      email: 'js@naver.com',
+      chat: '인사가 늦었습니다. 저도 반갑습니다.',
+      sentTime: '2024-06-04 12:00:20',
+    },
+    {
+      id: 11,
+      nickname: '경수',
+      email: 'effi@naver.com',
+      chat: '안녕하세요!',
+      sentTime: '2024-06-04 11:25:48',
+    },
+    {
+      id: 12,
+      nickname: '경수',
+      email: 'effi@naver.com',
+      chat: '반갑습니다 여러분!',
+      sentTime: '2024-06-04 11:25:58',
+    },
+    {
+      id: 13,
+      nickname: '승구',
+      email: 'skoo@naver.com',
+      chat: '안녕하세요 ㅎㅎ',
+      sentTime: '2024-06-04 11:26:10',
+    },
+    {
+      id: 14,
+      nickname: '재성',
+      email: 'js@naver.com',
+      chat: '하이요!',
+      sentTime: '2024-06-04 11:26:30',
+    },
+    {
+      id: 15,
+      nickname: '원석',
+      email: 'js@naver.com',
+      chat: '인사가 늦었습니다. 저도 반갑습니다.',
+      sentTime: '2024-06-04 12:00:20',
+    },
+    {
+      id: 16,
+      nickname: '경수',
+      email: 'effi@naver.com',
+      chat: '안녕하세요!',
+      sentTime: '2024-06-04 11:25:48',
+    },
+    {
+      id: 17,
+      nickname: '경수',
+      email: 'effi@naver.com',
+      chat: '반갑습니다 여러분!',
+      sentTime: '2024-06-04 11:25:58',
+    },
+    {
+      id: 18,
+      nickname: '승구',
+      email: 'skoo@naver.com',
+      chat: '안녕하세요 ㅎㅎ',
+      sentTime: '2024-06-04 11:26:10',
+    },
+    {
+      id: 19,
+      nickname: '재성',
+      email: 'js@naver.com',
+      chat: '하이요!',
+      sentTime: '2024-06-04 11:26:30',
+    },
+    {
+      id: 20,
+      nickname: '원석',
+      email: 'js@naver.com',
+      chat: '인사가 늦었습니다. 저도 반갑습니다.',
+      sentTime: '2024-06-04 12:00:20',
     },
   ],
 };

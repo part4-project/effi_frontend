@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import UserInfoModal from '@components/modal/user-info-modal';
+import ProfileModal from '@components/modal/profile-modal/profile-modal';
 import { navBarHeight } from '@styles/subsection-size';
 import styled from 'styled-components';
 import DropdownButton from './components/dropdown-button';
@@ -15,9 +15,9 @@ const Lobby = () => {
     <S.LobbyPageWrapper>
       <S.QuickButtonBox>
         <DropdownButton>회의 생성</DropdownButton>
-        <UserInfoModal>
+        <ProfileModal>
           <QuickButton>내 정보</QuickButton>
-        </UserInfoModal>
+        </ProfileModal>
       </S.QuickButtonBox>
       <S.MyScheduleBox>
         <MyCalendar DateValue={selectedDate} onChangeDate={setSelectedDate} />

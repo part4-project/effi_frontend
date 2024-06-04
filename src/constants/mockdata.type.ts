@@ -33,3 +33,16 @@ export interface TNoteItem {
   createdAt: string;
   topic_list: Topic[];
 }
+
+export interface TGroup {
+  id: number;
+  room_name: string;
+  code: string;
+}
+
+export interface TUser {
+  id: number;
+  nickname: string;
+  email: string;
+  invited_group: TGroup[];
+}
