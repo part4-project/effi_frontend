@@ -37,7 +37,7 @@ const S = {
       width: 100%;
       height: 100%;
       border-radius: 10px;
-      background-color: black;
+      background-color: var(--black);
     }
     div {
       position: absolute;
@@ -45,7 +45,7 @@ const S = {
       padding: 5px 10px;
       border-radius: 5px;
       opacity: 0.8;
-      color: #fff;
+      color: var(--white);
       text-align: center;
       font-family: Pretendard;
       font-size: 16px;

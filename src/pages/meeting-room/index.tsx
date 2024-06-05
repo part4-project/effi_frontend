@@ -36,7 +36,7 @@ const MeetingRoom = () => {
     setMeetingOverTime(time);
   };
 
-  console.log(meetingTotalTime, meetingOverTime);
+  console.log('total: ', meetingTotalTime, 'over', meetingOverTime);
 
   useEffect(() => {
     if (participatedMember.length === 1) handleToastChange(true);
@@ -58,7 +58,7 @@ const MeetingRoom = () => {
             RemoveCam -
           </button>
           <button onClick={() => setIsMeetingFinished(true)} style={{ zIndex: 99, color: '#a6a6a6' }}>
-            Meeting Finish
+            Meeting 시간 콘솔 출력
           </button>
           <Timer
             targetDurationInSeconds={calculateDurationInSeconds(
@@ -103,7 +103,7 @@ const S = {
     background-color: #212322;
   `,
   LeftSection: styled.div`
-    flex: 1 1 80%;
+    flex: 1 1 75%;
     position: relative;
     display: flex;
     align-items: center;
@@ -120,7 +120,7 @@ const S = {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    padding: 40px;
+    padding: 20px;
     visibility: hidden;
     opacity: 0;
     transition:
@@ -128,6 +128,7 @@ const S = {
       opacity 0.3s linear;
     position: absolute;
     top: 0;
+    z-index: 10;
   `,
   Title: styled.div`
     max-width: 400px;
@@ -147,7 +148,7 @@ const S = {
     align-items: center;
     width: 100%;
     height: 100%;
-    padding: 40px;
+    padding: 20px;
   `,
   RoomCameraBox: styled.div`
     display: flex;
@@ -161,7 +162,7 @@ const S = {
     justify-content: center;
     align-items: center;
     gap: 34px;
-    padding: 40px;
+    padding: 20px;
     visibility: hidden;
     opacity: 0;
     transition:
@@ -171,10 +172,10 @@ const S = {
     bottom: 0;
   `,
   RightSection: styled.div`
-    flex: 1 1 20%;
+    flex: 1 1 25%;
     display: flex;
     flex-direction: column;
-    gap: 35px;
-    margin: 30px;
+    gap: 20px;
+    margin: 20px;
   `,
 };

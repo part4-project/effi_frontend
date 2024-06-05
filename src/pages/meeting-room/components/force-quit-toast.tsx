@@ -9,7 +9,7 @@ interface ForceQuitToastProps {
 }
 
 const ForceQuitToast = ({ isToastOpen, isToastAnimClose }: ForceQuitToastProps) => {
-  const { currElapsedSeconds, formatDurationFromSeconds, isDurationOver, resetTimer } = useTimer(30);
+  const { currElapsedSeconds, formatDurationFromSeconds, isDurationOver, resetTimer } = useTimer(300);
 
   useEffect(() => {
     if (isDurationOver) console.log('방 폭파 함수 넣기!');
@@ -70,7 +70,7 @@ const S = {
     animation: ${({ $isToastAnimClose }) => $isToastAnimClose && 'slideOut 0.5s ease-in-out forwards'};
 
     p {
-      color: #fff;
+      color: var(--white);
       text-align: center;
       font-family: Pretendard;
       font-size: 16px;

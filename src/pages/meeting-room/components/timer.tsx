@@ -22,7 +22,8 @@ const Timer = ({
 
   useEffect(() => {
     if (isMeetingFinished) {
-      onMeetingOverTimeChange(formatDurationFromSeconds(currElapsedSeconds));
+      const overTime = isDurationOver ? currElapsedSeconds : 0;
+      onMeetingOverTimeChange(formatDurationFromSeconds(overTime));
       const totalTime = isDurationOver ? currElapsedSeconds + targetDurationInSeconds : currElapsedSeconds;
       onMeetingTotalTimeChange(formatDurationFromSeconds(totalTime));
     }
