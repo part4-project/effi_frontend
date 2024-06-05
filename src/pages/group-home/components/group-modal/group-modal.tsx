@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import closeBtn from '@assets/icons/close-btn.svg';
 import Modal from '@components/modal/modal';
+import ModalButton from '@components/modal/modal-button';
+import ModalHeader from '@components/modal/modal-header';
 import styled from 'styled-components';
 import GroupInvite from './group-invite';
 import GroupMemberList from './group-member-list';
@@ -30,21 +31,14 @@ const GroupModal = ({ children }: GroupModalProps) => {
       {children}
       <Modal isOpen={isOpen} onClose={handleModalClose}>
         <S.ModalWrap>
-          <S.ModalHeader>
-            <S.ModalTitle>그룹관리</S.ModalTitle>
-            <S.CloseBtn onClick={handleCloseButtonClick}>
-              <img src={closeBtn} alt="close" />
-            </S.CloseBtn>
-          </S.ModalHeader>
+          <ModalHeader headerTitle="그룹관리" onClose={handleCloseButtonClick} />
           <S.ModalContent>
             <GroupInvite />
             <GroupMemberList />
           </S.ModalContent>
           <S.ModalFooter>
-            <S.GroupDisbandment>그룹해체하기</S.GroupDisbandment>
-            <S.SaveBtnBox>
-              <S.SaveBtn>저장하기</S.SaveBtn>
-            </S.SaveBtnBox>
+            <S.GroupDisbandment>그룹 해체하기</S.GroupDisbandment>
+            <ModalButton type="primary">저장하기</ModalButton>
           </S.ModalFooter>
         </S.ModalWrap>
       </Modal>
@@ -56,13 +50,13 @@ export default GroupModal;
 
 const S = {
   ModalWrap: styled.div`
-    width: 100%;
+    width: 500px;
   `,
   ModalContent: styled.div`
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    padding: 8px;
+    gap: 30px;
+    padding: 40px 20px;
   `,
   ModalHeader: styled.div`
     width: 100%;
@@ -81,11 +75,8 @@ const S = {
   `,
   GroupDisbandment: styled.div`
     cursor: pointer;
+    color: #e74133;
+    font-weight: 500;
+    text-decoration: underline;
   `,
-  SaveBtnBox: styled.div`
-    padding: 8px 12px;
-    border-radius: 8px;
-    background-color: #cccccc;
-  `,
-  SaveBtn: styled.button``,
 };
