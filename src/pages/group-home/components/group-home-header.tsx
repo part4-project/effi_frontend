@@ -1,4 +1,5 @@
 import createMeetingButton from '@assets/icons/plus-monitor.svg';
+import polygonTop from '@assets/icons/polygon-top.svg';
 import groupManageButton from '@assets/icons/setting.svg';
 import GroupModal from '@pages/group-home/components/group-modal/group-modal';
 import MeetingModal from '@pages/group-home/components/meeting-modal/meeting-modal';
@@ -40,43 +41,39 @@ const S = {
 
   Trigger: styled.div`
     position: relative;
-    display: inline-block;
 
     &:hover > div {
+      visibility: visible;
       opacity: 1;
     }
   `,
 
   Balloon: styled.div`
+    visibility: hidden;
     opacity: 0;
-    transition: opacity 0.2s ease;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     position: absolute;
-    width: 81px;
-    height: 30px;
+    width: max-content;
     top: 55px;
     left: 50%;
     transform: translateX(-50%);
-
     background: var(--blue01);
-    color: white;
+    color: var(--white);
     font-size: 14px;
     border-radius: 10px;
     z-index: ${zIndex.balloon};
-    padding-top: 2px;
+    padding: 6px 15px;
+    transition:
+      opacity 0.2s ease,
+      visibility 0.2s ease-in-out;
 
     &:after {
-      border-bottom: 15px solid var(--blue01);
-      border-left: 8px solid transparent;
-      border-right: 8px solid transparent;
-      border-top: 0px solid transparent;
+      background: url(${polygonTop});
       content: '';
+      width: 13px;
+      height: 14px;
       position: absolute;
-      top: -50%;
-      left: 50%;
-      transform: translateX(-50%);
+      top: -35%;
+      left: calc(50% - 13px / 2);
     }
   `,
 };

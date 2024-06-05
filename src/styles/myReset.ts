@@ -13,12 +13,6 @@ const myReset = css`
     overflow-x: hidden;
     font-family: 'Pretendard', Helvetica, '맑은 고딕', 'malgun gothic', 'Apple SD Gothic Neo', 'Apple SD 산돌고딕 Neo',
       'Microsoft NeoGothic', 'Droid sans', sans-serif;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-  }
-
-  ::-webkit-scrollbar {
-    display: none;
   }
 
   body {

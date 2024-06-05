@@ -32,11 +32,12 @@ const S = {
     position: fixed;
     inset: 0;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.6);
     z-index: ${zIndex.modal};
   `,
 
@@ -48,6 +49,24 @@ const S = {
     margin: 24px;
     padding: 24px 48px;
     background: #ffffff;
-    border-radius: 8px;
+    border-radius: 20px;
+    box-shadow: 0px 4px 16px 0px #073327;
+
+    ::-webkit-scrollbar {
+      display: block;
+    }
+
+    ::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #d6d6d7;
+      border-radius: 16px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #f3f3f3;
+    }
   `,
 };
