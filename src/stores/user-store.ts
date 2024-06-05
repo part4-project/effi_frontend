@@ -1,15 +1,27 @@
+import { getCookie } from '@utils/cookie';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-interface userData {
+type UserData = {
   email: string;
+} | null;
+
+interface UserStore {
+  auth: boolean;
+  userData: UserData;
+  setAuth: (token: boolean) => void;
+  setUserData: (data: UserData) => void;
+  logout: () => void;
 }
 
-export const userStore = create(
+export const userStore = create<UserStore>()(
   persist(
     (set) => ({
-      userData: 'test',
-      setUserData: (data: userData) => set({ userData: data }),
+      auth: false,
+      userData: null,
+      setAuth: (isAuth) => set({ auth: isAuth }),
+      setUserData: (data) => set({ userData: data }),
+      logout: () => set({ auth: false, userData: null }),
     }),
     {
       name: 'userStore',

@@ -1,5 +1,4 @@
 import Logo from '@assets/logo.svg';
-import { GoogleOAuthProvider } from '@react-oauth/google';
 import styled from 'styled-components';
 import GoogleLoginButton from './components/google-login-button';
 
@@ -13,9 +12,7 @@ const Login = () => {
         <S.Title>EFFI</S.Title>
         <S.Caption>에피 설명 문구</S.Caption>
       </S.TopBox>
-      <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_AUTH_CLIENT_ID}>
-        <GoogleLoginButton />
-      </GoogleOAuthProvider>
+      <GoogleLoginButton />
     </S.LoginPageWrapper>
   );
 };

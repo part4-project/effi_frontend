@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import closeBtn from '@assets/icons/close-btn.svg';
+import { userStore } from '@stores/user-store';
 import { createRandomNickName } from '@utils/createRandomNickname';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Modal from './modal';
 
@@ -13,6 +13,8 @@ const UserInfoModal = ({ children }: GroupModalProps) => {
   const [nickName, setNickName] = useState('');
   const [isOpen, setIsOpen] = useState(false);
 
+  const { logout } = userStore();
+
   const handleOpenClick = () => {
     setIsOpen(true);
   };
@@ -20,6 +22,10 @@ const UserInfoModal = ({ children }: GroupModalProps) => {
   const handleCloseButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     setIsOpen(false);
+  };
+
+  const handleLogoutClick = () => {
+    logout();
   };
 
   useEffect(() => {
@@ -41,8 +47,8 @@ const UserInfoModal = ({ children }: GroupModalProps) => {
                 {nickName}
                 <S.SaveButton>저장하기</S.SaveButton>
               </S.Nickname>
-              <S.LogoutButton>
-                <Link to={'/login'}>로그아웃</Link>
+              <S.LogoutButton onClick={handleLogoutClick}>
+                <p>로그아웃</p>
               </S.LogoutButton>
             </S.NicknameAndLogoutBox>
           </S.UserInfoContainer>
