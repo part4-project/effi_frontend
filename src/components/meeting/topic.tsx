@@ -9,7 +9,7 @@ interface TopicProps {
   onClick?: () => void;
 }
 
-const Topic = ({ isCompleted, topicName, type = 'report-modal', onClick }: TopicProps) => {
+const Topic = ({ isCompleted, topicName, onClick, type = 'report-modal' }: TopicProps) => {
   return (
     <S.TopicList $type={type}>
       <S.TopicInCompleted
