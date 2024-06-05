@@ -151,7 +151,7 @@ export const NOTES_DATAS = [
   {
     id: 1,
     title: '프론트 회의',
-    createdAt: '24-05-29',
+    createdAt: '24-03-29',
     topic_list: [
       {
         id: 1,
@@ -173,7 +173,7 @@ export const NOTES_DATAS = [
   {
     id: 2,
     title: '주간 회의',
-    createdAt: '24-05-29',
+    createdAt: '24-03-29',
     topic_list: [
       {
         id: 1,
@@ -195,7 +195,7 @@ export const NOTES_DATAS = [
   {
     id: 3,
     title: '백엔드 회의',
-    createdAt: '24-05-29',
+    createdAt: '24-04-12',
     topic_list: [
       {
         id: 1,
@@ -217,7 +217,7 @@ export const NOTES_DATAS = [
   {
     id: 4,
     title: '프론트 회의',
-    createdAt: '24-05-29',
+    createdAt: '24-04-20',
     topic_list: [
       {
         id: 1,
@@ -239,7 +239,7 @@ export const NOTES_DATAS = [
   {
     id: 5,
     title: '주간 회의',
-    createdAt: '24-05-29',
+    createdAt: '24-04-21',
     topic_list: [
       {
         id: 1,
@@ -261,7 +261,7 @@ export const NOTES_DATAS = [
   {
     id: 6,
     title: '회식날짜 정하기',
-    createdAt: '24-05-29',
+    createdAt: '24-05-01',
     topic_list: [
       {
         id: 1,
@@ -283,7 +283,7 @@ export const NOTES_DATAS = [
   {
     id: 7,
     title: '백엔드 회의',
-    createdAt: '24-05-29',
+    createdAt: '24-05-10',
     topic_list: [
       {
         id: 1,

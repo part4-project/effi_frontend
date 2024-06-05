@@ -32,7 +32,7 @@ const S = {
   GroupHomeMain: styled.div`
     width: 100%;
     height: calc(100vh - ${navBarHeight.desktop});
-    padding: 112px 82px 86px;
+    padding: 100px 80px 60px;
     overflow: hidden;
     display: flex;
     flex-direction: column;

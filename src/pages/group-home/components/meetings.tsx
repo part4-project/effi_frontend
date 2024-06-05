@@ -55,12 +55,13 @@ const MeetingBase = styled.div`
   background-color: white;
   border-radius: 20px;
   aspect-ratio: 14/9;
-  width: 560px;
+  width: 480px;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: 20px;
 `;
 
 const S = {
@@ -84,17 +85,17 @@ const S = {
   StyledModal: styled.div`
     border-radius: 10px;
     position: absolute;
-    right: 40px;
-    top: 30px;
+    right: 28px;
+    top: 25px;
   `,
 
   EditIcon: styled.img`
-    width: 40px;
+    width: 20px;
   `,
 
   CharacterImage: styled.img`
-    width: 115px;
-    height: fit-content;
+    width: 95px;
+    height: 95px;
     object-fit: contain;
   `,
 
@@ -107,13 +108,13 @@ const S = {
     align-items: center;
     background-color: var(--blue01);
     border-radius: 10px;
-    font-size: 26px;
+    font-size: 20px;
     font-weight: 900;
     color: white;
   `,
 
   MeetingContainerComments: styled.p`
-    font-size: 20px;
+    font-size: 15px;
     color: #9e9e9e;
     text-align: center;
     line-height: 1.5;
