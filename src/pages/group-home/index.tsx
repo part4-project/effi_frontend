@@ -9,12 +9,13 @@ import Meetings from './components/meetings';
 
 const GroupHome = () => {
   const scheduledMeeting = MY_SCHEDULE_LIST[0];
+  const isMeetingOnLive = true;
   return (
     <S.Container>
       <GroupHomeSideBar />
       <S.GroupHomeMain>
         <GroupHomeHeader />
-        <Meetings scheduledMeeting={scheduledMeeting} />
+        <Meetings isMeetingOnLive={isMeetingOnLive} scheduledMeeting={scheduledMeeting} />
         <MeetingNotes />
       </S.GroupHomeMain>
     </S.Container>
@@ -32,7 +33,7 @@ const S = {
   GroupHomeMain: styled.div`
     width: 100%;
     height: calc(100vh - ${navBarHeight.desktop});
-    padding: 100px 80px 60px;
+    padding: 50px 80px 60px;
     overflow: hidden;
     display: flex;
     flex-direction: column;
