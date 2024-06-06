@@ -32,7 +32,7 @@ const InvitedList = () => {
               ) : (
                 <img src={inviteAcceptIcon} alt="Accept" onClick={() => handleAcceptButtonClick(group.id)} />
               )}
-              <img src={inviteRejectIcon} alt='Reject'/>
+              <img src={inviteRejectIcon} alt="Reject" />
             </S.InvitedGroupButtons>
           </S.InvitedGroup>
         ))}
@@ -81,7 +81,7 @@ const S = {
     transition: all 0.2s ease-in-out;
     z-index: 9999;
     &:hover {
-      box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+      box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.2);
       border: 2px solid var(--blue01);
       transform: translateY(-4px);
     }
@@ -106,14 +106,14 @@ const S = {
   `,
 
   GroupName: styled.span`
-    color: #3e82f1;
+    color: var(--blue01);
     font-weight: 700;
     font-size: 16px;
     margin-right: 5px;
   `,
 
   GroupCode: styled.span`
-    color: #a6a6a6;
+    color: var(--gray02);
     font-weight: 700;
     font-size: 12px;
   `,

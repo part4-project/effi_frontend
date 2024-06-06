@@ -33,7 +33,7 @@ const UserInfo = () => {
         <S.ProfileImgInputWrapper>
           <S.ProfileImgLInputLabel htmlFor="imgInput" />
           <S.ProfileImgInput type="file" id="imgInput" accept="image/*" onChange={handleImgInputChange} />
-          <S.ProfileImg src={imgSrc} />
+          <S.ProfileImg src={imgSrc} alt="Profile Image" />
         </S.ProfileImgInputWrapper>
       </S.ProfileImgInputSection>
 
@@ -86,6 +86,7 @@ const S = {
     align-items: center;
     font-size: 50px;
     cursor: pointer;
+    position: absolute;
   `,
 
   ProfileImgInput: styled.input`
@@ -95,7 +96,6 @@ const S = {
 
   ProfileImg: styled.img`
     position: absolute;
-    pointer-events: none;
     object-fit: cover;
     overflow: hidden;
     width: 168px;

@@ -59,7 +59,7 @@ const S = {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: ${({ $isMeetingData }) => ($isMeetingData ? 'var(--blue01)' : '#9e9e9e')};
+    background-color: ${({ $isMeetingData }) => ($isMeetingData ? 'var(--blue01)' : 'var(--gray01)')};
     border-radius: 10px;
     font-size: 20px;
     font-weight: 900;
@@ -68,7 +68,7 @@ const S = {
 
   MeetingBoxComments: styled.p`
     font-size: 16px;
-    color: #9e9e9e;
+    color: var(--gray01);
     text-align: center;
     line-height: 24px;
     white-space: pre-line;
