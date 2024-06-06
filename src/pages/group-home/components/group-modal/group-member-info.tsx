@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 
 interface GroupMemberInfoProp {
@@ -7,15 +8,22 @@ interface GroupMemberInfoProp {
 }
 
 const GroupMemberInfo: React.FC<GroupMemberInfoProp> = ({ name }) => {
+  const [isExport, setIsExport] = useState<boolean>(false);
+  const exportName = isExport ? '내보내기 취소' : '내보내기';
+
+  const handleExportClick = () => {
+    setIsExport((currentExport) => !currentExport);
+  };
+
   return (
     <S.MemberInfoWrap>
       <S.MemberInfo>
-        <S.MemberName>{name}</S.MemberName>
+        <S.MemberName $isExport={isExport}>{name}</S.MemberName>
         <S.MemberEmail>이메일</S.MemberEmail>
       </S.MemberInfo>
-      <S.MemberExileBtnBox>
-        <S.MemberExileBtn>내보내기</S.MemberExileBtn>
-      </S.MemberExileBtnBox>
+      <S.MemberExportBtn $isExport={isExport} onClick={handleExportClick}>
+        {exportName}
+      </S.MemberExportBtn>
     </S.MemberInfoWrap>
   );
 };
@@ -27,22 +35,32 @@ const S = {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #c1c1c1;
-    border-radius: 8px;
+    padding-block: 8px;
+    border-bottom: 1px solid #bdbdbd;
+    &:last-child {
+      border-bottom: 0;
+    }
   `,
   MemberInfo: styled.div`
     display: flex;
     gap: 4px;
     align-items: end;
   `,
-  MemberName: styled.div``,
+  MemberName: styled.div<{ $isExport: boolean }>`
+    color: ${({ $isExport }) => ($isExport ? '#C9C9C9' : '#9e9e9e')};
+    font-size: 14px;
+    font-weight: 500;
+  `,
   MemberEmail: styled.div`
     font-size: 10px;
   `,
-  MemberExileBtnBox: styled.div`
-    padding: 8px 12px;
-    border-radius: 8px;
-    background-color: #cccccc;
+  MemberExportBtn: styled.button<{ $isExport: boolean }>`
+    padding: 10px;
+    border-radius: 5px;
+    background-color: ${({ $isExport }) => ($isExport ? `var(--white)` : `var(--blue02)`)};
+    border: ${({ $isExport }) => ($isExport ? `1px solid var(--blue02)` : `1px solid transparent`)};
+    color: var(--blue01);
+    font-size: 12px;
+    font-weight: 700;
   `,
-  MemberExileBtn: styled.button``,
 };

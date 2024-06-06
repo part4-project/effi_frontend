@@ -21,13 +21,17 @@ const S = {
   MemberListWrap: styled.div`
     width: 100%;
   `,
-  MemberListTitle: styled.p``,
+  MemberListTitle: styled.p`
+    color: #404040;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  `,
   MemberListBox: styled.div`
-    padding: 24px;
-    background-color: #c2c2c2;
-    border-radius: 8px;
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    padding-right: 14px;
+    overflow-y: auto;
+    max-height: 17vh;
   `,
 };

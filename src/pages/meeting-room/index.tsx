@@ -1,64 +1,88 @@
-import { useMemo, useState } from 'react';
-import { MEETING_ROOM, TOPIC } from '@constants/mockdata';
-import { useNavigate } from 'react-router-dom';
+/* eslint-disable no-console */
+import { useEffect, useState } from 'react';
+import { MEETING_ROOM, TOPIC, GROUP_MEMBER } from '@constants/mockdata';
 import styled from 'styled-components';
 import Chatting from './components/chatting';
+import ForceQuitToast from './components/force-quit-toast';
 import RoomButton from './components/room-button';
 import RoomCamera from './components/room-camera';
 import Timer from './components/timer';
 import Topics from './components/topics';
+import { ROOM_BUTTONS } from './constants';
+import useForceQuitToast from './hooks/use-force-quit-toast';
+import { calculateDurationInSeconds } from './utils/calculate-duration-in-seconds';
 
-const CAMERAS = [{ user: 1 }, { user: 2 }, { user: 3 }, { user: 4 }, { user: 5 }];
+const PARTICIPATED_MEMBER = [...GROUP_MEMBER.member_list];
 
 const MeetingRoom = () => {
-  const navigate = useNavigate();
-  const [cameras, setCameras] = useState(CAMERAS);
-  const BUTTONS = useMemo(
-    () => [
-      { type: '카메라', handleClick: () => {} },
-      { type: '마이크', handleClick: () => {} },
-      {
-        type: '나가기',
-        handleClick: () => {
-          navigate('/group-home');
-        },
-      },
-    ],
-    [navigate],
-  );
+  const [participatedMember, setParticipatedMember] = useState(PARTICIPATED_MEMBER);
+  const [meetingTotalTime, setMeetingTotalTime] = useState('');
+  const [meetingOverTime, setMeetingOverTime] = useState('');
+  const [isMeetingFinished, setIsMeetingFinished] = useState(false);
+  const { isToastOpen, handleToastChange, isToastAnimClose, handleToastClose } = useForceQuitToast();
 
   const handleAddCamButtonClick = () => {
-    setCameras([...cameras, { user: 1 }]);
+    setParticipatedMember([...participatedMember, { id: 1, name: '홍길동', is_admin: false }]);
   };
 
   const handleRemoveCamButtonClick = () => {
-    setCameras(cameras.slice(0, cameras.length - 1));
+    setParticipatedMember(participatedMember.slice(0, participatedMember.length - 1));
   };
+
+  const handleMeetingTotalTimeChange = (time: string) => {
+    setMeetingTotalTime(time);
+  };
+  const handleMeetingOverTimeChange = (time: string) => {
+    setMeetingOverTime(time);
+  };
+
+  console.log('total: ', meetingTotalTime, 'over', meetingOverTime);
+
+  useEffect(() => {
+    if (participatedMember.length === 1) handleToastChange(true);
+  }, [participatedMember.length, handleToastChange]);
+
+  useEffect(() => {
+    if (isToastOpen && participatedMember.length !== 1) handleToastClose();
+  }, [participatedMember.length, isToastOpen, handleToastClose]);
+
   return (
     <S.Container>
       <S.LeftSection>
-        <S.Nav>
+        <S.Nav className="nav">
           <S.Title>{MEETING_ROOM.title}</S.Title>
-          <button onClick={handleAddCamButtonClick} style={{ zIndex: 99 }}>
+          <button onClick={handleAddCamButtonClick} style={{ zIndex: 99, color: '#a6a6a6' }}>
             AddCam +
           </button>
-          <button onClick={handleRemoveCamButtonClick} style={{ zIndex: 99 }}>
+          <button onClick={handleRemoveCamButtonClick} style={{ zIndex: 99, color: '#a6a6a6' }}>
             RemoveCam -
           </button>
-          <Timer />
+          <button onClick={() => setIsMeetingFinished(true)} style={{ zIndex: 99, color: '#a6a6a6' }}>
+            Meeting 시간 콘솔 출력
+          </button>
+          <Timer
+            targetDurationInSeconds={calculateDurationInSeconds(
+              MEETING_ROOM.start_date,
+              MEETING_ROOM.expected_end_date,
+            )}
+            isMeetingFinished={isMeetingFinished}
+            onMeetingTotalTimeChange={handleMeetingTotalTimeChange}
+            onMeetingOverTimeChange={handleMeetingOverTimeChange}
+          />
         </S.Nav>
         <S.RoomCameraContainer>
           <S.RoomCameraBox>
-            {cameras.map((_, idx) => (
-              <RoomCamera key={idx} cameraCount={cameras.length} />
+            {participatedMember.map((member, idx) => (
+              <RoomCamera key={idx} name={member.name} cameraCount={participatedMember.length} />
             ))}
           </S.RoomCameraBox>
         </S.RoomCameraContainer>
-        <S.RoomButtonContainer>
-          {BUTTONS.map((BUTTON, idx) => (
-            <RoomButton key={idx} type={BUTTON.type} onClick={BUTTON.handleClick} />
+        <S.RoomButtonContainer className="room-button-container">
+          {ROOM_BUTTONS.map((btn, idx) => (
+            <RoomButton key={idx} type={btn.type} initialImg={btn.initialImg} changedImg={btn.changedImg} />
           ))}
         </S.RoomButtonContainer>
+        <ForceQuitToast isToastOpen={isToastOpen} isToastAnimClose={isToastAnimClose} />
       </S.LeftSection>
       <S.RightSection>
         <Topics topicList={TOPIC.topic_list} />
@@ -76,16 +100,17 @@ const S = {
     max-width: 1920px;
     width: 100%;
     height: 100vh;
+    background-color: #212322;
   `,
   LeftSection: styled.div`
-    flex: 1 1 80%;
+    flex: 1 1 75%;
     position: relative;
     display: flex;
     align-items: center;
     flex-direction: column;
     &:hover {
-      & > div:first-child,
-      & > div:last-child {
+      & > .nav,
+      & > .room-button-container {
         visibility: visible;
         opacity: 1;
       }
@@ -95,7 +120,7 @@ const S = {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    padding: 40px;
+    padding: 20px;
     visibility: hidden;
     opacity: 0;
     transition:
@@ -103,22 +128,26 @@ const S = {
       opacity 0.3s linear;
     position: absolute;
     top: 0;
+    z-index: 10;
   `,
   Title: styled.div`
-    width: 180px;
+    max-width: 400px;
     height: 40px;
-    opacity: 0.4;
-    background: #c1c1c1;
     display: flex;
     justify-content: center;
     align-items: center;
+    color: #a6a6a6;
+    font-size: 26px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: 35px;
   `,
   RoomCameraContainer: styled.div`
     display: flex;
     align-items: center;
     width: 100%;
     height: 100%;
-    padding: 40px;
+    padding: 20px;
   `,
   RoomCameraBox: styled.div`
     display: flex;
@@ -131,8 +160,8 @@ const S = {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 4px;
-    padding: 40px;
+    gap: 34px;
+    padding: 20px;
     visibility: hidden;
     opacity: 0;
     transition:
@@ -142,10 +171,10 @@ const S = {
     bottom: 0;
   `,
   RightSection: styled.div`
-    flex: 1 1 20%;
+    flex: 1 1 25%;
     display: flex;
     flex-direction: column;
-    gap: 35px;
-    margin: 30px;
+    gap: 20px;
+    margin: 20px;
   `,
 };
