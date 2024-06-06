@@ -9,6 +9,10 @@ const colors = css`
     --blue03: #edf7f8;
     --blue04: #a6c4d5;
     --blue05: #132f5c;
+    --gray01: #9e9e9e;
+    --gray02: #bdbdbd;
+    --gray03: #f3f3f3;
+    --gray04: #f9f9f9;
   }
 `;
 export default colors;

@@ -15,6 +15,10 @@ const UserInfo = () => {
     }
   };
 
+  const handleNicknameInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+  };
+
   useEffect(() => {
     setNickName(createRandomNickName());
   }, []);
@@ -24,10 +28,10 @@ const UserInfo = () => {
   }, [nickName]);
 
   return (
-    <S.UserInfo>
+    <S.Container>
       <S.ProfileImgInputSection>
         <S.ProfileImgInputWrapper>
-          <S.ProfileImgLInputLabel htmlFor="imgInput">+</S.ProfileImgLInputLabel>
+          <S.ProfileImgLInputLabel htmlFor="imgInput" />
           <S.ProfileImgInput type="file" id="imgInput" accept="image/*" onChange={handleImgInputChange} />
           <S.ProfileImg src={imgSrc} />
         </S.ProfileImgInputWrapper>
@@ -41,19 +45,19 @@ const UserInfo = () => {
             id="nickname"
             placeholder="닉네임"
             value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
+            onChange={handleNicknameInputChange}
           />
           <S.ChangeNicknameButton>변경하기</S.ChangeNicknameButton>
         </S.Nickname>
       </S.NicknameAndLogoutBox>
-    </S.UserInfo>
+    </S.Container>
   );
 };
 
 export default UserInfo;
 
 const S = {
-  UserInfo: styled.div``,
+  Container: styled.div``,
 
   ProfileImgInputSection: styled.div`
     display: flex;
@@ -66,7 +70,7 @@ const S = {
     height: 168px;
     border-radius: 120px;
     background: var(--white);
-    border: 4px solid #f1f1f1;
+    border: 4px solid var(--gray03);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -116,7 +120,7 @@ const S = {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid #bdbdbd;
+    border-bottom: 1px solid var(--gray02);
   `,
 
   NicknameInput: styled.input`
@@ -128,16 +132,8 @@ const S = {
   ChangeNicknameButton: styled.button`
     padding: 6px 10px;
     border-radius: 4px;
-    background-color: #c1c1c1;
     font-size: 12px;
     color: var(--white);
     background-color: var(--blue01);
-  `,
-
-  LogoutButton: styled.button`
-    width: 100%;
-    height: 69px;
-    border-radius: 10px;
-    background: #f1f1f1;
   `,
 };
