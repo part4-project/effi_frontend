@@ -41,7 +41,7 @@ export default Chatting;
 const S = {
   Container: styled.div`
     width: 100%;
-    height: 650px;
+    height: 60%;
     border-radius: 10px;
     overflow: hidden;
     background: #4d4f4e;
