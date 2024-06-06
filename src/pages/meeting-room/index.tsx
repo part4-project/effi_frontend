@@ -137,7 +137,7 @@ const S = {
     justify-content: center;
     align-items: center;
     color: #a6a6a6;
-    font-family: Pretendard;
+    /* font-family: Pretendard; */
     font-size: 26px;
     font-style: normal;
     font-weight: 900;

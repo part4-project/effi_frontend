@@ -48,9 +48,6 @@ const S = {
     p {
       color: ${({ $isTimeOver }) => ($isTimeOver ? '#F9667B ' : '#9e9e9e')};
       text-align: center;
-      font-family: Pretendard;
-      font-size: 16px;
-      font-style: normal;
       font-weight: 700;
       line-height: 28px; /* 175% */
       letter-spacing: -0.6px;

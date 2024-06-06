@@ -43,7 +43,7 @@ const S = {
     line-height: 24px;
     letter-spacing: -0.6px;
   `,
-  ChattingLog: styled.p<{ $type: string }>`
+  ChattingLog: styled.p<{ $type: ChattingListProps['type'] }>`
     border-radius: 16px;
     background: ${({ $type }) => ($type === 'meeting-room' ? '#404040' : 'var(--blue01)')};
     padding: 6px 20px;

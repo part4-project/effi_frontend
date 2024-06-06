@@ -47,9 +47,6 @@ const S = {
       opacity: 0.8;
       color: var(--white);
       text-align: center;
-      font-family: Pretendard;
-      font-size: 16px;
-      font-style: normal;
       font-weight: 700;
       line-height: normal;
       bottom: 8px;
