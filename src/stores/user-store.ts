@@ -1,4 +1,3 @@
-import { getCookie } from '@utils/cookie';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
@@ -9,8 +8,8 @@ type UserData = {
 interface UserStore {
   auth: boolean;
   userData: UserData;
-  setAuth: (token: boolean) => void;
-  setUserData: (data: UserData) => void;
+  // eslint-disable-next-line no-unused-vars
+  login: (data: UserData) => void;
   logout: () => void;
 }
 
@@ -19,8 +18,7 @@ export const userStore = create<UserStore>()(
     (set) => ({
       auth: false,
       userData: null,
-      setAuth: (isAuth) => set({ auth: isAuth }),
-      setUserData: (data) => set({ userData: data }),
+      login: (data) => set({ auth: true, userData: data }),
       logout: () => set({ auth: false, userData: null }),
     }),
     {
