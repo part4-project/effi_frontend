@@ -23,9 +23,7 @@ const GroupListItem = ({ groupName, onClick, groupNameLength }: GroupListItemPro
       >
         <S.GroupName>{groupName}</S.GroupName>
         <S.FileImg src={isHovered ? images.hover : images.basic} alt="파일" />
-        <div>
-          <S.VectorImg $isLongGroupName={groupNameLength} src={images.vector} alt="벡터" />
-        </div>
+        <S.VectorImg $isLongGroupName={groupNameLength} src={images.vector} alt="벡터" />
       </S.Container>
     </MeetingModal>
   );
