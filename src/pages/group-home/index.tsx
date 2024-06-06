@@ -1,11 +1,11 @@
 import { MY_SCHEDULE_LIST } from '@constants/mockdata';
+import GroupHomeHeader from '@pages/group-home/components/group-home-header';
+import GroupHomeSideBar from '@pages/group-home/components/group-home-sidebar';
+import MeetingNotes from '@pages/group-home/components/meeting-notes';
+import Meetings from '@pages/group-home/components/meetings';
 import { device } from '@styles/breakpoints';
 import { navBarHeight } from '@styles/subsection-size';
 import styled from 'styled-components';
-import GroupHomeHeader from './components/group-home-header';
-import GroupHomeSideBar from './components/group-home-sidebar';
-import MeetingNotes from './components/meeting-notes';
-import Meetings from './components/meetings';
 
 const GroupHome = () => {
   const scheduledMeeting = MY_SCHEDULE_LIST[0];

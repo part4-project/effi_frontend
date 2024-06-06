@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import Modal from '@components/modal/modal';
+import ModalButton from '@components/modal/modal-button';
 import ModalHeader from '@components/modal/modal-header';
 import InvitedList from '@components/modal/profile-modal/invited-list';
 import UserInfo from '@components/modal/profile-modal/user-info';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import ModalButton from '../modal-button';
 
 interface GroupModalProps {
   children: React.ReactNode;
