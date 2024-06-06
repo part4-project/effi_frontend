@@ -18,10 +18,10 @@ export default ModalButton;
 
 const S = {
   Button: styled.button<{ $type: 'primary' | 'secondary' | 'disable' }>`
-    width: 250px;
+    width: 132px;
     border-radius: 30px;
-    padding: 15px 0;
-    font-size: 20px;
+    padding: 10px 0;
+    font-size: 14px;
     font-weight: 700;
     text-align: center;
     ${({ $type }) => {

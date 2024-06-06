@@ -9,13 +9,15 @@ import styled from 'styled-components';
 
 const GroupHome = () => {
   const scheduledMeeting = MY_SCHEDULE_LIST[0];
-  const isMeetingOnLive = true;
+  const isOnLive = true;
+  const isAdmin = true;
+
   return (
     <S.Container>
       <GroupHomeSideBar />
       <S.GroupHomeMain>
-        <GroupHomeHeader />
-        <Meetings isMeetingOnLive={isMeetingOnLive} scheduledMeeting={scheduledMeeting} />
+        {isAdmin && <GroupHomeHeader />}
+        <Meetings isOnLive={isOnLive} isAdmin={isAdmin} scheduledMeeting={scheduledMeeting} />
         <MeetingNotes />
       </S.GroupHomeMain>
     </S.Container>
