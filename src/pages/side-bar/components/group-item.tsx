@@ -26,7 +26,7 @@ const GroupItem: React.FC<GroupItemProp> = ({ room_name }) => {
       }
     };
     checkOverflow();
-  }, [room_name]);
+  });
 
   return (
     <S.Trigger>
