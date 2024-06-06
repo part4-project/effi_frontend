@@ -1,17 +1,17 @@
 import TestImg from '@assets/profile-test-img.gif';
-import UserInfoModal from '@components/modal/user-info-modal';
+import ProfileModal from '@components/modal/profile-modal/profile-modal';
 import styled from 'styled-components';
 
 const Profile = () => {
   return (
-    <UserInfoModal>
+    <ProfileModal>
       <S.ProfileBox>
         <S.NickNameBox>홍길동</S.NickNameBox>
         <S.ProfileImgBox>
           <img src={TestImg} alt="test" />
         </S.ProfileImgBox>
       </S.ProfileBox>
-    </UserInfoModal>
+    </ProfileModal>
   );
 };
 

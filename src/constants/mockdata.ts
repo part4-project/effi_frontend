@@ -1,10 +1,61 @@
-export const USER = [
-  {
-    id: 1,
-    nickname: '경수',
-    email: 'effi@naver.com',
-  },
-];
+import defaultProfileImg from '@assets/default-profile.png';
+
+export const USER = {
+  id: 1,
+  nickname: '경수',
+  email: 'effi@naver.com',
+  profile_img: defaultProfileImg,
+  invited_group: [
+    {
+      id: 1,
+      room_name: 'A그룹',
+      code: 'a2f8',
+      leader: '홍길동',
+    },
+    {
+      id: 2,
+      room_name: 'EFFI 프론트엔드',
+      code: 'a2f8',
+      leader: '홍길동',
+    },
+    {
+      id: 3,
+      room_name: 'EFFI 백엔드',
+      code: 'a2f8',
+      leader: '홍길동',
+    },
+    {
+      id: 4,
+      room_name: 'B그룹',
+      code: 'a2f8',
+      leader: '홍길동',
+    },
+    {
+      id: 5,
+      room_name: '이름이 매우 긴 그룹 테스트용 그룹 이름 제한 몇자로 할껀지?',
+      code: 'a2f8',
+      leader: '홍길동',
+    },
+    {
+      id: 6,
+      room_name: 'EFFI 프론트엔드',
+      code: 'a2f8',
+      leader: '홍길동',
+    },
+    {
+      id: 7,
+      room_name: 'EFFI 백엔드',
+      code: 'a2f8',
+      leader: '홍길동',
+    },
+    {
+      id: 8,
+      room_name: 'C그룹',
+      code: 'a2f8',
+      leader: '홍길동',
+    },
+  ],
+};
 
 export const GROUP = {
   id: 2,
@@ -147,6 +198,7 @@ export const TOPIC = {
     },
   ],
 };
+
 export const NOTES_DATAS = [
   {
     id: 1,

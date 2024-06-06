@@ -1,4 +1,4 @@
-import testImg from '@assets/default-profile.jpg';
+import testImg from '@assets/default-profile.png';
 import { TNoteItem } from '@constants/mockdata.type';
 import ReportModal from '@pages/group-home/components/report-modal/report-modal';
 import styled from 'styled-components';
