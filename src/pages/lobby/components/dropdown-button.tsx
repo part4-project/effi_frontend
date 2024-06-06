@@ -48,13 +48,13 @@ const S = {
     display: ${({ $isOpen }) => ($isOpen ? 'flex' : 'none')};
     flex-direction: column;
     position: absolute;
-    border: 1px solid black;
+    border: 1px solid var(--black);
     border-top: none;
     border-bottom: none;
     width: 100%;
   `,
   DropdownList: styled.li`
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid var(--black);
     padding: 2px;
     &:hover {
       background-color: #f0f0f0;

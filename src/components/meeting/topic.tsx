@@ -20,7 +20,7 @@ const Topic = ({ isCompleted, topicName, onClick, type = 'report-modal' }: Topic
         {isCompleted && <img src={checkMark} alt="체크" />}
       </S.TopicInCompleted>
       <S.TopicTitle $type={type}>{topicName}</S.TopicTitle>
-      <ModifyDeleteButton />
+      {type === 'meeting-room' && <ModifyDeleteButton />}
     </S.TopicList>
   );
 };
@@ -44,10 +44,10 @@ const S = {
     margin-top: 8px;
     margin-right: 8px;
     padding: 4px;
-    border-bottom: 2px solid ${({ $type }) => ($type === 'meeting-room' ? '#6F706F' : '#f3f3f3')};
+    border-bottom: 2px solid ${({ $type }) => ($type === 'meeting-room' ? '#6F706F' : 'var(--gray03)')};
   `,
   TopicInCompleted: styled.div<{ $isCompleted: boolean; $type: TopicProps['type'] }>`
-    background-color: ${({ $isCompleted }) => ($isCompleted ? '#3e82f1' : 'none')};
+    background-color: ${({ $isCompleted }) => ($isCompleted ? 'var(--blue01)' : 'none')};
     border: ${({ $isCompleted }) => ($isCompleted ? 'none' : '2px solid #c5c5c5')};
     cursor: ${({ $type }) => ($type === 'meeting-room' ? 'pointer' : 'auto')};
     width: 25px;

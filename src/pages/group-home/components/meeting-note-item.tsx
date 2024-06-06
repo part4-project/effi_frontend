@@ -66,7 +66,7 @@ const S = {
     cursor: pointer;
     transition: background-color 0.2s ease;
     &:hover {
-      background-color: white;
+      background-color: var(--white);
       span {
         color: var(--blue05);
       }

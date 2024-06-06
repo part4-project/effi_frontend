@@ -30,7 +30,7 @@ const S = {
     width: 90px;
     height: 150px;
     border-radius: 5px;
-    border: 1px solid #9e9e9e;
+    border: 1px solid var(--gray01);
     background: var(--white);
     display: flex;
     flex-direction: column;
@@ -39,7 +39,7 @@ const S = {
   `,
 
   SelectList: styled.li`
-    color: #9e9e9e;
+    color: var(--gray01);
     font-size: 14px;
     font-weight: 700;
     line-height: 24px;
@@ -47,7 +47,7 @@ const S = {
     cursor: pointer;
 
     &:hover {
-      background: #f3f3f3;
+      background: var(--gray03);
     }
   `,
 };

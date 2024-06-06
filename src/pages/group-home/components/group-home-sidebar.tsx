@@ -34,7 +34,7 @@ export default GroupHomeSideBar;
 
 const S = {
   Container: styled.div`
-    background-color: white;
+    background-color: var(--white);
     border-left: 4px solid var(--blue03);
     width: 180px;
     padding: 33px 28px;

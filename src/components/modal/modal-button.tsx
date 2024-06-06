@@ -2,21 +2,26 @@ import styled from 'styled-components';
 
 interface ModalButtonProp {
   children: React.ReactNode;
+  onClick?: () => void;
   type: 'primary' | 'secondary' | 'disable';
 }
 
-const ModalButton = ({ children, type }: ModalButtonProp) => {
-  return <S.Button $type={type}>{children}</S.Button>;
+const ModalButton = ({ children, onClick, type }: ModalButtonProp) => {
+  return (
+    <S.Button $type={type} onClick={onClick}>
+      {children}
+    </S.Button>
+  );
 };
 
 export default ModalButton;
 
 const S = {
   Button: styled.button<{ $type: 'primary' | 'secondary' | 'disable' }>`
-    width: 250px;
+    width: 132px;
     border-radius: 30px;
-    padding: 15px 0;
-    font-size: 20px;
+    padding: 10px 0;
+    font-size: 14px;
     font-weight: 700;
     text-align: center;
     ${({ $type }) => {

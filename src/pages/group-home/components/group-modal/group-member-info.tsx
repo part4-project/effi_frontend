@@ -36,7 +36,7 @@ const S = {
     align-items: center;
     justify-content: space-between;
     padding-block: 8px;
-    border-bottom: 1px solid #bdbdbd;
+    border-bottom: 1px solid var(--gray02);
     &:last-child {
       border-bottom: 0;
     }
@@ -47,7 +47,7 @@ const S = {
     align-items: end;
   `,
   MemberName: styled.div<{ $isExport: boolean }>`
-    color: ${({ $isExport }) => ($isExport ? '#C9C9C9' : '#9e9e9e')};
+    color: ${({ $isExport }) => ($isExport ? '#C9C9C9' : 'var(--gray01)')};
     font-size: 14px;
     font-weight: 500;
   `,

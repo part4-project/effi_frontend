@@ -10,11 +10,12 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 interface TMeetingProps {
-  isMeetingOnLive: boolean;
+  isOnLive: boolean;
+  isAdmin: boolean;
   scheduledMeeting: TMyScheduleItem;
 }
 
-const Meetings = ({ isMeetingOnLive, scheduledMeeting }: TMeetingProps) => {
+const Meetings = ({ isOnLive, isAdmin, scheduledMeeting }: TMeetingProps) => {
   const navigate = useNavigate();
 
   const handleMeetingClick = () => {
@@ -22,12 +23,12 @@ const Meetings = ({ isMeetingOnLive, scheduledMeeting }: TMeetingProps) => {
   };
 
   const liveMeetingProps = {
-    isLiveMeetingBox: isMeetingOnLive,
-    isMeetingData: isMeetingOnLive,
-    onClick: isMeetingOnLive ? handleMeetingClick : undefined,
-    src: isMeetingOnLive ? onLiveCharacter : noDataCharacter,
-    title: isMeetingOnLive ? 'LIVE ON' : 'LIVE OFF',
-    comments: isMeetingOnLive ? 'Live 중입니다!\n얼른 참여하세요!' : '현재 진행중인\n회의가 없습니다.',
+    isLiveMeetingBox: isOnLive,
+    isMeetingData: isOnLive,
+    onClick: isOnLive ? handleMeetingClick : undefined,
+    src: isOnLive ? onLiveCharacter : noDataCharacter,
+    title: isOnLive ? 'LIVE ON' : 'LIVE OFF',
+    comments: isOnLive ? 'Live 중입니다!\n얼른 참여하세요!' : '현재 진행중인\n회의가 없습니다.',
   };
 
   const scheduledMeetingProps = {
@@ -46,9 +47,11 @@ const Meetings = ({ isMeetingOnLive, scheduledMeeting }: TMeetingProps) => {
       <MeetingBox {...scheduledMeetingProps}>
         {scheduledMeeting && (
           <S.StyledModal>
-            <MeetingModal title="회의 수정" data={MEETING_ROOM} topicData={TOPIC}>
-              <S.EditIcon src={editMeetingIcon} />
-            </MeetingModal>
+            {isAdmin && (
+              <MeetingModal title="회의 수정" data={MEETING_ROOM} topicData={TOPIC}>
+                <S.EditIcon src={editMeetingIcon} />
+              </MeetingModal>
+            )}
           </S.StyledModal>
         )}
       </MeetingBox>

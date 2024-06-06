@@ -34,11 +34,11 @@ const S = {
   EmailInput: styled.input`
     flex: 1 1 auto;
     background-color: #fafafa;
-    border: 1px solid #9e9e9e;
+    border: 1px solid var(--gray01);
     border-radius: 5px;
     padding: 12px 15px;
     &::placeholder {
-      color: #bdbdbd;
+      color: var(--gray02);
       font-size: 14px;
       font-weight: 500;
     }

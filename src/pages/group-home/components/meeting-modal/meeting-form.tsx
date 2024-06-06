@@ -1,6 +1,5 @@
 import { useEffect, useState, forwardRef } from 'react';
 import ModifyDeleteButton from '@components/meeting/modify-delete-button';
-import Modal from '@components/modal/modal';
 import ModalButton from '@components/modal/modal-button';
 import { EXPECTED_END_TIME_LIST } from '@constants/mockdata';
 import { TMeetingRoom, TTopic } from '@constants/mockdata.type';
@@ -22,6 +21,9 @@ const MeetingForm = ({ data, topicData }: TMeetingFormProps) => {
   const [title, setTitle] = useState('');
   const [topic, setTopic] = useState('');
   const [topicList, setTopicList] = useState<string[]>([]);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editIndex, setEditIndex] = useState<number | null>(null);
+  const [editValue, setEditValue] = useState<string>('');
 
   const currentDateTime = new Date();
   const currentHour = currentDateTime.getHours();
@@ -30,7 +32,7 @@ const MeetingForm = ({ data, topicData }: TMeetingFormProps) => {
   const isConfirm = selectedDate && parseInt(selectedTime) && title;
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && topic.trim()) {
+    if (e.key === 'Enter' && e.nativeEvent.isComposing === false && topic.trim()) {
       setTopicList((prevTopicList) => [...prevTopicList, topic]);
       setTopic('');
     }
@@ -59,25 +61,34 @@ const MeetingForm = ({ data, topicData }: TMeetingFormProps) => {
   };
 
   const handleModifyClick = (index: number) => {
-    const modifiedItem = prompt('수정할 내용을 입력하세요.');
-    if (modifiedItem !== null && modifiedItem.trim() !== '') {
+    setEditIndex(index);
+    setEditValue(topicList[index]);
+    setIsEditing(true);
+  };
+
+  const handleEditChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEditValue(e.target.value);
+  };
+
+  const handleEditSubmit = () => {
+    if (editIndex !== null && editValue.trim() !== '') {
       setTopicList((prevTopicList) => {
         const newList = [...prevTopicList];
-        newList[index] = modifiedItem;
+        newList[editIndex] = editValue;
         return newList;
       });
+      setIsEditing(false);
+      setEditIndex(null);
+      setEditValue('');
     }
   };
 
   const handleDeleteClick = (index: number) => {
-    const confirmDelete = window.confirm('정말로 삭제하시겠습니까?');
-    if (confirmDelete) {
-      setTopicList((prevTopicList) => {
-        const newList = [...prevTopicList];
-        newList.splice(index, 1);
-        return newList;
-      });
-    }
+    setTopicList((prevTopicList) => {
+      const newList = [...prevTopicList];
+      newList.splice(index, 1);
+      return newList;
+    });
   };
 
   useEffect(() => {
@@ -94,6 +105,7 @@ const MeetingForm = ({ data, topicData }: TMeetingFormProps) => {
       회의 일시
     </S.SelectCustomButton>
   ));
+
   return (
     <S.Container>
       <S.TitleContainer>
@@ -136,11 +148,27 @@ const MeetingForm = ({ data, topicData }: TMeetingFormProps) => {
         <S.TopicListBox>
           {topicList.map((topic, index) => (
             <S.TopicList key={index}>
-              <S.TopicItem>{topic}</S.TopicItem>
-              <ModifyDeleteButton
-                onModifyClick={() => handleModifyClick(index)}
-                onDeleteClick={() => handleDeleteClick(index)}
-              />
+              {isEditing && editIndex === index ? (
+                <>
+                  <S.EditInput
+                    type="text"
+                    value={editValue}
+                    onChange={handleEditChange}
+                    onBlur={handleEditSubmit}
+                    autoFocus
+                    onKeyDown={(e) => e.key === 'Enter' && handleEditSubmit()}
+                  />
+                  <S.ConfirmButton onClick={handleEditSubmit}>확인</S.ConfirmButton>
+                </>
+              ) : (
+                <>
+                  <S.TopicItem>{topic}</S.TopicItem>
+                  <ModifyDeleteButton
+                    onModifyClick={() => handleModifyClick(index)}
+                    onDeleteClick={() => handleDeleteClick(index)}
+                  />
+                </>
+              )}
             </S.TopicList>
           ))}
         </S.TopicListBox>
@@ -165,6 +193,7 @@ export default MeetingForm;
 
 const S = {
   Container: styled.div`
+    width: 500px;
     margin: 30px 0 30px;
     display: flex;
     flex-direction: column;
@@ -173,7 +202,7 @@ const S = {
 
   TitleContainer: styled.div`
     width: 100%;
-    border-bottom: 1px solid #9e9e9e;
+    border-bottom: 1px solid var(--gray01);
     padding: 10px;
   `,
 
@@ -196,7 +225,7 @@ const S = {
   `,
 
   SelectedValue: styled.p`
-    color: #9e9e9e;
+    color: var(--gray01);
     font-size: 14px;
     font-weight: 500;
     line-height: 24px;
@@ -204,7 +233,7 @@ const S = {
   `,
 
   SelectCustomButton: styled.button`
-    color: #9e9e9e;
+    color: var(--gray01);
     font-weight: 700;
     line-height: 24px;
     text-decoration-line: underline;
@@ -224,12 +253,12 @@ const S = {
     width: 75%;
     height: 40px;
     border-radius: 5px;
-    border: 1px solid #9e9e9e;
+    border: 1px solid var(--gray01);
     background: #fafafa;
     padding: 10px 15px;
 
     &::placeholder {
-      color: #bdbdbd;
+      color: var(--gray02);
     }
   `,
 
@@ -255,12 +284,36 @@ const S = {
     justify-content: space-between;
     border-bottom: 1px solid #bdbdbd;
     padding: 8px 0;
+
+    &:last-child {
+      border-bottom: none;
+    }
   `,
+
   TopicItem: styled.li`
-    color: #9e9e9e;
+    color: var(--gray01);
     font-size: 14px;
     font-weight: 500;
     letter-spacing: 0.56px;
+  `,
+
+  EditInput: styled.input`
+    width: 80%;
+    color: var(--gray01);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.56px;
+  `,
+
+  ConfirmButton: styled.button`
+    background-color: var(--blue02);
+    color: var(--blue01);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 0 10px;
+    border-radius: 5px;
+    margin-left: 10px;
+    cursor: pointer;
   `,
 
   EmptyTopicList: styled.div`
@@ -270,7 +323,7 @@ const S = {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #9e9e9e;
+    color: var(--gray01);
     font-size: 14px;
     font-weight: 500;
     letter-spacing: 0.56px;
