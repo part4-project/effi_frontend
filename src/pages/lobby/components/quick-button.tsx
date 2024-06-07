@@ -16,6 +16,6 @@ const S = {
   QuickButton: styled.button`
     width: 229px;
     height: 229px;
-    border: 1px solid black;
+    border: 1px solid var(--black);
   `,
 };

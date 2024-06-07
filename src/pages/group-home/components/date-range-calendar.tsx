@@ -34,7 +34,7 @@ const S = {
   `,
 
   StyledDatePicker: styled(DatePicker)`
-    background-color: white;
+    background-color: var(--white);
     color: var(--blue01);
     font-size: 14px;
     border-radius: 10px;

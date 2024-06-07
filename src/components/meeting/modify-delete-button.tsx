@@ -23,7 +23,7 @@ const S = {
     gap: 2px;
     button,
     p {
-      color: #9e9e9e;
+      color: var(--gray01);
       font-family: Pretendard;
       font-size: 12px;
       font-style: normal;

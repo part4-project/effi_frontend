@@ -34,7 +34,7 @@ const S = {
     font-size: 20px;
     font-weight: 900;
     line-height: 35px;
-    border-bottom: 1px solid ${({ $type }) => ($type === 'meeting-room' ? '#6F706F' : '#f3f3f3')};
+    border-bottom: 1px solid ${({ $type }) => ($type === 'meeting-room' ? '#6F706F' : 'var(--gray03)')};
     padding-bottom: 10px;
   `,
   TopicList: styled.li<{ $type: string }>`
@@ -44,10 +44,10 @@ const S = {
     margin-top: 8px;
     margin-right: 8px;
     padding: 4px;
-    border-bottom: 2px solid ${({ $type }) => ($type === 'meeting-room' ? '#6F706F' : '#f3f3f3')};
+    border-bottom: 2px solid ${({ $type }) => ($type === 'meeting-room' ? '#6F706F' : 'var(--gray03)')};
   `,
   TopicInCompleted: styled.div<{ $isCompleted: boolean; $type: TopicProps['type'] }>`
-    background-color: ${({ $isCompleted }) => ($isCompleted ? '#3e82f1' : 'none')};
+    background-color: ${({ $isCompleted }) => ($isCompleted ? 'var(--blue01)' : 'none')};
     border: ${({ $isCompleted }) => ($isCompleted ? 'none' : '2px solid #c5c5c5')};
     cursor: ${({ $type }) => ($type === 'meeting-room' ? 'pointer' : 'auto')};
     width: 25px;
@@ -65,7 +65,7 @@ const S = {
   `,
   TopicTitle: styled.p<{ $type: TopicProps['type'] }>`
     flex-grow: 1;
-    color: ${({ $type }) => ($type === 'meeting-room' ? '#9E9E9E' : '#091a37')};
+    color: ${({ $type }) => ($type === 'meeting-room' ? 'var(--gray01)' : '#091a37')};
     font-weight: 700;
     line-height: 28px;
     letter-spacing: -0.6px;

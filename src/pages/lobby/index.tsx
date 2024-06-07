@@ -32,7 +32,7 @@ export default Lobby;
 const S = {
   LobbyPageWrapper: styled.div`
     width: 100%;
-    border: 1px solid black;
+    border: 1px solid var(--black);
     padding: 20px;
     display: flex;
     height: calc(100vh - ${navBarHeight.desktop});
@@ -43,7 +43,7 @@ const S = {
     justify-content: center;
     align-items: center;
     gap: 50px;
-    border: 1px solid black;
+    border: 1px solid var(--black);
   `,
   MyScheduleBox: styled.div`
     width: 30%;

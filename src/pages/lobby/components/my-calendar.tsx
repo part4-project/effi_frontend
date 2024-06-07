@@ -43,7 +43,7 @@ const S = {
   MyCalender: styled.div`
     width: 100%;
     height: 100%;
-    border: 1px solid black;
+    border: 1px solid var(--black);
 
     // 전체 캘린더
     .react-calendar {
