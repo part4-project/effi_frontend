@@ -1,7 +1,5 @@
-import { useState } from 'react';
 import MeetingModal from '@pages/group-home/components/meeting-modal/meeting-modal';
 import styled from 'styled-components';
-import { FILE_IMGS } from '../constants';
 
 interface GroupListItemProps {
   groupName: string;
@@ -10,20 +8,10 @@ interface GroupListItemProps {
 }
 
 const GroupListItem = ({ groupName, onClick, groupNameLength }: GroupListItemProps) => {
-  const images = FILE_IMGS[groupNameLength];
-  const [isHovered, setIsHovered] = useState(false);
-
   return (
     <MeetingModal title="회의 생성">
-      <S.Container
-        $isLongGroupName={groupNameLength}
-        onClick={onClick}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
-        <S.GroupName>{groupName}</S.GroupName>
-        <S.FileImg src={isHovered ? images.hover : images.basic} alt="파일" />
-        <S.VectorImg $isLongGroupName={groupNameLength} src={images.vector} alt="벡터" />
+      <S.Container $isLongGroupName={groupNameLength} onClick={onClick}>
+        <S.FileImg>{groupName} </S.FileImg>
       </S.Container>
     </MeetingModal>
   );
@@ -36,27 +24,30 @@ const S = {
     width: ${({ $isLongGroupName }) => ($isLongGroupName === 'long' ? '180px' : '100px')};
     height: 120px;
     margin: 9px 0 19px;
-    position: relative;
   `,
-  GroupName: styled.div`
+  FileImg: styled.div`
     width: 100%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    height: 100%;
+    position: relative;
+    clip-path: polygon(30px 0, 100% 0, 100% 100%, 0 100%, 0 30px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: var(--white);
     font-size: 20px;
     font-weight: 900;
-  `,
-  FileImg: styled.img`
-    width: 100%;
-    height: 100%;
-  `,
-  VectorImg: styled.img<{ $isLongGroupName: GroupListItemProps['groupNameLength'] }>`
-    position: absolute;
-    width: 23px;
-    height: 23px;
-    top: 0px;
-    left: ${({ $isLongGroupName }) => ($isLongGroupName === 'long' ? '-4px' : '0px')};
+    background-color: var(--blue04);
+    &:hover {
+      background-color: var(--blue01);
+    }
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 30px;
+      aspect-ratio: 1 / 1;
+      background: linear-gradient(315deg, var(--blue02) 50%, transparent 50%);
+    }
   `,
 };
