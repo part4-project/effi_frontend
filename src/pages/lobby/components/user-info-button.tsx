@@ -1,11 +1,11 @@
-import UserInfoModal from '@components/modal/user-info-modal';
+import ProfileModal from '@components/modal/profile-modal/profile-modal';
 import QuickButton from './quick-button';
 
 const UserInfoButton = () => {
   return (
-    <UserInfoModal>
+    <ProfileModal>
       <QuickButton type="user-info" />
-    </UserInfoModal>
+    </ProfileModal>
   );
 };
 
