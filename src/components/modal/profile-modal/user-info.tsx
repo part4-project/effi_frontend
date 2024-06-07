@@ -1,11 +1,12 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
+import refreshIcon from '@assets/icons/refresh.svg';
 import { USER } from '@constants/mockdata';
 import { createRandomNickName } from '@utils/createRandomNickname';
 import styled from 'styled-components';
 
 const UserInfo = () => {
-  const [nickName, setNickName] = useState('');
-  const [inputValue, setInputValue] = useState('');
+  const [randNickName, setRandNickName] = useState(createRandomNickName());
+  const [inputValue, setInputValue] = useState(randNickName);
   const [imgSrc, setImgSrc] = useState(USER.profile_img);
 
   const handleImgInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -15,31 +16,32 @@ const UserInfo = () => {
     }
   };
 
+  const handleNicknameRefreshButtonClick = () => {
+    const newNickName = createRandomNickName();
+    setRandNickName(newNickName);
+    setInputValue(newNickName);
+  };
+
   const handleNicknameInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };
-
-  useEffect(() => {
-    setNickName(createRandomNickName());
-  }, []);
-
-  useEffect(() => {
-    setInputValue(nickName);
-  }, [nickName]);
 
   return (
     <S.Container>
       <S.ProfileImgInputSection>
         <S.ProfileImgInputWrapper>
-          <S.ProfileImgLInputLabel htmlFor="imgInput" />
+          <S.ProfileImgInputLabel htmlFor="imgInput" />
           <S.ProfileImgInput type="file" id="imgInput" accept="image/*" onChange={handleImgInputChange} />
-          <S.ProfileImg src={imgSrc} />
+          <S.ProfileImg src={imgSrc} alt="Profile Image" />
         </S.ProfileImgInputWrapper>
       </S.ProfileImgInputSection>
 
       <S.NicknameAndLogoutBox>
-        <S.NicknameLabel htmlFor="nickname">닉네임</S.NicknameLabel>
-        <S.Nickname>
+        <S.NicknameLabelWrapper>
+          <S.NicknameLabel htmlFor="nickname">닉네임</S.NicknameLabel>
+          <S.NicknameRefreshButton src={refreshIcon} onClick={handleNicknameRefreshButtonClick} />
+        </S.NicknameLabelWrapper>
+        <S.NicknameForm>
           <S.NicknameInput
             type="text"
             id="nickname"
@@ -48,7 +50,7 @@ const UserInfo = () => {
             onChange={handleNicknameInputChange}
           />
           <S.ChangeNicknameButton>변경하기</S.ChangeNicknameButton>
-        </S.Nickname>
+        </S.NicknameForm>
       </S.NicknameAndLogoutBox>
     </S.Container>
   );
@@ -78,7 +80,7 @@ const S = {
     position: relative;
   `,
 
-  ProfileImgLInputLabel: styled.label`
+  ProfileImgInputLabel: styled.label`
     width: 168px;
     height: 168px;
     display: flex;
@@ -86,6 +88,7 @@ const S = {
     align-items: center;
     font-size: 50px;
     cursor: pointer;
+    position: absolute;
   `,
 
   ProfileImgInput: styled.input`
@@ -95,7 +98,6 @@ const S = {
 
   ProfileImg: styled.img`
     position: absolute;
-    pointer-events: none;
     object-fit: cover;
     overflow: hidden;
     width: 168px;
@@ -109,14 +111,25 @@ const S = {
     flex-direction: column;
   `,
 
+  NicknameLabelWrapper: styled.div`
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 12px;
+  `,
+
   NicknameLabel: styled.label`
     font-size: 16px;
     font-weight: bold;
     color: var(--blue05);
-    margin-bottom: 12px;
   `,
 
-  Nickname: styled.div`
+  NicknameRefreshButton: styled.img`
+    width: 17px;
+    cursor: pointer;
+  `,
+
+  NicknameForm: styled.form`
     display: flex;
     justify-content: space-between;
     align-items: center;

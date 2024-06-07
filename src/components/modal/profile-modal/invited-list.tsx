@@ -1,9 +1,19 @@
+import { useState } from 'react';
+import inviteAcceptBlueIcon from '@assets/icons/invite-check-blue.svg';
 import inviteAcceptIcon from '@assets/icons/invite-check.svg';
 import inviteRejectIcon from '@assets/icons/invite-reject.svg';
 import { USER } from '@constants/mockdata';
 import styled from 'styled-components';
 
 const InvitedList = () => {
+  const [acceptedGroups, setAcceptedGroups] = useState<{ [key: number]: boolean }>({});
+  const handleAcceptButtonClick = (groupId: number) => {
+    setAcceptedGroups((prev) => ({
+      ...prev,
+      [groupId]: true,
+    }));
+  };
+
   return (
     <S.Container>
       <S.InvitedListLabel>초대받은 그룹</S.InvitedListLabel>
@@ -17,8 +27,12 @@ const InvitedList = () => {
             </S.GroupInfo>
 
             <S.InvitedGroupButtons>
-              <img src={inviteAcceptIcon} />
-              <img src={inviteRejectIcon} />
+              {acceptedGroups[group.id] ? (
+                <img src={inviteAcceptBlueIcon} alt="Accepted" />
+              ) : (
+                <img src={inviteAcceptIcon} alt="Accept" onClick={() => handleAcceptButtonClick(group.id)} />
+              )}
+              <img src={inviteRejectIcon} alt="Reject" />
             </S.InvitedGroupButtons>
           </S.InvitedGroup>
         ))}
@@ -39,7 +53,6 @@ const S = {
     font-size: 16px;
     font-weight: bold;
     color: var(--blue05);
-    margin-bottom: 12px;
   `,
 
   InvitedList: styled.ul`
@@ -48,7 +61,7 @@ const S = {
     width: 505px;
     overflow: auto;
     white-space: nowrap;
-    padding-bottom: 11px;
+    padding: 12px 0 11px;
     &::-webkit-scrollbar {
       height: 4px;
     }
@@ -65,6 +78,13 @@ const S = {
     border: 2px solid var(--blue02);
     padding: 10px;
     border-radius: 10px;
+    transition: all 0.2s ease-in-out;
+    z-index: 9999;
+    &:hover {
+      box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.2);
+      border: 2px solid var(--blue01);
+      transform: translateY(-4px);
+    }
   `,
 
   Inviter: styled.p`
@@ -86,13 +106,15 @@ const S = {
   `,
 
   GroupName: styled.span`
-    color: #3e82f1;
+    color: var(--blue01);
+    font-weight: 700;
     font-size: 16px;
     margin-right: 5px;
   `,
 
   GroupCode: styled.span`
-    color: #a6a6a6;
+    color: var(--gray02);
+    font-weight: 700;
     font-size: 12px;
   `,
 
@@ -103,6 +125,7 @@ const S = {
     gap: 23px;
     img {
       width: 30px;
+      cursor: pointer;
     }
   `,
 };
