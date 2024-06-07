@@ -1,10 +1,61 @@
-export const USER = [
-  {
-    id: 1,
-    nickname: '경수',
-    email: 'effi@naver.com',
-  },
-];
+import defaultProfileImg from '@assets/default-profile.png';
+
+export const USER = {
+  id: 1,
+  nickname: '경수',
+  email: 'effi@naver.com',
+  profile_img: defaultProfileImg,
+  invited_group: [
+    {
+      id: 1,
+      room_name: 'A그룹',
+      code: 'a2f8',
+      leader: '홍길동',
+    },
+    {
+      id: 2,
+      room_name: 'EFFI 프론트엔드',
+      code: 'a2f8',
+      leader: '홍길동',
+    },
+    {
+      id: 3,
+      room_name: 'EFFI 백엔드',
+      code: 'a2f8',
+      leader: '홍길동',
+    },
+    {
+      id: 4,
+      room_name: 'B그룹',
+      code: 'a2f8',
+      leader: '홍길동',
+    },
+    {
+      id: 5,
+      room_name: '이름이 매우 긴 그룹 테스트용 그룹 이름 제한 몇자로 할껀지?',
+      code: 'a2f8',
+      leader: '홍길동',
+    },
+    {
+      id: 6,
+      room_name: 'EFFI 프론트엔드',
+      code: 'a2f8',
+      leader: '홍길동',
+    },
+    {
+      id: 7,
+      room_name: 'EFFI 백엔드',
+      code: 'a2f8',
+      leader: '홍길동',
+    },
+    {
+      id: 8,
+      room_name: 'C그룹',
+      code: 'a2f8',
+      leader: '홍길동',
+    },
+  ],
+};
 
 export const GROUP = {
   id: 2,
@@ -147,11 +198,12 @@ export const TOPIC = {
     },
   ],
 };
+
 export const NOTES_DATAS = [
   {
     id: 1,
     title: '프론트 회의',
-    createdAt: '24-05-29',
+    createdAt: '24-03-29',
     topic_list: [
       {
         id: 1,
@@ -173,7 +225,7 @@ export const NOTES_DATAS = [
   {
     id: 2,
     title: '주간 회의',
-    createdAt: '24-05-29',
+    createdAt: '24-03-29',
     topic_list: [
       {
         id: 1,
@@ -195,7 +247,7 @@ export const NOTES_DATAS = [
   {
     id: 3,
     title: '백엔드 회의',
-    createdAt: '24-05-29',
+    createdAt: '24-04-12',
     topic_list: [
       {
         id: 1,
@@ -217,7 +269,7 @@ export const NOTES_DATAS = [
   {
     id: 4,
     title: '프론트 회의',
-    createdAt: '24-05-29',
+    createdAt: '24-04-20',
     topic_list: [
       {
         id: 1,
@@ -239,7 +291,7 @@ export const NOTES_DATAS = [
   {
     id: 5,
     title: '주간 회의',
-    createdAt: '24-05-29',
+    createdAt: '24-04-21',
     topic_list: [
       {
         id: 1,
@@ -261,7 +313,7 @@ export const NOTES_DATAS = [
   {
     id: 6,
     title: '회식날짜 정하기',
-    createdAt: '24-05-29',
+    createdAt: '24-05-01',
     topic_list: [
       {
         id: 1,
@@ -283,7 +335,7 @@ export const NOTES_DATAS = [
   {
     id: 7,
     title: '백엔드 회의',
-    createdAt: '24-05-29',
+    createdAt: '24-05-10',
     topic_list: [
       {
         id: 1,

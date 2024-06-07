@@ -48,7 +48,7 @@ const S = {
     align-items: center;
     margin: 24px;
     padding: 24px 48px;
-    background: #ffffff;
+    background: var(--white);
     border-radius: 20px;
     box-shadow: 0px 4px 16px 0px #073327;
 
@@ -66,7 +66,7 @@ const S = {
     }
 
     ::-webkit-scrollbar-track {
-      background: #f3f3f3;
+      background: var(--gray03);
     }
   `,
 };

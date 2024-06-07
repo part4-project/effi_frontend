@@ -87,8 +87,8 @@ const S = {
     height: 60%;
     margin-left: 8px;
     border-radius: 36px;
-    border: 1px solid var(--Gray-01, #9e9e9e);
-    background: var(--Gray-01, #9e9e9e);
+    border: 1px solid var(--gray-01, #9e9e9e);
+    background: var(--gray-01, #9e9e9e);
     color: var(--white);
     text-align: center;
     font-family: Pretendard;

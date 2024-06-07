@@ -46,7 +46,7 @@ const S = {
     align-items: center;
     gap: 10px;
     p {
-      color: ${({ $isTimeOver }) => ($isTimeOver ? '#F9667B ' : '#9e9e9e')};
+      color: ${({ $isTimeOver }) => ($isTimeOver ? '#F9667B ' : 'var(--gray01)')};
       text-align: center;
       font-weight: 700;
       line-height: 28px; /* 175% */

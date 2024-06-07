@@ -1,3 +1,4 @@
+import testImg from '@assets/default-profile.png';
 import { TNoteItem } from '@constants/mockdata.type';
 import ReportModal from '@pages/group-home/components/report-modal/report-modal';
 import styled from 'styled-components';
@@ -14,18 +15,30 @@ const MeetingNoteItem = ({ note }: TMeetingNoteItemProps) => {
     <S.Container>
       <ReportModal>
         <S.MeetingNotesList>
-          <S.MeetingTitleAndTime>
+          <S.MeetingTitleAndTimeContainer>
             <S.NoteTitle>{note.title}</S.NoteTitle>
             <S.NoteCreatedAt>{note.createdAt}</S.NoteCreatedAt>
-          </S.MeetingTitleAndTime>
+          </S.MeetingTitleAndTimeContainer>
 
           <S.PercentageContainer>
-            <S.PercentageTitle>회의 달성률</S.PercentageTitle>
+            <S.PercentageTitle>진행률</S.PercentageTitle>
             <S.PercentageBar>
-              <S.CompletedPercentage $percentage={percentageCompleted}></S.CompletedPercentage>
+              <S.CompletedPercentageBar $percentage={percentageCompleted}></S.CompletedPercentageBar>
             </S.PercentageBar>
             <S.Percentage>{percentageCompleted}%</S.Percentage>
           </S.PercentageContainer>
+
+          <S.MemberImgContainer>
+            <div>
+              <img src={testImg} />
+            </div>
+            <div>
+              <img src={testImg} />
+            </div>
+            <div>
+              <img src={testImg} />
+            </div>
+          </S.MemberImgContainer>
         </S.MeetingNotesList>
       </ReportModal>
     </S.Container>
@@ -43,21 +56,24 @@ const S = {
 
   MeetingNotesList: styled.li`
     background-color: rgba(255, 255, 255, 0.4);
-
     height: 72px;
     border-radius: 10px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     padding: 0 36px;
 
     cursor: pointer;
     transition: background-color 0.2s ease;
     &:hover {
-      background-color: white;
+      background-color: var(--white);
+      span {
+        color: var(--blue05);
+      }
     }
   `,
 
-  MeetingTitleAndTime: styled.div`
+  MeetingTitleAndTimeContainer: styled.div`
     width: 40%;
     display: flex;
     align-items: center;
@@ -76,15 +92,17 @@ const S = {
   `,
 
   PercentageContainer: styled.div`
+    width: 50%;
     display: flex;
     align-items: center;
   `,
 
   PercentageTitle: styled.span`
     margin-right: 10px;
+    width: 170px;
     color: var(--blue05);
     font-weight: 500;
-    font-size: 20px;
+    font-size: 18px;
   `,
 
   PercentageBar: styled.div`
@@ -95,7 +113,7 @@ const S = {
     border-radius: 50px;
   `,
 
-  CompletedPercentage: styled.div<{ $percentage: string }>`
+  CompletedPercentageBar: styled.div<{ $percentage: string }>`
     background-color: var(--blue01);
     display: flex;
     width: ${({ $percentage }) => `${$percentage}%`};
@@ -104,9 +122,38 @@ const S = {
   `,
 
   Percentage: styled.span`
-    margin-left: 23px;
+    margin-left: 20px;
     color: var(--blue05);
-    font-weight: 500;
-    font-size: 20px;
+    font-size: 16px;
+    width: 100px;
+  `,
+
+  MemberImgContainer: styled.span`
+    position: relative;
+    width: 80px;
+    height: 30px;
+    display: flex;
+    margin-left: 20px;
+    div {
+      width: 28px;
+      height: 28px;
+      background-color: var(--blue01);
+      border: 1px solid var(--blue05);
+      border-radius: 50px;
+      position: absolute;
+      overflow: hidden;
+    }
+    div:nth-child(1) {
+      right: 0;
+      z-index: 2;
+    }
+    div:nth-child(2) {
+      right: 22px;
+      z-index: 1;
+    }
+    div:nth-child(3) {
+      right: 44px;
+      z-index: 0;
+    }
   `,
 };
