@@ -50,7 +50,7 @@ const S = {
     justify-content: center;
     align-items: center;
     margin: 24px;
-    padding: 24px 48px;
+    padding: 24px 34px;
     background: var(--white);
     border-radius: 20px;
     box-shadow: 0px 4px 16px 0px #073327;
