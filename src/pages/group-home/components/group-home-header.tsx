@@ -1,5 +1,5 @@
 import createMeetingButton from '@assets/icons/plus-monitor.svg';
-import polygonTop from '@assets/icons/polygon-top.svg';
+import polygonTop from '@assets/icons/polygon-top-blue.svg';
 import groupManageButton from '@assets/icons/setting.svg';
 import GroupModal from '@pages/group-home/components/group-modal/group-modal';
 import MeetingModal from '@pages/group-home/components/meeting-modal/meeting-modal';

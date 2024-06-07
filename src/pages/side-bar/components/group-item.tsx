@@ -93,16 +93,10 @@ const S = {
       visibility 0.2s ease-in-out;
 
     &:after {
-      /* border-bottom: 10px solid transparent;
-      border-left: 10px solid transparent;
-      border-right: 10px solid var(--blue01);
-      border-top: 10px solid transparent; */
       content: '';
       width: 14px;
       height: 13px;
-      background-image: url(${Polygon});
-      background-size: cover;
-      background-repeat: no-repeat;
+      background: url(${Polygon});
       position: absolute;
       top: 50%;
       left: -4px;
