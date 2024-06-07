@@ -73,7 +73,7 @@ const S = {
     margin-top: 8px;
     width: 100%;
     display: flex;
-    align-items: center;
+    align-items: end;
     justify-content: space-between;
   `,
   GroupDisbandment: styled.div`

@@ -1,21 +1,57 @@
-import { ReactNode } from 'react';
 import styled from 'styled-components';
+import { QUICK_BUTTONS } from '../constants';
 
 interface QuickButtonProps {
-  children: ReactNode;
+  type: 'make-meeting' | 'user-info';
   onClick?: () => void;
 }
 
-const QuickButton: React.FC<QuickButtonProps> = ({ children, onClick }) => {
-  return <S.QuickButton onClick={onClick}>{children}</S.QuickButton>;
+const QuickButton = ({ onClick, type }: QuickButtonProps) => {
+  const buttonDetails = QUICK_BUTTONS[type];
+
+  return (
+    <S.QuickButton onClick={onClick}>
+      <S.BackgroundImg src={buttonDetails.backgroundImg} alt="컨테이너" />
+      <S.InnerBox>
+        <S.InnerImg src={buttonDetails.innerImg} alt={buttonDetails.innerImgAlt} />
+        <S.Label $type={type}>{buttonDetails.label}</S.Label>
+      </S.InnerBox>
+    </S.QuickButton>
+  );
 };
 
 export default QuickButton;
 
 const S = {
   QuickButton: styled.button`
-    width: 229px;
-    height: 229px;
-    border: 1px solid var(--black);
+    width: 220px;
+    height: 138px;
+    position: relative;
+  `,
+  BackgroundImg: styled.img`
+    width: 100%;
+    height: 100%;
+  `,
+  InnerBox: styled.div`
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -40%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  `,
+  InnerImg: styled.img`
+    width: 30px;
+    height: 30px;
+  `,
+  Label: styled.p<{ $type: QuickButtonProps['type'] }>`
+    width: 150px;
+    color: ${({ $type }) => ($type === 'make-meeting' ? 'var(--white)' : 'var(--blue01)')};
+    text-align: center;
+    font-size: 26px;
+    font-weight: 900;
   `,
 };

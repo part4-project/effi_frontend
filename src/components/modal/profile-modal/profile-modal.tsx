@@ -60,7 +60,7 @@ const S = {
     margin-top: 15px;
     width: 100%;
     display: flex;
-    align-items: center;
+    align-items: end;
     justify-content: space-between;
   `,
 
