@@ -31,7 +31,7 @@ const S = {
     grid-area: time;
     display: flex;
     border-radius: 10px;
-    border: 2px solid #f3f3f3;
+    border: 2px solid var(--gray03);
     height: 180px;
     padding: 10px;
   `,
@@ -56,7 +56,7 @@ const S = {
       right: -20px;
       width: 2px;
       height: 100%;
-      background-color: #f3f3f3;
+      background-color: var(--gray03);
     }
   `,
 

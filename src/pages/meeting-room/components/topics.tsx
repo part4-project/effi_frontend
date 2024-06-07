@@ -82,7 +82,7 @@ const S = {
       width: 4px;
     }
     &::-webkit-scrollbar-thumb {
-      background: #f3f3f3;
+      background: var(--gray03);
     }
 
     &::-webkit-scrollbar-track {

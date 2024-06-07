@@ -65,7 +65,7 @@ const S = {
     }
 
     &::-webkit-scrollbar-thumb {
-      background: #f3f3f3;
+      background: var(--gray03);
       border-radius: 16px;
     }
 
@@ -78,7 +78,7 @@ const S = {
     height: 15%;
     justify-content: center;
     align-items: center;
-    border-top: 2px solid #9e9e9e;
+    border-top: 2px solid var(--gray01);
     padding-left: 10px;
     padding-right: 10px;
   `,
@@ -87,7 +87,7 @@ const S = {
     padding: 16px;
     height: 50%;
     border-radius: 36px;
-    border: 1px solid #9e9e9e;
+    border: 1px solid var(--gray01);
     background: #4d4f4e;
     display: flex;
     align-items: center;

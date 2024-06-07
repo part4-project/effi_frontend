@@ -33,7 +33,7 @@ const S = {
     grid-area: chat;
     display: flex;
     padding: 15px;
-    border: 2px solid ${({ $theme }) => ($theme === 'dark' ? '#4D4F4E' : '#f3f3f3')};
+    border: 2px solid ${({ $theme }) => ($theme === 'dark' ? '#4D4F4E' : 'var(--gray03)')};
     border-radius: 10px;
     height: 654px;
     background: ${({ $theme }) => ($theme === 'dark' ? '#4D4F4E' : 'var(--white)')};
@@ -47,11 +47,11 @@ const S = {
     width: 100%;
 
     &::-webkit-scrollbar-thumb {
-      background: ${({ $theme }) => ($theme === 'dark' ? '#f3f3f3' : '#D6D6D7')};
+      background: ${({ $theme }) => ($theme === 'dark' ? 'var(--gray03)' : '#D6D6D7')};
     }
 
     &::-webkit-scrollbar-track {
-      background: ${({ $theme }) => ($theme === 'dark' ? '#9d9d9d' : '#F3F3F3')};
+      background: ${({ $theme }) => ($theme === 'dark' ? '#9d9d9d' : 'var(--gray03)')};
     }
   `,
 
@@ -71,7 +71,7 @@ const S = {
   `,
 
   ChattingUserName: styled.p`
-    color: #9e9e9e;
+    color: var(--gray01);
     font-size: 14px;
     line-height: 24px;
     letter-spacing: -0.6px;
@@ -89,7 +89,7 @@ const S = {
   ChattingSentTime: styled.p`
     display: flex;
     align-items: end;
-    color: #9e9e9e;
+    color: var(--gray01);
     font-size: 12px;
     letter-spacing: -0.6px;
   `,

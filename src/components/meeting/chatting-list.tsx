@@ -38,7 +38,7 @@ const S = {
     max-width: 70%;
   `,
   ChattingUserName: styled.p`
-    color: #9e9e9e;
+    color: var(--gray01);
     font-size: 14px;
     line-height: 24px;
     letter-spacing: -0.6px;
@@ -54,7 +54,7 @@ const S = {
   ChattingSentTime: styled.p`
     display: flex;
     align-items: end;
-    color: #9e9e9e;
+    color: var(--gray01);
     font-size: 12px;
     letter-spacing: -0.6px;
   `,

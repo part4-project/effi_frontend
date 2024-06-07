@@ -39,7 +39,7 @@ const S = {
     display: flex;
     flex-direction: column;
     border-radius: 10px;
-    border: 2px solid ${({ $theme }) => ($theme === 'dark' ? '#4D4F4E' : '#f3f3f3')};
+    border: 2px solid ${({ $theme }) => ($theme === 'dark' ? '#4D4F4E' : 'var(--gray03)')};
     height: 255px;
     padding: 15px 10px 10px 15px;
     background: ${({ $theme }) => ($theme === 'dark' ? '#4D4F4E' : 'var(--white)')};
@@ -51,7 +51,7 @@ const S = {
     font-size: 20px;
     font-weight: 900;
     line-height: 35px;
-    border-bottom: 1px solid ${({ $theme }) => ($theme === 'dark' ? '#6F706F' : '#f3f3f3')};
+    border-bottom: 1px solid ${({ $theme }) => ($theme === 'dark' ? '#6F706F' : 'var(--gray03)')};
     padding-bottom: 10px;
   `,
 
@@ -64,11 +64,11 @@ const S = {
     overflow: auto;
 
     &::-webkit-scrollbar-thumb {
-      background: ${({ $theme }) => ($theme === 'dark' ? '#f3f3f3' : '#D6D6D7')};
+      background: ${({ $theme }) => ($theme === 'dark' ? 'var(--gray03)' : '#D6D6D7')};
     }
 
     &::-webkit-scrollbar-track {
-      background: ${({ $theme }) => ($theme === 'dark' ? '#9d9d9d' : '#F3F3F3')};
+      background: ${({ $theme }) => ($theme === 'dark' ? '#9d9d9d' : 'var(--gray03)')};
     }
   `,
 
@@ -77,7 +77,7 @@ const S = {
     gap: 10px;
     margin-top: 8px;
     padding: 4px;
-    border-bottom: 2px solid ${({ $theme }) => ($theme === 'dark' ? '#6F706F' : '#f3f3f3')};
+    border-bottom: 2px solid ${({ $theme }) => ($theme === 'dark' ? '#6F706F' : 'var(--gray03)')};
   `,
 
   TopicCompleted: styled.span`
@@ -106,7 +106,7 @@ const S = {
 
   TopicTitle: styled.p<{ $theme: string }>`
     width: 100%;
-    color: ${({ $theme }) => ($theme === 'dark' ? '#9E9E9E' : '#091a37')};
+    color: ${({ $theme }) => ($theme === 'dark' ? 'var(--gray01)' : '#091a37')};
     font-size: 16px;
     font-weight: 700;
     line-height: 28px;

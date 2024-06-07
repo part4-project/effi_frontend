@@ -27,7 +27,7 @@ const S = {
     display: flex;
     flex-direction: column;
     border-radius: 10px;
-    border: 2px solid #f3f3f3;
+    border: 2px solid var(--gray03);
     height: 180px;
     padding: 15px 10px 10px 15px;
   `,
@@ -38,7 +38,7 @@ const S = {
     font-size: 20px;
     font-weight: 900;
     line-height: 35px;
-    border-bottom: 1px solid #f3f3f3;
+    border-bottom: 1px solid var(--gray03);
     padding-bottom: 10px;
   `,
 
