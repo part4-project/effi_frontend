@@ -49,7 +49,7 @@ const S = {
     }
 
     &::-webkit-scrollbar-track {
-      background: #f3f3f3;
+      background: var(--gray03);
     }
   `,
   Polygon: styled.img`
