@@ -1,12 +1,11 @@
 import { useState } from 'react';
-import ChattingBox from '@components/meeting/chatting-box';
-import TopicList from '@components/meeting/topic-list';
 import Modal from '@components/modal/modal';
 import ModalHeader from '@components/modal/modal-header';
 import styled from 'styled-components';
+import ReportChattingBox from './report-chatting-box';
 import ReportMember from './report-member';
 import ReportTime from './report-time';
-
+import ReportTopicList from './report-topic-list';
 interface GroupModalProps {
   children: React.ReactNode;
 }
@@ -33,10 +32,10 @@ const ReportModal = ({ children }: GroupModalProps) => {
       <Modal isOpen={isOpen} onClose={handleModalClose}>
         <ModalHeader headerTitle="회의주제" onClose={handleCloseButtonClick} />
         <S.ReportContent>
-          <TopicList />
+          <ReportTopicList />
           <ReportMember />
           <ReportTime />
-          <ChattingBox />
+          <ReportChattingBox />
         </S.ReportContent>
       </Modal>
     </button>

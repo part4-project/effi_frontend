@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import GroupBg from '@assets/group-bg.svg';
 import Polygon from '@assets/icons/polygon-left.svg';
+import { device } from '@styles/breakpoints';
 import { zIndex } from '@styles/z-index';
 import styled from 'styled-components';
 
@@ -26,7 +27,7 @@ const GroupItem: React.FC<GroupItemProp> = ({ room_name }) => {
       }
     };
     checkOverflow();
-  }, [room_name]);
+  });
 
   return (
     <S.Trigger>
@@ -55,6 +56,12 @@ const S = {
       color: var(--blue01);
       font-weight: 900;
       font-size: ${({ $isOverFlowText }) => ($isOverFlowText ? '10px' : '16px')};
+      @media ${device.tablet} {
+        font-size: ${({ $isOverFlowText }) => ($isOverFlowText ? '8px' : '12px')};
+      }
+      @media ${device.mobile} {
+        font-size: ${({ $isOverFlowText }) => ($isOverFlowText ? '6px' : '8px')};
+      }
     }
   `,
   Trigger: styled.div`

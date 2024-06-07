@@ -545,3 +545,14 @@ export const MY_SCHEDULE_LIST = [
     title: 'API 회의',
   },
 ];
+
+export const EXPECTED_END_TIME_LIST = [
+  '30분',
+  '1시간',
+  '1시간 30분',
+  '2시간',
+  '2시간 30분',
+  '3시간',
+  '3시간 30분',
+  '4시간',
+];

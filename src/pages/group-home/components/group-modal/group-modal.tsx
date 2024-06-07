@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import ConfirmModal from '@components/modal/confirm-modal/confirm-modal';
 import Modal from '@components/modal/modal';
 import ModalButton from '@components/modal/modal-button';
 import ModalHeader from '@components/modal/modal-header';
@@ -27,8 +28,8 @@ const GroupModal = ({ children }: GroupModalProps) => {
   };
 
   return (
-    <button onClick={handleOpenButtonClick}>
-      {children}
+    <div>
+      <button onClick={handleOpenButtonClick}>{children}</button>
       <Modal isOpen={isOpen} onClose={handleModalClose}>
         <S.ModalWrap>
           <ModalHeader headerTitle="그룹관리" onClose={handleCloseButtonClick} />
@@ -37,12 +38,14 @@ const GroupModal = ({ children }: GroupModalProps) => {
             <GroupMemberList />
           </S.ModalContent>
           <S.ModalFooter>
-            <S.GroupDisbandment>그룹 해체하기</S.GroupDisbandment>
+            <ConfirmModal>
+              <S.GroupDisbandment>그룹 해체하기</S.GroupDisbandment>
+            </ConfirmModal>
             <ModalButton type="primary">저장하기</ModalButton>
           </S.ModalFooter>
         </S.ModalWrap>
       </Modal>
-    </button>
+    </div>
   );
 };
 

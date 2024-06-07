@@ -20,7 +20,7 @@ const Topic = ({ isCompleted, topicName, onClick, type = 'report-modal' }: Topic
         {isCompleted && <img src={checkMark} alt="체크" />}
       </S.TopicInCompleted>
       <S.TopicTitle $type={type}>{topicName}</S.TopicTitle>
-      <ModifyDeleteButton />
+      {type === 'meeting-room' && <ModifyDeleteButton />}
     </S.TopicList>
   );
 };

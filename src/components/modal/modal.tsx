@@ -8,9 +8,10 @@ interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   children: React.ReactNode;
+  isConfirmModal?: boolean;
 }
 
-const Modal = ({ isOpen, onClose, children }: ModalProps) => {
+const Modal = ({ isOpen, onClose, children, isConfirmModal = false }: ModalProps) => {
   const modalRef = useRef(null);
   useCloseModal(isOpen, onClose, modalRef);
 
@@ -18,7 +19,9 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
     isOpen && (
       <Portal>
         <S.ModalBackground>
-          <S.ModalBox ref={modalRef}>{children}</S.ModalBox>
+          <S.ModalBox ref={modalRef} $isConfirmModal={isConfirmModal}>
+            {children}
+          </S.ModalBox>
         </S.ModalBackground>
       </Portal>
     )
@@ -41,16 +44,22 @@ const S = {
     z-index: ${zIndex.modal};
   `,
 
-  ModalBox: styled.div`
+  ModalBox: styled.div<{ $isConfirmModal: boolean }>`
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     margin: 24px;
-    padding: 24px 48px;
+    padding: 24px 34px;
     background: var(--white);
     border-radius: 20px;
     box-shadow: 0px 4px 16px 0px #073327;
+
+    ${(props) =>
+      props.$isConfirmModal &&
+      `
+      padding: 0;
+      `}
 
     ::-webkit-scrollbar {
       display: block;
