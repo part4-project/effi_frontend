@@ -125,6 +125,7 @@ const S = {
   EditInput: styled.input`
     width: 80%;
     color: var(--gray01);
+    font-family: 'Pretendard';
     font-size: 14px;
     font-weight: 500;
     letter-spacing: 0.56px;
