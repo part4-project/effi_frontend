@@ -1,5 +1,4 @@
 import createMeetingButton from '@assets/icons/plus-monitor.svg';
-import polygonTop from '@assets/icons/polygon-top-blue.svg';
 import groupManageButton from '@assets/icons/setting.svg';
 import GroupModal from '@pages/group-home/components/group-modal/group-modal';
 import MeetingModal from '@pages/group-home/components/meeting-modal/meeting-modal';
@@ -67,7 +66,7 @@ const S = {
       visibility 0.2s ease-in-out;
 
     &:after {
-      background: url(${polygonTop});
+      background: url('/polygon-top-blue.svg');
       content: '';
       width: 13px;
       height: 14px;

@@ -13,11 +13,11 @@ const NavBar = () => {
     <S.NavWrap>
       <S.NavContainer>
         <S.FlexLeftBox>
-          <S.LogoBox>
+          <div>
             <Link to={'/'}>
               <img src={Logo} alt="text-logo" />
             </Link>
-          </S.LogoBox>
+          </div>
         </S.FlexLeftBox>
         <S.FlexRightBox>
           <SearchBar />
@@ -59,5 +59,4 @@ const S = {
     display: flex;
     gap: 25px;
   `,
-  LogoBox: styled.div``,
 };

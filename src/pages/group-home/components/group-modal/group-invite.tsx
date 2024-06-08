@@ -2,22 +2,19 @@ import styled from 'styled-components';
 
 const GroupInvite = () => {
   return (
-    <S.InviteWrap>
+    <div>
       <S.EmailLabel htmlFor="email">그룹 초대하기</S.EmailLabel>
       <S.EmailInputBox>
         <S.EmailInput id="email" name="email" type="text" placeholder="이메일을 입력해주세요!" />
         <S.EmailSendBtn>초대하기</S.EmailSendBtn>
       </S.EmailInputBox>
-    </S.InviteWrap>
+    </div>
   );
 };
 
 export default GroupInvite;
 
 const S = {
-  InviteWrap: styled.div`
-    width: 100%;
-  `,
   EmailLabel: styled.label`
     display: inline-block;
     color: #404040;

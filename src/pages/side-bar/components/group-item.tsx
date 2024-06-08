@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import GroupBg from '@assets/group-bg.svg';
-import Polygon from '@assets/icons/polygon-left.svg';
 import { device } from '@styles/breakpoints';
 import { zIndex } from '@styles/z-index';
 import styled from 'styled-components';
@@ -27,13 +26,17 @@ const GroupItem: React.FC<GroupItemProp> = ({ room_name }) => {
       }
     };
     checkOverflow();
-  });
+    window.addEventListener('resize', checkOverflow);
+    return () => {
+      window.removeEventListener('resize', checkOverflow);
+    };
+  }, [isOverFlowText]);
 
   return (
     <S.Trigger>
-      <S.GroupItem ref={groupItemRef} $isOverFlowText={isOverFlowText}>
+      <S.GroupItem ref={groupItemRef}>
         <img src={GroupBg} alt="groupImg" />
-        <div>{room_name}</div>
+        <S.GroupName $isOverFlowText={isOverFlowText}>{room_name}</S.GroupName>
       </S.GroupItem>
       <S.Balloon>{room_name}</S.Balloon>
     </S.Trigger>
@@ -43,25 +46,25 @@ const GroupItem: React.FC<GroupItemProp> = ({ room_name }) => {
 export default GroupItem;
 
 const S = {
-  GroupItem: styled.div<{ $isOverFlowText: boolean }>`
+  GroupItem: styled.div`
     position: relative;
     border-radius: 10%;
     overflow: hidden;
-    div {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate3d(-50%, -50%, 0);
-      white-space: nowrap;
-      color: var(--blue01);
-      font-weight: 900;
-      font-size: ${({ $isOverFlowText }) => ($isOverFlowText ? '10px' : '16px')};
-      @media ${device.tablet} {
-        font-size: ${({ $isOverFlowText }) => ($isOverFlowText ? '8px' : '12px')};
-      }
-      @media ${device.mobile} {
-        font-size: ${({ $isOverFlowText }) => ($isOverFlowText ? '6px' : '8px')};
-      }
+  `,
+  GroupName: styled.div<{ $isOverFlowText: boolean }>`
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%, -50%, 0);
+    white-space: nowrap;
+    color: var(--blue01);
+    font-weight: 900;
+    font-size: ${({ $isOverFlowText }) => ($isOverFlowText ? '10px' : '16px')};
+    @media ${device.tablet} {
+      font-size: ${({ $isOverFlowText }) => ($isOverFlowText ? '8px' : '12px')};
+    }
+    @media ${device.mobile} {
+      font-size: ${({ $isOverFlowText }) => ($isOverFlowText ? '6px' : '8px')};
     }
   `,
   Trigger: styled.div`
@@ -96,7 +99,7 @@ const S = {
       content: '';
       width: 14px;
       height: 13px;
-      background: url(${Polygon});
+      background: url('/polygon-left.svg');
       position: absolute;
       top: 50%;
       left: -4px;
