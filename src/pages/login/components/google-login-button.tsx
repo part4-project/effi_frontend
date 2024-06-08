@@ -27,23 +27,21 @@ export default GoogleLoginButton;
 
 const S = {
   GoogleLoginButton: styled.button`
-    cursor: pointer;
     position: relative;
-    background-color: #ffffff;
+    background-color: var(--white);
     border-radius: 100px;
-    border: 10px solid #000000;
     font-weight: 700;
     line-height: 19px;
     width: 320px;
-    padding-block: 8px;
+    padding-block: 18px;
     p {
       font-size: 16px;
-      color: #1e1f22;
+      color: var(--blue05);
     }
   `,
   GoogleLogoBox: styled.div`
     position: absolute;
-    top: 11%;
+    top: 5%;
     left: 4%;
   `,
 };

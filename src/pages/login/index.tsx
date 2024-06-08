@@ -47,22 +47,4 @@ const S = {
     font-weight: 700;
     color: var(--blue05);
   `,
-  SocialLogoBox: styled.div`
-    position: absolute;
-    top: 5%;
-    left: 4%;
-  `,
-  SocialLoginButton: styled.button`
-    position: relative;
-    background-color: var(--white);
-    border-radius: 100px;
-    font-weight: 700;
-    line-height: 19px;
-    width: 320px;
-    padding-block: 18px;
-    p {
-      font-size: 16px;
-      color: var(--blue05);
-    }
-  `,
 };
