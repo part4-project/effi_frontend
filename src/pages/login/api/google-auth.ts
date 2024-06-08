@@ -6,11 +6,11 @@ import { useNavigate } from 'react-router-dom';
 
 const GoogleOAuth = () => {
   const navigate = useNavigate();
-  const { login } = userStore();
+  const { login, logout } = userStore();
 
   const loginMutation = useMutation({
     mutationFn: (code: string) => {
-      return instance.post('/login', {
+      return instance.post('/user/login', {
         body: {
           code: code,
         },
@@ -19,11 +19,12 @@ const GoogleOAuth = () => {
     onSuccess: (response) => {
       const data = response.data;
       setCookie('accessToken', data.accessToken);
-      login({ email: data.email });
+      login();
       navigate('/');
     },
     onError: (error) => {
       console.error(error);
+      logout();
       navigate('/login');
     },
   });
