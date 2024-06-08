@@ -1,17 +1,19 @@
 import { useRef } from 'react';
+import ModalHeader from '@components/modal/modal-header';
+import Portal from '@components/modal/portal';
 import useCloseModal from '@hooks/use-close-modal';
 import { zIndex } from '@styles/z-index';
 import styled from 'styled-components';
-import Portal from './portal';
 
 interface ModalProps {
+  children: React.ReactNode;
   isOpen: boolean;
   onClose: () => void;
-  children: React.ReactNode;
+  headerTitle?: string;
   isConfirmModal?: boolean;
 }
 
-const Modal = ({ isOpen, onClose, children, isConfirmModal = false }: ModalProps) => {
+const Modal = ({ children, isOpen, onClose, headerTitle, isConfirmModal = false }: ModalProps) => {
   const modalRef = useRef(null);
   useCloseModal(isOpen, onClose, modalRef);
 
@@ -20,6 +22,7 @@ const Modal = ({ isOpen, onClose, children, isConfirmModal = false }: ModalProps
       <Portal>
         <S.ModalBackground>
           <S.ModalBox ref={modalRef} $isConfirmModal={isConfirmModal}>
+            <ModalHeader headerTitle={headerTitle} onClose={onClose} />
             {children}
           </S.ModalBox>
         </S.ModalBackground>

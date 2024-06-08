@@ -1,50 +1,38 @@
 import { useState } from 'react';
 import Modal from '@components/modal/modal';
 import ModalButton from '@components/modal/modal-button';
-import ModalHeader from '@components/modal/modal-header';
 import styled from 'styled-components';
 
 const primaryBtn = 'primary';
 const disableBtn = 'disable';
 
 interface GroupModalProps {
-  children: React.ReactNode;
+  isOpen: boolean;
+  onClose: () => void;
 }
 
-const GroupCreateModal = ({ children }: GroupModalProps) => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+const GroupCreateModal = ({ isOpen, onClose }: GroupModalProps) => {
   const [btnType, setBtnType] = useState<'disable' | 'primary' | 'secondary'>(disableBtn);
-
-  const handleModalClose = () => {
-    setIsOpen(false);
-  };
-
-  const handleOpenButtonClick = () => {
-    setIsOpen(true);
-  };
-
-  const handleCloseButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
-    setIsOpen(false);
-  };
 
   const handleNameInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.target.value ? setBtnType(primaryBtn) : setBtnType(disableBtn);
   };
 
+  const handleCreateGroupClick = () => {
+    btnType === primaryBtn ? onClose() : null;
+  };
+
   return (
-    <button onClick={handleOpenButtonClick}>
-      {children}
-      <Modal isOpen={isOpen} onClose={handleModalClose}>
-        <S.ModalWrap>
-          <ModalHeader headerTitle="그룹생성" onClose={handleCloseButtonClick} />
-          <S.ModalContent>
-            <S.GroupNameInput type="text" placeholder="그룹 이름을 작성하세요" onInput={handleNameInput} />
-            <ModalButton type={btnType}>생성</ModalButton>
-          </S.ModalContent>
-        </S.ModalWrap>
-      </Modal>
-    </button>
+    <Modal isOpen={isOpen} onClose={onClose} headerTitle="그룹생성">
+      <S.ModalWrap>
+        <S.ModalContent>
+          <S.GroupNameInput type="text" placeholder="그룹 이름을 작성하세요" onInput={handleNameInput} />
+          <ModalButton type={btnType} onClick={handleCreateGroupClick}>
+            생성
+          </ModalButton>
+        </S.ModalContent>
+      </S.ModalWrap>
+    </Modal>
   );
 };
 

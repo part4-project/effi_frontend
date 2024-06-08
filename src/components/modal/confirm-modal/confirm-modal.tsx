@@ -1,39 +1,36 @@
-import { useState } from 'react';
 import Modal from '@components/modal/modal';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 interface ConfirmModalProps {
-  children: React.ReactNode;
+  isOpen: boolean;
+  onClose: () => void;
 }
 
-const ConfirmModal = ({ children }: ConfirmModalProps) => {
-  const [isOpen, setIsOpen] = useState(false);
+const ConfirmModal = ({ isOpen, onClose }: ConfirmModalProps) => {
+  const navigate = useNavigate();
 
-  const handleModalClose = () => {
-    setIsOpen(false);
+  const handleDeleteGroupClick = () => {
+    navigate('/');
   };
 
-  const handleOpenButtonClick = () => {
-    setIsOpen(true);
+  const handleMaintainGroupClick = () => {
+    onClose();
   };
 
   return (
-    <div>
-      <button onClick={handleOpenButtonClick}>{children}</button>
-      <Modal isOpen={isOpen} onClose={handleModalClose} isConfirmModal>
-        <S.ConfirmModalContent>
-          <S.CommentsContainer>
-            <S.MainComment>잠깐만요!</S.MainComment>
-            <S.SubComment>{`삭제하시게 되면\n되돌릴 수 없습니다!`}</S.SubComment>
-          </S.CommentsContainer>
-
-          <S.ButtonsContainer>
-            <S.DeleteButton>삭제하기</S.DeleteButton>
-            <S.ConfirmButton>유지하기</S.ConfirmButton>
-          </S.ButtonsContainer>
-        </S.ConfirmModalContent>
-      </Modal>
-    </div>
+    <Modal isOpen={isOpen} onClose={onClose} isConfirmModal>
+      <S.ConfirmModalContent>
+        <S.CommentsContainer>
+          <S.MainComment>잠깐만요!</S.MainComment>
+          <S.SubComment>{`삭제하시게 되면\n되돌릴 수 없습니다!`}</S.SubComment>
+        </S.CommentsContainer>
+        <S.ButtonsContainer>
+          <S.DeleteButton onClick={handleDeleteGroupClick}>삭제하기</S.DeleteButton>
+          <S.ConfirmButton onClick={handleMaintainGroupClick}>유지하기</S.ConfirmButton>
+        </S.ButtonsContainer>
+      </S.ConfirmModalContent>
+    </Modal>
   );
 };
 

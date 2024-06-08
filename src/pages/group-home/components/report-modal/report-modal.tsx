@@ -1,44 +1,24 @@
-import { useState } from 'react';
 import Modal from '@components/modal/modal';
-import ModalHeader from '@components/modal/modal-header';
 import styled from 'styled-components';
 import ReportChattingBox from './report-chatting-box';
 import ReportMember from './report-member';
 import ReportTime from './report-time';
 import ReportTopicList from './report-topic-list';
 interface GroupModalProps {
-  children: React.ReactNode;
+  isOpen: boolean;
+  onClose: () => void;
 }
 
-const ReportModal = ({ children }: GroupModalProps) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleModalClose = () => {
-    setIsOpen(false);
-  };
-
-  const handleOpenButtonClick = () => {
-    setIsOpen(true);
-  };
-
-  const handleCloseButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
-    setIsOpen(false);
-  };
-
+const ReportModal = ({ isOpen, onClose }: GroupModalProps) => {
   return (
-    <button onClick={handleOpenButtonClick}>
-      {children}
-      <Modal isOpen={isOpen} onClose={handleModalClose}>
-        <ModalHeader headerTitle="회의주제" onClose={handleCloseButtonClick} />
-        <S.ReportContent>
-          <ReportTopicList />
-          <ReportMember />
-          <ReportTime />
-          <ReportChattingBox />
-        </S.ReportContent>
-      </Modal>
-    </button>
+    <Modal isOpen={isOpen} onClose={onClose} headerTitle="회의주제">
+      <S.ReportContent>
+        <ReportTopicList />
+        <ReportMember />
+        <ReportTime />
+        <ReportChattingBox />
+      </S.ReportContent>
+    </Modal>
   );
 };
 
