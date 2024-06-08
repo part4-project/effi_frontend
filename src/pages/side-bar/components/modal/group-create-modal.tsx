@@ -5,7 +5,7 @@ import ModalHeader from '@components/modal/modal-header';
 import styled from 'styled-components';
 
 const primaryBtn = 'primary';
-const disableBtn = 'disable';
+const secondaryBtn = 'secondary';
 
 interface GroupModalProps {
   children: React.ReactNode;
@@ -13,7 +13,7 @@ interface GroupModalProps {
 
 const GroupCreateModal = ({ children }: GroupModalProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [btnType, setBtnType] = useState<'disable' | 'primary' | 'secondary'>(disableBtn);
+  const [btnType, setBtnType] = useState<'disable' | 'primary' | 'secondary'>(secondaryBtn);
 
   const handleModalClose = () => {
     setIsOpen(false);
@@ -29,7 +29,7 @@ const GroupCreateModal = ({ children }: GroupModalProps) => {
   };
 
   const handleNameInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.target.value ? setBtnType(primaryBtn) : setBtnType(disableBtn);
+    e.target.value ? setBtnType(primaryBtn) : setBtnType(secondaryBtn);
   };
 
   return (
@@ -37,10 +37,12 @@ const GroupCreateModal = ({ children }: GroupModalProps) => {
       {children}
       <Modal isOpen={isOpen} onClose={handleModalClose}>
         <S.ModalWrap>
-          <ModalHeader headerTitle="그룹생성" onClose={handleCloseButtonClick} />
+          <ModalHeader headerTitle="그룹 생성하기" onClose={handleCloseButtonClick} />
           <S.ModalContent>
-            <S.GroupNameInput type="text" placeholder="그룹 이름을 작성하세요" onInput={handleNameInput} />
-            <ModalButton type={btnType}>생성</ModalButton>
+            <S.GroupNameBox>
+              <S.GroupNameInput type="text" placeholder="그룹 이름을 작성하세요" onInput={handleNameInput} />
+            </S.GroupNameBox>
+            <ModalButton type={btnType}>생성하기</ModalButton>
           </S.ModalContent>
         </S.ModalWrap>
       </Modal>
@@ -58,19 +60,23 @@ const S = {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: end;
     gap: 24px;
   `,
-  GroupNameInput: styled.input`
-    background-color: var(--gray03);
-    border: 1px solid var(--gray01);
-    border-radius: 5px;
-    padding: 12px 15px;
+  GroupNameBox: styled.div`
     width: 100%;
+    border-bottom: 1px solid var(--gray01);
+    padding: 10px;
+  `,
+  GroupNameInput: styled.input`
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 35px;
+    color: var(--blue05);
     &::placeholder {
       color: var(--gray02);
-      font-size: 14px;
-      font-weight: 500;
+      font-size: 32px;
+      font-weight: 700;
     }
   `,
 };
