@@ -23,9 +23,13 @@ const ForceQuitToast = ({ isToastOpen, isToastAnimClose }: ForceQuitToastProps) 
 
   return (
     <S.Container $isToastAnimClose={isToastAnimClose}>
-      <p>(⊙x⊙;) 저런!</p>
-      <p> 혼자 남으셨군요! </p>
-      <p>당신의 전기세를 위해, 5분 뒤 회의가 종료됩니다.</p>
+      <S.WarningText>
+        (⊙x⊙;)
+        <br />
+        저런! 혼자 남으셨군요!
+        <br />
+        당신의 전기세를 위해, 5분 뒤 회의가 종료됩니다.
+      </S.WarningText>
       <S.Timer>{formatDurationFromSeconds(currElapsedSeconds)}</S.Timer>
     </S.Container>
   );
@@ -34,7 +38,6 @@ export default ForceQuitToast;
 
 const S = {
   Container: styled.div<{ $isToastAnimClose: boolean }>`
-    padding: 40px;
     display: flex;
     flex-direction: column;
     padding: 15px;
@@ -65,27 +68,18 @@ const S = {
         transform: translateY(-200%);
       }
     }
-
     animation: slideIn 0.5s ease-in-out forwards;
     animation: ${({ $isToastAnimClose }) => $isToastAnimClose && 'slideOut 0.5s ease-in-out forwards'};
-
-    p {
-      color: var(--white);
-      text-align: center;
-      font-family: Pretendard;
-      font-size: 16px;
-      font-style: normal;
-      font-weight: 700;
-      line-height: normal;
-    }
+  `,
+  WarningText: styled.p`
+    color: var(--white);
+    font-size: 15px;
+    font-weight: 700;
   `,
   Timer: styled.div`
     margin-top: 20px;
     color: #f9667b;
-    font-family: Pretendard;
     font-size: 20px;
-    font-style: normal;
     font-weight: 700;
-    line-height: normal;
   `,
 };

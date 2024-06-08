@@ -71,7 +71,7 @@ const S = {
     height: 28px;
     background-color: inherit;
     outline: none;
-    font-family: Pretendard;
+    font-family: 'Pretendard';
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
@@ -91,7 +91,7 @@ const S = {
     background: var(--gray-01, #9e9e9e);
     color: var(--white);
     text-align: center;
-    font-family: Pretendard;
+    font-family: 'Pretendard';
     font-size: 16px;
     font-style: normal;
     font-weight: 700;

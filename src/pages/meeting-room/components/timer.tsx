@@ -30,10 +30,10 @@ const Timer = ({
   }, [isMeetingFinished]);
 
   return (
-    <S.Container $isTimeOver={isDurationOver}>
-      <S.Img src={isDurationOver ? clockOverIcon : clockIcon} alt="타이머" />
-      <p>{isDurationOver ? '초과시간' : '시작시간'}</p>
-      <p>{formatDurationFromSeconds(currElapsedSeconds)}</p>
+    <S.Container>
+      <S.TimerImg src={isDurationOver ? clockOverIcon : clockIcon} alt="타이머" />
+      <S.TimerText $isDurationOver={isDurationOver}>{isDurationOver ? '초과시간' : '시작시간'}</S.TimerText>
+      <S.TimerText $isDurationOver={isDurationOver}>{formatDurationFromSeconds(currElapsedSeconds)}</S.TimerText>
     </S.Container>
   );
 };
@@ -41,20 +41,20 @@ const Timer = ({
 export default Timer;
 
 const S = {
-  Container: styled.div<{ $isTimeOver: boolean }>`
+  Container: styled.div`
     display: flex;
     align-items: center;
     gap: 10px;
-    p {
-      color: ${({ $isTimeOver }) => ($isTimeOver ? '#F9667B ' : 'var(--gray01)')};
-      text-align: center;
-      font-weight: 700;
-      line-height: 28px; /* 175% */
-      letter-spacing: -0.6px;
-    }
   `,
-  Img: styled.img`
+  TimerImg: styled.img`
     width: 24px;
     height: 24px;
+  `,
+  TimerText: styled.p<{ $isDurationOver: boolean }>`
+    color: ${({ $isDurationOver }) => ($isDurationOver ? '#F9667B ' : 'var(--gray01)')};
+    text-align: center;
+    font-weight: 700;
+    line-height: 28px;
+    letter-spacing: -0.6px;
   `,
 };
