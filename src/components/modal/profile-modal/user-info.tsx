@@ -31,7 +31,7 @@ const UserInfo = () => {
       <S.ProfileImgInputSection>
         <S.ProfileImgInputWrapper>
           <S.ProfileImgInputLabel htmlFor="imgInput" />
-          <S.ProfileImgInput type="file" id="imgInput" accept="image/*" onChange={handleImgInputChange} />
+          <S.ProfileImgInput type="file" id="imgInput" accept=".jpg, .jpeg, .png" onChange={handleImgInputChange} />
           <S.ProfileImg src={imgSrc} alt="Profile Image" />
         </S.ProfileImgInputWrapper>
       </S.ProfileImgInputSection>
