@@ -51,25 +51,19 @@ const S = {
     gap: 30px;
     padding: 40px 20px;
   `,
-  ModalHeader: styled.div`
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  `,
-  ModalTitle: styled.div``,
-  CloseBtn: styled.button``,
   ModalFooter: styled.div`
     margin-top: 8px;
-    width: 100%;
     display: flex;
     align-items: end;
     justify-content: space-between;
   `,
-  GroupDisbandment: styled.button`
-    cursor: pointer;
-    color: #e74133;
+  GroupDisbandment: styled.div`
+    color: var(--gray01);
     font-weight: 500;
     text-decoration: underline;
+    &:hover {
+      cursor: pointer;
+      color: #e74133;
+    }
   `,
 };

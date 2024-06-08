@@ -17,7 +17,7 @@ const Topic = ({ isCompleted, topicName, onClick, type = 'report-modal' }: Topic
         $isCompleted={isCompleted}
         onClick={type === 'meeting-room' ? onClick : undefined}
       >
-        {isCompleted && <img src={checkMark} alt="체크" />}
+        {isCompleted && <S.CheckImg src={checkMark} alt="체크" />}
       </S.TopicInCompleted>
       <S.TopicTitle $type={type}>{topicName}</S.TopicTitle>
       {type === 'meeting-room' && <ModifyDeleteButton />}
@@ -54,14 +54,14 @@ const S = {
     height: 25px;
     border-radius: 100%;
     position: relative;
-    img {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 16px;
-      height: 16px;
-    }
+  `,
+  CheckImg: styled.img`
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 16px;
+    height: 16px;
   `,
   TopicTitle: styled.p<{ $type: TopicProps['type'] }>`
     flex-grow: 1;

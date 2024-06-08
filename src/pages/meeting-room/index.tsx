@@ -36,7 +36,10 @@ const MeetingRoom = () => {
     setMeetingOverTime(time);
   };
 
-  console.log('total: ', meetingTotalTime, 'over', meetingOverTime);
+  const handleMeetingFinsishButtonClick = () => {
+    setIsMeetingFinished(true);
+    console.log('total: ', meetingTotalTime, 'over', meetingOverTime);
+  };
 
   useEffect(() => {
     if (participatedMember.length === 1) handleToastChange(true);
@@ -57,8 +60,8 @@ const MeetingRoom = () => {
           <button onClick={handleRemoveCamButtonClick} style={{ zIndex: 99, color: '#a6a6a6' }}>
             RemoveCam -
           </button>
-          <button onClick={() => setIsMeetingFinished(true)} style={{ zIndex: 99, color: '#a6a6a6' }}>
-            Meeting 시간 콘솔 출력
+          <button onClick={handleMeetingFinsishButtonClick} style={{ zIndex: 99, color: '#a6a6a6' }}>
+            Meeting 끝: 시간 콘솔 출력
           </button>
           <Timer
             targetDurationInSeconds={calculateDurationInSeconds(
@@ -97,7 +100,6 @@ export default MeetingRoom;
 const S = {
   Container: styled.div`
     display: flex;
-    max-width: 1920px;
     width: 100%;
     height: 100vh;
     background-color: #212322;
@@ -124,8 +126,8 @@ const S = {
     visibility: hidden;
     opacity: 0;
     transition:
-      visibility 0s,
-      opacity 0.3s linear;
+      visibility 0.3s,
+      opacity 0.3s;
     position: absolute;
     top: 0;
     z-index: 10;
@@ -165,8 +167,8 @@ const S = {
     visibility: hidden;
     opacity: 0;
     transition:
-      visibility 0s,
-      opacity 0.3s linear;
+      visibility 0.3s,
+      opacity 0.3s;
     position: absolute;
     bottom: 0;
   `,
