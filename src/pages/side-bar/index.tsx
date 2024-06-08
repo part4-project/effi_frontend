@@ -1,5 +1,4 @@
 import AddGroupBtn from '@assets/add-group-btn.svg';
-import Polygon from '@assets/icons/polygon-left.svg';
 import LobbyBtn from '@assets/lobby-btn.svg';
 import GroupCreateModal from '@pages/side-bar/components/modal/group-create-modal';
 import { device } from '@styles/breakpoints';
@@ -89,14 +88,10 @@ const S = {
       visibility 0.2s ease-in-out;
 
     &:after {
-      /* border-bottom: 10px solid transparent;
-      border-left: 10px solid transparent;
-      border-right: 10px solid var(--blue01);
-      border-top: 10px solid transparent; */
       content: '';
       width: 14px;
       height: 13px;
-      background-image: url(${Polygon});
+      background-image: url('/polygon-left.svg');
       background-size: cover;
       background-repeat: no-repeat;
       position: absolute;
