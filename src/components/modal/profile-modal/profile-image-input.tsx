@@ -16,7 +16,7 @@ const ProfileImageInput = () => {
     <S.Container>
       <S.ProfileImgInputWrapper>
         <S.ProfileImgInputLabel htmlFor="imgInput" />
-        <S.ProfileImgInput type="file" id="imgInput" accept=".jpg, .jpeg, .png" onChange={handleImgInputChange} />
+        <S.ProfileImgInput type="file" id="imgInput" accept=".jpg, .jpeg, .png, .svg" onChange={handleImgInputChange} />
         <S.ProfileImg src={imgSrc} alt="Profile Image" />
       </S.ProfileImgInputWrapper>
     </S.Container>

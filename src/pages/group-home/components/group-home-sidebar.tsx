@@ -42,7 +42,7 @@ const S = {
     padding: 33px 28px;
     position: relative;
     border-radius: 0 20px 20px 0;
-    color: #404040;
+    color: var(--gray06);
   `,
 
   GroupName: styled.span`
