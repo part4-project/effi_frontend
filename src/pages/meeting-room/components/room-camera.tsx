@@ -1,6 +1,6 @@
 import { device } from '@styles/breakpoints';
 import styled from 'styled-components';
-import CalculateCameraWidth from '../utils/calculate-camera-width';
+import { calculateCameraWidth } from '../utils/calculate-camera-width';
 
 interface RoomCameraProps {
   cameraCount: number;
@@ -10,8 +10,8 @@ interface RoomCameraProps {
 const RoomCamera = ({ cameraCount, name }: RoomCameraProps) => {
   return (
     <S.Container $cameraCount={cameraCount}>
-      <video src=""></video>
-      <div>{name}</div>
+      <S.Video src="" />
+      <S.Name>{name}</S.Name>
     </S.Container>
   );
 };
@@ -22,7 +22,8 @@ const S = {
   Container: styled.div<{ $cameraCount: number }>`
     position: relative;
     aspect-ratio: 16 / 9;
-    width: ${({ $cameraCount }) => CalculateCameraWidth($cameraCount)};
+    width: ${({ $cameraCount }) => calculateCameraWidth($cameraCount, 'width')};
+    max-width: ${({ $cameraCount }) => calculateCameraWidth($cameraCount, 'max-width')};
     min-width: 350px;
     @media ${device.tablet} {
       width: ${({ $cameraCount }) => ($cameraCount === 1 ? 'calc(70% - 10px)' : 'calc(40% - 10px)')};
@@ -32,25 +33,23 @@ const S = {
       width: calc(70% - 10px);
       min-width: 250px;
     }
-    video {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: 10px;
-      background-color: var(--black);
-    }
-    div {
-      position: absolute;
-      background-color: #212322;
-      padding: 5px 10px;
-      border-radius: 5px;
-      opacity: 0.8;
-      color: var(--white);
-      text-align: center;
-      font-weight: 700;
-      line-height: normal;
-      bottom: 8px;
-      left: 8px;
-    }
+  `,
+  Video: styled.video`
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    background-color: var(--black);
+  `,
+  Name: styled.p`
+    position: absolute;
+    background-color: #212322;
+    padding: 5px 10px;
+    border-radius: 5px;
+    opacity: 0.8;
+    color: var(--white);
+    font-weight: 700;
+    bottom: 8px;
+    left: 8px;
   `,
 };

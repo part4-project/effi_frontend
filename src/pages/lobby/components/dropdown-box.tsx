@@ -8,12 +8,10 @@ interface DropDownBox extends React.PropsWithChildren {
 
 const DropDownBox = ({ isDropdownOpen, children }: DropDownBox) => {
   return (
-    <>
-      <S.Container $isDropdownOpen={isDropdownOpen}>
-        <S.Polygon src={polygonTopIcon} alt="위쪽" />
-        <S.ListBox>{children}</S.ListBox>
-      </S.Container>
-    </>
+    <S.Container $isDropdownOpen={isDropdownOpen}>
+      <S.Polygon src={polygonTopIcon} alt="위쪽" />
+      <S.ListBox>{children}</S.ListBox>
+    </S.Container>
   );
 };
 
