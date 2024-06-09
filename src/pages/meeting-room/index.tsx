@@ -54,13 +54,13 @@ const MeetingRoom = () => {
       <S.LeftSection>
         <S.Nav className="nav">
           <S.Title>{MEETING_ROOM.title}</S.Title>
-          <button onClick={handleAddCamButtonClick} style={{ zIndex: 99, color: '#a6a6a6' }}>
+          <button onClick={handleAddCamButtonClick} style={{ zIndex: 99, color: 'var(--gray05)' }}>
             AddCam +
           </button>
-          <button onClick={handleRemoveCamButtonClick} style={{ zIndex: 99, color: '#a6a6a6' }}>
+          <button onClick={handleRemoveCamButtonClick} style={{ zIndex: 99, color: 'var(--gray05)' }}>
             RemoveCam -
           </button>
-          <button onClick={handleMeetingFinsishButtonClick} style={{ zIndex: 99, color: '#a6a6a6' }}>
+          <button onClick={handleMeetingFinsishButtonClick} style={{ zIndex: 99, color: 'var(--gray05)' }}>
             Meeting 끝: 시간 콘솔 출력
           </button>
           <Timer
@@ -138,7 +138,7 @@ const S = {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #a6a6a6;
+    color: var(--gray05);
     font-size: 26px;
     font-style: normal;
     font-weight: 900;

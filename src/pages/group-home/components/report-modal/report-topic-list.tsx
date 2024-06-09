@@ -31,7 +31,7 @@ const S = {
 
   TopicAgenda: styled.p`
     background: var(--white);
-    color: #a6a6a6;
+    color: var(--gray05);
     font-size: 20px;
     font-weight: 900;
     line-height: 35px;
