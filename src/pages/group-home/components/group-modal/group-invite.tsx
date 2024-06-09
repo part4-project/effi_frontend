@@ -17,7 +17,7 @@ export default GroupInvite;
 const S = {
   EmailLabel: styled.label`
     display: inline-block;
-    color: #404040;
+    color: var(--gray06);
     font-size: 18px;
     font-weight: 700;
     margin-bottom: 6px;

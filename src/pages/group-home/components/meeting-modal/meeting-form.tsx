@@ -282,7 +282,7 @@ const S = {
   TopicList: styled.div`
     display: flex;
     justify-content: space-between;
-    border-bottom: 1px solid #bdbdbd;
+    border-bottom: 1px solid var(--gray02);
     padding: 8px 0;
 
     &:last-child {
