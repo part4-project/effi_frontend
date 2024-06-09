@@ -32,14 +32,5 @@ const S = {
     flex-direction: column;
     padding: 20px;
     overflow: auto;
-    width: 100%;
-
-    &::-webkit-scrollbar-thumb {
-      background: #d6d6d7;
-    }
-
-    &::-webkit-scrollbar-track {
-      background: var(--gray03);
-    }
   `,
 };

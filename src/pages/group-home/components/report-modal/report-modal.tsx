@@ -54,7 +54,6 @@ const S = {
       'member chat'
       'time chat';
     max-width: 962px;
-    width: 100%;
     gap: 20px;
     margin: 10px;
   `,

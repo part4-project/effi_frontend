@@ -46,54 +46,5 @@ const S = {
     padding: 10px;
     width: 100%;
     overflow: auto;
-
-    &::-webkit-scrollbar-thumb {
-      background: #d6d6d7;
-    }
-
-    &::-webkit-scrollbar-track {
-      background: var(--gray03);
-    }
-  `,
-
-  TopicList: styled.li`
-    display: flex;
-    gap: 10px;
-    margin-top: 8px;
-    padding: 4px;
-    border-bottom: 2px solid var(--gray03);
-  `,
-
-  TopicCompleted: styled.span`
-    position: relative;
-    width: 25px;
-    height: 25px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  `,
-
-  TopicCompletedCircleIcon: styled.img`
-    width: 25px;
-    height: 25px;
-  `,
-  TopicCompletedCheckIcon: styled.img`
-    position: absolute;
-    width: 16px;
-    height: 16px;
-  `,
-
-  TopicInCompleted: styled.img`
-    width: 25px;
-    height: 25px;
-  `,
-
-  TopicTitle: styled.p`
-    width: 100%;
-    color: #091a37;
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 28px;
-    letter-spacing: -0.6px;
   `,
 };
