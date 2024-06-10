@@ -5,9 +5,9 @@ import onScheduledCharacter from '@assets/icons/meeting-reserve-chracter.svg';
 import { MEETING_ROOM, TOPIC } from '@constants/mockdata';
 import { TMyScheduleItem } from '@constants/mockdata.type';
 import MeetingBox from '@pages/group-home/components/meeting-box';
-import MeetingModal from '@pages/group-home/components/meeting-modal/meeting-modal';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import MeetingModalButton from './meeting-modal/meeting-modal-button';
 
 interface TMeetingProps {
   isOnLive: boolean;
@@ -46,9 +46,9 @@ const Meetings = ({ isOnLive, isAdmin, scheduledMeeting }: TMeetingProps) => {
         {scheduledMeeting && (
           <S.StyledModal>
             {isAdmin && (
-              <MeetingModal title="회의 수정" data={MEETING_ROOM} topicData={TOPIC}>
+              <MeetingModalButton title="회의 수정" data={MEETING_ROOM} topicData={TOPIC}>
                 <S.EditIcon src={editMeetingIcon} />
-              </MeetingModal>
+              </MeetingModalButton>
             )}
           </S.StyledModal>
         )}
