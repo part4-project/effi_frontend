@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { zIndex } from '@styles/z-index';
 import styled from 'styled-components';
 
 interface TToastProps {
@@ -24,7 +25,7 @@ const S = {
     opacity: 0.8;
     width: 364px;
     height: 50px;
-    z-index: 9999;
+    z-index: ${zIndex.toast};
     border-radius: 10px;
     font-weight: bold;
   `,
