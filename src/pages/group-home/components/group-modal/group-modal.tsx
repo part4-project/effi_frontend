@@ -57,7 +57,6 @@ const S = {
     align-items: end;
     justify-content: space-between;
   `,
-
   GroupDisbandment: styled.div`
     color: var(--gray01);
     font-weight: 500;
