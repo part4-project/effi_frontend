@@ -27,7 +27,7 @@ export default DropDownSelector;
 const S = {
   Container: styled.ul`
     position: absolute;
-    width: 90px;
+    width: 100px;
     height: 150px;
     border-radius: 5px;
     border: 1px solid var(--gray01);
