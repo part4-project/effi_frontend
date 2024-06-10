@@ -6,12 +6,12 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import ProfileImageInput from './profile-image-input';
 
-interface GroupModalProps {
+interface ProfileModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-const ProfileModal = ({ isOpen, onClose }: GroupModalProps) => {
+const ProfileModal = ({ isOpen, onClose }: ProfileModalProps) => {
   const handleResignClick = () => {
     onClose();
   };

@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import GroupCreateModal from '@pages/side-bar/components/modal/group-create-modal';
 
-interface GroupModalProps {
+interface GroupCreateModalButtonProps {
   children: React.ReactNode;
 }
 
-const GroupCreateModalButton = ({ children }: GroupModalProps) => {
+const GroupCreateModalButton = ({ children }: GroupCreateModalButtonProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleModalClose = () => {

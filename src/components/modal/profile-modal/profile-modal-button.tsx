@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import ProfileModal from '@components/modal/profile-modal/profile-modal';
 
-interface GroupModalProps {
+interface ProfileModalButtonProps {
   children: React.ReactNode;
 }
 
-const ProfileModalButton = ({ children }: GroupModalProps) => {
+const ProfileModalButton = ({ children }: ProfileModalButtonProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleModalClose = () => {

@@ -2,14 +2,14 @@ import { useState } from 'react';
 import { TMeetingRoom, TTopic } from '@constants/mockdata.type';
 import MeetingModal from '@/pages/group-home/components/meeting-modal/meeting-modal';
 
-interface GroupModalProps {
+interface MeetingModalButtonProps {
   children: React.ReactNode;
   title: string;
   data?: TMeetingRoom;
   topicData?: TTopic;
 }
 
-const MeetingModalButton = ({ children, title, data, topicData }: GroupModalProps) => {
+const MeetingModalButton = ({ children, title, data, topicData }: MeetingModalButtonProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleModalClose = () => {

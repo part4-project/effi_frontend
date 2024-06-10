@@ -4,12 +4,12 @@ import ReportChattingBox from './report-chatting-box';
 import ReportMember from './report-member';
 import ReportTime from './report-time';
 import ReportTopicList from './report-topic-list';
-interface GroupModalProps {
+interface ReportModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-const ReportModal = ({ isOpen, onClose }: GroupModalProps) => {
+const ReportModal = ({ isOpen, onClose }: ReportModalProps) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose} headerTitle="회의주제">
       <S.ReportContent>

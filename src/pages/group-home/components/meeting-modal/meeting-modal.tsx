@@ -2,7 +2,7 @@ import Modal from '@components/modal/modal';
 import { TMeetingRoom, TTopic } from '@constants/mockdata.type';
 import MeetingForm from './meeting-form/meeting-form';
 
-interface GroupModalProps {
+interface MeetingModalProps {
   isOpen: boolean;
   onClose: () => void;
   title: string;
@@ -10,7 +10,7 @@ interface GroupModalProps {
   topicData?: TTopic;
 }
 
-const MeetingModal = ({ isOpen, onClose, title, data, topicData }: GroupModalProps) => {
+const MeetingModal = ({ isOpen, onClose, title, data, topicData }: MeetingModalProps) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose} headerTitle={title}>
       <MeetingForm data={data} topicData={topicData} />

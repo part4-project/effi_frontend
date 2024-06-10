@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import GroupModal from '@pages/group-home/components/group-modal/group-modal';
 
-interface GroupModalProps {
+interface GroupModalButtonProps {
   children: React.ReactNode;
 }
 
-const GroupModalButton = ({ children }: GroupModalProps) => {
+const GroupModalButton = ({ children }: GroupModalButtonProps) => {
   const [isOpen, setIsOpen] = useState({
     group: false,
     confirm: false,

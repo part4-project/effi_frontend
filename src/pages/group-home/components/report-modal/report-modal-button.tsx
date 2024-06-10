@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import ReportModal from '@pages/group-home/components/report-modal/report-modal';
 
-interface GroupModalProps {
+interface ReportModalProps {
   children: React.ReactNode;
 }
 
-const ReportModalButton = ({ children }: GroupModalProps) => {
+const ReportModalButton = ({ children }: ReportModalProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleModalClose = () => {
