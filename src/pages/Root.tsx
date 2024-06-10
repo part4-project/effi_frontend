@@ -1,3 +1,4 @@
+import Toaster from '@components/toast/toaster';
 import NavBar from '@pages/nav-bar';
 import SideBar from '@pages/side-bar';
 import { device } from '@styles/breakpoints';
@@ -22,6 +23,7 @@ const Root = () => {
       )}
       <GlobalStyle />
       <S.Main $isSubSection={isSubSection}>
+        <Toaster />
         <Outlet />
       </S.Main>
     </>

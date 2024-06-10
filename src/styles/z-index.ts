@@ -1,4 +1,5 @@
 const zIndex = {
+  toast: 9999,
   modal: 100,
   backdrop: 99,
   popOver: 98,
