@@ -3,6 +3,7 @@ import ModalButton from '@components/modal/modal-button';
 import InvitedList from '@components/modal/profile-modal/invited-list';
 import NicknameInput from '@components/modal/profile-modal/nickname-input';
 import { userStore } from '@stores/user-store';
+import { deleteCookie } from '@utils/cookie';
 import styled from 'styled-components';
 import ProfileImageInput from './profile-image-input';
 
@@ -19,6 +20,7 @@ const ProfileModal = ({ isOpen, onClose }: ProfileModalProps) => {
   };
 
   const handleLogoutClick = () => {
+    deleteCookie('accessToken');
     logout();
   };
 

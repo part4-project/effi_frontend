@@ -13,11 +13,10 @@ const GoogleOAuth = () => {
       return axios.get(`${import.meta.env.VITE_SERVER_URL}/user/login?code=${code}`);
     },
     onSuccess: (response) => {
-      console.log(`response = ${response}`);
-      const data = response.data;
-      setCookie('accessToken', data.accessToken);
+      const accessToken = response.headers['Authorization'].split(' ')[1];
+      setCookie('accessToken', accessToken);
       login();
-      //navigate('/');
+      navigate('/');
     },
     onError: (error) => {
       console.error(error);

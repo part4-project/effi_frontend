@@ -3,10 +3,10 @@ import ModifyDeleteButton from '@components/meeting/modify-delete-button';
 import ModalButton from '@components/modal/modal-button';
 import { EXPECTED_END_TIME_LIST } from '@constants/mockdata';
 import { TMeetingRoom, TTopic } from '@constants/mockdata.type';
+import DropDownSelector from '@pages/group-home/components/meeting-modal/meeting-form/dropdown-selector';
 import { formatDateToString } from '@pages/group-home/utils/format-date-to-string';
 import DatePicker from 'react-datepicker';
 import styled from 'styled-components';
-import DropDownSelector from './dropdown-selector';
 import 'react-datepicker/dist/react-datepicker.css';
 
 interface TMeetingFormProps {
