@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import editIcon from '@assets/icons/edit.svg';
 import { GROUP } from '@constants/mockdata';
+import { useToast } from '@hooks/use-toast';
 import styled from 'styled-components';
 
 interface TGroupNameInputProps {
@@ -8,6 +9,7 @@ interface TGroupNameInputProps {
 }
 
 const GroupNameInput = ({ isAdmin }: TGroupNameInputProps) => {
+  const { toast } = useToast();
   const [isEditing, setIsEditing] = useState(false);
   const [isInputValueExist, setIsInputValueExist] = useState(true);
   const [groupName, setGroupName] = useState(GROUP.room_name);
@@ -25,11 +27,11 @@ const GroupNameInput = ({ isAdmin }: TGroupNameInputProps) => {
   const handleEditCompleteButtonClick = useCallback(() => {
     if (groupName.length) {
       setIsEditing(false);
-      // 그룹 이름 변경 api
+      toast('그룹명이 변경되었습니다.');
     } else {
       setIsInputValueExist(false);
     }
-  }, [groupName.length]);
+  }, [groupName.length, toast]);
 
   useEffect(() => {
     if (isEditing && inputRef.current) {
@@ -51,6 +53,7 @@ const GroupNameInput = ({ isAdmin }: TGroupNameInputProps) => {
       };
     }
   }, [isEditing, handleEditCompleteButtonClick]);
+
   return (
     <div>
       {isEditing ? (
