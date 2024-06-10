@@ -1,22 +1,23 @@
 import groupLeaderBadge from '@assets/icons/group-leader-badge.svg';
-import editIcon from '@assets/icons/kebab.svg';
-import { GROUP, GROUP_MEMBER } from '@constants/mockdata';
+import { GROUP_MEMBER } from '@constants/mockdata';
+import GroupNameInput from '@pages/group-home/components/sidebar/group-name-input';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-const GroupHomeSideBar = () => {
+interface TGroupHomeSideBarProps {
+  isAdmin: boolean;
+}
+
+const GroupHomeSideBar = ({ isAdmin }: TGroupHomeSideBarProps) => {
   const navigate = useNavigate();
+
   const handleLeaveGroupButtonClick = () => {
     navigate('/');
   };
 
   return (
     <S.Container>
-      <S.GroupName>{GROUP.room_name}</S.GroupName>
-      <S.GroupNameSub>
-        <S.GroupCode>#{GROUP.code}</S.GroupCode>
-        <S.EditIcon src={editIcon} />
-      </S.GroupNameSub>
+      <GroupNameInput isAdmin={isAdmin} />
 
       <S.GroupMemberLists>
         {GROUP_MEMBER.member_list.map((member) => (
@@ -43,27 +44,6 @@ const S = {
     position: relative;
     border-radius: 0 20px 20px 0;
     color: var(--gray06);
-  `,
-
-  GroupName: styled.span`
-    font-weight: bold;
-    font-size: 20px;
-  `,
-
-  GroupNameSub: styled.div`
-    margin-top: 5px;
-    font-size: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  `,
-
-  GroupCode: styled.span`
-    color: var(--gray02);
-  `,
-
-  EditIcon: styled.img`
-    width: 20px;
   `,
 
   GroupMemberLists: styled.ul`
