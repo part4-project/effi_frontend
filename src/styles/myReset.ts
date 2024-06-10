@@ -6,11 +6,6 @@ const myReset = css`
     padding: 0;
     box-sizing: border-box;
     color: inherit;
-  }
-
-  html,
-  body {
-    overflow-x: hidden;
     font-family:
       Pretendard,
       -apple-system,
@@ -26,6 +21,11 @@ const myReset = css`
       'Segoe UI Emoji',
       'Segoe UI Symbol',
       sans-serif;
+  }
+
+  html,
+  body {
+    overflow-x: hidden;
   }
 
   body {
