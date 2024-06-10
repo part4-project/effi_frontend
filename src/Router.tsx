@@ -1,13 +1,29 @@
 import * as Page from '@pages/index';
-import { userStore } from '@stores/user-store';
-import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 const Router = () => {
-  const { isAuth } = userStore();
-
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<Page.Root />}>
+          <Route index element={<Page.Lobby />} />
+          <Route path="auth" element={<Page.Auth />} />
+          <Route path="login" element={<Page.Login />} />
+          <Route path="group-home" element={<Page.GroupHome />} />
+          <Route path="meeting-room" element={<Page.MeetingRoom />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
+};
+
+export default Router;
+
+/*
+//로그인 인증 성공적으로 마치면 적용 예정
+import { userStore } from '@stores/user-store';
+const { isAuth } = userStore();
+<Routes>
         {isAuth ? (
           <Route path="/" element={<Page.Root />}>
             <Route index element={<Page.Lobby />} />
@@ -17,14 +33,10 @@ const Router = () => {
           </Route>
         ) : (
           <Route element={<Page.Root />}>
-            <Route path="/login" element={<Page.Login />} />
             <Route path="/auth" element={<Page.Auth />} />
+            <Route path="/login" element={<Page.Login />} />
             <Route path="*" element={<Navigate to="/login" />} />
           </Route>
         )}
       </Routes>
-    </BrowserRouter>
-  );
-};
-
-export default Router;
+*/

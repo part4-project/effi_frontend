@@ -1,13 +1,12 @@
 import AddGroupBtn from '@assets/add-group-btn.svg';
-import Polygon from '@assets/icons/polygon-left.svg';
 import LobbyBtn from '@assets/lobby-btn.svg';
-import GroupCreateModal from '@pages/side-bar/components/modal/group-create-modal';
+import GroupList from '@pages/side-bar/components/group-list';
+import GroupCreateModalButton from '@pages/side-bar/components/modal/group-create-modal-button';
 import { device } from '@styles/breakpoints';
 import { navBarHeight, sideBarWidth } from '@styles/subsection-size';
 import { zIndex } from '@styles/z-index';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import GroupList from './components/group-list';
 
 const SideBar = () => {
   return (
@@ -20,9 +19,9 @@ const SideBar = () => {
           <S.Balloon>로비로 가기</S.Balloon>
         </S.Trigger>
         <S.Trigger>
-          <GroupCreateModal>
+          <GroupCreateModalButton>
             <img src={AddGroupBtn} alt="add" />
-          </GroupCreateModal>
+          </GroupCreateModalButton>
           <S.Balloon>그룹 추가하기</S.Balloon>
         </S.Trigger>
         <GroupList />
@@ -89,14 +88,10 @@ const S = {
       visibility 0.2s ease-in-out;
 
     &:after {
-      /* border-bottom: 10px solid transparent;
-      border-left: 10px solid transparent;
-      border-right: 10px solid var(--blue01);
-      border-top: 10px solid transparent; */
       content: '';
       width: 14px;
       height: 13px;
-      background-image: url(${Polygon});
+      background-image: url('/polygon-left.svg');
       background-size: cover;
       background-repeat: no-repeat;
       position: absolute;

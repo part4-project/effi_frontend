@@ -1,10 +1,11 @@
-import defaultProfileImg from '@assets/default-profile.png';
+import { getRandomNum } from '@utils/get-random-num';
 
+const DEFAULT_PROFILE_NUM = 6;
 export const USER = {
   id: 1,
   nickname: '경수',
   email: 'effi@naver.com',
-  profile_img: defaultProfileImg,
+  profile_img: `/default-profile/default-profile${getRandomNum(DEFAULT_PROFILE_NUM)}.svg`,
   invited_group: [
     {
       id: 1,

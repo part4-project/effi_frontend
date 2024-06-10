@@ -1,4 +1,4 @@
-import { getCookie } from '@utils/cookie';
+import { getCookie, setCookie } from '@utils/cookie';
 import axios from 'axios';
 
 const instance = axios.create({
@@ -12,6 +12,7 @@ const instance = axios.create({
 instance.interceptors.request.use(
   (config) => {
     const accessToken = getCookie('accessToken');
+
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`;
     }
@@ -22,10 +23,7 @@ instance.interceptors.request.use(
   },
 );
 
-/*
-리프레쉬 토큰 관련
-
-// 인증 유효하지 않으면 accessToken 재발급
+//인증 유효하지 않으면 accessToken 재발급
 instance.interceptors.response.use(
   (response) => {
     return response;
@@ -33,11 +31,13 @@ instance.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
+    // 401 Unauthorized : 만료되었거나 올바르지 않은 토큰 형식
     if (error.response.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true; // 재시도 플래그 설정
+      // 재시도 플래그 설정
+      originalRequest._retry = true;
 
       try {
-        // 아직 경로 모름
+        // 경로 입력 예정
         const response = await axios.get(`경로 입력 예정`);
 
         const newAccessToken = response.data.accessToken;
@@ -55,6 +55,5 @@ instance.interceptors.response.use(
     return Promise.reject(error);
   },
 );
-*/
 
 export default instance;

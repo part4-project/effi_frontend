@@ -1,4 +1,4 @@
-import MeetingModal from '@pages/group-home/components/meeting-modal/meeting-modal';
+import MeetingModalButton from '@pages/group-home/components/meeting-modal/meeting-modal-button';
 import styled from 'styled-components';
 
 interface GroupListItemProps {
@@ -9,24 +9,23 @@ interface GroupListItemProps {
 
 const GroupListItem = ({ groupName, onClick, groupNameLength }: GroupListItemProps) => {
   return (
-    <MeetingModal title="회의 생성">
-      <S.Container $isLongGroupName={groupNameLength} onClick={onClick}>
+    <MeetingModalButton title="회의 생성">
+      <S.Container $groupNameLength={groupNameLength} onClick={onClick}>
         <S.FileImg>{groupName} </S.FileImg>
       </S.Container>
-    </MeetingModal>
+    </MeetingModalButton>
   );
 };
 
 export default GroupListItem;
 
 const S = {
-  Container: styled.div<{ $isLongGroupName: GroupListItemProps['groupNameLength'] }>`
-    width: ${({ $isLongGroupName }) => ($isLongGroupName === 'long' ? '180px' : '100px')};
+  Container: styled.div<{ $groupNameLength: GroupListItemProps['groupNameLength'] }>`
+    width: ${({ $groupNameLength }) => ($groupNameLength === 'long' ? '180px' : '100px')};
     height: 120px;
     margin: 9px 0 19px;
   `,
   FileImg: styled.div`
-    width: 100%;
     height: 100%;
     position: relative;
     clip-path: polygon(30px 0, 100% 0, 100% 100%, 0 100%, 0 30px);

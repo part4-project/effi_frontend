@@ -40,10 +40,8 @@ const Meetings = ({ isOnLive, isAdmin, scheduledMeeting }: TMeetingProps) => {
 
   return (
     <S.Container>
-      {/* 진행중인 회의 */}
       <MeetingBox {...liveMeetingProps} />
 
-      {/* 예약된 회의 */}
       <MeetingBox {...scheduledMeetingProps}>
         {scheduledMeeting && (
           <S.StyledModal>

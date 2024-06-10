@@ -1,4 +1,5 @@
 import groupLeaderBadge from '@assets/icons/group-leader-badge.svg';
+import editIcon from '@assets/icons/kebab.svg';
 import { GROUP, GROUP_MEMBER } from '@constants/mockdata';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -8,12 +9,13 @@ const GroupHomeSideBar = () => {
   const handleLeaveGroupButtonClick = () => {
     navigate('/');
   };
+
   return (
     <S.Container>
       <S.GroupName>{GROUP.room_name}</S.GroupName>
       <S.GroupNameSub>
         <S.GroupCode>#{GROUP.code}</S.GroupCode>
-        <S.EditIcon>연필</S.EditIcon>
+        <S.EditIcon src={editIcon} />
       </S.GroupNameSub>
 
       <S.GroupMemberLists>
@@ -40,7 +42,7 @@ const S = {
     padding: 33px 28px;
     position: relative;
     border-radius: 0 20px 20px 0;
-    color: #404040;
+    color: var(--gray06);
   `,
 
   GroupName: styled.span`
@@ -52,14 +54,17 @@ const S = {
     margin-top: 5px;
     font-size: 12px;
     display: flex;
+    align-items: center;
     justify-content: space-between;
   `,
 
   GroupCode: styled.span`
-    color: rgba(0, 0, 0, 0.3);
+    color: var(--gray02);
   `,
 
-  EditIcon: styled.span``,
+  EditIcon: styled.img`
+    width: 20px;
+  `,
 
   GroupMemberLists: styled.ul`
     margin-top: 25px;
@@ -69,7 +74,6 @@ const S = {
   `,
 
   GroupMemberList: styled.li`
-    font-size: 16px;
     display: flex;
     align-items: center;
     gap: 6px;
@@ -86,8 +90,7 @@ const S = {
     font-weight: bold;
     width: 125px;
     height: 31px;
-
-    border-radius: 20px;
+    border-radius: 50px;
     position: absolute;
     bottom: 40px;
     left: calc(50% - 125px / 2);

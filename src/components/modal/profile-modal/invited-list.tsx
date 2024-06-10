@@ -3,7 +3,7 @@ import inviteAcceptBlueIcon from '@assets/icons/invite-check-blue.svg';
 import inviteAcceptIcon from '@assets/icons/invite-check.svg';
 import inviteRejectIcon from '@assets/icons/invite-reject.svg';
 import { USER } from '@constants/mockdata';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const InvitedList = () => {
   const [acceptedGroups, setAcceptedGroups] = useState<{ [key: number]: boolean }>({});
@@ -28,11 +28,11 @@ const InvitedList = () => {
 
             <S.InvitedGroupButtons>
               {acceptedGroups[group.id] ? (
-                <img src={inviteAcceptBlueIcon} alt="Accepted" />
+                <S.AcceptButton src={inviteAcceptBlueIcon} alt="Accepted" />
               ) : (
-                <img src={inviteAcceptIcon} alt="Accept" onClick={() => handleAcceptButtonClick(group.id)} />
+                <S.AcceptButton src={inviteAcceptIcon} alt="Accept" onClick={() => handleAcceptButtonClick(group.id)} />
               )}
-              <img src={inviteRejectIcon} alt="Reject" />
+              <S.RejectButton src={inviteRejectIcon} alt="Reject" />
             </S.InvitedGroupButtons>
           </S.InvitedGroup>
         ))}
@@ -43,8 +43,13 @@ const InvitedList = () => {
 
 export default InvitedList;
 
+const BaseButton = css`
+  width: 30px;
+  cursor: pointer;
+`;
+
 const S = {
-  Container: styled.div`
+  Container: styled.section`
     margin-top: 48px;
     width: 100%;
   `,
@@ -62,12 +67,9 @@ const S = {
     overflow: auto;
     white-space: nowrap;
     padding: 12px 0 11px;
+
     &::-webkit-scrollbar {
       height: 4px;
-    }
-    &::-webkit-scrollbar-thumb {
-      background-color: #d6d6d7;
-      border-radius: 50px;
     }
     &::-webkit-scrollbar-track {
       border-radius: 50px;
@@ -79,7 +81,7 @@ const S = {
     padding: 10px;
     border-radius: 10px;
     transition: all 0.2s ease-in-out;
-    z-index: 9999;
+
     &:hover {
       box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.2);
       border: 2px solid var(--blue01);
@@ -108,7 +110,6 @@ const S = {
   GroupName: styled.span`
     color: var(--blue01);
     font-weight: 700;
-    font-size: 16px;
     margin-right: 5px;
   `,
 
@@ -123,9 +124,12 @@ const S = {
     justify-content: end;
     padding-right: 8px;
     gap: 23px;
-    img {
-      width: 30px;
-      cursor: pointer;
-    }
+  `,
+
+  AcceptButton: styled.img`
+    ${BaseButton}
+  `,
+  RejectButton: styled.img`
+    ${BaseButton}
   `,
 };

@@ -26,7 +26,7 @@ const RoomButton = ({ type, initialImg, changedImg }: RoomButtonProps) => {
 
   return (
     <S.RoomButton onClick={HANDLE_BUTTON_CLICKS[type]}>
-      <img src={btnImg} alt="버튼 이미지" />
+      <S.Img src={btnImg} alt="버튼 이미지" />
     </S.RoomButton>
   );
 };
@@ -42,9 +42,9 @@ const S = {
     display: flex;
     justify-content: center;
     align-items: center;
-    img {
-      width: 50px;
-      height: 50px;
-    }
+  `,
+  Img: styled.img`
+    width: 50px;
+    height: 50px;
   `,
 };

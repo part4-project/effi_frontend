@@ -1,6 +1,6 @@
 import testImg from '@assets/default-profile.png';
 import { TNoteItem } from '@constants/mockdata.type';
-import ReportModal from '@pages/group-home/components/report-modal/report-modal';
+import ReportModalButton from '@pages/group-home/components/report-modal/report-modal-button';
 import styled from 'styled-components';
 import { calculateCompletedPercentage } from '../utils/completed-percentage-calculate';
 
@@ -13,7 +13,7 @@ const MeetingNoteItem = ({ note }: TMeetingNoteItemProps) => {
 
   return (
     <S.Container>
-      <ReportModal>
+      <ReportModalButton>
         <S.MeetingNotesList>
           <S.MeetingTitleAndTimeContainer>
             <S.NoteTitle>{note.title}</S.NoteTitle>
@@ -40,7 +40,7 @@ const MeetingNoteItem = ({ note }: TMeetingNoteItemProps) => {
             </div>
           </S.MemberImgContainer>
         </S.MeetingNotesList>
-      </ReportModal>
+      </ReportModalButton>
     </S.Container>
   );
 };

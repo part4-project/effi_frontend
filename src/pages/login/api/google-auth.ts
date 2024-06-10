@@ -1,7 +1,7 @@
-import instance from '@api/axios-instance';
 import { userStore } from '@stores/user-store';
 import { useMutation } from '@tanstack/react-query';
 import { setCookie } from '@utils/cookie';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const GoogleOAuth = () => {
@@ -10,17 +10,14 @@ const GoogleOAuth = () => {
 
   const loginMutation = useMutation({
     mutationFn: (code: string) => {
-      return instance.post('/user/login', {
-        body: {
-          code: code,
-        },
-      });
+      return axios.get(`${import.meta.env.VITE_SERVER_URL}/user/login?code=${code}`);
     },
     onSuccess: (response) => {
+      console.log(`response = ${response}`);
       const data = response.data;
       setCookie('accessToken', data.accessToken);
       login();
-      navigate('/');
+      //navigate('/');
     },
     onError: (error) => {
       console.error(error);

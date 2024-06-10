@@ -1,27 +1,25 @@
 import createMeetingButton from '@assets/icons/plus-monitor.svg';
-import polygonTop from '@assets/icons/polygon-top-blue.svg';
 import groupManageButton from '@assets/icons/setting.svg';
-import GroupModal from '@pages/group-home/components/group-modal/group-modal';
-import MeetingModal from '@pages/group-home/components/meeting-modal/meeting-modal';
+import GroupModalButton from '@pages/group-home/components/group-modal/group-modal-button';
+import MeetingModalButton from '@pages/group-home/components/meeting-modal/meeting-modal-button';
 import { zIndex } from '@styles/z-index';
 import styled from 'styled-components';
 
 const GroupHomeHeader = () => {
   return (
     <S.Container>
-      <MeetingModal title="회의 생성">
+      <MeetingModalButton title="회의 생성">
         <S.Trigger>
           <S.Balloon>회의 생성</S.Balloon>
           <img src={createMeetingButton} />
         </S.Trigger>
-      </MeetingModal>
-
-      <GroupModal>
+      </MeetingModalButton>
+      <GroupModalButton>
         <S.Trigger>
           <S.Balloon>그룹 관리</S.Balloon>
           <img src={groupManageButton} />
         </S.Trigger>
-      </GroupModal>
+      </GroupModalButton>
     </S.Container>
   );
 };
@@ -67,7 +65,7 @@ const S = {
       visibility 0.2s ease-in-out;
 
     &:after {
-      background: url(${polygonTop});
+      background: url('/polygon-top-blue.svg');
       content: '';
       width: 13px;
       height: 14px;

@@ -9,7 +9,7 @@ import styled from 'styled-components';
 const Root = () => {
   const location = useLocation();
 
-  const nonSubSectionArray = ['/login', '/meeting-room'];
+  const nonSubSectionArray = ['/auth', '/login', '/meeting-room'];
   const isSubSection = !nonSubSectionArray.includes(location.pathname);
 
   return (
@@ -32,6 +32,7 @@ export default Root;
 
 const S = {
   Main: styled.main<{ $isSubSection: boolean }>`
+    min-width: 300px;
     ${({ $isSubSection }) =>
       $isSubSection &&
       `

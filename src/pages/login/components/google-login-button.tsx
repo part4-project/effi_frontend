@@ -4,13 +4,12 @@ import styled from 'styled-components';
 const GoogleLoginButton = () => {
   //구글 로그인 리다이렉트
   const handleLoginClick = () => {
-    //redirect_uri 수정 해야함
     window.location.href =
       'https://accounts.google.com/o/oauth2/auth?' +
-      `client_id=${import.meta.env.VITE_GOOGLE_AUTH_CLIENT_ID}&` +
-      `redirect_uri=http://api.effi.club/user/login&` +
-      'response_type=code&' +
-      'scope=email profile';
+      `&client_id=${import.meta.env.VITE_GOOGLE_AUTH_CLIENT_ID}` +
+      `&redirect_uri=${import.meta.env.VITE_REDIRECT_URL}` +
+      '&response_type=code' +
+      '&scope=email profile';
   };
 
   return (

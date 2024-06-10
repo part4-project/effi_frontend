@@ -1,20 +1,12 @@
 /* eslint-disable no-console */
-import { useState } from 'react';
 import ChattingList from '@components/meeting/chatting-list';
 import { CHAT } from '@constants/mockdata';
 import styled from 'styled-components';
 import InputForm from './input-form';
+import useInputForm from '../hooks/use-input-form';
 
 const Chatting = () => {
-  const [inputValue, setInputValue] = useState('');
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log(inputValue);
-    setInputValue('');
-  };
-
-  const handleInputValueChange = (e: React.ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value);
+  const { inputValue, handleSubmit, handleInputValueChange } = useInputForm(() => console.log('submitCb실행'));
 
   return (
     <S.Container>
@@ -99,7 +91,7 @@ const S = {
     height: 28px;
     background-color: inherit;
     outline: none;
-    font-family: Pretendard;
+    font-family: 'Pretendard';
     font-size: 16px;
     font-style: normal;
     font-weight: 400;

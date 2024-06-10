@@ -17,7 +17,7 @@ const Topic = ({ isCompleted, topicName, onClick, type = 'report-modal' }: Topic
         $isCompleted={isCompleted}
         onClick={type === 'meeting-room' ? onClick : undefined}
       >
-        {isCompleted && <img src={checkMark} alt="체크" />}
+        {isCompleted && <S.CheckImg src={checkMark} alt="체크" />}
       </S.TopicInCompleted>
       <S.TopicTitle $type={type}>{topicName}</S.TopicTitle>
       {type === 'meeting-room' && <ModifyDeleteButton />}
@@ -30,7 +30,7 @@ export default Topic;
 const S = {
   TopicAgenda: styled.p<{ $type: TopicProps['type'] }>`
     background: ${({ $type }) => ($type === 'meeting-room' ? '#4D4F4E' : 'var(--white)')};
-    color: ${({ $type }) => ($type === 'meeting-room' ? '#9d9d9d' : '#A6A6A6')};
+    color: ${({ $type }) => ($type === 'meeting-room' ? '#9d9d9d' : 'var(--gray05)')};
     font-size: 20px;
     font-weight: 900;
     line-height: 35px;
@@ -48,20 +48,20 @@ const S = {
   `,
   TopicInCompleted: styled.div<{ $isCompleted: boolean; $type: TopicProps['type'] }>`
     background-color: ${({ $isCompleted }) => ($isCompleted ? 'var(--blue01)' : 'none')};
-    border: ${({ $isCompleted }) => ($isCompleted ? 'none' : '2px solid #c5c5c5')};
+    border: ${({ $isCompleted }) => ($isCompleted ? 'none' : '2px solid var(--gray07)')};
     cursor: ${({ $type }) => ($type === 'meeting-room' ? 'pointer' : 'auto')};
     width: 25px;
     height: 25px;
     border-radius: 100%;
     position: relative;
-    img {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 16px;
-      height: 16px;
-    }
+  `,
+  CheckImg: styled.img`
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 16px;
+    height: 16px;
   `,
   TopicTitle: styled.p<{ $type: TopicProps['type'] }>`
     flex-grow: 1;
