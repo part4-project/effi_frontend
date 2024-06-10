@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import ModifyDeleteButton from '@components/meeting/modify-delete-button';
 import { DragDropContext, Droppable, Draggable, DropResult } from '@hello-pangea/dnd';
-// import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd';
 import styled from 'styled-components';
+import dropdownIcon from '@/assets/icons/dropdown.svg';
+// import { DragDropContext, Droppable, Draggable, DropResult } from 'react-beautiful-dnd';
 
 interface MeetingTopicListProps {
   topicList: string[];
@@ -64,7 +65,8 @@ const MeetingTopicList = ({ topicList, setTopicList }: MeetingTopicListProps) =>
               // 현재 key 값이 topic이라 중복일 경우 오류 발생하므로 추후 실제 데이터를 받아올 때는 topic.id 와 같은 고유값으로 대체해야됨
               <Draggable key={topic} draggableId={topic} index={index}>
                 {(provided) => (
-                  <S.TopicList ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
+                  <S.TopicList ref={provided.innerRef} {...provided.draggableProps}>
+                    <S.DropdownImg src={dropdownIcon} alt="dnd" {...provided.dragHandleProps} />
                     {isEditing && editIndex === index ? (
                       <>
                         <S.EditInput
@@ -108,7 +110,6 @@ const S = {
   `,
   TopicList: styled.div`
     display: flex;
-    justify-content: space-between;
     border-bottom: 1px solid var(--gray02);
     padding: 8px 0;
 
@@ -121,9 +122,10 @@ const S = {
     font-size: 14px;
     font-weight: 500;
     letter-spacing: 0.56px;
+    margin-right: auto;
   `,
   EditInput: styled.input`
-    width: 80%;
+    width: 85%;
     color: var(--gray01);
     font-family: 'Pretendard';
     font-size: 14px;
@@ -152,5 +154,11 @@ const S = {
     font-weight: 500;
     letter-spacing: 0.56px;
     border-radius: 5px;
+  `,
+
+  DropdownImg: styled.img`
+    width: 16px;
+    height: 16px;
+    margin-right: 10px;
   `,
 };
