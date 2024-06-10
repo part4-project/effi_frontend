@@ -557,3 +557,42 @@ export const EXPECTED_END_TIME_LIST = [
   '3시간 30분',
   '4시간',
 ];
+
+export const ALARM_LIST = [
+  {
+    id: 1,
+    type: 'invite',
+    group_name: 'A그룹',
+    remind_time: 0,
+  },
+  {
+    id: 2,
+    type: 'meeting',
+    group_name: 'A그룹',
+    remind_time: 5,
+  },
+  {
+    id: 3,
+    type: 'invite',
+    group_name: 'A그A그A그A그A그A그A그A그룹',
+    remind_time: 0,
+  },
+  {
+    id: 4,
+    type: 'meeting',
+    group_name: 'A그룹A그A그A그A그A그A그A그A그A그A그',
+    remind_time: 5,
+  },
+  {
+    id: 5,
+    type: 'invite',
+    group_name: 'A그룹A그룹A그',
+    remind_time: 0,
+  },
+  {
+    id: 6,
+    type: 'meeting',
+    group_name: 'A그룹',
+    remind_time: 10,
+  },
+];
