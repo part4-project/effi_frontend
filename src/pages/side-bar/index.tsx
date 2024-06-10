@@ -1,12 +1,12 @@
 import AddGroupBtn from '@assets/add-group-btn.svg';
 import LobbyBtn from '@assets/lobby-btn.svg';
-import GroupCreateModal from '@pages/side-bar/components/modal/group-create-modal';
+import GroupList from '@pages/side-bar/components/group-list';
+import GroupCreateModalButton from '@pages/side-bar/components/modal/group-create-modal-button';
 import { device } from '@styles/breakpoints';
 import { navBarHeight, sideBarWidth } from '@styles/subsection-size';
 import { zIndex } from '@styles/z-index';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import GroupList from './components/group-list';
 
 const SideBar = () => {
   return (
@@ -19,9 +19,9 @@ const SideBar = () => {
           <S.Balloon>로비로 가기</S.Balloon>
         </S.Trigger>
         <S.Trigger>
-          <GroupCreateModal>
+          <GroupCreateModalButton>
             <img src={AddGroupBtn} alt="add" />
-          </GroupCreateModal>
+          </GroupCreateModalButton>
           <S.Balloon>그룹 추가하기</S.Balloon>
         </S.Trigger>
         <GroupList />

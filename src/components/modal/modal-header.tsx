@@ -3,18 +3,20 @@ import styled from 'styled-components';
 import xCircle from '@/assets/icons/x-circle.svg';
 
 interface ReportHeaderProps {
-  headerTitle: string;
-  onClose: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  headerTitle?: string;
+  onClose?: () => void;
 }
 
 const ModalHeader = ({ headerTitle, onClose }: ReportHeaderProps) => {
   return (
-    <S.HeaderContainer>
-      <S.ModalTitle>{headerTitle}</S.ModalTitle>
-      <button onClick={onClose}>
-        <img src={xCircle} alt="x" />
-      </button>
-    </S.HeaderContainer>
+    headerTitle && (
+      <S.HeaderContainer>
+        <S.ModalTitle>{headerTitle}</S.ModalTitle>
+        <button onClick={onClose}>
+          <img src={xCircle} alt="x" />
+        </button>
+      </S.HeaderContainer>
+    )
   );
 };
 

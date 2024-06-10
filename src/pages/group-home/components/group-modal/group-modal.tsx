@@ -1,51 +1,41 @@
-import { useState } from 'react';
 import ConfirmModal from '@components/modal/confirm-modal/confirm-modal';
 import Modal from '@components/modal/modal';
 import ModalButton from '@components/modal/modal-button';
-import ModalHeader from '@components/modal/modal-header';
+import GroupInvite from '@pages/group-home/components/group-modal/group-invite';
+import GroupMemberList from '@pages/group-home/components/group-modal/group-member-list';
 import styled from 'styled-components';
-import GroupInvite from './group-invite';
-import GroupMemberList from './group-member-list';
 
 interface GroupModalProps {
-  children: React.ReactNode;
+  isOpen: {
+    group: boolean;
+    confirm: boolean;
+  };
+  onGroupClose: () => void;
+  onConfirmClose: () => void;
+  onConfirmOpen: () => void;
 }
 
-const GroupModal = ({ children }: GroupModalProps) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleModalClose = () => {
-    setIsOpen(false);
-  };
-
-  const handleOpenButtonClick = () => {
-    setIsOpen(true);
-  };
-
-  const handleCloseButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
-    setIsOpen(false);
+const GroupModal = ({ isOpen, onGroupClose, onConfirmClose, onConfirmOpen }: GroupModalProps) => {
+  const handleSaveGroupClick = () => {
+    onGroupClose();
   };
 
   return (
-    <div>
-      <button onClick={handleOpenButtonClick}>{children}</button>
-      <Modal isOpen={isOpen} onClose={handleModalClose}>
-        <S.ModalWrap>
-          <ModalHeader headerTitle="그룹관리" onClose={handleCloseButtonClick} />
-          <S.ModalContent>
-            <GroupInvite />
-            <GroupMemberList />
-          </S.ModalContent>
-          <S.ModalFooter>
-            <ConfirmModal>
-              <S.GroupDisbandment>그룹 해체하기</S.GroupDisbandment>
-            </ConfirmModal>
-            <ModalButton type="primary">저장하기</ModalButton>
-          </S.ModalFooter>
-        </S.ModalWrap>
-      </Modal>
-    </div>
+    <Modal isOpen={isOpen.group} onClose={onGroupClose} headerTitle="그룹관리">
+      <S.ModalWrap>
+        <S.ModalContent>
+          <GroupInvite />
+          <GroupMemberList />
+        </S.ModalContent>
+        <S.ModalFooter>
+          <S.GroupDisbandment onClick={onConfirmOpen}>그룹 해체하기</S.GroupDisbandment>
+          <ModalButton type="primary" onClick={handleSaveGroupClick}>
+            저장하기
+          </ModalButton>
+        </S.ModalFooter>
+      </S.ModalWrap>
+      <ConfirmModal isOpen={isOpen.confirm} onClose={onConfirmClose} />
+    </Modal>
   );
 };
 

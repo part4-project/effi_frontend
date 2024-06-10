@@ -1,4 +1,4 @@
-import MeetingModal from '@pages/group-home/components/meeting-modal/meeting-modal';
+import MeetingModalButton from '@pages/group-home/components/meeting-modal/meeting-modal-button';
 import styled from 'styled-components';
 
 interface GroupListItemProps {
@@ -9,11 +9,11 @@ interface GroupListItemProps {
 
 const GroupListItem = ({ groupName, onClick, groupNameLength }: GroupListItemProps) => {
   return (
-    <MeetingModal title="회의 생성">
+    <MeetingModalButton title="회의 생성">
       <S.Container $groupNameLength={groupNameLength} onClick={onClick}>
         <S.FileImg>{groupName} </S.FileImg>
       </S.Container>
-    </MeetingModal>
+    </MeetingModalButton>
   );
 };
 

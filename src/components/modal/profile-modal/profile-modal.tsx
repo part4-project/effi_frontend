@@ -1,53 +1,35 @@
-import { useState } from 'react';
 import Modal from '@components/modal/modal';
 import ModalButton from '@components/modal/modal-button';
-import ModalHeader from '@components/modal/modal-header';
 import InvitedList from '@components/modal/profile-modal/invited-list';
 import NicknameInput from '@components/modal/profile-modal/nickname-input';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import ProfileImageInput from './profile-image-input';
 
-interface GroupModalProps {
-  children: React.ReactNode;
+interface ProfileModalProps {
+  isOpen: boolean;
+  onClose: () => void;
 }
 
-const ProfileModal = ({ children }: GroupModalProps) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleModalClose = () => {
-    setIsOpen(false);
-  };
-
-  const handleOpenButtonClick = () => {
-    setIsOpen(true);
-  };
-
-  const handleCloseButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.stopPropagation();
-    setIsOpen(false);
+const ProfileModal = ({ isOpen, onClose }: ProfileModalProps) => {
+  const handleResignClick = () => {
+    onClose();
   };
 
   return (
-    <button onClick={handleOpenButtonClick}>
-      {children}
-      <Modal isOpen={isOpen} onClose={handleModalClose}>
-        <ModalHeader headerTitle="내 정보" onClose={handleCloseButtonClick} />
-
-        <div>
-          <ProfileImageInput />
-          <NicknameInput />
-          <InvitedList />
-        </div>
-
-        <S.ModalFooter>
-          <S.WithdrawButton>탈퇴하기</S.WithdrawButton>
-          <ModalButton type="secondary">
-            <Link to="/login">로그아웃</Link>
-          </ModalButton>
-        </S.ModalFooter>
-      </Modal>
-    </button>
+    <Modal isOpen={isOpen} onClose={onClose} headerTitle="내 정보">
+      <div>
+        <ProfileImageInput />
+        <NicknameInput />
+        <InvitedList />
+      </div>
+      <S.ModalFooter>
+        <S.WithdrawButton onClick={handleResignClick}>탈퇴하기</S.WithdrawButton>
+        <ModalButton type="secondary">
+          <Link to="/login">로그아웃</Link>
+        </ModalButton>
+      </S.ModalFooter>
+    </Modal>
   );
 };
 
