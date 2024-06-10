@@ -12,9 +12,9 @@ const ModalHeader = ({ headerTitle, onClose }: ReportHeaderProps) => {
     headerTitle && (
       <S.HeaderContainer>
         <S.ModalTitle>{headerTitle}</S.ModalTitle>
-        <S.CloseButton onClick={onClose}>
-          <S.CloseIcon src={xCircle} alt="x" />
-        </S.CloseButton>
+        <button onClick={onClose}>
+          <img src={xCircle} alt="x" />
+        </button>
       </S.HeaderContainer>
     )
   );
@@ -34,8 +34,6 @@ const S = {
     line-height: 36px;
     font-weight: 900;
   `,
-  CloseButton: styled.button``,
-  CloseIcon: styled.img``,
 };
 
 export default ModalHeader;

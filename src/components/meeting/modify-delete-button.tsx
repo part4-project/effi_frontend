@@ -8,9 +8,9 @@ interface ModifyDeleteButtonProps {
 const ModifyDeleteButton = ({ onModifyClick, onDeleteClick }: ModifyDeleteButtonProps) => {
   return (
     <S.Container>
-      <button onClick={onModifyClick}>수정</button>
-      <p>/</p>
-      <button onClick={onDeleteClick}>삭제</button>
+      <S.Button onClick={onModifyClick}>수정</S.Button>
+      <S.Slash>/</S.Slash>
+      <S.Button onClick={onDeleteClick}>삭제</S.Button>
     </S.Container>
   );
 };
@@ -21,15 +21,21 @@ const S = {
   Container: styled.div`
     display: flex;
     gap: 2px;
-    button,
-    p {
-      color: var(--gray01);
-      font-family: Pretendard;
-      font-size: 12px;
-      font-style: normal;
-      font-weight: 500;
-      line-height: normal;
-      letter-spacing: 0.48px;
-    }
+  `,
+  Button: styled.button`
+    color: var(--gray01);
+    font-family: 'Pretendard';
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: 0.48px;
+  `,
+  Slash: styled.span`
+    color: var(--gray01);
+    font-family: 'Pretendard';
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.48px;
   `,
 };

@@ -32,6 +32,7 @@ const S = {
     overflow: hidden;
     border: 0.1px solid var(--blue01);
     width: 20px;
+    height: 20px;
     border-radius: 100%;
   `,
 };

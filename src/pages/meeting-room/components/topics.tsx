@@ -1,7 +1,9 @@
+/* eslint-disable no-console */
 import { useState } from 'react';
 import Topic from '@components/meeting/topic';
 import styled from 'styled-components';
 import InputForm from './input-form';
+import useInputForm from '../hooks/use-input-form';
 
 type TopicListType = {
   id: number;
@@ -14,15 +16,8 @@ interface TopicsProps {
 }
 
 const Topics = ({ topicList }: TopicsProps) => {
-  const [inputValue, setInputValue] = useState('');
   const [meetingRoomTopicList, setMeetingRoomTopicList] = useState(topicList);
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setInputValue('');
-  };
-
-  const handleInputValueChange = (e: React.ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value);
+  const { inputValue, handleSubmit, handleInputValueChange } = useInputForm(() => console.log('submitCb실행'));
 
   const handleCheckClick = (id: number) => {
     setMeetingRoomTopicList((prev: TopicListType[]) =>
@@ -31,23 +26,21 @@ const Topics = ({ topicList }: TopicsProps) => {
   };
 
   return (
-    <>
-      <S.Container>
-        <S.TopicAgenda>회의 안건</S.TopicAgenda>
-        <S.TopicContainer>
-          {meetingRoomTopicList.map((topic) => (
-            <Topic
-              key={topic.id}
-              isCompleted={topic.is_completed}
-              topicName={topic.topic_name}
-              type="meeting-room"
-              onClick={() => handleCheckClick(topic.id)}
-            />
-          ))}
-        </S.TopicContainer>
-        <InputForm type="topic" inputValue={inputValue} onSubmit={handleSubmit} onChange={handleInputValueChange} />
-      </S.Container>
-    </>
+    <S.Container>
+      <S.TopicAgenda>회의 안건</S.TopicAgenda>
+      <S.TopicContainer>
+        {meetingRoomTopicList.map((topic) => (
+          <Topic
+            key={topic.id}
+            isCompleted={topic.is_completed}
+            topicName={topic.topic_name}
+            type="meeting-room"
+            onClick={() => handleCheckClick(topic.id)}
+          />
+        ))}
+      </S.TopicContainer>
+      <InputForm type="topic" inputValue={inputValue} onSubmit={handleSubmit} onChange={handleInputValueChange} />
+    </S.Container>
   );
 };
 
@@ -55,7 +48,6 @@ export default Topics;
 
 const S = {
   Container: styled.div`
-    width: 100%;
     height: 40%;
     border-radius: 10px;
     background: #4d4f4e;
@@ -87,14 +79,6 @@ const S = {
 
     &::-webkit-scrollbar-track {
       background: #9d9d9d;
-    }
-  `,
-  TopicItem: styled.div`
-    display: flex;
-    align-items: center;
-    margin: 16px;
-    input {
-      margin-right: 8px;
     }
   `,
 };

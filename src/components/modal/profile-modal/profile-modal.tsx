@@ -1,9 +1,10 @@
 import Modal from '@components/modal/modal';
 import ModalButton from '@components/modal/modal-button';
 import InvitedList from '@components/modal/profile-modal/invited-list';
-import UserInfo from '@components/modal/profile-modal/user-info';
+import NicknameInput from '@components/modal/profile-modal/nickname-input';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import ProfileImageInput from './profile-image-input';
 
 interface GroupModalProps {
   isOpen: boolean;
@@ -17,10 +18,11 @@ const ProfileModal = ({ isOpen, onClose }: GroupModalProps) => {
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} headerTitle="내 정보">
-      <S.MyInfoContent>
-        <UserInfo />
+      <div>
+        <ProfileImageInput />
+        <NicknameInput />
         <InvitedList />
-      </S.MyInfoContent>
+      </div>
       <S.ModalFooter>
         <S.WithdrawButton onClick={handleResignClick}>탈퇴하기</S.WithdrawButton>
         <ModalButton type="secondary">
@@ -34,10 +36,6 @@ const ProfileModal = ({ isOpen, onClose }: GroupModalProps) => {
 export default ProfileModal;
 
 const S = {
-  MyInfoContent: styled.div`
-    margin-top: 0px;
-  `,
-
   ModalFooter: styled.div`
     margin-top: 15px;
     width: 100%;
