@@ -1,8 +1,8 @@
 import { MY_SCHEDULE_LIST } from '@constants/mockdata';
 import GroupHomeHeader from '@pages/group-home/components/group-home-header';
-import GroupHomeSideBar from '@pages/group-home/components/group-home-sidebar';
 import MeetingNotes from '@pages/group-home/components/meeting-notes';
 import Meetings from '@pages/group-home/components/meetings';
+import GroupHomeSideBar from '@pages/group-home/components/sidebar/group-home-sidebar';
 import { device } from '@styles/breakpoints';
 import { navBarHeight } from '@styles/subsection-size';
 import styled from 'styled-components';
@@ -14,7 +14,7 @@ const GroupHome = () => {
 
   return (
     <S.Container>
-      <GroupHomeSideBar />
+      <GroupHomeSideBar isAdmin={isAdmin} />
       <S.GroupHomeMain>
         {isAdmin && <GroupHomeHeader />}
         <Meetings isOnLive={isOnLive} isAdmin={isAdmin} scheduledMeeting={scheduledMeeting} />
