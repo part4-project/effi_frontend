@@ -1,16 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import GroupBg from '@assets/group-bg.svg';
 import { device } from '@styles/breakpoints';
-import { zIndex } from '@styles/z-index';
 import styled from 'styled-components';
-
-interface GroupItemProp {
+interface AlarmInviteProp {
   id: number;
-  room_name: string;
-  type?: 'side-bar' | 'calendar';
+  type: string;
+  group_name: string;
+  remind_time: number;
 }
-
-const GroupItem: React.FC<GroupItemProp> = ({ room_name, type = 'side-bar' }) => {
+const AlarmInvite = ({ group_name }: AlarmInviteProp) => {
   const groupItemRef = useRef<HTMLDivElement>(null);
   const [isOverFlowText, setIsOverFlowText] = useState<boolean>(false);
 
@@ -34,25 +32,36 @@ const GroupItem: React.FC<GroupItemProp> = ({ room_name, type = 'side-bar' }) =>
   }, [isOverFlowText]);
 
   return (
-    <S.Trigger>
-      <S.GroupItem ref={groupItemRef}>
-        <img src={GroupBg} alt="groupImg" />
-        <S.GroupName $isOverFlowText={isOverFlowText}>{room_name}</S.GroupName>
-      </S.GroupItem>
-      {type === 'side-bar' && <S.Balloon>{room_name}</S.Balloon>}
-    </S.Trigger>
+    <S.AlarmContent>
+      <S.AlarmImgBox ref={groupItemRef}>
+        <img src={GroupBg} alt="alarm" />
+        <S.GroupImgInName $isOverFlowText={isOverFlowText}>{group_name}</S.GroupImgInName>
+      </S.AlarmImgBox>
+      <S.AlarmTextBox>
+        <S.AlarmTitle>
+          <S.GroupName>{group_name}</S.GroupName>
+        </S.AlarmTitle>
+        <S.AlarmText>{`${group_name}에서 초대장을 보냈어요!`}</S.AlarmText>
+      </S.AlarmTextBox>
+    </S.AlarmContent>
   );
 };
 
-export default GroupItem;
+export default AlarmInvite;
 
 const S = {
-  GroupItem: styled.div`
+  AlarmContent: styled.div`
+    display: flex;
+    align-items: start;
+    gap: 13px;
+  `,
+  AlarmImgBox: styled.div`
+    flex: 0 0 auto;
     position: relative;
     border-radius: 10%;
     overflow: hidden;
   `,
-  GroupName: styled.div<{ $isOverFlowText: boolean }>`
+  GroupImgInName: styled.div<{ $isOverFlowText: boolean }>`
     position: absolute;
     top: 50%;
     left: 50%;
@@ -68,43 +77,23 @@ const S = {
       font-size: ${({ $isOverFlowText }) => ($isOverFlowText ? '6px' : '8px')};
     }
   `,
-  Trigger: styled.div`
-    position: relative;
-
-    &:hover > div {
-      visibility: visible;
-      opacity: 1;
-    }
+  AlarmTextBox: styled.div`
+    display: flex;
+    flex-direction: column;
   `,
-
-  Balloon: styled.div`
-    visibility: hidden;
-    opacity: 0;
-    position: absolute;
-    width: max-content;
-    max-width: 200%;
-    top: 50%;
-    left: 130%;
-    transform: translate3d(0, -50%, 0);
-    background: var(--blue01);
-    color: var(--white);
+  AlarmTitle: styled.h3`
+    font-size: 20px;
+    font-weight: 700;
+    word-wrap: break-word;
+  `,
+  AlarmText: styled.p`
+    color: var(--blue05, #132f5c);
     font-size: 14px;
-    border-radius: 10px;
-    z-index: ${zIndex.balloon};
-    padding: 8px;
-    transition:
-      opacity 0.2s ease-in-out,
-      visibility 0.2s ease-in-out;
-
-    &:after {
-      content: '';
-      width: 14px;
-      height: 13px;
-      background: url('/polygon-left.svg');
-      position: absolute;
-      top: 50%;
-      left: -4px;
-      transform: translate3d(-50%, -50%, 0);
-    }
+    font-weight: 500;
+    margin-top: 4px;
+  `,
+  GroupName: styled.p`
+    color: var(--blue05, #132f5c);
+    line-height: 24px;
   `,
 };

@@ -82,7 +82,7 @@ export default MeetingForm;
 
 const S = {
   Container: styled.div`
-    width: 500px;
+    width: 520px;
     display: flex;
     flex-direction: column;
     gap: 25px;

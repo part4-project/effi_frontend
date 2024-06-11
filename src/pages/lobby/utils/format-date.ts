@@ -1,11 +1,7 @@
-import { CalendarValue } from '../types/type';
+import { format, parse } from 'date-fns';
+import { ko } from 'date-fns/locale';
 
-export const formatDate = (date: CalendarValue) => {
-  if (date instanceof Date) {
-    const year = String(date.getFullYear()).slice(-2);
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
-  }
-  throw Error('INVALID DATE');
+export const formatDate = (date: string) => {
+  const parsedDate = parse(date, 'yy-MM-dd HH:mm', new Date());
+  return format(parsedDate, 'yyyy년 M월 d일 EEEE', { locale: ko });
 };

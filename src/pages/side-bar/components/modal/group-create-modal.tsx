@@ -27,7 +27,7 @@ const GroupCreateModal = ({ isOpen, onClose }: GroupCreateModalProps) => {
       <S.ModalWrap>
         <S.ModalContent>
           <S.GroupNameBox>
-            <S.GroupNameInput type="text" placeholder="그룹 이름을 작성하세요" onInput={handleNameInput} />
+            <S.GroupNameInput type="text" placeholder="그룹명" onInput={handleNameInput} />
           </S.GroupNameBox>
           <ModalButton type={btnType} onClick={handleCreateGroupClick}>
             생성하기
