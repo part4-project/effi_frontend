@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import GoogleOAuth from '@pages/login/api/google-auth';
+import GoogleOAuth from '@pages/lobby/api/google-auth';
 import { navBarHeight } from '@styles/subsection-size';
 import styled from 'styled-components';
 import MakeMeetingButton from './components/make-meeting-button';

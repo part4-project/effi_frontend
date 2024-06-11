@@ -9,7 +9,7 @@ import styled from 'styled-components';
 const Root = () => {
   const location = useLocation();
 
-  const nonSubSectionArray = ['/auth', '/login', '/meeting-room'];
+  const nonSubSectionArray = ['/login', '/meeting-room'];
   const isSubSection = !nonSubSectionArray.includes(location.pathname);
 
   return (

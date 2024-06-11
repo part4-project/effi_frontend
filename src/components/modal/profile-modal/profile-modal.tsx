@@ -3,6 +3,7 @@ import ModalButton from '@components/modal/modal-button';
 import InvitedList from '@components/modal/profile-modal/invited-list';
 import NicknameInput from '@components/modal/profile-modal/nickname-input';
 import { deleteCookie } from '@utils/cookie';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import ProfileImageInput from './profile-image-input';
 
@@ -12,13 +13,15 @@ interface ProfileModalProps {
 }
 
 const ProfileModal = ({ isOpen, onClose }: ProfileModalProps) => {
+  const navigate = useNavigate();
+
   const handleResignClick = () => {
     onClose();
   };
 
   const handleLogoutClick = () => {
     deleteCookie('accessToken');
-    window.location.reload();
+    navigate('/login');
   };
 
   return (

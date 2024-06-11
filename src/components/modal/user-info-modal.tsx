@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import closeBtn from '@assets/icons/close-btn.svg';
 import { deleteCookie } from '@utils/cookie';
 import { createRandomNickName } from '@utils/createRandomNickname';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Modal from './modal';
 
@@ -12,6 +13,8 @@ interface GroupModalProps {
 const UserInfoModal = ({ children }: GroupModalProps) => {
   const [nickName, setNickName] = useState('');
   const [isOpen, setIsOpen] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleOpenClick = () => {
     setIsOpen(true);
@@ -24,7 +27,7 @@ const UserInfoModal = ({ children }: GroupModalProps) => {
 
   const handleLogoutClick = () => {
     deleteCookie('accessToken');
-    window.location.reload();
+    navigate('/login');
   };
 
   useEffect(() => {
