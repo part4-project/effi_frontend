@@ -23,10 +23,11 @@ const QuickButton = ({ onClick, type }: QuickButtonProps) => {
 export default QuickButton;
 
 const S = {
-  QuickButton: styled.button`
+  QuickButton: styled.div`
     width: 220px;
     height: 138px;
     position: relative;
+    cursor: pointer;
   `,
   BackgroundImg: styled.img`
     width: 100%;

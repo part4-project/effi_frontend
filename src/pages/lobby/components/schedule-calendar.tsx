@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import { MY_SCHEDULE_LIST } from '@constants/mockdata';
-import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -10,23 +9,16 @@ import ScheduleListItem from './schedule-list-item';
 import { useCalendarDropdown } from '../hooks/use-calendar-dropdown';
 import { ScheduleList } from '../types/type';
 import { addScheduleDot } from '../utils/add-schedule-dot';
-import { formatDate } from '../utils/format-date';
+import { filterSchedule } from '../utils/filter-schedule';
 
 const ScheduleCalendar = () => {
   const ref = useRef<HTMLDivElement>(null);
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-  const [filterdScheduleList, setFilterdScheduleList] = useState<ScheduleList[]>([]);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
+  const [filterdScheduleList, setFilterdScheduleList] = useState<ScheduleList[]>(
+    filterSchedule(MY_SCHEDULE_LIST, selectedDate),
+  );
   const [currMonth, setCurrMonth] = useState(new Date().getMonth() + 1);
   const { isDropdownOpen, handleDropdownOpen, handleDropdownClose } = useCalendarDropdown();
-
-  const handleScheduleListFilter = (date: Date | null) => {
-    if (date instanceof Date) {
-      const filterdList = MY_SCHEDULE_LIST.filter(
-        (el) => formatDate(el.start_date) === format(date, 'yyyy년 M월 d일 EEEE', { locale: ko }),
-      );
-      setFilterdScheduleList(filterdList);
-    }
-  };
 
   const handleCalendarReset = () => {
     if (selectedDate) {
@@ -72,7 +64,7 @@ const ScheduleCalendar = () => {
         selected={selectedDate}
         onChange={(date) => {
           setSelectedDate(date);
-          handleScheduleListFilter(date);
+          setFilterdScheduleList(filterSchedule(MY_SCHEDULE_LIST, date));
         }}
         onMonthChange={(date) => setCurrMonth(date.getMonth() + 1)}
         onClickOutside={handleCalendarOutsideClick}
@@ -183,6 +175,10 @@ const S = {
       display: grid;
       grid-template-columns: repeat(7, 1fr);
       justify-items: center;
+    }
+
+    .react-datepicker__day--outside-month {
+      opacity: 0.4;
     }
 
     .react-datepicker__week :first-child {
