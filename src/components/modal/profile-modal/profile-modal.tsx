@@ -2,7 +2,8 @@ import Modal from '@components/modal/modal';
 import ModalButton from '@components/modal/modal-button';
 import InvitedList from '@components/modal/profile-modal/invited-list';
 import NicknameInput from '@components/modal/profile-modal/nickname-input';
-import { Link } from 'react-router-dom';
+import { deleteCookie } from '@utils/cookie';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import ProfileImageInput from './profile-image-input';
 
@@ -12,8 +13,15 @@ interface ProfileModalProps {
 }
 
 const ProfileModal = ({ isOpen, onClose }: ProfileModalProps) => {
+  const navigate = useNavigate();
+
   const handleResignClick = () => {
     onClose();
+  };
+
+  const handleLogoutClick = () => {
+    deleteCookie('accessToken');
+    navigate('/login');
   };
 
   return (
@@ -25,8 +33,8 @@ const ProfileModal = ({ isOpen, onClose }: ProfileModalProps) => {
       </div>
       <S.ModalFooter>
         <S.WithdrawButton onClick={handleResignClick}>탈퇴하기</S.WithdrawButton>
-        <ModalButton type="secondary">
-          <Link to="/login">로그아웃</Link>
+        <ModalButton type="secondary" onClick={handleLogoutClick}>
+          <span>로그아웃</span>
         </ModalButton>
       </S.ModalFooter>
     </Modal>
