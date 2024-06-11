@@ -8,6 +8,7 @@ interface CookieOptions {
   sameSite?: 'Strict' | 'Lax' | 'None';
 }
 
+//쿠키 저장하기
 export function setCookie(name: string, value: string, options: CookieOptions = {}) {
   if (typeof document === 'undefined') return;
 
@@ -33,6 +34,7 @@ export function setCookie(name: string, value: string, options: CookieOptions = 
   document.cookie = updatedCookie;
 }
 
+//쿠키 가져오기
 export function getCookie(name: string) {
   if (typeof document === 'undefined') return;
 
@@ -42,6 +44,7 @@ export function getCookie(name: string) {
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
+//쿠키 삭제하기
 export function deleteCookie(name: string) {
   setCookie(name, '', {
     'max-age': -1,
