@@ -7,9 +7,10 @@ import styled from 'styled-components';
 interface GroupItemProp {
   id: number;
   room_name: string;
+  type?: 'side-bar' | 'calendar';
 }
 
-const GroupItem: React.FC<GroupItemProp> = ({ room_name }) => {
+const GroupItem: React.FC<GroupItemProp> = ({ room_name, type = 'side-bar' }) => {
   const groupItemRef = useRef<HTMLDivElement>(null);
   const [isOverFlowText, setIsOverFlowText] = useState<boolean>(false);
 
@@ -38,7 +39,7 @@ const GroupItem: React.FC<GroupItemProp> = ({ room_name }) => {
         <img src={GroupBg} alt="groupImg" />
         <S.GroupName $isOverFlowText={isOverFlowText}>{room_name}</S.GroupName>
       </S.GroupItem>
-      <S.Balloon>{room_name}</S.Balloon>
+      {type === 'side-bar' && <S.Balloon>{room_name}</S.Balloon>}
     </S.Trigger>
   );
 };

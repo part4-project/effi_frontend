@@ -1,5 +1,6 @@
 import React from 'react';
 import polygonTopIcon from '@assets/icons/polygon-top.svg';
+import polygonWhiteTopIcon from '@assets/icons/polygon-white-top.svg';
 import styled from 'styled-components';
 
 interface DropDownBoxProps extends React.PropsWithChildren {
@@ -10,7 +11,7 @@ interface DropDownBoxProps extends React.PropsWithChildren {
 const DropDownBox = ({ type, isDropdownOpen, children }: DropDownBoxProps) => {
   return (
     <S.Container $type={type} $isDropdownOpen={isDropdownOpen}>
-      <S.Polygon $type={type} src={polygonTopIcon} alt="위쪽" />
+      <S.Polygon $type={type} src={type === 'schedule-calendar' ? polygonWhiteTopIcon : polygonTopIcon} alt="위쪽" />
       <S.ListBox $type={type}>{children}</S.ListBox>
     </S.Container>
   );
