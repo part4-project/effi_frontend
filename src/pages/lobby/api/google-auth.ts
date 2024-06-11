@@ -9,7 +9,7 @@ const GoogleOAuth = () => {
       return await axios.get(`${import.meta.env.VITE_SERVER_URL}/user/login?code=${code}`);
     },
     onSuccess: (response) => {
-      const accessToken = response.headers?.authorization.split[' '][1];
+      const accessToken = response.headers?.authorization.split(' ')[1];
       console.log(accessToken);
       setCookie('accessToken', accessToken);
     },
