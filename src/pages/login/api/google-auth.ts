@@ -1,10 +1,10 @@
 import { useMutation } from '@tanstack/react-query';
 import { setCookie } from '@utils/cookie';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+//import { useNavigate } from 'react-router-dom';
 
 const GoogleOAuth = () => {
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
 
   const loginMutation = useMutation({
     mutationFn: (code: string) => {
@@ -14,11 +14,11 @@ const GoogleOAuth = () => {
       console.log(response);
       const accessToken = response.headers['Authorization'].split(' ')[1];
       setCookie('accessToken', accessToken);
-      navigate('/');
+      //navigate('/');
     },
     onError: (error) => {
       console.error(error);
-      navigate('/login');
+      //navigate('/login');
     },
   });
 

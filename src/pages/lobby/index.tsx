@@ -20,6 +20,8 @@ const Lobby = () => {
   const params = new URLSearchParams(window.location.search);
   const code = params.get('code');
 
+  console.log(code);
+
   useEffect(() => {
     if (code) {
       //로그인 인증 api 호출
