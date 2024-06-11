@@ -29,8 +29,10 @@ const ScheduleCalendar = () => {
   };
 
   const handleCalendarReset = () => {
-    setSelectedDate(null);
-    setFilterdScheduleList([]);
+    if (selectedDate) {
+      setSelectedDate(null);
+      setFilterdScheduleList([]);
+    }
   };
 
   const handleCalendarOutsideClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
@@ -104,6 +106,7 @@ const S = {
       background-color: var(--white);
       border: none;
       border-radius: 10px;
+      /* background-color: green; */
     }
 
     .react-datepicker__navigation {
@@ -113,11 +116,11 @@ const S = {
 
     .react-datepicker__navigation--previous {
       left: auto;
-      right: 16%;
+      right: 12%;
     }
 
     .react-datepicker__navigation--next {
-      right: 8%;
+      right: 6%;
     }
 
     .react-datepicker__month-container {

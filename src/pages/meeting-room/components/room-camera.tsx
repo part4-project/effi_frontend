@@ -24,7 +24,6 @@ const S = {
     aspect-ratio: 16 / 9;
     width: ${({ $cameraCount }) => calculateCameraWidth($cameraCount, 'width')};
     max-width: ${({ $cameraCount }) => calculateCameraWidth($cameraCount, 'max-width')};
-    min-width: 350px;
     @media ${device.tablet} {
       width: ${({ $cameraCount }) => ($cameraCount === 1 ? 'calc(70% - 10px)' : 'calc(40% - 10px)')};
       min-width: 330px;
