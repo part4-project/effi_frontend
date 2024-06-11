@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-//import { setCookie } from '@utils/cookie';
+import { setCookie } from '@utils/cookie';
 import axios from 'axios';
 //import { useNavigate } from 'react-router-dom';
 
@@ -12,8 +12,8 @@ const GoogleOAuth = () => {
     },
     onSuccess: (response) => {
       console.log(response);
-      //const accessToken = response.headers['Authorization'].split(' ')[1];
-      //setCookie('accessToken', accessToken);
+      const accessToken = response.headers['Authorization'].split(' ')[1];
+      setCookie('accessToken', accessToken);
       //navigate('/');
     },
     onError: (error) => {
