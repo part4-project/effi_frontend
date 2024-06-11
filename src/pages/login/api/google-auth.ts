@@ -7,8 +7,8 @@ const GoogleOAuth = () => {
   //const navigate = useNavigate();
 
   const loginMutation = useMutation({
-    mutationFn: (code: string) => {
-      return axios.get(`${import.meta.env.VITE_SERVER_URL}/user/login?code=${code}`);
+    mutationFn: async (code: string) => {
+      return await axios.get(`${import.meta.env.VITE_SERVER_URL}/user/login?code=${code}`);
     },
     onSuccess: (response) => {
       console.log(response);
