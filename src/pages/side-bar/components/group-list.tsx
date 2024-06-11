@@ -1,16 +1,22 @@
-import { GROUP_LIST } from '@constants/mockdata';
+import { useGroupQuery } from '@hooks/react-query/use-query-group';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import GroupItem from './group-item';
 
 const GroupList = () => {
+  const { data: groupData, isLoading, isError } = useGroupQuery();
+
+  if (isLoading) return 'Loading...';
+
+  if (isError) return 'Error...';
+
   return (
     <S.GroupListWrap>
-      {GROUP_LIST.map((group) => (
-        <Link to={'/group-home'} key={group.id}>
+      {/* {groupData.map((group) => (
+        <Link to={'/group-home'} key={group.groupId}>
           <GroupItem {...group} />
         </Link>
-      ))}
+      ))} */}
     </S.GroupListWrap>
   );
 };

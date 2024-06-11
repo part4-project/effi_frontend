@@ -1,15 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
+import { TGroupFetchInfo } from '@api/group/group-request.type';
 import GroupBg from '@assets/group-bg.svg';
 import { device } from '@styles/breakpoints';
 import { zIndex } from '@styles/z-index';
 import styled from 'styled-components';
 
-interface GroupItemProp {
-  id: number;
-  room_name: string;
-}
-
-const GroupItem: React.FC<GroupItemProp> = ({ room_name }) => {
+const GroupItem: React.FC<TGroupFetchInfo> = ({ groupName }) => {
   const groupItemRef = useRef<HTMLDivElement>(null);
   const [isOverFlowText, setIsOverFlowText] = useState<boolean>(false);
 
@@ -36,9 +32,9 @@ const GroupItem: React.FC<GroupItemProp> = ({ room_name }) => {
     <S.Trigger>
       <S.GroupItem ref={groupItemRef}>
         <img src={GroupBg} alt="groupImg" />
-        <S.GroupName $isOverFlowText={isOverFlowText}>{room_name}</S.GroupName>
+        <S.GroupName $isOverFlowText={isOverFlowText}>{groupName}</S.GroupName>
       </S.GroupItem>
-      <S.Balloon>{room_name}</S.Balloon>
+      <S.Balloon>{groupName}</S.Balloon>
     </S.Trigger>
   );
 };

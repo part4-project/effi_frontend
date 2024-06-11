@@ -1,4 +1,5 @@
-import { useState } from 'react';
+/* eslint-disable no-unused-vars */
+import { useRef, useState } from 'react';
 import Modal from '@components/modal/modal';
 import ModalButton from '@components/modal/modal-button';
 import styled from 'styled-components';
@@ -9,17 +10,19 @@ const secondaryBtn = 'secondary';
 interface GroupCreateModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onSubmit: (name: string | undefined) => void;
 }
 
-const GroupCreateModal = ({ isOpen, onClose }: GroupCreateModalProps) => {
+const GroupCreateModal = ({ isOpen, onClose, onSubmit }: GroupCreateModalProps) => {
   const [btnType, setBtnType] = useState<'disable' | 'primary' | 'secondary'>(secondaryBtn);
+  const groupNameRef = useRef<HTMLInputElement>(null);
 
   const handleNameInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.target.value ? setBtnType(primaryBtn) : setBtnType(secondaryBtn);
   };
 
   const handleCreateGroupClick = () => {
-    btnType === primaryBtn ? onClose() : null;
+    btnType === primaryBtn ? onSubmit(groupNameRef.current?.value) : null;
   };
 
   return (
@@ -27,7 +30,7 @@ const GroupCreateModal = ({ isOpen, onClose }: GroupCreateModalProps) => {
       <S.ModalWrap>
         <S.ModalContent>
           <S.GroupNameBox>
-            <S.GroupNameInput type="text" placeholder="그룹명" onInput={handleNameInput} />
+            <S.GroupNameInput ref={groupNameRef} type="text" placeholder="그룹명" onInput={handleNameInput} />
           </S.GroupNameBox>
           <ModalButton type={btnType} onClick={handleCreateGroupClick}>
             생성하기
