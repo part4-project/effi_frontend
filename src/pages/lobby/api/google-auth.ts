@@ -12,9 +12,9 @@ const GoogleOAuth = () => {
     },
     onSuccess: (response) => {
       console.log(response);
-      const accessToken = response.headers.authorization;
-      console.log(accessToken);
-      setCookie('accessToken', accessToken);
+      // const accessToken = response.headers.authorization;
+      // console.log(accessToken);
+      // setCookie('accessToken', accessToken);
       //navigate('/');
     },
     onError: (error) => {
