@@ -8,11 +8,11 @@ const GoogleOAuth = () => {
 
   const loginMutation = useMutation({
     mutationFn: async (code: string) => {
-      return await axios.get(`${import.meta.env.VITE_SERVER_URL}///////user/login?code=${code}`);
+      return await axios.get(`${import.meta.env.VITE_SERVER_URL}/user/login?code=${code}`);
     },
     onSuccess: (response) => {
-      // console.log(response);
-      const accessToken = response.headers['authorization'];
+      console.log(response);
+      const accessToken = response.headers['authorization'].split(' ')[1];
       console.log(accessToken);
       setCookie('accessToken', accessToken);
       //navigate('/');
