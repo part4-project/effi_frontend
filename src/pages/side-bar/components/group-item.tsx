@@ -5,13 +5,11 @@ import { device } from '@styles/breakpoints';
 import { zIndex } from '@styles/z-index';
 import styled from 'styled-components';
 
-interface GroupItemProp {
-  id: number;
-  room_name: string;
+interface GroupItemProp extends TGroupFetchInfo {
   type?: 'side-bar' | 'calendar';
 }
 
-const GroupItem: React.FC<GroupItemProp> = ({ room_name, type = 'side-bar' }) => {
+const GroupItem: React.FC<GroupItemProp> = ({ groupName, type = 'side-bar' }) => {
   const groupItemRef = useRef<HTMLDivElement>(null);
   const [isOverFlowText, setIsOverFlowText] = useState<boolean>(false);
 
