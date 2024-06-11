@@ -106,7 +106,6 @@ const S = {
       background-color: var(--white);
       border: none;
       border-radius: 10px;
-      /* background-color: green; */
     }
 
     .react-datepicker__navigation {
