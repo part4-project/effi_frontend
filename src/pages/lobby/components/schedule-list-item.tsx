@@ -70,9 +70,9 @@ const S = {
     font-size: 20px;
     font-weight: 700;
     min-width: 150px;
-    white-space: nowrap; /* 텍스트가 한 줄로 표시되도록 설정 */
-    overflow: hidden; /* 넘치는 텍스트를 감출 수 있도록 설정 */
-    text-overflow: ellipsis; /* 넘치는 텍스트에 ...을 추가하여 표시 */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   `,
   GroupName: styled.span`
     font-size: 14px;

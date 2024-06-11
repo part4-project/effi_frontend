@@ -64,7 +64,6 @@ const S = {
     height: 21px;
     position: absolute;
     top: ${({ $type }) => ($type === 'schedule-calendar' ? 'calc(100% + 15px) ' : '-5px')};
-    z-index: 20;
     left: 50%;
     transform: translate(-50%, -50%);
   `,
