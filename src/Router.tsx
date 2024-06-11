@@ -7,7 +7,6 @@ const Router = () => {
       <Routes>
         <Route path="/" element={<Page.Root />}>
           <Route index element={<Page.Lobby />} />
-          <Route path="auth" element={<Page.Auth />} />
           <Route path="login" element={<Page.Login />} />
           <Route path="group-home" element={<Page.GroupHome />} />
           <Route path="meeting-room" element={<Page.MeetingRoom />} />
