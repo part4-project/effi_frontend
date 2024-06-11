@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import GoogleOAuth from '@pages/login/api/google-auth';
-import { useNavigate } from 'react-router-dom';
+//import { useNavigate } from 'react-router-dom';
 
 const Auth = () => {
   const loginMutation = GoogleOAuth();
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
 
   // 현재 url에서 code 부분 추출
   const params = new URLSearchParams(window.location.search);

@@ -1,4 +1,3 @@
-import { userStore } from '@stores/user-store';
 import { getCookie, setCookie } from '@utils/cookie';
 import axios from 'axios';
 
@@ -48,11 +47,7 @@ instance.interceptors.response.use(
 
         return axios(originalRequest);
       } catch (error) {
-        const { logout } = userStore();
-
         console.error(error);
-
-        logout();
         window.location.href = '/login';
       }
     }

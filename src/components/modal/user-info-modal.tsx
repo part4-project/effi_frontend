@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import closeBtn from '@assets/icons/close-btn.svg';
-import { userStore } from '@stores/user-store';
+import { deleteCookie } from '@utils/cookie';
 import { createRandomNickName } from '@utils/createRandomNickname';
 import styled from 'styled-components';
 import Modal from './modal';
@@ -13,8 +13,6 @@ const UserInfoModal = ({ children }: GroupModalProps) => {
   const [nickName, setNickName] = useState('');
   const [isOpen, setIsOpen] = useState(false);
 
-  const { logout } = userStore();
-
   const handleOpenClick = () => {
     setIsOpen(true);
   };
@@ -25,7 +23,8 @@ const UserInfoModal = ({ children }: GroupModalProps) => {
   };
 
   const handleLogoutClick = () => {
-    logout();
+    deleteCookie('accessToken');
+    window.location.reload();
   };
 
   useEffect(() => {
