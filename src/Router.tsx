@@ -21,8 +21,6 @@ export default Router;
 
 /*
 //로그인 인증 성공적으로 마치면 적용 예정
-import { userStore } from '@stores/user-store';
-const { isAuth } = userStore();
 <Routes>
         {isAuth ? (
           <Route path="/" element={<Page.Root />}>

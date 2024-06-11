@@ -15,7 +15,7 @@ const Auth = () => {
       //로그인 인증 api 호출
       loginMutation.mutate(code);
     } else {
-      navigate('/login');
+      //navigate('/login');
     }
   }, [code]);
 

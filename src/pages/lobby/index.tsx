@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import GoogleOAuth from '@pages/login/api/google-auth';
 import { navBarHeight } from '@styles/subsection-size';
-import { useNavigate } from 'react-router-dom';
+//import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import MakeMeetingButton from './components/make-meeting-button';
 import MyCalendar from './components/my-calendar';
@@ -14,7 +14,7 @@ const Lobby = () => {
   const [selectedDate, setSelectedDate] = useState<CalendarValue>(today);
 
   const loginMutation = GoogleOAuth();
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
 
   // 현재 url에서 code 부분 추출
   const params = new URLSearchParams(window.location.search);
@@ -25,9 +25,9 @@ const Lobby = () => {
       //로그인 인증 api 호출
       loginMutation.mutate(code);
     } else {
-      navigate('/login');
+      //navigate('/login');
     }
-  }, []);
+  }, [code]);
 
   return (
     <S.LobbyPageWrapper>

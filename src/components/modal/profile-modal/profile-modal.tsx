@@ -2,7 +2,6 @@ import Modal from '@components/modal/modal';
 import ModalButton from '@components/modal/modal-button';
 import InvitedList from '@components/modal/profile-modal/invited-list';
 import NicknameInput from '@components/modal/profile-modal/nickname-input';
-import { userStore } from '@stores/user-store';
 import { deleteCookie } from '@utils/cookie';
 import styled from 'styled-components';
 import ProfileImageInput from './profile-image-input';
@@ -13,15 +12,13 @@ interface ProfileModalProps {
 }
 
 const ProfileModal = ({ isOpen, onClose }: ProfileModalProps) => {
-  const { logout } = userStore();
-
   const handleResignClick = () => {
     onClose();
   };
 
   const handleLogoutClick = () => {
     deleteCookie('accessToken');
-    logout();
+    window.location.reload();
   };
 
   return (
