@@ -11,9 +11,9 @@ const GoogleOAuth = () => {
       return await axios.get(`${import.meta.env.VITE_SERVER_URL}/user/login?code=${code}`);
     },
     onSuccess: (response) => {
-      console.log(response);
-      const accessToken = response.headers['Authorization'].split(' ')[1];
-      setCookie('accessToken', accessToken);
+      console.log(response.headers);
+      //const accessToken = response.headers['Authorization'].split(' ')[1];
+      //setCookie('accessToken', accessToken);
       //navigate('/');
     },
     onError: (error) => {
