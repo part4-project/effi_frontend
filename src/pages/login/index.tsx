@@ -1,13 +1,8 @@
-import GoogleLogo from '@assets/icons/google_logo.svg';
 import Logo from '@assets/logo.svg';
-import { useNavigate } from 'react-router-dom';
+import GoogleLoginButton from '@pages/login/components/google-login-button';
 import styled from 'styled-components';
 
 const Login = () => {
-  const navigate = useNavigate();
-  const handleLoginClick = () => {
-    navigate('/');
-  };
   return (
     <S.LoginPageWrapper>
       <S.TopBox>
@@ -17,12 +12,7 @@ const Login = () => {
         <S.Title>EFFI</S.Title>
         <S.Caption>에피 설명 문구</S.Caption>
       </S.TopBox>
-      <S.SocialLoginButton onClick={handleLoginClick}>
-        <S.SocialLogoBox>
-          <img src={GoogleLogo} alt="google" />
-        </S.SocialLogoBox>
-        <p>구글로 로그인</p>
-      </S.SocialLoginButton>
+      <GoogleLoginButton />
     </S.LoginPageWrapper>
   );
 };
@@ -56,23 +46,5 @@ const S = {
   Caption: styled.p`
     font-weight: 700;
     color: var(--blue05);
-  `,
-  SocialLogoBox: styled.div`
-    position: absolute;
-    top: 5%;
-    left: 4%;
-  `,
-  SocialLoginButton: styled.button`
-    position: relative;
-    background-color: var(--white);
-    border-radius: 100px;
-    font-weight: 700;
-    line-height: 19px;
-    width: 320px;
-    padding-block: 18px;
-    p {
-      font-size: 16px;
-      color: var(--blue05);
-    }
   `,
 };
