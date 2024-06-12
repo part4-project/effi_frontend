@@ -1,6 +1,14 @@
 /* eslint-disable no-console */
 import userRequest from '@api/user/user-request';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+
+export const useUserQuery = () => {
+  const query = useQuery({
+    queryKey: [`userInfo`],
+    queryFn: async () => await userRequest.FetchUserData(),
+  });
+  return query;
+};
 
 export const useUserNicknameUpdateMutation = () => {
   const queryClient = useQueryClient();
