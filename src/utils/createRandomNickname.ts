@@ -1,14 +1,10 @@
+import { ADJECTIVE_DATA, NOUN_DATA } from '@constants/nickname-data';
 import { fakerKO as faker } from '@faker-js/faker';
 
 export function createRandomNickName() {
-  const adjective = faker.word.adjective();
-  const noun = faker.word.noun();
+  const randomAdjective = faker.helpers.arrayElement(ADJECTIVE_DATA);
+  const randomNoun = faker.helpers.arrayElement(NOUN_DATA);
 
-  // fakerJS 3*3 랜덤
-  if (adjective.length === 3 && noun.length === 3) {
-    const nickname = `${adjective}${noun}`;
-    return nickname;
-  }
-
-  return createRandomNickName();
+  const nickname = `${randomAdjective} ${randomNoun}`;
+  return nickname;
 }

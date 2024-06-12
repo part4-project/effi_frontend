@@ -9,7 +9,7 @@ import styled, { css } from 'styled-components';
 const NicknameInput = () => {
   const nickNameUpdate = useUserNicknameUpdateMutation();
   const { data: userData } = useUserQuery();
-  const { inputValue, setInputValue, errorMessage, handleInputChange } = useValidateText(2, 7, false);
+  const { inputValue, setInputValue, errorMessage, handleInputChange } = useValidateText(2, 7);
   const { toast } = useToast();
 
   const handleNicknameRefreshButtonClick = () => {

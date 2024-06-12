@@ -17,7 +17,6 @@ export const useUserNicknameUpdateMutation = () => {
     mutationFn: async (nickName: string) => await userRequest.updateNickname(nickName),
     onSuccess: () => {
       // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: [`userNickname`] });
       queryClient.invalidateQueries({ queryKey: [`userInfo`] });
     },
     onError: (error) => console.log(`유저 이름변경 에러: ${error}`),
