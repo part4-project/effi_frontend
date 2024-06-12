@@ -10,13 +10,35 @@ const instance = axios.create({
 instance.interceptors.request.use(
   (config) => {
     const token = getCookie('accessToken');
-
-    config.headers['Authorization'] = `Bearer ${token}`;
-
-    return config;
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
+      return config;
+    } else {
+      window.location.href = '/login';
+      return config;
+    }
   },
   (error) => {
-    return Promise.reject(error);
+    if (error.response.status === 401) {
+      window.location.href = '/login';
+    }
+  },
+);
+instance.interceptors.response.use(
+  (config) => {
+    const token = getCookie('accessToken');
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
+      return config;
+    } else {
+      window.location.href = '/login';
+      return config;
+    }
+  },
+  (error) => {
+    if (error.response.status === 401) {
+      window.location.href = '/login';
+    }
   },
 );
 
