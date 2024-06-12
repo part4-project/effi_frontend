@@ -1,25 +1,10 @@
-import { useEffect } from 'react';
-import GoogleOAuth from '@pages/lobby/api/google-auth';
 import { navBarHeight } from '@styles/subsection-size';
-import { getCookie } from '@utils/cookie';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import MakeMeetingButton from './components/make-meeting-button';
 import ScheduleCalendar from './components/schedule-calendar';
 import UserInfoButton from './components/user-info-button';
 
 const Lobby = () => {
-  const navigate = useNavigate();
-  const params = new URLSearchParams(window.location.search);
-  const code = params.get('code');
-  GoogleOAuth(code);
-
-  useEffect(() => {
-    if (!getCookie('accessToken') && !code) {
-      navigate('/login');
-    }
-  }, [code, navigate]);
-
   return (
     <S.LobbyPageWrapper>
       <S.ButtonBox>
