@@ -1,6 +1,5 @@
 /* eslint-disable no-console */
 import userRequest from '@api/user/user-request';
-import { TUserNicknameReq } from '@api/user/user-request.type';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export const useUserNicknameUpdateMutation = () => {
