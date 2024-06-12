@@ -9,7 +9,9 @@ import styled from 'styled-components';
 
 const ProfileImageInput = () => {
   const {
-    data: { profileImageUrl, isLoading, isError },
+    data: { profileImageUrl },
+    isLoading,
+    isError,
   } = useUserQuery();
   const { mutate: profileImgUpdateMutate, isPending: isProfileImgUpdatePending } = useUserProfileImgUpdateMutation();
   const { mutate: defaultImgMutate, isPending: isDefaultImgPending } = useUserProfileImgDefaultMutation();
