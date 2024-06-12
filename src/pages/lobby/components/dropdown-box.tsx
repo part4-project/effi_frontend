@@ -39,8 +39,8 @@ const S = {
     display: flex;
     max-width: 100%;
     gap: 13px;
-    overflow-x: ${({ $type }) => $type === 'make-meeting' && 'scroll'};
-    overflow-y: ${({ $type }) => $type === 'schedule-calendar' && 'scroll'};
+    overflow-x: ${({ $type }) => $type === 'make-meeting' && 'auto'};
+    overflow-y: ${({ $type }) => $type === 'schedule-calendar' && 'auto'};
     max-height: ${({ $type }) => $type === 'schedule-calendar' && '20vh'};
     flex-direction: ${({ $type }) => ($type === 'schedule-calendar' ? 'column' : 'row')};
     padding-inline-end: ${({ $type }) => $type === 'schedule-calendar' && '9px'};

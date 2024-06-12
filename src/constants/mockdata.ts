@@ -545,6 +545,13 @@ export const MY_SCHEDULE_LIST = [
     expected_end_date: '24-06-01 22:00',
     title: 'API 회의',
   },
+  {
+    id: 7,
+    group: '그룹7',
+    start_date: '24-06-12 20:00',
+    expected_end_date: '24-06-12 22:00',
+    title: 'API 회의2',
+  },
 ];
 
 export const EXPECTED_END_TIME_LIST = [
