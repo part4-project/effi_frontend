@@ -1,21 +1,36 @@
-import { ChangeEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import refreshIcon from '@assets/icons/refresh.svg';
+import { useUserNicknameUpdateMutation } from '@hooks/react-query/use-query-user';
+import useValidateText from '@hooks/use-validate-text';
 import { createRandomNickName } from '@utils/createRandomNickname';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const NicknameInput = () => {
-  const [randNickName, setRandNickName] = useState(createRandomNickName());
-  const [inputValue, setInputValue] = useState(randNickName);
+  const nickNameUpdate = useUserNicknameUpdateMutation();
+  const { inputValue, setInputValue, errorMessage, handleInputChange } = useValidateText(7);
+  const [isCheck, setIsCheck] = useState(false);
+
+  //테스트용
+  const userData = {
+    nickname: 'test',
+  };
 
   const handleNicknameRefreshButtonClick = () => {
     const newNickName = createRandomNickName();
-    setRandNickName(newNickName);
     setInputValue(newNickName);
   };
 
-  const handleNicknameInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
+  const handleNickNameSaveButtonClick = (e: FormEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    nickNameUpdate.mutate(inputValue);
   };
+
+  useEffect(() => {
+    if (userData?.nickname) {
+      setInputValue(userData.nickname);
+      setIsCheck(true);
+    }
+  }, []);
 
   return (
     <S.Container>
@@ -23,16 +38,18 @@ const NicknameInput = () => {
         <S.NicknameLabel htmlFor="nickname">닉네임</S.NicknameLabel>
         <S.NicknameRefreshButton src={refreshIcon} onClick={handleNicknameRefreshButtonClick} />
       </S.NicknameLabelWrapper>
-
       <S.NicknameForm>
         <S.NicknameInput
           type="text"
           id="nickname"
           placeholder="닉네임"
           value={inputValue}
-          onChange={handleNicknameInputChange}
+          onChange={handleInputChange}
         />
-        <S.ChangeNicknameButton>저장하기</S.ChangeNicknameButton>
+        <S.ChangeNicknameButton onClick={handleNickNameSaveButtonClick} disabled={!!errorMessage}>
+          저장하기
+        </S.ChangeNicknameButton>
+        {isCheck && <S.NicknameErrorMessage>{errorMessage}</S.NicknameErrorMessage>}
       </S.NicknameForm>
     </S.Container>
   );
@@ -66,6 +83,7 @@ const S = {
   `,
 
   NicknameForm: styled.form`
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -78,11 +96,24 @@ const S = {
     padding: 12px 10px;
   `,
 
+  NicknameErrorMessage: styled.strong`
+    position: absolute;
+    top: 120%;
+    left: 3%;
+    color: var(--red01);
+  `,
+
   ChangeNicknameButton: styled.button`
     padding: 6px 10px;
     border-radius: 4px;
     font-size: 12px;
     color: var(--white);
     background-color: var(--blue01);
+    ${(props) =>
+      props.disabled &&
+      css`
+        cursor: auto;
+        background-color: var(--gray01);
+      `}
   `,
 };

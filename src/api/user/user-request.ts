@@ -3,7 +3,7 @@ import axios from '@api/axios';
 const userRequest = {
   updateNickname: async (nickName: string) => {
     try {
-      const { data } = await axios.post('user/info/modifyNickname', { nickName });
+      const { data } = await axios.post('user/info/modifyNickname', { nickname: nickName });
       return data;
     } catch (error) {
       return error;
