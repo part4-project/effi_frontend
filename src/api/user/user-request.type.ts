@@ -1,7 +1,4 @@
 // request
-export interface TUserNicknameReq {
-  nickname: string;
-}
 
 // response
 export interface TUserNicknameRes {

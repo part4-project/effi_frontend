@@ -1,3 +1,4 @@
+import { TGroupFetchInfo } from '@api/group/group-request.type';
 import { useGroupQuery } from '@hooks/react-query/use-query-group';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -12,11 +13,11 @@ const GroupList = () => {
 
   return (
     <S.GroupListWrap>
-      {/* {groupData.map((group) => (
+      {groupData.map((group: TGroupFetchInfo) => (
         <Link to={'/group-home'} key={group.groupId}>
           <GroupItem {...group} />
         </Link>
-      ))} */}
+      ))}
     </S.GroupListWrap>
   );
 };

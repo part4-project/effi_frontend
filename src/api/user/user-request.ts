@@ -1,10 +1,9 @@
 import axios from '@api/axios';
-import { TUserNicknameReq } from './user-request.type';
 
 const userRequest = {
-  updateNickname: async (nameData: TUserNicknameReq) => {
+  updateNickname: async (nickName: string) => {
     try {
-      const data = await axios.post('user/info/modifyNickname', nameData);
+      const { data } = await axios.post('user/info/modifyNickname', { nickName });
       return data;
     } catch (error) {
       return error;
@@ -15,7 +14,7 @@ const userRequest = {
     formData.append('image', file);
 
     try {
-      const data = await axios.post(`user/info/modifyProfileImage`, formData, {
+      const { data } = await axios.post(`user/info/modifyProfileImage`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -27,7 +26,7 @@ const userRequest = {
   },
   updateProfileDefaultImg: async () => {
     try {
-      const data = await axios.post(`user/info/modifyProfileImage/default`);
+      const { data } = await axios.post(`user/info/modifyProfileImage/default`);
       return data;
     } catch (error) {
       return error;

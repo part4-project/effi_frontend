@@ -25,6 +25,7 @@ const GroupCreateModalButton = ({ children }: GroupCreateModalButtonProps) => {
       try {
         await mutateAsync(groupName);
         toast('그룹이 생성되었습니다.');
+        setIsOpen(false);
       } catch (error) {
         toast('그룹 생성에 실패했습니다.');
         setIsOpen(false);

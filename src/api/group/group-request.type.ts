@@ -4,9 +4,9 @@
 export interface TGroupFetchInfo {
   groupId: number;
   groupName: string;
-  groupCode: string;
-  sortNum: number;
-  admin: boolean;
+  groupCode?: string;
+  sortNum?: number;
+  admin?: boolean;
 }
 export type TGroupFetchRes = TGroupFetchInfo[];
 

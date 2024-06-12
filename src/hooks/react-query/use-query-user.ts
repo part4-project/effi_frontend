@@ -7,7 +7,7 @@ export const useUserNicknameUpdateMutation = () => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: async (userData: TUserNicknameReq) => await userRequest.updateNickname(userData),
+    mutationFn: async (nickName: string) => await userRequest.updateNickname(nickName),
     onSuccess: () => {
       // Invalidate and refetch
       queryClient.invalidateQueries({ queryKey: [`userNickname`] });

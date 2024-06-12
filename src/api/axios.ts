@@ -2,8 +2,9 @@ import { getCookie } from '@utils/cookie';
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'http://api.effi.club/',
+  baseURL: 'https://api.effi.club/',
   timeout: 5000,
+  withCredentials: true,
 });
 
 instance.interceptors.request.use(
