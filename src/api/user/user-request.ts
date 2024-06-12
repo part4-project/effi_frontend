@@ -1,6 +1,14 @@
 import axios from '@api/axios';
 
 const userRequest = {
+  FetchUserData: async () => {
+    try {
+      const { data } = await axios.get(`user/info/me`);
+      return data;
+    } catch (error) {
+      return error;
+    }
+  },
   updateNickname: async (nickName: string) => {
     try {
       const { data } = await axios.post('user/info/modifyNickname', { nickname: nickName });
