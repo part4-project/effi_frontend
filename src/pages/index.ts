@@ -1,7 +1,8 @@
-import Login from '@pages/login';
+import Auth from '@pages/auth';
 import GroupHome from '@pages/group-home';
 import Lobby from '@pages/lobby';
-import Root from '@pages/Root';
+import Login from '@pages/login';
 import MeetingRoom from '@pages/meeting-room';
+import Root from '@pages/Root';
 
-export { Login, GroupHome, Lobby, Root, MeetingRoom };
+export { Login, GroupHome, Lobby, Root, MeetingRoom, Auth };

@@ -10,6 +10,7 @@ const Router = () => {
           <Route path="login" element={<Page.Login />} />
           <Route path="group-home" element={<Page.GroupHome />} />
           <Route path="meeting-room" element={<Page.MeetingRoom />} />
+          <Route path="auth" element={<Page.Auth />} />
         </Route>
       </Routes>
     </BrowserRouter>
