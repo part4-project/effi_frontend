@@ -1,19 +1,16 @@
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, useEffect } from 'react';
 import refreshIcon from '@assets/icons/refresh.svg';
-import { useUserNicknameUpdateMutation } from '@hooks/react-query/use-query-user';
+import { useUserQuery, useUserNicknameUpdateMutation } from '@hooks/react-query/use-query-user';
+import { useToast } from '@hooks/use-toast';
 import useValidateText from '@hooks/use-validate-text';
 import { createRandomNickName } from '@utils/createRandomNickname';
 import styled, { css } from 'styled-components';
 
 const NicknameInput = () => {
   const nickNameUpdate = useUserNicknameUpdateMutation();
-  const { inputValue, setInputValue, errorMessage, handleInputChange } = useValidateText(7, false);
-  const [isCheck, setIsCheck] = useState(false);
-
-  //테스트용
-  const userData = {
-    nickname: 'test',
-  };
+  const { data: userData } = useUserQuery();
+  const { inputValue, setInputValue, errorMessage, handleInputChange } = useValidateText(2, 7, false);
+  const { toast } = useToast();
 
   const handleNicknameRefreshButtonClick = () => {
     const newNickName = createRandomNickName();
@@ -22,13 +19,19 @@ const NicknameInput = () => {
 
   const handleNickNameSaveButtonClick = (e: FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    nickNameUpdate.mutate(inputValue);
+    nickNameUpdate.mutate(inputValue, {
+      onSuccess: () => {
+        toast('닉네임이 저장 되었습니다.');
+      },
+      onError: () => {
+        toast('닉네임 저장에 실패했습니다.');
+      },
+    });
   };
 
   useEffect(() => {
     if (userData?.nickname) {
       setInputValue(userData.nickname);
-      setIsCheck(true);
     }
   }, []);
 
@@ -49,7 +52,7 @@ const NicknameInput = () => {
         <S.ChangeNicknameButton onClick={handleNickNameSaveButtonClick} disabled={!!errorMessage}>
           저장하기
         </S.ChangeNicknameButton>
-        {isCheck && <S.NicknameErrorMessage>{errorMessage}</S.NicknameErrorMessage>}
+        <S.NicknameErrorMessage>{errorMessage}</S.NicknameErrorMessage>
       </S.NicknameForm>
     </S.Container>
   );
@@ -109,11 +112,17 @@ const S = {
     font-size: 12px;
     color: var(--white);
     background-color: var(--blue01);
+    &:hover {
+      background-color: var(--blue04);
+    }
     ${(props) =>
       props.disabled &&
       css`
         cursor: auto;
         background-color: var(--gray01);
+        &:hover {
+          background-color: var(--gray01);
+        }
       `}
   `,
 };
