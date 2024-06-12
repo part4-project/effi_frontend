@@ -2,7 +2,6 @@ import GoogleLogo from '@assets/icons/google_logo.svg';
 import styled from 'styled-components';
 
 const GoogleLoginButton = () => {
-  //구글 로그인 리다이렉트
   const handleLoginClick = () => {
     window.location.href =
       'https://accounts.google.com/o/oauth2/auth?' +
