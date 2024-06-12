@@ -1,16 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
+import { TGroupFetchInfo } from '@api/group/group-request.type';
 import GroupBg from '@assets/group-bg.svg';
 import { device } from '@styles/breakpoints';
 import { zIndex } from '@styles/z-index';
 import styled from 'styled-components';
 
-interface GroupItemProp {
-  id: number;
-  room_name: string;
+interface GroupItemProp extends TGroupFetchInfo {
   type?: 'side-bar' | 'calendar';
 }
 
-const GroupItem: React.FC<GroupItemProp> = ({ room_name, type = 'side-bar' }) => {
+const GroupItem: React.FC<GroupItemProp> = ({ groupName, type = 'side-bar' }) => {
   const groupItemRef = useRef<HTMLDivElement>(null);
   const [isOverFlowText, setIsOverFlowText] = useState<boolean>(false);
 
@@ -37,9 +36,9 @@ const GroupItem: React.FC<GroupItemProp> = ({ room_name, type = 'side-bar' }) =>
     <S.Trigger>
       <S.GroupItem ref={groupItemRef}>
         <img src={GroupBg} alt="groupImg" />
-        <S.GroupName $isOverFlowText={isOverFlowText}>{room_name}</S.GroupName>
+        <S.GroupName $isOverFlowText={isOverFlowText}>{groupName}</S.GroupName>
       </S.GroupItem>
-      {type === 'side-bar' && <S.Balloon>{room_name}</S.Balloon>}
+      {type === 'side-bar' && <S.Balloon>{groupName}</S.Balloon>}
     </S.Trigger>
   );
 };

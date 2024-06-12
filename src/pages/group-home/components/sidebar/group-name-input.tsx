@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import editIcon from '@assets/icons/edit.svg';
 import { GROUP } from '@constants/mockdata';
+import { useGroupUpdateMutation } from '@hooks/react-query/use-query-group';
 import { useToast } from '@hooks/use-toast';
 import styled from 'styled-components';
 
@@ -14,24 +15,26 @@ const GroupNameInput = ({ isAdmin }: TGroupNameInputProps) => {
   const [isInputValueExist, setIsInputValueExist] = useState(true);
   const [groupName, setGroupName] = useState(GROUP.room_name);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const { mutateAsync } = useGroupUpdateMutation('31');
 
   const handleGroupNameChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setGroupName(e.target.value);
     setIsInputValueExist(true);
   };
 
-  const handleEditButtonClick = () => {
+  const handleEditButtonClick = async () => {
     setIsEditing(true);
   };
 
-  const handleEditCompleteButtonClick = useCallback(() => {
+  const handleEditCompleteButtonClick = useCallback(async () => {
     if (groupName.length) {
+      await mutateAsync(groupName);
       setIsEditing(false);
       toast('그룹명이 변경되었습니다.');
     } else {
       setIsInputValueExist(false);
     }
-  }, [groupName.length, toast]);
+  }, [toast, mutateAsync, groupName]);
 
   useEffect(() => {
     if (isEditing && inputRef.current) {
