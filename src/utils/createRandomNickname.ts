@@ -6,7 +6,7 @@ export function createRandomNickName() {
 
   // fakerJS 3*3 랜덤
   if (adjective.length === 3 && noun.length === 3) {
-    const nickname = `${adjective} ${noun}`;
+    const nickname = `${adjective}${noun}`;
     return nickname;
   }
 

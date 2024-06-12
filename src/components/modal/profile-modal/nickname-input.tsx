@@ -7,7 +7,7 @@ import styled, { css } from 'styled-components';
 
 const NicknameInput = () => {
   const nickNameUpdate = useUserNicknameUpdateMutation();
-  const { inputValue, setInputValue, errorMessage, handleInputChange } = useValidateText(7);
+  const { inputValue, setInputValue, errorMessage, handleInputChange } = useValidateText(7, false);
   const [isCheck, setIsCheck] = useState(false);
 
   //테스트용
