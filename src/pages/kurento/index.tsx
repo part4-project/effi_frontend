@@ -103,7 +103,8 @@ const Kurento = () => {
       <h1>Room {roomName}</h1>
       <S.Container>
         <Video />
-        {/* <Video /> */}
+        <Video />
+        <Video />
       </S.Container>
       {/* <Modal /> */}
     </div>
@@ -113,6 +114,8 @@ const Kurento = () => {
 const S = {
   Container: styled.div`
     display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
   `,
 };
 
