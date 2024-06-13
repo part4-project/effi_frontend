@@ -1,13 +1,8 @@
 import { useState } from 'react';
+import { TGroupFetchMemberInfo } from '@api/group/group-request.type';
 import styled from 'styled-components';
 
-interface GroupMemberInfoProp {
-  id: number;
-  name: string;
-  is_admin: boolean;
-}
-
-const GroupMemberInfo: React.FC<GroupMemberInfoProp> = ({ name }) => {
+const GroupMemberInfo: React.FC<TGroupFetchMemberInfo> = ({ nickname, email }) => {
   const [isExport, setIsExport] = useState<boolean>(false);
   const exportName = isExport ? '내보내기 취소' : '내보내기';
 
@@ -18,8 +13,8 @@ const GroupMemberInfo: React.FC<GroupMemberInfoProp> = ({ name }) => {
   return (
     <S.MemberInfoWrap>
       <S.MemberInfo>
-        <S.MemberName $isExport={isExport}>{name}</S.MemberName>
-        <S.MemberEmail>이메일</S.MemberEmail>
+        <S.MemberName $isExport={isExport}>{nickname}</S.MemberName>
+        <S.MemberEmail>{email}</S.MemberEmail>
       </S.MemberInfo>
       <S.MemberExportBtn $isExport={isExport} onClick={handleExportClick}>
         {exportName}

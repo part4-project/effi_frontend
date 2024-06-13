@@ -22,7 +22,7 @@ const GroupHomeSideBar = ({ isAdmin }: TGroupHomeSideBarProps) => {
 
   return (
     <S.Container>
-      <GroupNameInput groupName={groupData.groupName} isAdmin={isAdmin} />
+      <GroupNameInput groupName={groupData.groupName} groupCode={groupData.code} isAdmin={isAdmin} />
 
       <S.GroupMemberLists>
         {groupData.memberList.map((member: TGroupFetchMemberInfo) => (

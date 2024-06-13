@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import editIcon from '@assets/icons/edit.svg';
-import { GROUP } from '@constants/mockdata';
 import { useGroupUpdateMutation } from '@hooks/react-query/use-query-group';
 import { useToast } from '@hooks/use-toast';
 import { useGroupStore } from '@stores/group';
@@ -8,10 +7,11 @@ import styled from 'styled-components';
 
 interface TGroupNameInputProps {
   groupName: string;
+  groupCode: string;
   isAdmin: boolean;
 }
 
-const GroupNameInput = ({ groupName: groupNameProp, isAdmin }: TGroupNameInputProps) => {
+const GroupNameInput = ({ groupName: groupNameProp, groupCode, isAdmin }: TGroupNameInputProps) => {
   const { toast } = useToast();
   const [isEditing, setIsEditing] = useState(false);
   const [isInputValueExist, setIsInputValueExist] = useState(true);
@@ -39,7 +39,6 @@ const GroupNameInput = ({ groupName: groupNameProp, isAdmin }: TGroupNameInputPr
   }, [toast, mutateAsync, groupName]);
 
   useEffect(() => {
-    setGroupName(groupNameProp);
     if (isEditing && inputRef.current) {
       const input = inputRef.current;
       input.focus();
@@ -57,6 +56,8 @@ const GroupNameInput = ({ groupName: groupNameProp, isAdmin }: TGroupNameInputPr
       return () => {
         input.removeEventListener('keydown', handleKeyDown);
       };
+    } else {
+      setGroupName(groupNameProp);
     }
   }, [isEditing, handleEditCompleteButtonClick, groupNameProp]);
 
@@ -74,7 +75,7 @@ const GroupNameInput = ({ groupName: groupNameProp, isAdmin }: TGroupNameInputPr
       )}
 
       <S.GroupNameSub>
-        <S.GroupCode>#{GROUP.code}</S.GroupCode>
+        <S.GroupCode>#{groupCode}</S.GroupCode>
         {isAdmin &&
           (isEditing ? (
             <S.EditButton onClick={handleEditCompleteButtonClick}>

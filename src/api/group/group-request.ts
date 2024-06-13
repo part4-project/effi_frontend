@@ -33,6 +33,14 @@ const groupRequest = {
       return error;
     }
   },
+  inviteGroup: async (targetEmail: string, groupId: number) => {
+    try {
+      const { data } = await axios.post(`user/group/invite`, { groupId, targetEmail });
+      return data;
+    } catch (error) {
+      return error;
+    }
+  },
   fetchInvitedGroup: async () => {
     try {
       const { data } = await axios.get(`user/group/view/invitations`);
