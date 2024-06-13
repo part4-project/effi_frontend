@@ -17,7 +17,7 @@ export const useUserNicknameUpdateMutation = () => {
     mutationFn: async (nickName: string) => await userRequest.updateNickname(nickName),
     onSuccess: () => {
       // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: [`userNickname`] });
+      queryClient.invalidateQueries({ queryKey: [`userInfo`] });
     },
     onError: (error) => console.log(`유저 이름변경 에러: ${error}`),
   });
@@ -32,7 +32,7 @@ export const useUserProfileImgUpdateMutation = () => {
     mutationFn: async (userData: File) => await userRequest.updateProfileImg(userData),
     onSuccess: () => {
       // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: [`userProfileImg`] });
+      queryClient.invalidateQueries({ queryKey: [`userInfo`] });
     },
     onError: (error) => console.log(`유저 프로필사진 변경 에러: ${error}`),
   });
@@ -47,7 +47,7 @@ export const useUserProfileImgDefaultMutation = () => {
     mutationFn: async () => await userRequest.updateProfileDefaultImg(),
     onSuccess: () => {
       // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: [`userProfileImg`] });
+      queryClient.invalidateQueries({ queryKey: [`userInfo`] });
     },
     onError: (error) => console.log(`유저 프로필사진(기본) 변경 에러: ${error}`),
   });
