@@ -1,12 +1,10 @@
 import editMeetingIcon from '@assets/icons/kebab.svg';
-import onLiveCharacter from '@assets/icons/meeting-live-character.svg';
 import noDataCharacter from '@assets/icons/meeting-no-data-character.svg';
-import onScheduledCharacter from '@assets/icons/meeting-reserve-chracter.svg';
 import { MEETING_ROOM, TOPIC } from '@constants/mockdata';
 import { TMyScheduleItem } from '@constants/mockdata.type';
 import MeetingBox from '@pages/group-home/components/meeting-box';
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 import MeetingModalButton from './meeting-modal/meeting-modal-button';
 
 interface TMeetingProps {
@@ -17,6 +15,7 @@ interface TMeetingProps {
 
 const Meetings = ({ isOnLive, isAdmin, scheduledMeeting }: TMeetingProps) => {
   const navigate = useNavigate();
+  const theme = useTheme();
 
   const handleMeetingClick = () => {
     navigate('/meeting-room');
@@ -26,14 +25,14 @@ const Meetings = ({ isOnLive, isAdmin, scheduledMeeting }: TMeetingProps) => {
     isLiveMeetingBox: isOnLive,
     isMeetingData: isOnLive,
     onClick: isOnLive ? handleMeetingClick : undefined,
-    src: isOnLive ? onLiveCharacter : noDataCharacter,
+    src: isOnLive ? theme.onLiveCharacter : noDataCharacter,
     title: isOnLive ? 'LIVE ON' : 'LIVE OFF',
     comments: isOnLive ? 'Live 중입니다!\n얼른 참여하세요!' : '현재 진행중인\n회의가 없습니다.',
   };
 
   const scheduledMeetingProps = {
     isMeetingData: !!scheduledMeeting,
-    src: scheduledMeeting ? onScheduledCharacter : noDataCharacter,
+    src: scheduledMeeting ? theme.onScheduledCharacter : noDataCharacter,
     title: scheduledMeeting ? scheduledMeeting.start_date : 'NOT YET',
     comments: scheduledMeeting ? `'${scheduledMeeting.title}'\n회의가 진행됩니다.` : `현재 예정인\n회의가 없습니다.`,
   };

@@ -1,7 +1,5 @@
 import React from 'react';
-import polygonTopIcon from '@assets/icons/polygon-top.svg';
-import polygonWhiteTopIcon from '@assets/icons/polygon-white-top.svg';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 
 interface DropDownBoxProps extends React.PropsWithChildren {
   type: 'make-meeting' | 'schedule-calendar';
@@ -9,9 +7,15 @@ interface DropDownBoxProps extends React.PropsWithChildren {
 }
 
 const DropDownBox = ({ type, isDropdownOpen, children }: DropDownBoxProps) => {
+  const theme = useTheme();
+
   return (
     <S.Container $type={type} $isDropdownOpen={isDropdownOpen}>
-      <S.Polygon $type={type} src={type === 'schedule-calendar' ? polygonWhiteTopIcon : polygonTopIcon} alt="위쪽" />
+      <S.Polygon
+        $type={type}
+        src={type === 'schedule-calendar' ? theme.polygonScheduleTop : theme.polygonMeetingTop}
+        alt="위쪽"
+      />
       <S.ListBox $type={type}>{children}</S.ListBox>
     </S.Container>
   );
@@ -31,7 +35,7 @@ const S = {
     width: ${({ $type }) => $type === 'schedule-calendar' && '100%'};
     max-height: ${({ $type }) => $type === 'schedule-calendar' && '25vh'};
     margin-top: ${({ $type }) => $type === 'schedule-calendar' && '15px'};
-    background: ${({ $type }) => ($type === 'schedule-calendar' ? 'var(--white)' : 'var(--blue03)')};
+    background: ${({ $type, theme }) => ($type === 'schedule-calendar' ? theme.schedule : theme.meetingDropDown)};
     position: ${({ $type }) => ($type === 'schedule-calendar' ? 'auto' : 'absolute')};
     transform: ${({ $type }) => ($type === 'schedule-calendar' ? 'auto' : 'translate(-50%, -50%)')};
   `,
@@ -51,7 +55,7 @@ const S = {
     }
 
     &::-webkit-scrollbar-thumb {
-      background: #d6d6d7;
+      background: ${(props) => props.theme.scrollBar};
       border-radius: 2px;
     }
 

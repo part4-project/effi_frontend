@@ -49,12 +49,12 @@ const S = {
     }
 
     &::-webkit-scrollbar-thumb {
-      background: #d6d6d7;
+      background: ${(props) => props.theme.scrollBar};
       border-radius: 16px;
     }
 
     &::-webkit-scrollbar-track {
-      background: var(--gray03);
+      background: ${(props) => props.theme.scroll};
     }
   `,
   AlarmListContent: styled.div<{ $isAlarmList: boolean }>`
@@ -62,7 +62,7 @@ const S = {
   `,
   AlarmItemWrap: styled.div`
     padding-block: 18px;
-    border-bottom: 1px solid var(--blue02, #d2e3ed);
+    border-bottom: 1px solid ${(props) => props.theme.line};
     &:first-child {
       padding-top: 0;
     }

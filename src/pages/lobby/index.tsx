@@ -23,7 +23,7 @@ export default Lobby;
 const S = {
   LobbyPageWrapper: styled.div`
     width: 100%;
-    background: var(--blue02);
+    background: ${(props) => props.theme.theme02};
     padding: 52px 77px;
     display: flex;
     height: calc(100vh - ${navBarHeight.desktop});

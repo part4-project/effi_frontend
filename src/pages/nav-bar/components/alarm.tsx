@@ -1,15 +1,15 @@
-import AlarmImg from '@assets/icons/alarm-active.svg';
 import useDropdown from '@pages/lobby/hooks/use-dropdown';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 import AlarmPopOver from './alarm-popover';
 
 const Alarm = () => {
+  const theme = useTheme();
   const { ref, isDropdownOpen, handleDropdownClick } = useDropdown();
 
   return (
     <S.AlarmWrap ref={ref}>
       <div onClick={handleDropdownClick}>
-        <S.AlarmImg src={AlarmImg} alt="alarm" />
+        <S.AlarmImg src={theme.alarmActive} alt="alarm" />
       </div>
       {isDropdownOpen && <AlarmPopOver />}
     </S.AlarmWrap>

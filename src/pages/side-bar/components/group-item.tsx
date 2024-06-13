@@ -1,15 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
 import { TGroupFetchInfo } from '@api/group/group-request.type';
-import GroupBg from '@assets/group-bg.svg';
 import { device } from '@styles/breakpoints';
 import { zIndex } from '@styles/z-index';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 
 interface GroupItemProp extends TGroupFetchInfo {
   type?: 'side-bar' | 'calendar';
 }
 
 const GroupItem: React.FC<GroupItemProp> = ({ groupName, type = 'side-bar' }) => {
+  const theme = useTheme();
+
   const groupItemRef = useRef<HTMLDivElement>(null);
   const [isOverFlowText, setIsOverFlowText] = useState<boolean>(false);
 
@@ -35,7 +36,7 @@ const GroupItem: React.FC<GroupItemProp> = ({ groupName, type = 'side-bar' }) =>
   return (
     <S.Trigger>
       <S.GroupItem ref={groupItemRef}>
-        <img src={GroupBg} alt="groupImg" />
+        <img src={theme.groupBg} alt="groupImg" />
         <S.GroupName $isOverFlowText={isOverFlowText}>{groupName}</S.GroupName>
       </S.GroupItem>
       {type === 'side-bar' && <S.Balloon>{groupName}</S.Balloon>}
@@ -57,7 +58,7 @@ const S = {
     left: 50%;
     transform: translate3d(-50%, -50%, 0);
     white-space: nowrap;
-    color: var(--blue01);
+    color: ${(props) => props.theme.theme01};
     font-weight: 900;
     font-size: ${({ $isOverFlowText }) => ($isOverFlowText ? '10px' : '16px')};
     @media ${device.tablet} {
@@ -85,7 +86,7 @@ const S = {
     top: 50%;
     left: 130%;
     transform: translate3d(0, -50%, 0);
-    background: var(--blue01);
+    background: ${(props) => props.theme.theme01};
     color: var(--white);
     font-size: 14px;
     border-radius: 10px;
@@ -99,7 +100,7 @@ const S = {
       content: '';
       width: 14px;
       height: 13px;
-      background: url('/polygon-left.svg');
+      background: url('${(props) => props.theme.polygonLeft}');
       position: absolute;
       top: 50%;
       left: -4px;

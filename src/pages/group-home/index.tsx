@@ -29,7 +29,7 @@ export default GroupHome;
 const S = {
   Container: styled.div`
     display: flex;
-    background-color: var(--blue02);
+    background-color: ${(props) => props.theme.theme02};
   `,
 
   GroupHomeMain: styled.div`

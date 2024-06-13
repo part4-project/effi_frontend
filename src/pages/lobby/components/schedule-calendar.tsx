@@ -95,7 +95,7 @@ const S = {
       padding: 10% 8%;
       font-family: 'Pretendard';
       font-size: 16px;
-      background-color: var(--white);
+      background-color: ${(props) => props.theme.schedule};
       border: none;
       border-radius: 10px;
     }
@@ -123,7 +123,7 @@ const S = {
     .react-datepicker-time__header,
     .react-datepicker-year-header {
       margin-top: 0;
-      color: var(--black);
+      color: ${(props) => props.theme.scheduleText};
       font-weight: 700;
       font-size: 24px;
       margin-bottom: 0;
@@ -131,7 +131,7 @@ const S = {
 
     .react-datepicker__header {
       text-align: start;
-      background-color: var(--white);
+      background-color: ${(props) => props.theme.schedule};
       border-bottom: none;
       border-top-left-radius: 0.3rem;
       padding: 0;
@@ -188,7 +188,7 @@ const S = {
     .react-datepicker__day-name,
     .react-datepicker__day,
     .react-datepicker__time-name {
-      color: var(--black);
+      color: ${(props) => props.theme.scheduleText};
       display: inline-block;
       width: 32px;
       height: 32px;
@@ -208,7 +208,7 @@ const S = {
     .react-datepicker__quarter-text:hover,
     .react-datepicker__year-text:hover {
       border-radius: 100%;
-      background-color: var(--blue02);
+      background-color: ${(props) => props.theme.theme02};
     }
 
     .react-datepicker__day--selected:hover,
@@ -223,7 +223,7 @@ const S = {
     .react-datepicker__year-text--selected:hover,
     .react-datepicker__year-text--in-selecting-range:hover,
     .react-datepicker__year-text--in-range:hover {
-      background-color: var(--blue01);
+      background-color: ${(props) => props.theme.theme01};
     }
 
     .react-datepicker__day--selected,
@@ -239,8 +239,8 @@ const S = {
     .react-datepicker__year-text--in-selecting-range,
     .react-datepicker__year-text--in-range {
       border-radius: 100%;
-      background-color: var(--blue01);
-      color: var(--white);
+      background-color: ${(props) => props.theme.text02};
+      color: ${(props) => props.theme.schedule};
     }
 
     .react-datepicker__day--keyboard-selected,
@@ -263,7 +263,7 @@ const S = {
     .dot {
       width: 4px;
       height: 4px;
-      background-color: var(--blue01);
+      background-color: ${(props) => props.theme.dot};
       border-radius: 100%;
     }
   `,

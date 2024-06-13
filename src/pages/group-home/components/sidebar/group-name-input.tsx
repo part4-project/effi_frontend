@@ -1,15 +1,15 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import editIcon from '@assets/icons/edit.svg';
 import { GROUP } from '@constants/mockdata';
 import { useGroupUpdateMutation } from '@hooks/react-query/use-query-group';
 import { useToast } from '@hooks/use-toast';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 
 interface TGroupNameInputProps {
   isAdmin: boolean;
 }
 
 const GroupNameInput = ({ isAdmin }: TGroupNameInputProps) => {
+  const theme = useTheme();
   const { toast } = useToast();
   const [isEditing, setIsEditing] = useState(false);
   const [isInputValueExist, setIsInputValueExist] = useState(true);
@@ -79,7 +79,7 @@ const GroupNameInput = ({ isAdmin }: TGroupNameInputProps) => {
             </S.EditButton>
           ) : (
             <S.EditButton onClick={handleEditButtonClick}>
-              <img src={editIcon} />
+              <img src={theme.editIcon} />
             </S.EditButton>
           ))}
       </S.GroupNameSub>

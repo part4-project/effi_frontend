@@ -1,13 +1,14 @@
 import { ChangeEvent, KeyboardEventHandler, useState } from 'react';
-import SearchIcon from '@assets/icons/search.svg';
 import { NOTES_DATAS } from '@constants/mockdata';
 import { TNoteItem } from '@constants/mockdata.type';
 import DateRangeCalendar from '@pages/group-home/components/date-range-calendar';
 import MeetingNoteItem from '@pages/group-home/components/meeting-note-item';
 import { filteredNotesBySearchQuery } from '@pages/group-home/utils/date-range-filter';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 
 const MeetingNotes = () => {
+  const theme = useTheme();
+
   const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([null, null]);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [inputValue, setInputValue] = useState<string>('');
@@ -42,7 +43,7 @@ const MeetingNotes = () => {
             onKeyDown={handleSearch}
           />
           <S.NotesSearchIcon>
-            <img src={SearchIcon} alt="search" />
+            <img src={theme.search} alt="search" />
           </S.NotesSearchIcon>
         </S.NotesSearchBarBox>
       </S.MeetingNotesHeader>
@@ -94,7 +95,7 @@ const S = {
       width: 8px;
     }
     &::-webkit-scrollbar-thumb {
-      background-color: var(--blue04);
+      background-color: ${(props) => props.theme.theme08};
       border-radius: 50px;
     }
     &::-webkit-scrollbar-track {

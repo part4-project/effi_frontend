@@ -1,26 +1,26 @@
-import AddGroupBtn from '@assets/add-group-btn.svg';
-import LobbyBtn from '@assets/lobby-btn.svg';
 import GroupList from '@pages/side-bar/components/group-list';
 import GroupCreateModalButton from '@pages/side-bar/components/modal/group-create-modal-button';
 import { device } from '@styles/breakpoints';
 import { navBarHeight, sideBarWidth } from '@styles/subsection-size';
 import { zIndex } from '@styles/z-index';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 
 const SideBar = () => {
+  const theme = useTheme();
+
   return (
     <S.SideWrap>
       <S.ButtonList>
         <S.Trigger>
           <Link to={'/'}>
-            <img src={LobbyBtn} alt="home" />
+            <img src={theme.lobbyBtn} alt="home" />
           </Link>
           <S.Balloon>로비로 가기</S.Balloon>
         </S.Trigger>
         <S.Trigger>
           <GroupCreateModalButton>
-            <img src={AddGroupBtn} alt="add" />
+            <img src={theme.addGroupBtn} alt="add" />
           </GroupCreateModalButton>
           <S.Balloon>그룹 추가하기</S.Balloon>
         </S.Trigger>
@@ -39,7 +39,7 @@ const S = {
     position: fixed;
     left: 0;
     top: ${navBarHeight.desktop};
-    background-color: var(--white);
+    background-color: ${(props) => props.theme.theme06};
     height: 100%;
     z-index: ${zIndex.sideBar};
     @media ${device.tablet} {
@@ -77,7 +77,7 @@ const S = {
     top: 50%;
     left: 130%;
     transform: translate3d(0, -50%, 0);
-    background: var(--blue01);
+    background: ${(props) => props.theme.theme01};
     color: var(--white);
     font-size: 14px;
     border-radius: 10px;
@@ -91,7 +91,7 @@ const S = {
       content: '';
       width: 14px;
       height: 13px;
-      background-image: url('/polygon-left.svg');
+      background-image: url('${(props) => props.theme.polygonLeft}');
       background-size: cover;
       background-repeat: no-repeat;
       position: absolute;

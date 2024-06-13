@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import GroupBg from '@assets/group-bg.svg';
 import { device } from '@styles/breakpoints';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 interface AlarmInviteProp {
   id: number;
   type: string;
@@ -9,6 +8,7 @@ interface AlarmInviteProp {
   remind_time: number;
 }
 const AlarmInvite = ({ group_name }: AlarmInviteProp) => {
+  const theme = useTheme();
   const groupItemRef = useRef<HTMLDivElement>(null);
   const [isOverFlowText, setIsOverFlowText] = useState<boolean>(false);
 
@@ -34,7 +34,7 @@ const AlarmInvite = ({ group_name }: AlarmInviteProp) => {
   return (
     <S.AlarmContent>
       <S.AlarmImgBox ref={groupItemRef}>
-        <img src={GroupBg} alt="alarm" />
+        <img src={theme.groupBg} alt="alarm" />
         <S.GroupImgInName $isOverFlowText={isOverFlowText}>{group_name}</S.GroupImgInName>
       </S.AlarmImgBox>
       <S.AlarmTextBox>
@@ -67,7 +67,7 @@ const S = {
     left: 50%;
     transform: translate3d(-50%, -50%, 0);
     white-space: nowrap;
-    color: var(--blue01);
+    color: ${(props) => props.theme.theme01};
     font-weight: 900;
     font-size: ${({ $isOverFlowText }) => ($isOverFlowText ? '10px' : '16px')};
     @media ${device.tablet} {
@@ -87,13 +87,13 @@ const S = {
     word-wrap: break-word;
   `,
   AlarmText: styled.p`
-    color: var(--blue05, #132f5c);
+    color: ${(props) => props.theme.theme05};
     font-size: 14px;
     font-weight: 500;
     margin-top: 4px;
   `,
   GroupName: styled.p`
-    color: var(--blue05, #132f5c);
+    color: ${(props) => props.theme.theme05};
     line-height: 24px;
   `,
 };
