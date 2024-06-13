@@ -1,10 +1,16 @@
+/* eslint-disable no-unused-vars */
 import { useState, useEffect } from 'react';
 
-const SelectMedia = () => {
+interface SelectMediaProps {
+  selectedCameraId: string;
+  selectedAudioId: string;
+  onCameraChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+  onAudioChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+}
+
+const SelectMedia = ({ selectedCameraId, selectedAudioId, onCameraChange, onAudioChange }: SelectMediaProps) => {
   const [cameras, setCameras] = useState([]); // 카메라 목록 상태
   const [audios, setAudios] = useState([]); // 오디오 목록 상태
-  const [selectedCamera, setSelectedCamera] = useState(''); // 선택된 카메라 상태
-  const [selectedAudios, setSelectedAudios] = useState(''); // 선택된 오디오 상태
 
   useEffect(() => {
     getCameras();
@@ -23,17 +29,9 @@ const SelectMedia = () => {
     }
   };
 
-  const handleCameraChange = (event) => {
-    setSelectedCamera(event.target.value);
-  };
-
-  const handleAudioChange = (event) => {
-    setSelectedAudios(event.target.value);
-  };
-
   return (
     <div>
-      <select value={selectedCamera} onChange={handleCameraChange}>
+      <select value={selectedCameraId} onChange={onCameraChange}>
         <option value="">카메라 선택</option>
         {cameras.map((camera) => (
           <option key={camera.deviceId} value={camera.deviceId}>
@@ -42,7 +40,7 @@ const SelectMedia = () => {
         ))}
       </select>
 
-      <select value={selectedAudios} onChange={handleAudioChange}>
+      <select value={selectedAudioId} onChange={onAudioChange}>
         <option value="">마이크 선택</option>
         {audios.map((audio) => (
           <option key={audio.deviceId} value={audio.deviceId}>

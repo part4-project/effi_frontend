@@ -3,17 +3,37 @@ import defaultProfile from '@assets/default-profile.jpg';
 import styled from 'styled-components';
 import { CONSTRAINTS } from '../constants/constraints';
 
-const Video = () => {
+interface VideoProps {
+  selectedCameraId: string;
+  selectedAudioId: string;
+}
+
+const Video = ({ selectedCameraId, selectedAudioId }: VideoProps) => {
   const videoRef = useRef(null);
   const audioRef = useRef(null);
 
   const [videoCount, setVideoCount] = useState(0);
 
   useEffect(() => {
+    console.log('camera', selectedCameraId);
+    console.log('audio', selectedAudioId);
     const getMediaStream = async () => {
       try {
-        const stream = await navigator.mediaDevices.getUserMedia(CONSTRAINTS);
+        const videoConstraints = selectedCameraId
+          ? { ...CONSTRAINTS.video, deviceId: { exact: selectedCameraId } }
+          : CONSTRAINTS.video;
+
+        const audioConstraints = selectedAudioId
+          ? { ...CONSTRAINTS.audio, deviceId: { exact: selectedAudioId } }
+          : CONSTRAINTS.audio;
+
+        const newConstraints = {
+          video: videoConstraints,
+          audio: audioConstraints,
+        };
+        const stream = await navigator.mediaDevices.getUserMedia(newConstraints);
         setVideoCount(stream.getVideoTracks().length);
+        console.log(stream);
 
         if (videoRef.current) {
           videoRef.current.srcObject = stream;
@@ -28,7 +48,7 @@ const Video = () => {
     };
 
     getMediaStream();
-  }, [videoCount]);
+  }, [videoCount, selectedCameraId, selectedAudioId]);
 
   return (
     <>

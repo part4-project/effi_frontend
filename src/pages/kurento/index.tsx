@@ -4,16 +4,28 @@ import Video from '@pages/kurento/components/video';
 import styled from 'styled-components';
 
 const Kurento = () => {
-  const [roomName, setRoomName] = useState('테스트 room');
+  const [selectedCameraId, setSelectedCameraId] = useState(''); // 선택된 CameraId
+  const [selectedAudioId, setSelectedAudioId] = useState(''); // 선택된 AudioId
+
+  const handleCameraIdChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedCameraId(e.target.value);
+  };
+
+  const handleAudioChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedAudioId(e.target.value);
+  };
 
   return (
     <div>
-      <h1>Room {roomName}</h1>
-      <SelectMedia />
+      <h1>Room TEST</h1>
+      <SelectMedia
+        selectedCameraId={selectedCameraId}
+        selectedAudioId={selectedAudioId}
+        onCameraChange={handleCameraIdChange}
+        onAudioChange={handleAudioChange}
+      />
       <S.VideoContainer>
-        <Video />
-        <Video />
-        <Video />
+        <Video selectedCameraId={selectedCameraId} selectedAudioId={selectedAudioId} />
       </S.VideoContainer>
     </div>
   );
