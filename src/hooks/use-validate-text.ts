@@ -1,10 +1,6 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 
-/*
-length: 글자 수 제한
-space: 띄어쓰기 제한
-*/
-const useValidateText = (minLength: number, maxLength: number, space: boolean = true) => {
+const useValidateText = (minLength: number, maxLength: number) => {
   const [inputValue, setInputValue] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -22,14 +18,6 @@ const useValidateText = (minLength: number, maxLength: number, space: boolean = 
         validate: () => text.length > maxLength,
         message: `내용은 ${maxLength}자 이하여야 합니다.`,
       },
-      ...(!space
-        ? [
-            {
-              validate: () => /\s/.test(text),
-              message: '띄어쓰기를 사용할 수 없습니다.',
-            },
-          ]
-        : []),
     ];
 
     const error = validators.find(({ validate }) => validate());
