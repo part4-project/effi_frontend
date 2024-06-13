@@ -1,39 +1,19 @@
 import { useEffect, useRef, useState } from 'react';
 import defaultProfile from '@assets/default-profile.jpg';
 import styled from 'styled-components';
-
-const CONSTRAINTS = {
-  audio: {
-    autoGainControl: true,
-    channelCount: 2,
-    echoCancellation: true,
-    latency: 0,
-    noiseSuppression: true,
-    sampleRate: 48000,
-    sampleSize: 16,
-  },
-
-  video: {
-    width: 400,
-    height: 300,
-    maxFrameRate: 50,
-    minFrameRate: 40,
-  },
-};
+import { CONSTRAINTS } from '../constants/constraints';
 
 const Video = () => {
   const videoRef = useRef(null);
   const audioRef = useRef(null);
+
   const [videoCount, setVideoCount] = useState(0);
 
   useEffect(() => {
     const getMediaStream = async () => {
       try {
         const stream = await navigator.mediaDevices.getUserMedia(CONSTRAINTS);
-        // 마이크, 카메라 리스트 가져오기
-        const devices = await navigator.mediaDevices.enumerateDevices();
-        const cameras = devices.filter((device) => device.kind === 'videoinput');
-        const audios = devices.filter((device) => device.kind === 'audioinput');
+        setVideoCount(stream.getVideoTracks().length);
 
         if (videoRef.current) {
           videoRef.current.srcObject = stream;
@@ -42,10 +22,6 @@ const Video = () => {
         if (audioRef.current) {
           audioRef.current.srcObject = stream;
         }
-
-        setVideoCount(stream.getVideoTracks().length);
-
-        console.log(cameras, audios);
       } catch (error) {
         console.error('Error accessing media devices.', error);
       }
