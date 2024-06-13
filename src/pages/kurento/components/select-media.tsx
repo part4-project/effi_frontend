@@ -9,8 +9,8 @@ interface SelectMediaProps {
 }
 
 const SelectMedia = ({ selectedCameraId, selectedAudioId, onCameraChange, onAudioChange }: SelectMediaProps) => {
-  const [cameras, setCameras] = useState([]); // 카메라 목록 상태
-  const [audios, setAudios] = useState([]); // 오디오 목록 상태
+  const [cameras, setCameras] = useState<MediaDeviceInfo[]>([]); // 카메라 목록 상태
+  const [audios, setAudios] = useState<MediaDeviceInfo[]>([]); // 오디오 목록 상태
 
   useEffect(() => {
     getCameras();
@@ -25,7 +25,7 @@ const SelectMedia = ({ selectedCameraId, selectedAudioId, onCameraChange, onAudi
       setCameras(cameras);
       setAudios(audios);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { LegacyRef, forwardRef, useEffect, useRef, useState } from 'react';
 import defaultProfile from '@assets/default-profile.jpg';
 import styled from 'styled-components';
 import { CONSTRAINTS } from '../constants/constraints';
@@ -8,15 +8,13 @@ interface VideoProps {
   selectedAudioId: string;
 }
 
-const Video = ({ selectedCameraId, selectedAudioId }: VideoProps) => {
+const Video = ({ selectedCameraId, selectedAudioId }: VideoProps, ref: LegacyRef<HTMLDivElement> | undefined) => {
   const videoRef = useRef(null);
   const audioRef = useRef(null);
 
   const [videoCount, setVideoCount] = useState(0);
 
   useEffect(() => {
-    console.log('camera', selectedCameraId);
-    console.log('audio', selectedAudioId);
     const getMediaStream = async () => {
       try {
         const videoConstraints = selectedCameraId
@@ -33,7 +31,6 @@ const Video = ({ selectedCameraId, selectedAudioId }: VideoProps) => {
         };
         const stream = await navigator.mediaDevices.getUserMedia(newConstraints);
         setVideoCount(stream.getVideoTracks().length);
-        console.log(stream);
 
         if (videoRef.current) {
           videoRef.current.srcObject = stream;
@@ -53,12 +50,12 @@ const Video = ({ selectedCameraId, selectedAudioId }: VideoProps) => {
   return (
     <>
       {videoCount > 0 ? (
-        <S.Container>
+        <S.Container ref={ref}>
           <S.StyledVideo ref={videoRef} autoPlay playsInline muted />
           <audio ref={audioRef} autoPlay controls />
         </S.Container>
       ) : (
-        <S.DummyContainer>
+        <S.DummyContainer ref={ref}>
           <S.DummyVideo>
             <img src={defaultProfile} />
           </S.DummyVideo>
@@ -98,4 +95,4 @@ const S = {
   `,
 };
 
-export default Video;
+export default forwardRef(Video);
