@@ -34,3 +34,13 @@ export interface TGroupCreateRes {
   createdAt: string;
   modifiedAt: string | null;
 }
+
+export interface TInvitedGroupFetchRes {
+  invitorId: number;
+  invitorName: string;
+  groupId: number;
+  groupName: string;
+  code: string;
+  createdAt: string;
+  modifiedAt: string | null;
+}
