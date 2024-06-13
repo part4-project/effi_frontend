@@ -3,15 +3,17 @@ import { TGroupFetchInfo } from '@api/group/group-request.type';
 import GroupBg from '@assets/group-bg.svg';
 import { device } from '@styles/breakpoints';
 import { zIndex } from '@styles/z-index';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 interface GroupItemProp extends TGroupFetchInfo {
+  selectGroupId?: number;
   type?: 'side-bar' | 'calendar';
 }
 
-const GroupItem: React.FC<GroupItemProp> = ({ groupName, type = 'side-bar' }) => {
+const GroupItem: React.FC<GroupItemProp> = ({ selectGroupId, groupId, groupName, type = 'side-bar' }) => {
   const groupItemRef = useRef<HTMLDivElement>(null);
   const [isOverFlowText, setIsOverFlowText] = useState<boolean>(false);
+  const isSelect = selectGroupId == groupId;
 
   useEffect(() => {
     // 뒷배경보다 텍스트 길이가 긴지 체크
@@ -34,7 +36,7 @@ const GroupItem: React.FC<GroupItemProp> = ({ groupName, type = 'side-bar' }) =>
 
   return (
     <S.Trigger>
-      <S.GroupItem ref={groupItemRef}>
+      <S.GroupItem ref={groupItemRef} $isSelect={isSelect}>
         <img src={GroupBg} alt="groupImg" />
         <S.GroupName $isOverFlowText={isOverFlowText}>{groupName}</S.GroupName>
       </S.GroupItem>
@@ -46,10 +48,14 @@ const GroupItem: React.FC<GroupItemProp> = ({ groupName, type = 'side-bar' }) =>
 export default GroupItem;
 
 const S = {
-  GroupItem: styled.div`
-    position: relative;
-    border-radius: 10%;
+  GroupItem: styled.div<{ $isSelect: boolean }>`
+    border-radius: 10px;
     overflow: hidden;
+    ${({ $isSelect }) =>
+      $isSelect &&
+      css`
+        border: 1px solid var(--blue01);
+      `}
   `,
   GroupName: styled.div<{ $isOverFlowText: boolean }>`
     position: absolute;

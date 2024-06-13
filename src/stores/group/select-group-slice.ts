@@ -1,9 +1,14 @@
+/* eslint-disable no-unused-vars */
 import { StateCreator } from 'zustand';
 
-export interface groupState {}
+export interface groupState {
+  groupId: number;
+  setGroupId: (id: number) => void;
+  initGroupId: () => void;
+}
 
 export const selectGroupSlice: StateCreator<groupState> = (set) => ({
   groupId: 0,
-  setGroupId: (id: number) => set({ groupId: id }),
+  setGroupId: (groupId: number) => set({ groupId }),
   initGroupId: () => set(() => ({ groupId: 0 })),
 });

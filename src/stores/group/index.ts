@@ -3,6 +3,6 @@ import { groupState, selectGroupSlice } from './select-group-slice';
 
 type SliceCreator = groupState;
 
-export const useColumnStore = create<SliceCreator>((...args) => ({
+export const useGroupStore = create<SliceCreator>((...args) => ({
   ...selectGroupSlice(...args),
 }));
