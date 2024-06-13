@@ -13,7 +13,7 @@ export const useGroupQuery = () => {
 export const useGroupMemberQuery = (groupId: number) => {
   const query = useQuery({
     queryKey: [`groupMember`, groupId],
-    queryFn: async () => await groupRequest.fetchGroup(),
+    queryFn: async () => await groupRequest.fetchGroupMember(groupId),
   });
   return query;
 };
@@ -33,7 +33,7 @@ export const useGroupCreateMutation = () => {
   return mutation;
 };
 
-export const useGroupUpdateMutation = (groupId: string) => {
+export const useGroupUpdateMutation = (groupId: number) => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({

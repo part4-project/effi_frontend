@@ -25,7 +25,7 @@ const groupRequest = {
       return error;
     }
   },
-  updateGroup: async (groupName: string, groupId: string) => {
+  updateGroup: async (groupName: string, groupId: number) => {
     try {
       const { data } = await axios.patch(`user/group/modify/${groupId}`, { groupName });
       return data;
