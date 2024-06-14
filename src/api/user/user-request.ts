@@ -14,7 +14,7 @@ const userRequest = {
       const { data } = await axios.post('user/info/modifyNickname', { nickname: nickName });
       return data;
     } catch (error) {
-      return error;
+      throw new Error(error as string);
     }
   },
   updateProfileImg: async (file: File) => {

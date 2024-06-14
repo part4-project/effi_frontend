@@ -8,7 +8,7 @@ const Toaster = () => {
     <>
       {toasts.map((toast) => {
         return (
-          <Toast key={toast.id} show={toast.show}>
+          <Toast key={toast.id} show={toast.show} error={toast.error}>
             {toast.message}
           </Toast>
         );

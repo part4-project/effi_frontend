@@ -5,14 +5,19 @@ import styled from 'styled-components';
 interface TToastProps {
   children: ReactNode;
   show: boolean;
+  error: boolean;
 }
 
-function Toast({ children, show }: TToastProps) {
-  return <S.Container $show={show}>{children}</S.Container>;
+function Toast({ children, show, error }: TToastProps) {
+  return (
+    <S.Container $show={show} $error={error}>
+      {children}
+    </S.Container>
+  );
 }
 
 const S = {
-  Container: styled.div<{ $show: boolean }>`
+  Container: styled.div<{ $show: boolean; $error: boolean }>`
     position: fixed;
     left: 50%;
     top: 70px;
@@ -20,7 +25,7 @@ const S = {
     display: ${({ $show }) => ($show ? 'flex' : 'none')};
     align-items: center;
     justify-content: center;
-    background-color: var(--blue05);
+    background-color: ${({ $error }) => ($error ? 'var(--red01)' : 'var(--blue05)')};
     color: var(--white);
     opacity: 0.8;
     width: 364px;

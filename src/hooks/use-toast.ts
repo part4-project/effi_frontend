@@ -7,6 +7,7 @@ interface Toast {
   id: string;
   message: string;
   show: boolean;
+  error: boolean;
 }
 
 let toasts: Toast[] = [];
@@ -21,12 +22,12 @@ const timeouts = new Map<string, ReturnType<typeof setTimeout>>();
 // eslint-disable-next-line no-unused-vars
 const listeners: Array<(toasts: Toast[]) => void> = [];
 
-const toast = (message: string) => {
+const toast = (message: string, isError: boolean = false) => {
   const id = genId();
 
   listeners.forEach((listener) => {
     if (!toasts.find((toast) => toast.id === id)) {
-      toasts = [...toasts, { id, message, show: true }];
+      toasts = [...toasts, { id, message, show: true, error: isError }];
     }
     listener(toasts);
 
@@ -50,7 +51,6 @@ const toast = (message: string) => {
 
 export const useToast = () => {
   const [state, setState] = useState(toasts);
-
   useEffect(() => {
     listeners.push(setState);
     return () => {
