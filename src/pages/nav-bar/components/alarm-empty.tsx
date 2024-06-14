@@ -1,12 +1,13 @@
-import AlarmEmptyIcon from '@assets/icons/alarm-empty.svg';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 
 const AlarmEmpty = () => {
+  const theme = useTheme();
+
   return (
     <S.AlarmWrap>
       <S.AlarmContent>
         <div>
-          <img src={AlarmEmptyIcon} alt="icon" />
+          <img src={theme.alarmEmpty} alt="icon" />
         </div>
         <div>
           <span>알림이 없습니다</span>

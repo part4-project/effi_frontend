@@ -68,7 +68,7 @@ const S = {
     &:hover {
       background-color: var(--white);
       span {
-        color: var(--blue05);
+        color: ${(props) => props.theme.theme05};
       }
     }
   `,
@@ -82,13 +82,13 @@ const S = {
   NoteTitle: styled.span`
     font-size: 20px;
     margin-right: 17px;
-    color: var(--blue01);
+    color: ${(props) => props.theme.text06};
     font-weight: bold;
   `,
 
   NoteCreatedAt: styled.span`
     font-size: 14px;
-    color: var(--blue01);
+    color: ${(props) => props.theme.text06};
   `,
 
   PercentageContainer: styled.div`
@@ -100,13 +100,13 @@ const S = {
   PercentageTitle: styled.span`
     margin-right: 10px;
     width: 170px;
-    color: var(--blue05);
+    color: ${(props) => props.theme.text03};
     font-weight: 500;
     font-size: 18px;
   `,
 
   PercentageBar: styled.div`
-    background-color: var(--blue04);
+    background-color: ${(props) => props.theme.percentBar};
     display: flex;
     width: 365px;
     height: 15px;
@@ -114,7 +114,7 @@ const S = {
   `,
 
   CompletedPercentageBar: styled.div<{ $percentage: string }>`
-    background-color: var(--blue01);
+    background-color: ${(props) => props.theme.theme01};
     display: flex;
     width: ${({ $percentage }) => `${$percentage}%`};
     height: 15px;
@@ -123,7 +123,7 @@ const S = {
 
   Percentage: styled.span`
     margin-left: 20px;
-    color: var(--blue05);
+    color: ${(props) => props.theme.text03};
     font-size: 16px;
     width: 100px;
   `,

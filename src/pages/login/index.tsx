@@ -1,13 +1,14 @@
-import Logo from '@assets/logo.svg';
 import GoogleLoginButton from '@pages/login/components/google-login-button';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 
 const Login = () => {
+  const theme = useTheme();
+
   return (
     <S.LoginPageWrapper>
       <S.TopBox>
         <S.LogoBox>
-          <img src={Logo} alt="logo" />
+          <img src={theme.logo} alt="logo" />
         </S.LogoBox>
         <S.Title>EFFI</S.Title>
         <S.Caption>에피 설명 문구</S.Caption>
@@ -27,7 +28,7 @@ const S = {
     align-items: center;
     gap: 50px;
     height: 100vh;
-    background-color: var(--blue02);
+    background-color: ${(props) => props.theme.theme02};
   `,
   TopBox: styled.div`
     display: flex;
@@ -41,10 +42,10 @@ const S = {
     font-weight: 400;
     font-size: 30px;
     margin: 0;
-    color: var(--blue05);
+    color: ${(props) => props.theme.text03};
   `,
   Caption: styled.p`
     font-weight: 700;
-    color: var(--blue05);
+    color: ${(props) => props.theme.text03};
   `,
 };

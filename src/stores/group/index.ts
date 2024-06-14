@@ -1,5 +1,5 @@
-import { persist } from 'zustand/middleware';
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 import { groupState, selectGroupSlice } from './select-group-slice';
 
 type SliceCreator = groupState;

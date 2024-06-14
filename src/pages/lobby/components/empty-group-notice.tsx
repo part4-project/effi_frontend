@@ -29,7 +29,7 @@ const S = {
   `,
   Text: styled.span`
     width: 302px;
-    color: var(--blue05);
+    color: ${(props) => props.theme.text01};
     text-align: center;
     font-size: 18px;
     font-weight: 700;
@@ -42,12 +42,12 @@ const S = {
     font-weight: 700;
     text-align: center;
     font-family: 'Pretendard';
-    color: var(--blue01);
+    color: ${(props) => props.theme.theme01};
     background-color: var(--white);
-    border: 1px solid var(--blue01);
+    border: 1px solid ${(props) => props.theme.theme01};
     &:hover {
       color: var(--white);
-      background-color: var(--blue01);
+      background-color: ${(props) => props.theme.theme01};
       border: 1px solid transparent;
     }
   `,

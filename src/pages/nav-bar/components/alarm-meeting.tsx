@@ -1,6 +1,5 @@
 import { useRef } from 'react';
-import MeetingAlarm from '@assets/icons/meeting-alarm.svg';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 import useCheckLines from '../hooks/use-check-line';
 interface AlarmMeetingProp {
   id: number;
@@ -9,13 +8,14 @@ interface AlarmMeetingProp {
   remind_time: number;
 }
 const AlarmMeeting = ({ group_name, remind_time }: AlarmMeetingProp) => {
+  const theme = useTheme();
   const textRef = useRef<HTMLParagraphElement>(null);
   const lines = useCheckLines(textRef);
   const isWrap = lines > 1 ? '\n' : ' ';
   return (
     <S.AlarmContent>
       <S.AlarmImgBox>
-        <img src={MeetingAlarm} alt="alarm" />
+        <img src={theme.meetingAlarm} alt="alarm" />
       </S.AlarmImgBox>
       <S.AlarmTextBox>
         <S.AlarmTitle>
@@ -47,24 +47,24 @@ const S = {
     flex-direction: column;
   `,
   AlarmTitle: styled.h3`
-    color: var(--blue05, #132f5c);
+    color: ${(props) => props.theme.theme05};
     font-size: 20px;
     font-weight: 700;
     white-space: pre-wrap;
     word-wrap: break-word;
   `,
   AlarmText: styled.p`
-    color: var(--blue05, #132f5c);
+    color: ${(props) => props.theme.theme05};
     font-size: 14px;
     font-weight: 500;
     margin-top: 4px;
   `,
   GroupName: styled.p`
-    color: var(--blue01, #3e82f1);
+    color: ${(props) => props.theme.theme01};
     line-height: 24px;
     white-space: pre-wrap;
   `,
   NoColor: styled.span`
-    color: var(--blue05, #132f5c);
+    color: ${(props) => props.theme.theme05};
   `,
 };

@@ -42,13 +42,13 @@ export default GroupHomeSideBar;
 
 const S = {
   Container: styled.div`
-    background-color: var(--white);
-    border-left: 4px solid var(--blue03);
+    background-color: ${(props) => props.theme.theme06};
+    border-left: 4px solid ${(props) => props.theme.theme03};
     width: 180px;
     padding: 33px 28px;
     position: relative;
     border-radius: 0 20px 20px 0;
-    color: var(--gray06);
+    color: ${(props) => props.theme.text05};
   `,
 
   GroupMemberLists: styled.ul`
@@ -69,8 +69,8 @@ const S = {
   `,
 
   LeaveGroupButton: styled.button`
-    background-color: var(--blue02);
-    color: var(--blue01);
+    background-color: ${(props) => props.theme.button01};
+    color: ${(props) => props.theme.theme01};
     font-size: 12px;
     font-weight: bold;
     width: 125px;

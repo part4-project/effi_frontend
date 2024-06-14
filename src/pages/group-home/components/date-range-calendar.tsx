@@ -1,8 +1,5 @@
-import rightArrowIcon from '@assets/icons/arrow-right.svg';
-import calendarIcon from '@assets/icons/calendar.svg';
-import refreshIcon from '@assets/icons/refresh-calendar.svg';
 import DatePicker from 'react-datepicker';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 
 interface TDateRangeCalendarProps {
   dateRange: [Date | null, Date | null];
@@ -11,6 +8,8 @@ interface TDateRangeCalendarProps {
 }
 
 const DateRangeCalendar = ({ dateRange, setDateRange }: TDateRangeCalendarProps) => {
+  const theme = useTheme();
+
   const [startDate, endDate] = dateRange;
 
   const handleClickCalendarRefreshButton = () => {
@@ -31,10 +30,10 @@ const DateRangeCalendar = ({ dateRange, setDateRange }: TDateRangeCalendarProps)
             setDateRange(date as [Date | null, Date | null]);
           }}
         />
-        <S.CalendarIcon src={calendarIcon} />
-        <S.ArrowIcon src={rightArrowIcon} />
+        <S.CalendarIcon src={theme.calendar} />
+        <S.ArrowIcon src={theme.arrowRight} />
       </S.DatepickerWrapper>
-      <S.RefreshButton src={refreshIcon} onClick={handleClickCalendarRefreshButton} />
+      <S.RefreshButton src={theme.refreshIcon} onClick={handleClickCalendarRefreshButton} />
     </S.Container>
   );
 };

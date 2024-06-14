@@ -40,7 +40,7 @@ const S = {
     gap: 10px;
   `,
   NickNameBox: styled.div`
-    color: #343c49;
+    color: ${(props) => props.theme.nickName};
     font-weight: 500;
   `,
   ProfileImgBox: styled.div`

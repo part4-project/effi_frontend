@@ -39,16 +39,16 @@ const S = {
     display: flex;
     justify-content: space-between;
     border-radius: 10px;
-    background: var(--white);
-    box-shadow: 0px 4px 6.8px 0px rgba(166, 196, 213, 0.57);
+    background: ${(props) => props.theme.schedule};
+    box-shadow: 0px 4px 6.8px 0px ${(props) => props.theme.boxShadow};
     margin-block: 2px;
-    color: var(--blue05);
-    border: 1px solid var(--white);
+    color: ${(props) => props.theme.text03};
+    border: 1px solid ${(props) => props.theme.schedule};
     cursor: pointer;
     transition: all 0.2s ease-in-out;
 
     &:hover {
-      border: 1px solid var(--blue01);
+      border: 1px solid ${(props) => props.theme.text02};
       transform: translateY(-2px);
     }
   `,
