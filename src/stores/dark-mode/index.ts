@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { DarkModeStoreTypes, darkModeSlice } from './dark-mode';
+import { DarkModeStoreTypes, darkModeSlice } from './dark-mode-slice';
 
 type SliceCreator = DarkModeStoreTypes;
 
