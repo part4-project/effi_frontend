@@ -27,9 +27,9 @@ const S = {
   Container: styled.div<{ $type: DropDownBoxProps['type']; $isDropdownOpen: boolean }>`
     display: ${({ $isDropdownOpen }) => ($isDropdownOpen ? 'block' : 'none')};
     gap: 13px;
-    padding: 18px 29px;
+    padding: 18px 22px;
     border-radius: 10px;
-    top: ${({ $type }) => $type === 'make-meeting' && '180%'};
+    top: ${({ $type }) => $type === 'make-meeting' && 'calc(180% + 5px)'};
     left: ${({ $type }) => $type === 'make-meeting' && '50%'};
     max-width: ${({ $type }) => $type === 'make-meeting' && '722px'};
     width: ${({ $type }) => $type === 'schedule-calendar' && '100%'};
@@ -42,10 +42,11 @@ const S = {
   ListBox: styled.div<{ $type: DropDownBoxProps['type'] }>`
     display: flex;
     max-width: 100%;
-    gap: 13px;
     overflow-x: ${({ $type }) => $type === 'make-meeting' && 'auto'};
     overflow-y: ${({ $type }) => $type === 'schedule-calendar' && 'auto'};
     max-height: ${({ $type }) => $type === 'schedule-calendar' && '20vh'};
+    padding: ${({ $type }) => $type === 'schedule-calendar' && '2px 7px'};
+    gap: ${({ $type }) => ($type === 'schedule-calendar' ? '4px' : '13px')};
     flex-direction: ${({ $type }) => ($type === 'schedule-calendar' ? 'column' : 'row')};
     padding-inline-end: ${({ $type }) => $type === 'schedule-calendar' && '9px'};
     &::-webkit-scrollbar {

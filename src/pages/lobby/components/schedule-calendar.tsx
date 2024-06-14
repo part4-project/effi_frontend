@@ -18,7 +18,7 @@ const ScheduleCalendar = () => {
     filterSchedule(MY_SCHEDULE_LIST, selectedDate),
   );
   const [currMonth, setCurrMonth] = useState(new Date().getMonth() + 1);
-  const { isDropdownOpen, handleDropdownOpen, handleDropdownClose } = useCalendarDropdown();
+  // const { isDropdownOpen, handleDropdownOpen, handleDropdownClose } = useCalendarDropdown();
 
   const handleCalendarReset = () => {
     if (selectedDate) {
@@ -27,33 +27,33 @@ const ScheduleCalendar = () => {
     }
   };
 
-  const handleCalendarOutsideClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    if (ref.current && !ref.current.contains(e.target as Node)) {
-      handleCalendarReset();
-    }
-  };
+  // const handleCalendarOutsideClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+  //   if (ref.current && !ref.current.contains(e.target as Node)) {
+  //     handleCalendarReset();
+  //   }
+  // };
 
   useEffect(() => {
     addScheduleDot(MY_SCHEDULE_LIST);
   }, [currMonth]);
 
-  useEffect(() => {
-    if (filterdScheduleList.length) return handleDropdownOpen();
-    return handleDropdownClose();
-  }, [filterdScheduleList, handleDropdownOpen, handleDropdownClose]);
+  // useEffect(() => {
+  //   if (filterdScheduleList.length) return handleDropdownOpen();
+  //   return handleDropdownClose();
+  // }, [filterdScheduleList, handleDropdownOpen, handleDropdownClose]);
 
-  useEffect(() => {
-    const navigationButtons = document.querySelectorAll('.react-datepicker__navigation');
-    navigationButtons.forEach((button) => {
-      button.addEventListener('click', handleCalendarReset);
-    });
+  // useEffect(() => {
+  //   const navigationButtons = document.querySelectorAll('.react-datepicker__navigation');
+  //   navigationButtons.forEach((button) => {
+  //     button.addEventListener('click', handleCalendarReset);
+  //   });
 
-    return () => {
-      navigationButtons.forEach((button) => {
-        button.removeEventListener('click', handleCalendarReset);
-      });
-    };
-  }, []);
+  //   return () => {
+  //     navigationButtons.forEach((button) => {
+  //       button.removeEventListener('click', handleCalendarReset);
+  //     });
+  //   };
+  // }, []);
 
   return (
     <S.Container ref={ref}>
@@ -67,15 +67,24 @@ const ScheduleCalendar = () => {
           setFilterdScheduleList(filterSchedule(MY_SCHEDULE_LIST, date));
         }}
         onMonthChange={(date) => setCurrMonth(date.getMonth() + 1)}
-        onClickOutside={handleCalendarOutsideClick}
+        // onClickOutside={handleCalendarOutsideClick}
         inline
         showDisabledMonthNavigation
         autoFocus={false}
       />
-      <DropDownBox type="schedule-calendar" isDropdownOpen={isDropdownOpen}>
-        {filterdScheduleList.map((schedule, idx) => (
-          <ScheduleListItem key={idx} groupId={schedule.id} groupName={schedule.group} meetingTitle={schedule.title} />
-        ))}
+      <DropDownBox type="schedule-calendar" isDropdownOpen={true}>
+        {filterdScheduleList.length ? (
+          filterdScheduleList.map((schedule, idx) => (
+            <ScheduleListItem
+              key={idx}
+              groupId={schedule.id}
+              groupName={schedule.group}
+              meetingTitle={schedule.title}
+            />
+          ))
+        ) : (
+          <S.EmptyScheduleNotice>금일 스케줄이 없습니다!</S.EmptyScheduleNotice>
+        )}
       </DropDownBox>
     </S.Container>
   );
@@ -266,5 +275,11 @@ const S = {
       background-color: ${(props) => props.theme.dot};
       border-radius: 100%;
     }
+  `,
+  EmptyScheduleNotice: styled.div`
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   `,
 };
