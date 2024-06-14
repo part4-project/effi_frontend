@@ -12,6 +12,7 @@ const Router = () => {
           <Route path="meeting-room" element={<Page.MeetingRoom />} />
           <Route path="auth" element={<Page.Auth />} />
           <Route path="kurento" element={<Page.Kurento />} />
+          <Route path="kurento-service" element={<Page.KurentoService />} />
         </Route>
       </Routes>
     </BrowserRouter>
