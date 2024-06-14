@@ -1,21 +1,23 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import editIcon from '@assets/icons/edit.svg';
-import { GROUP } from '@constants/mockdata';
 import { useGroupUpdateMutation } from '@hooks/react-query/use-query-group';
 import { useToast } from '@hooks/use-toast';
+import { useGroupStore } from '@stores/group';
 import styled from 'styled-components';
 
 interface TGroupNameInputProps {
+  groupName: string;
+  groupCode: string;
   isAdmin: boolean;
 }
 
-const GroupNameInput = ({ isAdmin }: TGroupNameInputProps) => {
+const GroupNameInput = ({ groupName: groupNameProp, groupCode, isAdmin }: TGroupNameInputProps) => {
   const { toast } = useToast();
   const [isEditing, setIsEditing] = useState(false);
   const [isInputValueExist, setIsInputValueExist] = useState(true);
-  const [groupName, setGroupName] = useState(GROUP.room_name);
+  const [groupName, setGroupName] = useState(groupNameProp);
   const inputRef = useRef<HTMLTextAreaElement>(null);
-  const { mutateAsync } = useGroupUpdateMutation('31');
+  const { mutateAsync } = useGroupUpdateMutation(useGroupStore((state) => state.groupId));
 
   const handleGroupNameChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setGroupName(e.target.value);
@@ -54,8 +56,10 @@ const GroupNameInput = ({ isAdmin }: TGroupNameInputProps) => {
       return () => {
         input.removeEventListener('keydown', handleKeyDown);
       };
+    } else {
+      setGroupName(groupNameProp);
     }
-  }, [isEditing, handleEditCompleteButtonClick]);
+  }, [isEditing, handleEditCompleteButtonClick, groupNameProp]);
 
   return (
     <div>
@@ -71,7 +75,7 @@ const GroupNameInput = ({ isAdmin }: TGroupNameInputProps) => {
       )}
 
       <S.GroupNameSub>
-        <S.GroupCode>#{GROUP.code}</S.GroupCode>
+        <S.GroupCode>#{groupCode}</S.GroupCode>
         {isAdmin &&
           (isEditing ? (
             <S.EditButton onClick={handleEditCompleteButtonClick}>

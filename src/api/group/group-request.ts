@@ -25,9 +25,17 @@ const groupRequest = {
       return error;
     }
   },
-  updateGroup: async (groupName: string, groupId: string) => {
+  updateGroup: async (groupName: string, groupId: number) => {
     try {
       const { data } = await axios.patch(`user/group/modify/${groupId}`, { groupName });
+      return data;
+    } catch (error) {
+      return error;
+    }
+  },
+  inviteGroup: async (targetEmail: string, groupId: number) => {
+    try {
+      const { data } = await axios.post(`user/group/invite`, { groupId, targetEmail });
       return data;
     } catch (error) {
       return error;

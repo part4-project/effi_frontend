@@ -27,13 +27,10 @@ instance.interceptors.request.use(
 instance.interceptors.response.use(
   (config) => {
     const token = getCookie('accessToken');
-    if (token) {
-      config.headers['Authorization'] = `Bearer ${token}`;
-      return config;
-    } else {
+    if (!token) {
       window.location.href = '/login';
-      return config;
     }
+    return config;
   },
   (error) => {
     if (error.response.status === 401) {

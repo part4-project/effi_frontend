@@ -13,8 +13,8 @@ export const useGroupQuery = () => {
 
 export const useGroupMemberQuery = (groupId: number) => {
   const query = useQuery({
-    queryKey: [`groupMember`, groupId],
-    queryFn: async () => await groupRequest.fetchGroup(),
+    queryKey: [`groupInfo`, groupId],
+    queryFn: async () => await groupRequest.fetchGroupMember(groupId),
   });
   return query;
 };
@@ -34,14 +34,14 @@ export const useGroupCreateMutation = () => {
   return mutation;
 };
 
-export const useGroupUpdateMutation = (groupId: string) => {
+export const useGroupUpdateMutation = (groupId: number) => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
     mutationFn: async (groupName: string) => await groupRequest.updateGroup(groupName, groupId),
     onSuccess: () => {
       // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: [`group`, groupId] });
+      queryClient.invalidateQueries({ queryKey: [`groupInfo`, groupId] });
       queryClient.invalidateQueries({ queryKey: [`groupList`] });
     },
     onError: (error) => console.log(`그룹명 수정 에러: ${error}`),
@@ -87,5 +87,13 @@ export const useInvitedGroupRejectMutation = () => {
     onError: (error) => console.log(`그룹 초대 거절 에러: ${error}`),
   });
 
+  return mutation;
+};
+
+export const useGroupInviteMutation = (groupId: number) => {
+  const mutation = useMutation({
+    mutationFn: async (targetEmail: string) => await groupRequest.inviteGroup(targetEmail, groupId),
+    onError: (error) => console.log(`그룹초대 에러: ${error.message}`),
+  });
   return mutation;
 };
