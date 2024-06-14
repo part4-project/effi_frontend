@@ -6,6 +6,7 @@ import GroupHomeSideBar from '@pages/group-home/components/sidebar/group-home-si
 import { device } from '@styles/breakpoints';
 import { navBarHeight } from '@styles/subsection-size';
 import styled from 'styled-components';
+import AdminHOC from './components/admin-hoc';
 
 const GroupHome = () => {
   const scheduledMeeting = MY_SCHEDULE_LIST[0];
@@ -24,7 +25,7 @@ const GroupHome = () => {
   );
 };
 
-export default GroupHome;
+export default AdminHOC(GroupHome);
 
 const S = {
   Container: styled.div`

@@ -1,4 +1,4 @@
-import { darkModeStore } from '@stores/darkmode';
+import { useDarkModeStore } from '@stores/dark-mode';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { darkModeTheme, lightModeTheme } from '@utils/theme';
@@ -8,7 +8,7 @@ import Router from './Router';
 const queryClient = new QueryClient();
 
 const App = () => {
-  const { isDarkMode } = darkModeStore();
+  const { isDarkMode } = useDarkModeStore();
 
   return (
     <QueryClientProvider client={queryClient}>

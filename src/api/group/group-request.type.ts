@@ -14,8 +14,13 @@ export interface TGroupFetchMemberInfo {
   id: number;
   nickname: string;
   profileImageUrl: string;
+  email: string;
+  admin: boolean;
 }
-export type TGroupMemberFetchRes = TGroupFetchMemberInfo[];
+export interface TGroupMemberFetchRes {
+  groupName: string;
+  memberList: TGroupFetchMemberInfo[];
+}
 
 export interface TGroupUpdateRes {
   groupId: number;
@@ -31,6 +36,16 @@ export interface TGroupCreateRes {
   groupName: string;
   code: string;
   groupState: string;
+  createdAt: string;
+  modifiedAt: string | null;
+}
+
+export interface TInvitedGroupFetchRes {
+  invitorId: number;
+  invitorName: string;
+  groupId: number;
+  groupName: string;
+  code: string;
   createdAt: string;
   modifiedAt: string | null;
 }

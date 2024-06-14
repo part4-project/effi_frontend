@@ -1,21 +1,14 @@
-import { darkModeStore } from '@stores/darkmode';
 import { device } from '@styles/breakpoints';
 import { navBarHeight } from '@styles/subsection-size';
 import { zIndex } from '@styles/z-index';
 import { Link } from 'react-router-dom';
 import styled, { useTheme } from 'styled-components';
 import Alarm from './components/alarm';
+import DarkModeButton from './components/dark-mode';
 import Profile from './components/profile';
-import SearchBar from './components/search-bar';
 
 const NavBar = () => {
   const theme = useTheme();
-  //다크모드 테스트 용 입니다.
-  const { isDarkMode, onDarkMode, onLightMode } = darkModeStore();
-
-  const handleDarkModeClick = () => {
-    isDarkMode ? onLightMode() : onDarkMode();
-  };
 
   return (
     <S.NavWrap>
@@ -28,8 +21,7 @@ const NavBar = () => {
           </div>
         </S.FlexLeftBox>
         <S.FlexRightBox>
-          <button onClick={handleDarkModeClick}>다크 모드</button>
-          <SearchBar />
+          <DarkModeButton />
           <Alarm />
           <Profile />
         </S.FlexRightBox>
