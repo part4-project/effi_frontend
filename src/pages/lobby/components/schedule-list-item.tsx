@@ -11,27 +11,33 @@ interface ScheduleListItemProps {
 
 const ScheduleListItem = ({ groupId, groupName, meetingTitle }: ScheduleListItemProps) => {
   return (
-    <S.Container to={'/meeting-room'}>
-      <S.LeftSection>
-        <S.GroupItemBox>
-          <GroupItem groupId={groupId} groupName={groupName} type="calendar" />
-        </S.GroupItemBox>
-        <S.GroupInfo>
-          <S.MeetingTitle>{meetingTitle}</S.MeetingTitle>
-          <S.GroupName>{groupName}</S.GroupName>
-        </S.GroupInfo>
-      </S.LeftSection>
-      <S.RightSection>
-        <S.WatchImg src={clockIcon} alt="시계" />
-        <S.Time>9 : 00</S.Time>
-      </S.RightSection>
-    </S.Container>
+    <S.BorderBox>
+      <S.Container to={'/meeting-room'}>
+        <S.LeftSection>
+          <S.GroupItemBox>
+            <GroupItem groupId={groupId} groupName={groupName} type="calendar" />
+          </S.GroupItemBox>
+          <S.GroupInfo>
+            <S.MeetingTitle>{meetingTitle}</S.MeetingTitle>
+            <S.GroupName>{groupName}</S.GroupName>
+          </S.GroupInfo>
+        </S.LeftSection>
+        <S.RightSection>
+          <S.WatchImg src={clockIcon} alt="시계" />
+          <S.Time>9 : 00</S.Time>
+        </S.RightSection>
+      </S.Container>
+    </S.BorderBox>
   );
 };
 
 export default ScheduleListItem;
 
 const S = {
+  BorderBox: styled.div`
+    padding-bottom: 4px;
+    border-bottom: 1px solid ${(props) => props.theme.line};
+  `,
   Container: styled(Link)`
     width: 100%;
     height: 82px;
