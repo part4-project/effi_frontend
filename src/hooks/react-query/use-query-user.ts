@@ -20,7 +20,7 @@ export const useUserNicknameUpdateMutation = () => {
       queryClient.invalidateQueries({ queryKey: [`userInfo`] });
       queryClient.refetchQueries({ queryKey: [`groupInfo`] });
     },
-    onError: (error) => console.log(`유저 이름변경 에러: ${error}`),
+    onError: (error) => console.error(`유저 이름변경 에러: ${error}`),
   });
 
   return mutation;

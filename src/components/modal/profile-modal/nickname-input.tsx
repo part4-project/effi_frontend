@@ -24,7 +24,7 @@ const NicknameInput = () => {
         toast('닉네임이 저장 되었습니다.');
       },
       onError: () => {
-        toast('닉네임 저장에 실패했습니다.');
+        toast('닉네임 변경에 실패했습니다.', true);
       },
     });
   };
