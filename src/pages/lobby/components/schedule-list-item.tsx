@@ -36,7 +36,7 @@ export default ScheduleListItem;
 const S = {
   BorderBox: styled.div`
     padding-bottom: 4px;
-    border-bottom: 1px solid var(--blue02);
+    border-bottom: 1px solid ${(props) => props.theme.line};
   `,
   Container: styled(Link)`
     width: 100%;

@@ -1,3 +1,5 @@
+import { TGroupFetchInfo } from '@api/group/group-request.type';
+import { useGroupQuery } from '@hooks/react-query/use-query-group';
 import styled from 'styled-components';
 import DropDownBox from './dropdown-box';
 import EmptyGroupNotice from './empty-group-notice';
@@ -6,22 +8,25 @@ import QuickButton from './quick-button';
 import useDropdown from '../hooks/use-dropdown';
 import { checkGroupNameLong } from '../utils/check-group-name-long';
 
-const groupList: string[] = ['그룹1', '그룹1', '그룹2', '그룹3', '그룹45678add', '그룹4', '그룹4', '그룹4'];
-
 const MakeMeetingButton = () => {
+  const { data: groupData, isLoading, isError } = useGroupQuery();
   const { ref, isDropdownOpen, handleDropdownClick, handleDropdownClose } = useDropdown();
+
+  if (isLoading) return 'Loading...';
+
+  if (isError) return 'Error...';
 
   return (
     <S.Container ref={ref}>
       <QuickButton onClick={handleDropdownClick} type="make-meeting" />
       <DropDownBox type="make-meeting" isDropdownOpen={isDropdownOpen}>
-        {groupList.length ? (
-          groupList.map((group, idx) => (
+        {groupData.length ? (
+          groupData.map((group: TGroupFetchInfo) => (
             <GroupListItem
-              key={idx}
-              groupName={group}
+              key={group.groupId}
+              groupName={group.groupName}
               onClick={handleDropdownClose}
-              groupNameLength={checkGroupNameLong(group)}
+              groupNameLength={checkGroupNameLong(group.groupName)}
             />
           ))
         ) : (

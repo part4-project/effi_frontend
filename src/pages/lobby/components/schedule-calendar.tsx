@@ -6,7 +6,6 @@ import 'react-datepicker/dist/react-datepicker.css';
 import styled from 'styled-components';
 import DropDownBox from './dropdown-box';
 import ScheduleListItem from './schedule-list-item';
-import { useCalendarDropdown } from '../hooks/use-calendar-dropdown';
 import { ScheduleList } from '../types/type';
 import { addScheduleDot } from '../utils/add-schedule-dot';
 import { filterSchedule } from '../utils/filter-schedule';
@@ -18,42 +17,10 @@ const ScheduleCalendar = () => {
     filterSchedule(MY_SCHEDULE_LIST, selectedDate),
   );
   const [currMonth, setCurrMonth] = useState(new Date().getMonth() + 1);
-  // const { isDropdownOpen, handleDropdownOpen, handleDropdownClose } = useCalendarDropdown();
-
-  const handleCalendarReset = () => {
-    if (selectedDate) {
-      setSelectedDate(null);
-      setFilterdScheduleList([]);
-    }
-  };
-
-  // const handleCalendarOutsideClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-  //   if (ref.current && !ref.current.contains(e.target as Node)) {
-  //     handleCalendarReset();
-  //   }
-  // };
 
   useEffect(() => {
     addScheduleDot(MY_SCHEDULE_LIST);
   }, [currMonth]);
-
-  // useEffect(() => {
-  //   if (filterdScheduleList.length) return handleDropdownOpen();
-  //   return handleDropdownClose();
-  // }, [filterdScheduleList, handleDropdownOpen, handleDropdownClose]);
-
-  // useEffect(() => {
-  //   const navigationButtons = document.querySelectorAll('.react-datepicker__navigation');
-  //   navigationButtons.forEach((button) => {
-  //     button.addEventListener('click', handleCalendarReset);
-  //   });
-
-  //   return () => {
-  //     navigationButtons.forEach((button) => {
-  //       button.removeEventListener('click', handleCalendarReset);
-  //     });
-  //   };
-  // }, []);
 
   return (
     <S.Container ref={ref}>
@@ -67,7 +34,6 @@ const ScheduleCalendar = () => {
           setFilterdScheduleList(filterSchedule(MY_SCHEDULE_LIST, date));
         }}
         onMonthChange={(date) => setCurrMonth(date.getMonth() + 1)}
-        // onClickOutside={handleCalendarOutsideClick}
         inline
         showDisabledMonthNavigation
         autoFocus={false}
@@ -257,7 +223,7 @@ const S = {
     .react-datepicker__quarter-text--keyboard-selected,
     .react-datepicker__year-text--keyboard-selected {
       border-radius: 100%;
-      background-color: var(--white);
+      background-color: ${(props) => props.theme.schedule};
     }
 
     .dot-container {
