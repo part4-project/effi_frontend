@@ -34,7 +34,15 @@ const GroupModal = ({ isOpen, onGroupClose, onConfirmClose, onConfirmOpen }: Gro
           </ModalButton>
         </S.ModalFooter>
       </S.ModalWrap>
-      <ConfirmModal isOpen={isOpen.confirm} onClose={onConfirmClose} />
+      <ConfirmModal
+        isOpen={isOpen.confirm}
+        onClose={onConfirmClose}
+        content={{
+          comment: '그룹을 삭제하시게 되면\n되돌릴 수 없습니다!',
+          deleteButton: '삭제하기',
+          confirmButton: '유지하기',
+        }}
+      />
     </Modal>
   );
 };

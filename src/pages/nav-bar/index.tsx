@@ -4,7 +4,7 @@ import { zIndex } from '@styles/z-index';
 import { Link } from 'react-router-dom';
 import styled, { useTheme } from 'styled-components';
 import Alarm from './components/alarm';
-import DarkModeButton from './components/dark-mode';
+import DarkModeButton from './components/dark-mode-button';
 import Profile from './components/profile';
 
 const NavBar = () => {

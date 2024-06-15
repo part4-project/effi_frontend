@@ -1,16 +1,16 @@
 import { TGroupFetchMemberInfo } from '@api/group/group-request.type';
-import groupLeaderBadge from '@assets/icons/group-leader-badge.svg';
 import { useGroupMemberQuery } from '@hooks/react-query/use-query-group';
 import GroupNameInput from '@pages/group-home/components/sidebar/group-name-input';
 import { useGroupStore } from '@stores/group';
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 
 interface TGroupHomeSideBarProps {
   isAdmin: boolean;
 }
 
 const GroupHomeSideBar = ({ isAdmin }: TGroupHomeSideBarProps) => {
+  const theme = useTheme();
   const { data: groupData, isError, isLoading } = useGroupMemberQuery(useGroupStore((state) => state.groupId));
   const navigate = useNavigate();
   const handleLeaveGroupButtonClick = () => {
@@ -28,7 +28,7 @@ const GroupHomeSideBar = ({ isAdmin }: TGroupHomeSideBarProps) => {
         {groupData.memberList.map((member: TGroupFetchMemberInfo) => (
           <S.GroupMemberList key={member.id}>
             <span>{member.nickname}</span>
-            {member.admin && <S.AdminIcon src={groupLeaderBadge} />}
+            {member.admin && <S.AdminIcon src={theme.groupLeaderBadge} />}
           </S.GroupMemberList>
         ))}
       </S.GroupMemberLists>

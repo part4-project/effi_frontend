@@ -109,7 +109,8 @@ const S = {
     resize: none;
     overflow: hidden;
     line-height: 1.3;
-    outline: ${({ $isInputValueExist }) => ($isInputValueExist ? '1px solid var(--blue02)' : '1px solid var(--red01)')};
+    outline: 1px solid ${({ $isInputValueExist, theme }) => ($isInputValueExist ? theme.theme02 : 'var(--red01)')};
+    color: var(--black);
   `,
 
   GroupNameSub: styled.div`
@@ -132,7 +133,7 @@ const S = {
   EditComplete: styled.span`
     padding: 2px 6px;
     border-radius: 5px;
-    background-color: var(--blue02);
-    color: var(--blue01);
+    background-color: ${(props) => props.theme.theme02};
+    color: ${(props) => props.theme.text02};
   `,
 };

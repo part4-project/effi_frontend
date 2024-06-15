@@ -28,17 +28,17 @@ const GroupModalButton = ({ children }: GroupModalButtonProps) => {
     }));
   };
 
-  const handleConfirmModalOpen = () => {
-    setIsOpen((prev) => ({
-      ...prev,
-      confirm: true,
-    }));
-  };
-
   const handleConfirmModalClose = () => {
     setIsOpen((prev) => ({
       ...prev,
       confirm: false,
+    }));
+  };
+
+  const handleConfirmModalOpen = () => {
+    setIsOpen((prev) => ({
+      ...prev,
+      confirm: true,
     }));
   };
 

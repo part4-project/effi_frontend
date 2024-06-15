@@ -54,7 +54,7 @@ const S = {
     }
 
     &::-webkit-scrollbar-track {
-      background: ${(props) => props.theme.scroll};
+      background: ${(props) => props.theme.scrollAlarm};
     }
   `,
   AlarmListContent: styled.div<{ $isAlarmList: boolean }>`

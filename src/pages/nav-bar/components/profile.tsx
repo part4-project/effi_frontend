@@ -45,7 +45,7 @@ const S = {
   `,
   ProfileImgBox: styled.div`
     overflow: hidden;
-    border: 0.1px solid var(--blue01);
+    border: 0.1px solid ${(props) => props.theme.theme01};
     width: 20px;
     height: 20px;
     border-radius: 100%;

@@ -55,7 +55,7 @@ const S = {
     ${({ $isSelect }) =>
       $isSelect &&
       css`
-        border: 1px solid var(--blue01);
+        border: 2px solid ${(props) => props.theme.theme01};
       `}
   `,
   GroupName: styled.div<{ $isOverFlowText: boolean }>`
