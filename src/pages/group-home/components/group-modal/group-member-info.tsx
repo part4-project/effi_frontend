@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { TGroupFetchMemberInfo } from '@api/group/group-request.type';
+import groupLeaderBadge from '@assets/icons/group-leader-badge.svg';
 import styled from 'styled-components';
 
-const GroupMemberInfo: React.FC<TGroupFetchMemberInfo> = ({ nickname, email }) => {
+const GroupMemberInfo: React.FC<TGroupFetchMemberInfo> = ({ nickname, email, admin }) => {
   const [isExport, setIsExport] = useState<boolean>(false);
   const exportName = isExport ? '내보내기 취소' : '내보내기';
 
@@ -16,9 +17,15 @@ const GroupMemberInfo: React.FC<TGroupFetchMemberInfo> = ({ nickname, email }) =
         <S.MemberName $isExport={isExport}>{nickname}</S.MemberName>
         <S.MemberEmail>{email}</S.MemberEmail>
       </S.MemberInfo>
-      <S.MemberExportBtn $isExport={isExport} onClick={handleExportClick}>
-        {exportName}
-      </S.MemberExportBtn>
+      {admin ? (
+        <S.AdminIconBox>
+          <S.AdminIcon src={groupLeaderBadge} alt="admin" />
+        </S.AdminIconBox>
+      ) : (
+        <S.MemberExportBtn $isExport={isExport} onClick={handleExportClick}>
+          {exportName}
+        </S.MemberExportBtn>
+      )}
     </S.MemberInfoWrap>
   );
 };
@@ -35,6 +42,12 @@ const S = {
     &:last-child {
       border-bottom: 0;
     }
+  `,
+  AdminIconBox: styled.div`
+    padding: 10px;
+  `,
+  AdminIcon: styled.img`
+    width: 14px;
   `,
   MemberInfo: styled.div`
     display: flex;
