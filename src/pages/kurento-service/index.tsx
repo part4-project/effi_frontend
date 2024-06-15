@@ -12,9 +12,9 @@ const KurentoService = () => {
     stompClientRef.current = stompClient;
 
     stompClient.onConnect = () => {
-      console.log(new Date());
+      // console.log(new Date());
       console.log('STOMP 연결됨');
-      stompClient.subscribe('/sub', handleReceivedMessage); // 구독할 주제 설정
+      stompClient.subscribe('/signal/sub/1/chat', handleReceivedMessage); // 구독할 주제 설정
     };
 
     stompClient.onDisconnect = () => {
@@ -37,12 +37,20 @@ const KurentoService = () => {
   };
 
   const sendMessageToServer = () => {
-    console.log('send!');
+    const messageObject = {
+      type: 'ENTER', // SessionMessageType에 따라 적절한 값을 설정
+      userId: 30, // 실제 사용자 ID 값
+      meetingId: 1, // 회의 ID 값
+      message: ' ID : 30번 유저가 1번 회의실에 입장하였습니다!!', // 원하는 메시지
+      timeStamp: new Date().toISOString(), // 현재 시각 ISO 문자열 형식으로
+    };
+
     if (stompClientRef.current.connected) {
       stompClientRef.current.publish({
-        destination: '/app/sendMessage', // 서버에서 메시지 수신 엔드포인트
-        body: '테스트메세지!', // 전송할 메시지
+        destination: '/signal/pub/meeting/1/enter',
+        body: JSON.stringify(messageObject),
       });
+      // console.log('Message sent to server:', messageObject);
     } else {
       console.error('WebSocket 연결이 필요합니다.');
     }
