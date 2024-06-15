@@ -1,4 +1,5 @@
 import axios from '@api/axios';
+import { isAxiosError } from 'axios';
 
 const userRequest = {
   FetchUserData: async () => {
@@ -14,7 +15,16 @@ const userRequest = {
       const { data } = await axios.post('user/info/modifyNickname', { nickname: nickName });
       return data;
     } catch (error) {
-      throw new Error(error as string);
+      if (isAxiosError(error)) {
+        if (error.response) {
+          throw {
+            errorMessage: error.response.data.errorMessage || 'errorMessage',
+            errorCode: error.response.data.errorCode || 'UNKNOWN_ERROR',
+            statusCode: error.response.status,
+          };
+        }
+      }
+      return error;
     }
   },
   updateProfileImg: async (file: File) => {
@@ -29,6 +39,15 @@ const userRequest = {
       });
       return data;
     } catch (error) {
+      if (isAxiosError(error)) {
+        if (error.response) {
+          throw {
+            errorMessage: error.response.data.errorMessage || 'errorMessage',
+            errorCode: error.response.data.errorCode || 'UNKNOWN_ERROR',
+            statusCode: error.response.status,
+          };
+        }
+      }
       return error;
     }
   },
@@ -37,6 +56,15 @@ const userRequest = {
       const { data } = await axios.post(`user/info/modifyProfileImage/default`);
       return data;
     } catch (error) {
+      if (isAxiosError(error)) {
+        if (error.response) {
+          throw {
+            errorMessage: error.response.data.errorMessage || 'errorMessage',
+            errorCode: error.response.data.errorCode || 'UNKNOWN_ERROR',
+            statusCode: error.response.status,
+          };
+        }
+      }
       return error;
     }
   },

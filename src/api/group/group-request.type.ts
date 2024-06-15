@@ -18,6 +18,7 @@ export interface TGroupFetchMemberInfo {
   admin: boolean;
 }
 export interface TGroupMemberFetchRes {
+  code: string;
   groupName: string;
   memberList: TGroupFetchMemberInfo[];
 }

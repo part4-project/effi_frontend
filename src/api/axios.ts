@@ -1,6 +1,12 @@
 import { getCookie } from '@utils/cookie';
 import axios from 'axios';
 
+export interface TAxiosError {
+  errorMessage: string;
+  errorCode: string;
+  statusCode: number;
+}
+
 const instance = axios.create({
   baseURL: 'https://api.effi.club/',
   timeout: 5000,
@@ -22,6 +28,7 @@ instance.interceptors.request.use(
     if (error.response.status === 401) {
       window.location.href = '/login';
     }
+    return error;
   },
 );
 instance.interceptors.response.use(
@@ -36,6 +43,7 @@ instance.interceptors.response.use(
     if (error.response.status === 401) {
       window.location.href = '/login';
     }
+    return error;
   },
 );
 

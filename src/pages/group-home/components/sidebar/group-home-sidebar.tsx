@@ -1,8 +1,9 @@
-import { TGroupFetchMemberInfo } from '@api/group/group-request.type';
+import { TGroupFetchMemberInfo, TGroupMemberFetchRes } from '@api/group/group-request.type';
 import groupLeaderBadge from '@assets/icons/group-leader-badge.svg';
-import { useGroupMemberQuery } from '@hooks/react-query/use-query-group';
+import { QUERY_KEY } from '@constants/query-key';
 import GroupNameInput from '@pages/group-home/components/sidebar/group-name-input';
 import { useGroupStore } from '@stores/group';
+import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -11,21 +12,22 @@ interface TGroupHomeSideBarProps {
 }
 
 const GroupHomeSideBar = ({ isAdmin }: TGroupHomeSideBarProps) => {
-  const { data: groupData, isError, isLoading } = useGroupMemberQuery(useGroupStore((state) => state.groupId));
+  const groupData = useQueryClient().getQueryData<TGroupMemberFetchRes>([
+    QUERY_KEY.groupInfo,
+    useGroupStore((state) => state.groupId),
+  ]);
   const navigate = useNavigate();
+
   const handleLeaveGroupButtonClick = () => {
     navigate('/');
   };
 
-  if (isLoading) return 'Loading...';
-  if (isError) return 'Error...';
-
   return (
     <S.Container>
-      <GroupNameInput groupName={groupData.groupName} groupCode={groupData.code} isAdmin={isAdmin} />
+      <GroupNameInput groupName={groupData!.groupName} groupCode={groupData!.code} isAdmin={isAdmin} />
 
       <S.GroupMemberLists>
-        {groupData.memberList.map((member: TGroupFetchMemberInfo) => (
+        {groupData!.memberList.map((member: TGroupFetchMemberInfo) => (
           <S.GroupMemberList key={member.id}>
             <span>{member.nickname}</span>
             {member.admin && <S.AdminIcon src={groupLeaderBadge} />}
