@@ -14,6 +14,7 @@ const KurentoService = () => {
     stompClient.onConnect = () => {
       // console.log(new Date());
       console.log('STOMP 연결됨');
+      // 엔드포인트 추후 /signal/sub/meeting/1/chat 으로 바뀔예정 (반영아직안됨);
       stompClient.subscribe('/signal/sub/1/chat', handleReceivedMessage); // 구독할 주제 설정
     };
 
