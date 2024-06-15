@@ -40,9 +40,9 @@ const ScheduleCalendar = () => {
       />
       <DropDownBox type="schedule-calendar" isDropdownOpen={true}>
         {filterdScheduleList.length ? (
-          filterdScheduleList.map((schedule, idx) => (
+          filterdScheduleList.map((schedule) => (
             <ScheduleListItem
-              key={idx}
+              key={schedule.id}
               groupId={schedule.id}
               groupName={schedule.group}
               meetingTitle={schedule.title}

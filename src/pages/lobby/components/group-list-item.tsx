@@ -11,7 +11,7 @@ const GroupListItem = ({ groupName, onClick, groupNameLength }: GroupListItemPro
   return (
     <MeetingModalButton title="회의 생성">
       <S.Container $groupNameLength={groupNameLength} onClick={onClick}>
-        <S.FileImg>{groupName} </S.FileImg>
+        <S.FileImg>{groupName}</S.FileImg>
       </S.Container>
     </MeetingModalButton>
   );
