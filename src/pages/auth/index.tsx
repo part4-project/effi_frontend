@@ -15,6 +15,7 @@ const Auth = () => {
       setCookie('accessToken', accessToken, {
         sameSite: 'None',
         secure: true,
+        domain: 'effi.club'
       });
       navigate('/');
     } else {
