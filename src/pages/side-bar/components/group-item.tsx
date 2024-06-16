@@ -49,6 +49,7 @@ export default GroupItem;
 
 const S = {
   GroupItem: styled.div<{ $isSelect: boolean }>`
+    cursor: pointer;
     position: relative;
     border-radius: 10px;
     overflow: hidden;

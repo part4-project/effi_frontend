@@ -1,18 +1,15 @@
 import { MouseEvent, useRef } from 'react';
 import { useGroupInviteMutation } from '@hooks/react-query/use-query-group';
-import { useToast } from '@hooks/use-toast';
 import { useGroupStore } from '@stores/group';
 import styled from 'styled-components';
 
 const GroupInvite = () => {
-  const { mutateAsync } = useGroupInviteMutation(useGroupStore((state) => state.groupId));
+  const { mutate } = useGroupInviteMutation(useGroupStore((state) => state.groupId));
   const emailRef = useRef<HTMLInputElement>(null);
-  const { toast } = useToast();
-  const handleSubmitBtnClick = async (e: MouseEvent<HTMLButtonElement>) => {
+  const handleSubmitBtnClick = (e: MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
     if (emailRef.current) {
-      await mutateAsync(emailRef.current.value);
-      toast('초대가 완료되었습니다');
+      mutate(emailRef.current.value);
     }
   };
 

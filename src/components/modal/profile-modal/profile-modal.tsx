@@ -25,6 +25,13 @@ const ProfileModal = ({ isOpen, onProfileClose, onConfirmClose, onConfirmOpen }:
     navigate('/login');
   };
 
+  const handleDeleteButtonClick = () => {
+    //회원 탈퇴 api 작성
+
+    //일단 로그인 페이지로 이동하게 작성
+    navigate('/login');
+  };
+
   return (
     <Modal isOpen={isOpen.profile} onClose={onProfileClose} headerTitle="내 정보">
       <div>
@@ -41,6 +48,7 @@ const ProfileModal = ({ isOpen, onProfileClose, onConfirmClose, onConfirmOpen }:
       <ConfirmModal
         isOpen={isOpen.confirm}
         onClose={onConfirmClose}
+        onDeleteButton={handleDeleteButtonClick}
         content={{
           comment: '회원을 탈퇴하시게 되면\n되돌릴 수 없습니다!',
           deleteButton: '탈퇴하기',

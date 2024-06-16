@@ -1,7 +1,6 @@
 import { FormEvent, useEffect } from 'react';
 import refreshIcon from '@assets/icons/refresh.svg';
 import { useUserQuery, useUserNicknameUpdateMutation } from '@hooks/react-query/use-query-user';
-import { useToast } from '@hooks/use-toast';
 import useValidateText from '@hooks/use-validate-text';
 import { createRandomNickName } from '@utils/createRandomNickname';
 import styled, { css } from 'styled-components';
@@ -10,7 +9,6 @@ const NicknameInput = () => {
   const nickNameUpdate = useUserNicknameUpdateMutation();
   const { data: userData } = useUserQuery();
   const { inputValue, setInputValue, errorMessage, handleInputChange } = useValidateText(2, 7);
-  const { toast } = useToast();
 
   const handleNicknameRefreshButtonClick = () => {
     const newNickName = createRandomNickName();
@@ -19,14 +17,7 @@ const NicknameInput = () => {
 
   const handleNickNameSaveButtonClick = (e: FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    nickNameUpdate.mutate(inputValue, {
-      onSuccess: () => {
-        toast('닉네임이 저장 되었습니다.');
-      },
-      onError: () => {
-        toast('닉네임 변경에 실패했습니다.', true);
-      },
-    });
+    nickNameUpdate.mutate(inputValue);
   };
 
   useEffect(() => {

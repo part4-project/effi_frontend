@@ -1,10 +1,10 @@
 import Modal from '@components/modal/modal';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 interface ConfirmModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onDeleteButton: () => void;
   content: {
     comment: string;
     deleteButton: string;
@@ -12,13 +12,7 @@ interface ConfirmModalProps {
   };
 }
 
-const ConfirmModal = ({ isOpen, onClose, content }: ConfirmModalProps) => {
-  const navigate = useNavigate();
-
-  const handleDeleteButtonClick = () => {
-    navigate('/');
-  };
-
+const ConfirmModal = ({ isOpen, onClose, onDeleteButton, content }: ConfirmModalProps) => {
   const handleConfirmButtonClick = () => {
     onClose();
   };
@@ -31,7 +25,7 @@ const ConfirmModal = ({ isOpen, onClose, content }: ConfirmModalProps) => {
           <S.SubComment>{content.comment}</S.SubComment>
         </S.CommentsContainer>
         <S.ButtonsContainer>
-          <S.DeleteButton onClick={handleDeleteButtonClick}>{content.deleteButton}</S.DeleteButton>
+          <S.DeleteButton onClick={onDeleteButton}>{content.deleteButton}</S.DeleteButton>
           <S.ConfirmButton onClick={handleConfirmButtonClick}>{content.confirmButton}</S.ConfirmButton>
         </S.ButtonsContainer>
       </S.ConfirmModalContent>

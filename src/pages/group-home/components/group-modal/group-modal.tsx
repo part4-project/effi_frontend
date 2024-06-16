@@ -3,6 +3,7 @@ import Modal from '@components/modal/modal';
 import ModalButton from '@components/modal/modal-button';
 import GroupInvite from '@pages/group-home/components/group-modal/group-invite';
 import GroupMemberList from '@pages/group-home/components/group-modal/group-member-list';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 interface GroupModalProps {
@@ -16,8 +17,16 @@ interface GroupModalProps {
 }
 
 const GroupModal = ({ isOpen, onGroupClose, onConfirmClose, onConfirmOpen }: GroupModalProps) => {
+  const navigate = useNavigate();
+
   const handleSaveGroupClick = () => {
     onGroupClose();
+  };
+
+  const handleDeleteButtonClick = () => {
+    //그룹 삭제 api 작성
+
+    navigate('/');
   };
 
   return (
@@ -37,6 +46,7 @@ const GroupModal = ({ isOpen, onGroupClose, onConfirmClose, onConfirmOpen }: Gro
       <ConfirmModal
         isOpen={isOpen.confirm}
         onClose={onConfirmClose}
+        onDeleteButton={handleDeleteButtonClick}
         content={{
           comment: '그룹을 삭제하시게 되면\n되돌릴 수 없습니다!',
           deleteButton: '삭제하기',
