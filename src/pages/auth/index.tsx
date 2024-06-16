@@ -12,7 +12,11 @@ const Auth = () => {
     const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/user/login?code=${code}`);
     if (response.status === 200) {
       const accessToken = response.headers?.authorization.split(' ')[1];
-      setCookie('accessToken', accessToken);
+      setCookie('accessToken', accessToken, {
+        sameSite: 'None',
+        secure: true,
+        domain: '.effi.club'
+      });
       navigate('/');
     } else {
       navigate('/login');
