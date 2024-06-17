@@ -10,6 +10,8 @@ import Timer from './components/timer';
 import Topics from './components/topics';
 import { ROOM_BUTTONS } from './constants';
 import useForceQuitToast from './hooks/use-force-quit-toast';
+import useHistoryBackBlock from './hooks/use-history-back-block';
+import useReloadBlock from './hooks/use-reload-block';
 import { calculateDurationInSeconds } from './utils/calculate-duration-in-seconds';
 
 const PARTICIPATED_MEMBER = [...GROUP_MEMBER.member_list];
@@ -48,6 +50,9 @@ const MeetingRoom = () => {
   useEffect(() => {
     if (isToastOpen && participatedMember.length !== 1) handleToastClose();
   }, [participatedMember.length, isToastOpen, handleToastClose]);
+
+  useHistoryBackBlock(); // 뒤로가기 차단
+  useReloadBlock(); // 새로고침 차단
 
   return (
     <S.Container>
