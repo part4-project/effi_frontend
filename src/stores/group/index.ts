@@ -1,8 +1,8 @@
-import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { groupState, selectGroupSlice } from './select-group-slice';
+import { create } from 'zustand';
+import { GroupState, selectGroupSlice } from './select-group-slice';
 
-type SliceCreator = groupState;
+type SliceCreator = GroupState;
 
 export const useGroupStore = create<SliceCreator>()(
   persist(

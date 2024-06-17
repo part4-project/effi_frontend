@@ -1,6 +1,8 @@
 /* eslint-disable no-console */
 import { useEffect, useState } from 'react';
 import { MEETING_ROOM, TOPIC, GROUP_MEMBER } from '@constants/mockdata';
+import { useMeetingStore } from '@stores/meeting';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Chatting from './components/chatting';
 import ForceQuitToast from './components/force-quit-toast';
@@ -17,12 +19,14 @@ import { calculateDurationInSeconds } from './utils/calculate-duration-in-second
 const PARTICIPATED_MEMBER = [...GROUP_MEMBER.member_list];
 
 const MeetingRoom = () => {
+  const navigate = useNavigate();
   const [participatedMember, setParticipatedMember] = useState(PARTICIPATED_MEMBER);
   const [meetingTotalTime, setMeetingTotalTime] = useState('');
   const [meetingOverTime, setMeetingOverTime] = useState('');
   const [isMeetingFinished, setIsMeetingFinished] = useState(false);
   const { isToastOpen, handleToastChange, isToastAnimClose, handleToastClose } = useForceQuitToast();
-
+  const memberList = useMeetingStore((state) => state.memberList);
+  console.log(memberList);
   const handleAddCamButtonClick = () => {
     setParticipatedMember([...participatedMember, { id: 1, name: '홍길동', is_admin: false }]);
   };
@@ -50,6 +54,12 @@ const MeetingRoom = () => {
   useEffect(() => {
     if (isToastOpen && participatedMember.length !== 1) handleToastClose();
   }, [participatedMember.length, isToastOpen, handleToastClose]);
+
+  useEffect(() => {
+    if (memberList.length == 0) {
+      navigate('/meeting-loading');
+    }
+  });
 
   useHistoryBackBlock(); // 뒤로가기 차단
   useReloadBlock(); // 새로고침 차단
