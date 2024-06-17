@@ -158,9 +158,9 @@ export const MEETING_ROOM = {
   id: 3,
   group_id: 2,
   title: '프론트엔드 R&R 논의',
-  start_date: '2024. 5. 30. 오후 13:00',
-  expected_end_date: '2024. 5. 30. 오후 14:00',
-  actual_end_date: '2024. 5. 30. 오후 14:18',
+  start_date: '2024. 6. 17. 오후 21:22',
+  expected_end_date: '2024. 6. 17. 오후 22:30',
+  actual_end_date: '2024. 6. 17. 오후 22:18',
 };
 
 export const TOPIC = {
