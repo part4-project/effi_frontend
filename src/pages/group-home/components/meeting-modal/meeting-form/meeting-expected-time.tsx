@@ -44,14 +44,14 @@ const S = {
   `,
 
   SelectedValue: styled.p`
-    color: var(--gray01);
+    color: ${(props) => props.theme.text11};
     font-size: 14px;
     font-weight: 500;
     line-height: 24px;
     margin-left: 12px;
   `,
   SelectCustomButton: styled.button`
-    color: var(--gray01);
+    color: ${(props) => props.theme.text11};
     font-weight: 700;
     line-height: 24px;
     text-decoration-line: underline;

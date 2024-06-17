@@ -1,9 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useGroupUpdateMutation } from '@hooks/react-query/use-query-group';
-import { useToast } from '@hooks/use-toast';
+
 import { useGroupStore } from '@stores/group';
 import styled, { useTheme } from 'styled-components';
-
 interface TGroupNameInputProps {
   groupName: string;
   groupCode: string;
@@ -12,7 +11,6 @@ interface TGroupNameInputProps {
 
 const GroupNameInput = ({ groupName: groupNameProp, groupCode, isAdmin }: TGroupNameInputProps) => {
   const theme = useTheme();
-  const { toast } = useToast();
   const [isEditing, setIsEditing] = useState(false);
   const [isInputValueExist, setIsInputValueExist] = useState(true);
   const [groupName, setGroupName] = useState(groupNameProp);
@@ -32,11 +30,10 @@ const GroupNameInput = ({ groupName: groupNameProp, groupCode, isAdmin }: TGroup
     if (groupName.length) {
       await mutateAsync(groupName);
       setIsEditing(false);
-      toast('그룹명이 변경되었습니다.');
     } else {
       setIsInputValueExist(false);
     }
-  }, [toast, mutateAsync, groupName]);
+  }, [mutateAsync, groupName]);
 
   useEffect(() => {
     if (isEditing && inputRef.current) {

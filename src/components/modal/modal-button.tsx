@@ -24,23 +24,23 @@ const S = {
     font-size: 14px;
     font-weight: 700;
     text-align: center;
-    ${({ $type }) => {
+    ${({ $type, theme }) => {
       switch ($type) {
         case 'primary':
           return `
-            color: var(--white);
-            background-color: var(--blue01);
+            color: var(--dark08);
+            background-color: ${theme.theme01};
             border: 1px solid transparent;
             `;
         case 'secondary':
           return `
-            background-color: var(--white);
-            color: var(--blue01);
-            border: 1px solid var(--blue01);
+            background-color: var(--dark08);
+            color: ${theme.theme01};
+            border: 1px solid ${theme.text06};
           `;
         case 'disable':
           return `
-            color: var(--white);
+            color: var(--dark08);
             background-color: var(--gray01, #9E9E9E);
             border: 1px solid transparent;
             `;

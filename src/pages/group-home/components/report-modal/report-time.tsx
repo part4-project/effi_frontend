@@ -17,7 +17,7 @@ const ReportTime = () => {
         </S.TimeBox>
         <S.TimeBox>
           <S.TimeTitle>초과된 시간</S.TimeTitle>
-          {overTime ? <S.Timer>{overTime}</S.Timer> : <S.Timer>-</S.Timer>}
+          {overTime ? <S.Timer $overTime={!!overTime}>{overTime}</S.Timer> : <S.Timer>-</S.Timer>}
         </S.TimeBox>
       </S.TimeContent>
     </S.Container>
@@ -31,9 +31,10 @@ const S = {
     grid-area: time;
     display: flex;
     border-radius: 10px;
-    border: 2px solid var(--gray03);
+    border: 2px solid ${(props) => props.theme.box};
     height: 180px;
     padding: 10px;
+    background: ${(props) => props.theme.theme10};
   `,
 
   TimeContent: styled.ul`
@@ -56,20 +57,20 @@ const S = {
       right: -20px;
       width: 2px;
       height: 100%;
-      background-color: var(--gray03);
+      background-color: ${(props) => props.theme.box};
     }
   `,
 
   TimeTitle: styled.p`
-    color: #9d9d9d;
+    color: ${(props) => props.theme.text11};
     text-align: center;
     font-size: 20px;
     font-weight: 900;
     line-height: 35px;
   `,
 
-  Timer: styled.p`
-    color: var(--blue01);
+  Timer: styled.p<{ $overTime?: boolean }>`
+    color: ${({ $overTime, theme }) => ($overTime ? theme.red : theme.text02)};
     text-align: center;
     font-size: 30px;
     font-weight: 900;
