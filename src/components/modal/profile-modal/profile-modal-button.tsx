@@ -6,20 +6,51 @@ interface ProfileModalButtonProps {
 }
 
 const ProfileModalButton = ({ children }: ProfileModalButtonProps) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState({
+    profile: false,
+    confirm: false,
+  });
 
-  const handleModalClose = () => {
-    setIsOpen(false);
+  const handleProfileModalClose = () => {
+    //confirm 모달이 열려있으면 닫힘 방지
+    if (!isOpen.confirm) {
+      setIsOpen((prev) => ({
+        ...prev,
+        profile: false,
+      }));
+    }
   };
 
-  const handleOpenModalButtonClick = () => {
-    setIsOpen(true);
+  const handleProfileModalOpen = () => {
+    setIsOpen((prev) => ({
+      ...prev,
+      profile: true,
+    }));
+  };
+
+  const handleConfirmModalClose = () => {
+    setIsOpen((prev) => ({
+      ...prev,
+      confirm: false,
+    }));
+  };
+
+  const handleConfirmModalOpen = () => {
+    setIsOpen((prev) => ({
+      ...prev,
+      confirm: true,
+    }));
   };
 
   return (
     <>
-      <button onClick={handleOpenModalButtonClick}>{children}</button>
-      <ProfileModal isOpen={isOpen} onClose={handleModalClose} />
+      <button onClick={handleProfileModalOpen}>{children}</button>
+      <ProfileModal
+        isOpen={isOpen}
+        onProfileClose={handleProfileModalClose}
+        onConfirmClose={handleConfirmModalClose}
+        onConfirmOpen={handleConfirmModalOpen}
+      />
     </>
   );
 };

@@ -11,7 +11,7 @@ import ALARM from '@assets/icons/alarm.svg';
 import ARROW_DOWN_DARK from '@assets/icons/arrow-down-dark.svg';
 import ARROW_DOWN from '@assets/icons/arrow-down.svg';
 import ARROW_RIGHT_DARK from '@assets/icons/arrow-right-dark.svg';
-import ARROW_RIGHT from '@assets/icons/arrow-right-dark.svg';
+import ARROW_RIGHT from '@assets/icons/arrow-right.svg';
 import CALENDAR_ICON_DARK from '@assets/icons/calendar-dark.svg';
 import CALENDAR_ICON from '@assets/icons/calendar.svg';
 import EDIT_ICON_WHITE from '@assets/icons/edit-white.svg';
@@ -20,6 +20,8 @@ import FOLDER_BLUE from '@assets/icons/folder-blue.svg';
 import FOLDER_DARK from '@assets/icons/folder-dark.svg';
 import FOLDER_GRAY from '@assets/icons/folder-gray.svg';
 import FOLDER_WHITE from '@assets/icons/folder-white.svg';
+import GROUP_LEADER_BADGE_DARK from '@assets/icons/group-leader-badge-dark.svg';
+import GROUP_LEADER_BADGE from '@assets/icons/group-leader-badge.svg';
 import MEETING_ALARM_DARK from '@assets/icons/meeting-alarm-dark.svg';
 import MEETING_ALARM from '@assets/icons/meeting-alarm.svg';
 import ON_LIVE_CHARACTER_DARK from '@assets/icons/meeting-live-character-dark.svg';
@@ -99,11 +101,13 @@ export const lightModeTheme = {
   arrowRight: ARROW_RIGHT,
   refreshIcon: REFRESH_CALENDAR,
   meetingAlarm: MEETING_ALARM,
+  groupLeaderBadge: GROUP_LEADER_BADGE,
 
   //other
   nickName: 'var(--dark02)',
-  scroll: 'var(--gray03)',
-  scrollBar: 'var(--dark07)',
+  scroll: 'var(--white)',
+  scrollAlarm: 'var(--blue03)',
+  scrollBar: 'var(--gray01)',
   quickButtonHover: 'var(--white)',
   schedule: 'var(--white)',
   scheduleText: 'var(--black)',
@@ -166,10 +170,12 @@ export const darkModeTheme = {
   arrowRight: ARROW_RIGHT_DARK,
   refreshIcon: REFRESH_CALENDAR_DARK,
   meetingAlarm: MEETING_ALARM_DARK,
+  groupLeaderBadge: GROUP_LEADER_BADGE_DARK,
 
   //other
   nickName: 'var(--dark07)',
-  scroll: 'var(--dark07)',
+  scroll: 'var(--gray03)',
+  scrollAlarm: 'var(--gray03)',
   scrollBar: 'var(--dark02)',
   quickButtonHover: 'var(--white)',
   schedule: 'var(--dark05)',

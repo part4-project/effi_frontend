@@ -15,14 +15,14 @@ export default AlarmPopOver;
 const S = {
   PopOverWrap: styled.div`
     width: 300px;
-    background-color: ${(props) => props.theme.theme08};
+    background-color: ${(props) => props.theme.theme07};
     z-index: ${zIndex.popOver};
     position: absolute;
     left: -200px;
     top: 60px;
     border-radius: 10px;
     padding: 16px;
-    box-shadow: 0px 4px 6.8px 0px #a6c4d591;
+    box-shadow: 0px 4px 6.8px 0px ${(props) => props.theme.theme02};
     &:after {
       background: url('${(props) => props.theme.polygonTopWhite}');
       content: '';
