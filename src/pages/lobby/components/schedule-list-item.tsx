@@ -37,6 +37,10 @@ const S = {
   BorderBox: styled.div`
     padding-bottom: 4px;
     border-bottom: 1px solid ${(props) => props.theme.line};
+
+    &:last-child {
+      border-bottom: none;
+    }
   `,
   Container: styled(Link)`
     width: 100%;
