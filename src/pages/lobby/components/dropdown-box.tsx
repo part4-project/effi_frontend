@@ -61,7 +61,7 @@ const S = {
     }
 
     &::-webkit-scrollbar-track {
-      background: var(--gray03);
+      background: ${(props) => props.theme.scroll};
     }
   `,
   Polygon: styled.img<{ $type: DropDownBoxProps['type'] }>`

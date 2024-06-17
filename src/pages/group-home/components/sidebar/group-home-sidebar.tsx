@@ -1,22 +1,23 @@
 import { TGroupFetchMemberInfo, TGroupMemberFetchRes } from '@api/group/group-request.type';
-import groupLeaderBadge from '@assets/icons/group-leader-badge.svg';
 import { QUERY_KEY } from '@constants/query-key';
 import GroupNameInput from '@pages/group-home/components/sidebar/group-name-input';
 import { useGroupStore } from '@stores/group';
 import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 
 interface TGroupHomeSideBarProps {
   isAdmin: boolean;
 }
 
 const GroupHomeSideBar = ({ isAdmin }: TGroupHomeSideBarProps) => {
+  const theme = useTheme();
+  const navigate = useNavigate();
+
   const groupData = useQueryClient().getQueryData<TGroupMemberFetchRes>([
     QUERY_KEY.groupInfo,
     useGroupStore((state) => state.groupId),
   ]);
-  const navigate = useNavigate();
 
   const handleLeaveGroupButtonClick = () => {
     navigate('/');
@@ -30,7 +31,7 @@ const GroupHomeSideBar = ({ isAdmin }: TGroupHomeSideBarProps) => {
         {groupData!.memberList.map((member: TGroupFetchMemberInfo) => (
           <S.GroupMemberList key={member.id}>
             <span>{member.nickname}</span>
-            {member.admin && <S.AdminIcon src={groupLeaderBadge} />}
+            {member.admin && <S.AdminIcon src={theme.groupLeaderBadge} />}
           </S.GroupMemberList>
         ))}
       </S.GroupMemberLists>

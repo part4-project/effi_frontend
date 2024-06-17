@@ -24,7 +24,7 @@ const S = {
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 2px solid var(--blue03, #edf7f8);
+    border: 2px solid ${(props) => props.theme.theme03};
     border-radius: 5px;
     padding-block: 20px;
   `,
