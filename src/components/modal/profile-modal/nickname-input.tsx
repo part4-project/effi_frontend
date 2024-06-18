@@ -68,7 +68,7 @@ const S = {
   NicknameLabel: styled.label`
     font-size: 16px;
     font-weight: bold;
-    color: var(--blue05);
+    color: ${(props) => props.theme.text08};
   `,
 
   NicknameRefreshButton: styled.img`
@@ -85,6 +85,8 @@ const S = {
   `,
 
   NicknameInput: styled.input`
+    background: ${(props) => props.theme.modalBg};
+    color: ${(props) => props.theme.input};
     font-size: 16px;
     font-weight: bold;
     padding: 12px 10px;
@@ -101,10 +103,12 @@ const S = {
     padding: 6px 10px;
     border-radius: 4px;
     font-size: 12px;
-    color: var(--white);
-    background-color: var(--blue01);
+    font-weight: 600;
+    color: ${(props) => props.theme.text07};
+    background-color: ${(props) => props.theme.button03};
     &:hover {
-      background-color: var(--blue04);
+      color: ${(props) => props.theme.text06};
+      background-color: ${(props) => props.theme.theme04};
     }
     ${(props) =>
       props.disabled &&

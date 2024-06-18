@@ -54,7 +54,7 @@ const S = {
     font-size: 18px;
     font-weight: 700;
     letter-spacing: 1px;
-    color: var(--blue01);
+    color: ${(props) => props.theme.text06};
   `,
 
   SubComment: styled.p`
@@ -63,12 +63,12 @@ const S = {
     font-size: 16px;
     font-weight: 500;
     letter-spacing: 1px;
-    color: var(--black);
+    color: ${(props) => props.theme.scheduleText};
   `,
 
   ButtonsContainer: styled.div`
     display: flex;
-    border-top: 1px solid var(--blue01);
+    border-top: 1px solid ${(props) => props.theme.text06};
 
     justify-content: center;
 
@@ -81,11 +81,11 @@ const S = {
   `,
 
   DeleteButton: styled.button`
-    color: var(--blue05);
+    color: ${(props) => props.theme.text08};
   `,
   ConfirmButton: styled.button`
-    background-color: var(--blue01);
-    color: var(--white);
+    background-color: ${(props) => props.theme.text06};
+    color: ${(props) => props.theme.text07};
     border-bottom-right-radius: 20px;
   `,
 };

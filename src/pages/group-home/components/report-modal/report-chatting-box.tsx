@@ -21,10 +21,10 @@ const S = {
     grid-area: chat;
     display: flex;
     padding: 15px;
-    border: 2px solid var(--gray03);
+    border: 2px solid ${(props) => props.theme.box};
     border-radius: 10px;
     height: 654px;
-    background: var(--white);
+    background: ${(props) => props.theme.theme10};
   `,
   ChattingLists: styled.ul`
     display: flex;

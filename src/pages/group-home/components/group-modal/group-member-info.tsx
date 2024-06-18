@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { TGroupFetchMemberInfo } from '@api/group/group-request.type';
-import groupLeaderBadge from '@assets/icons/group-leader-badge.svg';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 
 const GroupMemberInfo: React.FC<TGroupFetchMemberInfo> = ({ nickname, email, admin }) => {
+  const theme = useTheme();
+
   const [isExport, setIsExport] = useState<boolean>(false);
   const exportName = isExport ? '내보내기 취소' : '내보내기';
 
@@ -19,7 +20,7 @@ const GroupMemberInfo: React.FC<TGroupFetchMemberInfo> = ({ nickname, email, adm
       </S.MemberInfo>
       {admin ? (
         <S.AdminIconBox>
-          <S.AdminIcon src={groupLeaderBadge} alt="admin" />
+          <S.AdminIcon src={theme.groupLeaderBadge} alt="admin" />
         </S.AdminIconBox>
       ) : (
         <S.MemberExportBtn $isExport={isExport} onClick={handleExportClick}>
@@ -55,19 +56,20 @@ const S = {
     align-items: end;
   `,
   MemberName: styled.div<{ $isExport: boolean }>`
-    color: ${({ $isExport }) => ($isExport ? '#C9C9C9' : 'var(--gray01)')};
+    color: ${({ $isExport, theme }) => ($isExport ? '#C9C9C9' : theme.text11)};
     font-size: 14px;
     font-weight: 500;
   `,
   MemberEmail: styled.div`
+    color: ${(props) => props.theme.text09};
     font-size: 10px;
   `,
   MemberExportBtn: styled.button<{ $isExport: boolean }>`
     padding: 10px;
     border-radius: 5px;
-    background-color: ${({ $isExport }) => ($isExport ? `var(--white)` : `var(--blue02)`)};
-    border: ${({ $isExport }) => ($isExport ? `1px solid var(--blue02)` : `1px solid transparent`)};
-    color: var(--blue01);
+    background-color: ${({ $isExport, theme }) => ($isExport ? `var(--white)` : theme.theme02)};
+    border: ${({ $isExport, theme }) => ($isExport ? `1px solid ${theme.theme02}` : `1px solid transparent`)};
+    color: ${(props) => props.theme.text06};
     font-size: 12px;
     font-weight: 700;
   `,

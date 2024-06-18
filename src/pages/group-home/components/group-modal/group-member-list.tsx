@@ -26,7 +26,7 @@ export default GroupMemberList;
 
 const S = {
   MemberListTitle: styled.p`
-    color: var(--gray06);
+    color: ${(props) => props.theme.text09};
     font-size: 18px;
     font-weight: 700;
     margin-bottom: 6px;

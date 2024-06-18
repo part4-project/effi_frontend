@@ -23,19 +23,19 @@ const S = {
     display: flex;
     flex-direction: column;
     border-radius: 10px;
-    border: 2px solid var(--gray03);
+    border: 2px solid ${(props) => props.theme.box};
     height: 255px;
     padding: 15px 10px 10px 15px;
-    background: var(--white);
+    background: ${(props) => props.theme.theme10};
   `,
 
   TopicAgenda: styled.p`
-    background: var(--white);
+    background: ${(props) => props.theme.theme10};
     color: var(--gray05);
     font-size: 20px;
     font-weight: 900;
     line-height: 35px;
-    border-bottom: 1px solid var(--gray03);
+    border-bottom: 1px solid ${(props) => props.theme.box};
     padding-bottom: 10px;
   `,
 

@@ -45,7 +45,7 @@ const S = {
   `,
   ChattingLog: styled.p<{ $type: ChattingListProps['type'] }>`
     border-radius: 16px;
-    background: ${({ $type }) => ($type === 'meeting-room' ? 'var(--gray06)' : 'var(--blue01)')};
+    background: ${({ $type, theme }) => ($type === 'meeting-room' ? 'var(--gray06)' : theme.theme01)};
     padding: 6px 20px;
     color: var(--white);
     line-height: 28px;

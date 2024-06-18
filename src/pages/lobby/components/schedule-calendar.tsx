@@ -247,5 +247,6 @@ const S = {
     display: flex;
     justify-content: center;
     align-items: center;
+    color: ${(props) => props.theme.input};
   `,
 };
