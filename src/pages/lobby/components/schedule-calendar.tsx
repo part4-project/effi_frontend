@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import EmptyNotice from '@components/empty-notice';
 import { MY_SCHEDULE_LIST } from '@constants/mockdata';
 import { ko } from 'date-fns/locale';
 import DatePicker from 'react-datepicker';
@@ -49,7 +50,9 @@ const ScheduleCalendar = () => {
             />
           ))
         ) : (
-          <S.EmptyScheduleNotice>금일 스케줄이 없습니다!</S.EmptyScheduleNotice>
+          <S.EmptyNoticeContainer>
+            <EmptyNotice borderType="none">금일 스케줄이 없습니다.</EmptyNotice>
+          </S.EmptyNoticeContainer>
         )}
       </DropDownBox>
     </S.Container>
@@ -165,8 +168,6 @@ const S = {
     .react-datepicker__time-name {
       color: ${(props) => props.theme.scheduleText};
       display: inline-block;
-      width: 32px;
-      height: 32px;
       line-height: center;
       text-align: center;
       margin: 0;
@@ -228,7 +229,7 @@ const S = {
 
     .dot-container {
       position: absolute;
-      top: 120%;
+      top: calc(50% + 20px);
       left: 50%;
       transform: translate(-50%, -50%);
       display: flex;
@@ -242,11 +243,7 @@ const S = {
       border-radius: 100%;
     }
   `,
-  EmptyScheduleNotice: styled.div`
-    height: 80px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: ${(props) => props.theme.input};
+  EmptyNoticeContainer: styled.div`
+    height: 15vh;
   `,
 };
