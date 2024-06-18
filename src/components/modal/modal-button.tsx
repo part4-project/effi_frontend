@@ -8,7 +8,7 @@ interface ModalButtonProp {
 
 const ModalButton = ({ children, onClick, type }: ModalButtonProp) => {
   return (
-    <S.Button $type={type} onClick={onClick}>
+    <S.Button $type={type} onClick={onClick} disabled={type === 'disable'}>
       {children}
     </S.Button>
   );
@@ -43,6 +43,7 @@ const S = {
             color: var(--dark08);
             background-color: var(--gray01, #9E9E9E);
             border: 1px solid transparent;
+            cursor: default;
             `;
       }
     }};
