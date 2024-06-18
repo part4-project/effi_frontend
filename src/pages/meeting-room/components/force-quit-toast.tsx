@@ -1,7 +1,8 @@
 /* eslint-disable no-console */
 import { useEffect } from 'react';
 import styled from 'styled-components';
-import useTimer from '../hooks/use-timer';
+import useForceQuitToastTimer from '../hooks/use-force-quit-toast-timer';
+import { formatDurationFromSeconds } from '../utils/format-duration-from-seconds';
 
 interface ForceQuitToastProps {
   isToastOpen: boolean;
@@ -9,7 +10,7 @@ interface ForceQuitToastProps {
 }
 
 const ForceQuitToast = ({ isToastOpen, isToastAnimClose }: ForceQuitToastProps) => {
-  const { currElapsedSeconds, formatDurationFromSeconds, isDurationOver, resetTimer } = useTimer(300);
+  const { currElapsedSeconds, isDurationOver, resetTimer } = useForceQuitToastTimer(300);
 
   useEffect(() => {
     if (isDurationOver) console.log('방 폭파 함수 넣기!');
@@ -30,7 +31,7 @@ const ForceQuitToast = ({ isToastOpen, isToastAnimClose }: ForceQuitToastProps) 
         <br />
         당신의 전기세를 위해, 5분 뒤 회의가 종료됩니다.
       </S.WarningText>
-      <S.Timer>{formatDurationFromSeconds(currElapsedSeconds)}</S.Timer>
+      <S.Timer>{isDurationOver ? '종료!' : formatDurationFromSeconds(currElapsedSeconds)}</S.Timer>
     </S.Container>
   );
 };
