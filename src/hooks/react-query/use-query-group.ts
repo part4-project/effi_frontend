@@ -29,11 +29,10 @@ export const useGroupCreateMutation = () => {
   const mutation = useMutation({
     mutationFn: async (groupData: string) => await groupRequest.createGroup(groupData),
     onSuccess: () => {
-      // Invalidate and refetch
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.groupList] });
       toast('그룹이 생성되었습니다');
     },
-    onError: (error: TAxiosError) => toast(error.errorMessage),
+    onError: (error: TAxiosError) => toast(error.errorMessage, true),
   });
 
   return mutation;
@@ -46,12 +45,11 @@ export const useGroupUpdateMutation = (groupId: number) => {
   const mutation = useMutation({
     mutationFn: async (groupName: string) => await groupRequest.updateGroup(groupName, groupId),
     onSuccess: () => {
-      // Invalidate and refetch
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.groupInfo, groupId] });
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.groupList] });
       toast('그룹명이 변경되었습니다');
     },
-    onError: (error: TAxiosError) => toast(error.errorMessage),
+    onError: (error: TAxiosError) => toast(error.errorMessage, true),
   });
 
   return mutation;
@@ -72,12 +70,11 @@ export const useInvitedGroupAcceptMutation = () => {
   const mutation = useMutation({
     mutationFn: async (groupId: number) => await groupRequest.acceptInvitedGroup(groupId),
     onSuccess: () => {
-      // Invalidate and refetch
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.invitedGroupList] });
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.groupList] });
       toast('초대가 수락되었습니다');
     },
-    onError: (error: TAxiosError) => toast(error.errorMessage),
+    onError: (error: TAxiosError) => toast(error.errorMessage, true),
   });
 
   return mutation;
@@ -90,12 +87,11 @@ export const useInvitedGroupRejectMutation = () => {
   const mutation = useMutation({
     mutationFn: async (groupId: number) => await groupRequest.rejectInvitedGroup(groupId),
     onSuccess: () => {
-      // Invalidate and refetch
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.invitedGroupList] });
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.groupList] });
       toast('초대를 거절했습니다');
     },
-    onError: (error: TAxiosError) => toast(error.errorMessage),
+    onError: (error: TAxiosError) => toast(error.errorMessage, true),
   });
 
   return mutation;
@@ -107,7 +103,7 @@ export const useGroupInviteMutation = (groupId: number) => {
   const mutation = useMutation({
     mutationFn: async (targetEmail: string) => await groupRequest.inviteGroup(targetEmail, groupId),
     onSuccess: () => toast('초대가 완료되었습니다'),
-    onError: (error: TAxiosError) => toast(error.errorMessage),
+    onError: (error: TAxiosError) => toast(error.errorMessage, true),
   });
   return mutation;
 };
