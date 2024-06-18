@@ -75,5 +75,8 @@ const S = {
     color: var(--gray01);
     font-weight: 500;
     text-decoration: underline;
+    &:hover {
+      color: ${(props) => props.theme.red};
+    }
   `,
 };

@@ -1,11 +1,11 @@
 /* eslint-disable no-unused-vars */
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Modal from '@components/modal/modal';
 import ModalButton from '@components/modal/modal-button';
 import styled from 'styled-components';
 
 const primaryBtn = 'primary';
-const secondaryBtn = 'secondary';
+const disableBtn = 'disable';
 
 interface GroupCreateModalProps {
   isOpen: boolean;
@@ -14,16 +14,20 @@ interface GroupCreateModalProps {
 }
 
 const GroupCreateModal = ({ isOpen, onClose, onSubmit }: GroupCreateModalProps) => {
-  const [btnType, setBtnType] = useState<'disable' | 'primary' | 'secondary'>(secondaryBtn);
+  const [btnType, setBtnType] = useState<'disable' | 'primary' | 'secondary'>(disableBtn);
   const groupNameRef = useRef<HTMLInputElement>(null);
 
   const handleNameInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.target.value ? setBtnType(primaryBtn) : setBtnType(secondaryBtn);
+    e.target.value ? setBtnType(primaryBtn) : setBtnType(disableBtn);
   };
 
   const handleCreateGroupClick = () => {
     btnType === primaryBtn ? onSubmit(groupNameRef.current?.value) : null;
   };
+
+  useEffect(() => {
+    setBtnType(disableBtn);
+  }, [onClose]);
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} headerTitle="그룹 생성하기">

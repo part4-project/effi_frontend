@@ -59,5 +59,9 @@ const S = {
     color: ${(props) => props.theme.text06};
     font-size: 14px;
     font-weight: 700;
+    &:hover {
+      background: ${(props) => props.theme.theme01};
+      color: var(--dark08);
+    }
   `,
 };

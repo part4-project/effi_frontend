@@ -95,15 +95,25 @@ const S = {
 
   InvitedGroup: styled.li`
     background: ${(props) => props.theme.text01};
-    border: 2px solid ${(props) => props.theme.theme02};
+    border: 2px solid ${(props) => props.theme.line};
     padding: 10px;
     border-radius: 10px;
     transition: all 0.2s ease-in-out;
 
     &:hover {
+      background: var(--dark08);
       box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.2);
-      border: 2px solid ${(props) => props.theme.text02};
+      border: 2px solid ${(props) => props.theme.hoverLine};
       transform: translateY(-4px);
+      p {
+        color: ${(props) => props.theme.theme01};
+      }
+      strong {
+        color: ${(props) => props.theme.text12};
+      }
+      span {
+        color: ${(props) => props.theme.text13};
+      }
     }
   `,
 
@@ -125,14 +135,14 @@ const S = {
     margin-bottom: 14px;
   `,
 
-  GroupName: styled.span`
+  GroupName: styled.strong`
     color: ${(props) => props.theme.text06};
     font-weight: 700;
     margin-right: 5px;
   `,
 
   GroupCode: styled.span`
-    color: var(--gray02);
+    color: var(--gray01);
     font-weight: 700;
     font-size: 12px;
   `,

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { TGroupFetchInfo } from '@api/group/group-request.type';
 import { device } from '@styles/breakpoints';
 import { zIndex } from '@styles/z-index';
@@ -15,29 +15,23 @@ const GroupItem: React.FC<GroupItemProp> = ({ selectGroupId, groupId, groupName,
   const [isOverFlowText, setIsOverFlowText] = useState<boolean>(false);
   const isSelect = selectGroupId == groupId;
 
-  useEffect(() => {
+  //img onload 사용해 실행
+  const checkOverflow = () => {
     // 뒷배경보다 텍스트 길이가 긴지 체크
-    const checkOverflow = () => {
-      if (groupItemRef.current) {
-        const roomName = groupItemRef.current.querySelector('div');
-        const bgImg = groupItemRef.current.querySelector('img');
-        if (roomName && bgImg) {
-          const isOverflowing = roomName.scrollWidth > bgImg.scrollWidth;
-          setIsOverFlowText(isOverflowing);
-        }
+    if (groupItemRef.current) {
+      const roomName = groupItemRef.current.querySelector('div');
+      const bgImg = groupItemRef.current.querySelector('img');
+      if (roomName && bgImg) {
+        const isOverflowing = roomName.scrollWidth > bgImg.scrollWidth;
+        setIsOverFlowText(isOverflowing);
       }
-    };
-    checkOverflow();
-    window.addEventListener('resize', checkOverflow);
-    return () => {
-      window.removeEventListener('resize', checkOverflow);
-    };
-  }, [isOverFlowText]);
+    }
+  };
 
   return (
     <S.Trigger>
       <S.GroupItem ref={groupItemRef} $isSelect={isSelect}>
-        <img src={theme.groupBg} alt="groupImg" />
+        <img src={theme.groupBg} alt="groupImg" onLoad={checkOverflow} />
         <S.GroupName $isOverFlowText={isOverFlowText}>{groupName}</S.GroupName>
       </S.GroupItem>
       {type === 'side-bar' && <S.Balloon>{groupName}</S.Balloon>}
@@ -67,7 +61,7 @@ const S = {
     white-space: nowrap;
     color: ${(props) => props.theme.theme01};
     font-weight: 900;
-    font-size: ${({ $isOverFlowText }) => ($isOverFlowText ? '10px' : '16px')};
+    font-size: ${({ $isOverFlowText }) => ($isOverFlowText ? '12px' : '16px')};
     @media ${device.tablet} {
       font-size: ${({ $isOverFlowText }) => ($isOverFlowText ? '8px' : '12px')};
     }

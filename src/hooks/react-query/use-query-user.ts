@@ -21,12 +21,11 @@ export const useUserNicknameUpdateMutation = () => {
   const mutation = useMutation({
     mutationFn: async (nickName: string) => await userRequest.updateNickname(nickName),
     onSuccess: () => {
-      // Invalidate and refetch
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.userInfo] });
       queryClient.refetchQueries({ queryKey: [QUERY_KEY.groupInfo] });
       toast('닉네임이 변경되었습니다');
     },
-    onError: (error: TAxiosError) => toast(error.errorMessage),
+    onError: (error: TAxiosError) => toast(error.errorMessage, true),
   });
 
   return mutation;
@@ -39,11 +38,10 @@ export const useUserProfileImgUpdateMutation = () => {
   const mutation = useMutation({
     mutationFn: async (userData: File) => await userRequest.updateProfileImg(userData),
     onSuccess: () => {
-      // Invalidate and refetch
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.userInfo] });
       toast('프로필이미지가 변경되었습니다');
     },
-    onError: (error: TAxiosError) => toast(error.errorMessage),
+    onError: (error: TAxiosError) => toast(error.errorMessage, true),
   });
 
   return mutation;
@@ -56,11 +54,10 @@ export const useUserProfileImgDefaultMutation = () => {
   const mutation = useMutation({
     mutationFn: async () => await userRequest.updateProfileDefaultImg(),
     onSuccess: () => {
-      // Invalidate and refetch
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.userInfo] });
       toast('프로필이미지가 초기화 되었습니다');
     },
-    onError: (error: TAxiosError) => toast(error.errorMessage),
+    onError: (error: TAxiosError) => toast(error.errorMessage, true),
   });
 
   return mutation;
