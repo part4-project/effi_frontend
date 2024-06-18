@@ -1,30 +1,44 @@
-import useTransformUser from '@hooks/use-transform-user';
 import { formatHoursAmPm } from '@pages/group-home/utils/format-hours-ampm';
-import { TChatSocketType } from '@pages/meeting-room/types';
-import styled from 'styled-components';
+import { TChatType } from '@pages/meeting-room/types';
+import styled, { css } from 'styled-components';
+import UserHOC from './user-hoc';
 interface TChattingProp {
-  type: 'report-modal' | 'meeting-room';
-  socket: TChatSocketType;
+  roomType: 'report-modal' | 'meeting-room';
 }
-const ChattingList = ({ socket, type = 'report-modal' }: TChattingProp) => {
-  const chat = useTransformUser(socket);
-  if (!chat) return;
+interface ChatProps extends TChattingProp {
+  chat: TChatType;
+  isMe: boolean;
+}
+
+const ChattingList = ({ chat, isMe, roomType = 'report-modal' }: ChatProps) => {
+  if (chat.type != 'CHAT') {
+    return (
+      <S.ChattingSystemLog>
+        <p>{chat.message}</p>
+      </S.ChattingSystemLog>
+    );
+  }
   return (
-    <S.ChattingList>
+    <S.ChattingList $isMe={isMe}>
       <S.ChattingIcon src={chat.profileImageUrl} alt="profile" />
       <S.ChattingBox>
-        <S.ChattingUserName>{chat.nickname}</S.ChattingUserName>
-        <S.ChattingLog $type={type}>{chat.message}</S.ChattingLog>
+        <S.ChattingUserName $isMe={isMe}>{chat.nickname}</S.ChattingUserName>
+        <S.ChattingLog $type={roomType}>{chat.message}</S.ChattingLog>
       </S.ChattingBox>
-      <S.ChattingSentTime>{chat.timeStamp}</S.ChattingSentTime>
+      <S.ChattingSentTime>{formatHoursAmPm(chat.timeStamp)}</S.ChattingSentTime>
     </S.ChattingList>
   );
 };
-export default ChattingList;
+export default UserHOC(ChattingList);
 
 const S = {
-  ChattingList: styled.li`
+  ChattingList: styled.li<{ $isMe: boolean }>`
     display: flex;
+    ${({ $isMe }) =>
+      $isMe &&
+      css`
+        flex-direction: row-reverse;
+      `}
   `,
   ChattingIcon: styled.img`
     width: 40px;
@@ -34,20 +48,27 @@ const S = {
   ChattingBox: styled.div`
     margin: 8px 5px 0 8px;
     max-width: 70%;
+    flex: 0 0 auto;
   `,
-  ChattingUserName: styled.p`
+  ChattingUserName: styled.p<{ $isMe: boolean }>`
     color: var(--gray01);
     font-size: 14px;
     line-height: 24px;
     letter-spacing: -0.6px;
+    ${({ $isMe }) =>
+      $isMe &&
+      css`
+        text-align: right;
+      `}
   `,
-  ChattingLog: styled.p<{ $type: ChattingListProps['type'] }>`
+  ChattingLog: styled.p<{ $type: TChattingProp['roomType'] }>`
     border-radius: 16px;
     background: ${({ $type, theme }) => ($type === 'meeting-room' ? 'var(--gray06)' : theme.theme01)};
     padding: 6px 20px;
     color: var(--white);
     line-height: 28px;
     letter-spacing: -0.6px;
+    word-break: break-all;
   `,
   ChattingSentTime: styled.p`
     display: flex;
@@ -55,5 +76,9 @@ const S = {
     color: var(--gray01);
     font-size: 12px;
     letter-spacing: -0.6px;
+  `,
+  ChattingSystemLog: styled.li`
+    color: var(--gray01);
+    text-align: center;
   `,
 };

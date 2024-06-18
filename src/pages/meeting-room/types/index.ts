@@ -19,6 +19,8 @@ export interface TChatSocketType {
 export interface TChatType extends TGroupFetchMemberInfo {
   message: string;
   timeStamp: string;
+  type: string;
+  userId: number;
 }
 
 export type TChatListType = TChatType[];

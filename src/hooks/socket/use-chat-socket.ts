@@ -1,19 +1,23 @@
 /* eslint-disable no-unused-vars */
 import { useCallback, useEffect, useState } from 'react';
+import { TUserInfoRes } from '@api/user/user-request.type';
+import { QUERY_KEY } from '@constants/query-key';
 import { SOCKET_TYPE } from '@constants/socket-type';
 import { TChatSocketType } from '@pages/meeting-room/types';
 import { IMessage } from '@stomp/stompjs';
+import { useQueryClient } from '@tanstack/react-query';
 import useSocket from './use-socket';
 
 const useChatSocket = (meetingId: number) => {
   const { stompClientRef: chatSocketClient, isConnected } = useSocket();
   const [chatSocketList, setChatSocketList] = useState<TChatSocketType[]>([]);
+  const userInfo = useQueryClient().getQueryData<TUserInfoRes>([QUERY_KEY.userInfo]);
 
   const sendMessage = useCallback(
     (type: string, message: string) => {
       const messageObject = {
         type: type, // SessionMessageType에 따라 적절한 값을 설정
-        userId: 30, // 실제 사용자 ID 값
+        userId: userInfo?.id, // 실제 사용자 ID 값
         meetingId: meetingId, // 회의 ID 값
         message: message, // 원하는 메시지
         timeStamp: new Date().toISOString(), // 현재 시각 ISO 문자열 형식으로
@@ -29,7 +33,7 @@ const useChatSocket = (meetingId: number) => {
         console.error('WebSocket 연결이 필요합니다.');
       }
     },
-    [chatSocketClient, meetingId],
+    [chatSocketClient, meetingId, userInfo],
   );
   const handleReceivedMessage = (message: IMessage) => {
     const msg = JSON.parse(message.body);
@@ -41,14 +45,14 @@ const useChatSocket = (meetingId: number) => {
       const client = chatSocketClient.current;
       const subscription = client.subscribe(`/signal/sub/meeting/${meetingId}/chat`, handleReceivedMessage); // 구독할 주제 설정
 
-      sendMessage(SOCKET_TYPE.ENTER, '입장');
+      sendMessage(SOCKET_TYPE.ENTER, `${userInfo?.nickname} 님이 입장하셨습니다`);
 
       return () => {
         subscription.unsubscribe();
-        sendMessage(SOCKET_TYPE.LEAVE, '퇴장');
+        sendMessage(SOCKET_TYPE.LEAVE, `${userInfo?.nickname} 님이 퇴장하셨습니다`);
       };
     }
-  }, [isConnected, chatSocketClient, meetingId, sendMessage]);
+  }, [isConnected, chatSocketClient, meetingId, sendMessage, userInfo]);
 
   return { sendMessage, chatSocketList };
 };

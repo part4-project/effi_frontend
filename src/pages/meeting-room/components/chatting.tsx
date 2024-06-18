@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+import { useEffect, useRef } from 'react';
 import ChattingList from '@components/meeting/chatting-list';
 import { SOCKET_TYPE } from '@constants/socket-type';
 import useChatSocket from '@hooks/socket/use-chat-socket';
@@ -9,18 +10,26 @@ import { TChatSocketType } from '../types';
 
 const Chatting = () => {
   const handleSendMessage = () => {
-    sendMessage(SOCKET_TYPE.CHAT, 'test');
+    sendMessage(SOCKET_TYPE.CHAT, inputValue);
   };
 
   const { inputValue, handleSubmit, handleInputValueChange } = useInputForm(handleSendMessage);
   const { sendMessage, chatSocketList } = useChatSocket(1);
+  const chatContainerRef = useRef<HTMLUListElement>(null);
+
+  useEffect(() => {
+    // 컴포넌트가 업데이트될 때마다 스크롤을 최하단으로 이동
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    }
+  }, [chatSocketList]);
 
   return (
     <S.Container>
       <S.ChattingWrap>
-        <S.ChattingContainer>
+        <S.ChattingContainer ref={chatContainerRef}>
           {chatSocketList.map((chatSocket: TChatSocketType, idx) => (
-            <ChattingList key={idx} type="meeting-room" socket={chatSocket} />
+            <ChattingList key={idx} roomType="meeting-room" socket={chatSocket} />
           ))}
         </S.ChattingContainer>
       </S.ChattingWrap>

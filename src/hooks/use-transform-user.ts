@@ -7,7 +7,13 @@ const useTransformUser = (socketMsg: TChatSocketType) => {
   const member = memberList.find((member: TGroupFetchMemberInfo) => socketMsg.userId == member.id);
   let memberChat;
   if (member) {
-    memberChat = { ...member, message: socketMsg.message, timeStamp: socketMsg.timeStamp };
+    memberChat = {
+      ...member,
+      message: socketMsg.message,
+      timeStamp: socketMsg.timeStamp,
+      type: socketMsg.type,
+      userId: socketMsg.userId,
+    };
   }
 
   return memberChat;
