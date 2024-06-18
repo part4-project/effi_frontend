@@ -54,9 +54,9 @@ const S = {
     align-items: center;
     margin: 24px;
     padding: 24px 34px;
-    background: var(--white);
+    background: ${(props) => props.theme.modalBg};
     border-radius: 20px;
-    box-shadow: 0px 4px 16px 0px #073327;
+    box-shadow: 0px 4px 16px 0px ${(props) => props.theme.modalShadow};
 
     ${(props) =>
       props.$isConfirmModal &&
@@ -73,12 +73,12 @@ const S = {
     }
 
     ::-webkit-scrollbar-thumb {
-      background: #d6d6d7;
+      background: var(--dark07);
       border-radius: 16px;
     }
 
     ::-webkit-scrollbar-track {
-      background: var(--gray03);
+      background: ${(props) => props.theme.box};
     }
   `,
 };

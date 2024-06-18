@@ -25,8 +25,8 @@ const S = {
     display: ${({ $show }) => ($show ? 'flex' : 'none')};
     align-items: center;
     justify-content: center;
-    background-color: ${({ $error }) => ($error ? 'var(--red01)' : 'var(--blue05)')};
-    color: var(--white);
+    background-color: ${({ $error, theme }) => ($error ? 'var(--red01)' : theme.text08)};
+    color: ${(props) => props.theme.text01};
     opacity: 0.8;
     width: 364px;
     height: 50px;

@@ -29,7 +29,7 @@ export default GroupInvite;
 const S = {
   EmailLabel: styled.label`
     display: inline-block;
-    color: var(--gray06);
+    color: ${(props) => props.theme.text09};
     font-size: 18px;
     font-weight: 700;
     margin-bottom: 6px;
@@ -42,12 +42,12 @@ const S = {
   `,
   EmailInput: styled.input`
     flex: 1 1 auto;
-    background-color: #fafafa;
+    background-color: ${(props) => props.theme.theme07};
     border: 1px solid var(--gray01);
     border-radius: 5px;
     padding: 12px 15px;
     &::placeholder {
-      color: var(--gray02);
+      color: ${(props) => props.theme.text10};
       font-size: 14px;
       font-weight: 500;
     }
@@ -55,8 +55,8 @@ const S = {
   EmailSendBtn: styled.button`
     padding: 12px 30px;
     border-radius: 5px;
-    background-color: var(--blue02);
-    color: var(--blue01);
+    background-color: ${(props) => props.theme.theme02};
+    color: ${(props) => props.theme.text06};
     font-size: 14px;
     font-weight: 700;
   `,

@@ -60,11 +60,12 @@ const S = {
     padding: 10px;
   `,
   GroupNameInput: styled.input`
+    background: ${(props) => props.theme.modalBg};
     width: 100%;
     font-size: 32px;
     font-weight: 700;
     line-height: 35px;
-    color: var(--blue05);
+    color: ${(props) => props.theme.text08};
     &::placeholder {
       color: var(--gray02);
       font-size: 32px;

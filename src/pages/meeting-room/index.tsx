@@ -6,9 +6,9 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Chatting from './components/chatting';
 import ForceQuitToast from './components/force-quit-toast';
+import MeetingRoomTimer from './components/meeting-room-timer';
 import RoomButton from './components/room-button';
 import RoomCamera from './components/room-camera';
-import Timer from './components/timer';
 import Topics from './components/topics';
 import { ROOM_BUTTONS } from './constants';
 import useForceQuitToast from './hooks/use-force-quit-toast';
@@ -21,8 +21,6 @@ const PARTICIPATED_MEMBER = [...GROUP_MEMBER.member_list];
 const MeetingRoom = () => {
   const navigate = useNavigate();
   const [participatedMember, setParticipatedMember] = useState(PARTICIPATED_MEMBER);
-  const [meetingTotalTime, setMeetingTotalTime] = useState('');
-  const [meetingOverTime, setMeetingOverTime] = useState('');
   const [isMeetingFinished, setIsMeetingFinished] = useState(false);
   const { isToastOpen, handleToastChange, isToastAnimClose, handleToastClose } = useForceQuitToast();
   const memberList = useMeetingStore((state) => state.memberList);
@@ -35,16 +33,8 @@ const MeetingRoom = () => {
     setParticipatedMember(participatedMember.slice(0, participatedMember.length - 1));
   };
 
-  const handleMeetingTotalTimeChange = (time: string) => {
-    setMeetingTotalTime(time);
-  };
-  const handleMeetingOverTimeChange = (time: string) => {
-    setMeetingOverTime(time);
-  };
-
   const handleMeetingFinsishButtonClick = () => {
     setIsMeetingFinished(true);
-    console.log('total: ', meetingTotalTime, 'over', meetingOverTime);
   };
 
   useEffect(() => {
@@ -78,14 +68,10 @@ const MeetingRoom = () => {
           <button onClick={handleMeetingFinsishButtonClick} style={{ zIndex: 99, color: 'var(--gray05)' }}>
             Meeting 끝: 시간 콘솔 출력
           </button>
-          <Timer
-            targetDurationInSeconds={calculateDurationInSeconds(
-              MEETING_ROOM.start_date,
-              MEETING_ROOM.expected_end_date,
-            )}
+          <MeetingRoomTimer
+            startDate={MEETING_ROOM.start_date}
+            endDate={MEETING_ROOM.expected_end_date}
             isMeetingFinished={isMeetingFinished}
-            onMeetingTotalTimeChange={handleMeetingTotalTimeChange}
-            onMeetingOverTimeChange={handleMeetingOverTimeChange}
           />
         </S.Nav>
         <S.RoomCameraContainer>

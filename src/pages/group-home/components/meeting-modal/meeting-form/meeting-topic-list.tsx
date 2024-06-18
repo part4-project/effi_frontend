@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import EmptyNotice from '@components/empty-notice';
 import ModifyDeleteButton from '@components/meeting/modify-delete-button';
 import { DragDropContext, Droppable, Draggable, DropResult } from '@hello-pangea/dnd';
 import styled from 'styled-components';
@@ -54,7 +55,12 @@ const MeetingTopicList = ({ topicList, setTopicList }: MeetingTopicListProps) =>
     setTopicList(updatedList);
   };
 
-  if (!topicList.length) return <S.EmptyTopicList>추가된 안건이 없습니다!</S.EmptyTopicList>;
+  if (!topicList.length)
+    return (
+      <S.EmptyNoticeContainer>
+        <EmptyNotice>추가된 안건이 없습니다!</EmptyNotice>
+      </S.EmptyNoticeContainer>
+    );
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
@@ -141,20 +147,10 @@ const S = {
     margin-left: 10px;
     cursor: pointer;
   `,
-  EmptyTopicList: styled.div`
+  EmptyNoticeContainer: styled.div`
     width: 100%;
     height: 110px;
-    background: #f5f5f5;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: var(--gray01);
-    font-size: 14px;
-    font-weight: 500;
-    letter-spacing: 0.56px;
-    border-radius: 5px;
   `,
-
   DropdownImg: styled.img`
     width: 16px;
     height: 16px;

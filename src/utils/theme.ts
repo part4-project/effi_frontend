@@ -8,6 +8,8 @@ import ALARM_DARK from '@assets/icons/alarm-dark.svg';
 import ALARM_EMPTY_DARK from '@assets/icons/alarm-empty-dark.svg';
 import ALARM_EMPTY from '@assets/icons/alarm-empty.svg';
 import ALARM from '@assets/icons/alarm.svg';
+import ALERT_CIRCLE_DARK from '@assets/icons/alert-circle-dark.svg';
+import ALERT_CIRCLE from '@assets/icons/alert-circle.svg';
 import ARROW_DOWN_DARK from '@assets/icons/arrow-down-dark.svg';
 import ARROW_DOWN from '@assets/icons/arrow-down.svg';
 import ARROW_RIGHT_DARK from '@assets/icons/arrow-right-dark.svg';
@@ -22,6 +24,10 @@ import FOLDER_GRAY from '@assets/icons/folder-gray.svg';
 import FOLDER_WHITE from '@assets/icons/folder-white.svg';
 import GROUP_LEADER_BADGE_DARK from '@assets/icons/group-leader-badge-dark.svg';
 import GROUP_LEADER_BADGE from '@assets/icons/group-leader-badge.svg';
+import INVITE_CHECK_DARK from '@assets/icons/invite-check-dark.svg';
+import INVITE_CHECK from '@assets/icons/invite-check.svg';
+import INVITE_REJECT_DARK from '@assets/icons/invite-reject-dark.svg';
+import INVITE_REJECT from '@assets/icons/invite-reject.svg';
 import MEETING_ALARM_DARK from '@assets/icons/meeting-alarm-dark.svg';
 import MEETING_ALARM from '@assets/icons/meeting-alarm.svg';
 import ON_LIVE_CHARACTER_DARK from '@assets/icons/meeting-live-character-dark.svg';
@@ -48,6 +54,10 @@ import LOGO_DARK from '@assets/logo-dark.svg';
 import LOGO from '@assets/logo.svg';
 import TEXT_LOGO_DARK from '@assets/text-logo-dark.svg';
 import TEXT_LOGO from '@assets/text-logo.svg';
+import CIRCLE_BLUE_5 from '@/assets/icons/circle-blue5.svg';
+import CIRCLE_WHITE from '@/assets/icons/circle-white.svg';
+import X_CIRCLE_DARK from '@/assets/icons/x-circle-dark.svg';
+import X_CIRCLE from '@/assets/icons/x-circle.svg';
 
 export const lightModeTheme = {
   //color
@@ -59,6 +69,9 @@ export const lightModeTheme = {
   theme06: 'var(--white)',
   theme07: 'var(--white)',
   theme08: 'var(--blue04)',
+  theme09: 'var(--dark08)',
+  theme10: 'var(--white)',
+  theme11: 'var(--blue03)',
 
   //text color
   text01: 'var(--white)',
@@ -67,9 +80,20 @@ export const lightModeTheme = {
   text04: 'var(--blue05)',
   text05: 'var(--dark04)',
   text06: 'var(--blue01)',
+  text07: 'var(--dark08)',
+  text08: 'var(--blue05)',
+  text09: 'var(--gray06)',
+  text10: 'var(--gray02)',
+  text11: 'var(--gray01)',
 
   //button color
   button01: 'var(--blue02)',
+  button02: 'var(--dark08)',
+  button03: 'var(--blue01)',
+
+  //modal
+  modalBg: 'var(--white)',
+  modalShadow: '#073327',
 
   //img
   logo: LOGO,
@@ -102,6 +126,11 @@ export const lightModeTheme = {
   refreshIcon: REFRESH_CALENDAR,
   meetingAlarm: MEETING_ALARM,
   groupLeaderBadge: GROUP_LEADER_BADGE,
+  xCircle: X_CIRCLE,
+  check: INVITE_CHECK,
+  reject: INVITE_REJECT,
+  circle: CIRCLE_BLUE_5,
+  alertCircle: ALERT_CIRCLE,
 
   //other
   nickName: 'var(--dark02)',
@@ -112,10 +141,13 @@ export const lightModeTheme = {
   schedule: 'var(--white)',
   scheduleText: 'var(--black)',
   meetingDropDown: 'var(--blue03)',
+  box: 'var(--gray03)',
   boxShadow: 'rgba(166, 196, 213, 0.57)',
   dot: 'var(--blue01)',
   percentBar: 'var(--blue04)',
   line: 'var(--blue02)',
+  input: 'var(--dark01)',
+  red: 'var(--red01)',
 };
 
 export const darkModeTheme = {
@@ -128,6 +160,9 @@ export const darkModeTheme = {
   theme06: 'var(--dark06)',
   theme07: 'var(--dark07)',
   theme08: 'var(--dark08)',
+  theme09: 'var(--dark03)',
+  theme10: 'var(--dark04)',
+  theme11: 'var(--dark08)',
 
   //text color
   text01: 'var(--dark01)',
@@ -136,9 +171,20 @@ export const darkModeTheme = {
   text04: 'var(--dark01)',
   text05: 'var(--dark08)',
   text06: 'var(--dark08)',
+  text07: 'var(--dark01)',
+  text08: 'var(--dark08)',
+  text09: 'var(--dark07)',
+  text10: 'var(--dark06)',
+  text11: 'var(--dark08)',
 
   //button color
   button01: 'var(--dark07)',
+  button02: 'var(--dark01)',
+  button03: 'var(--dark08)',
+
+  //modal
+  modalBg: 'var(--dark03)',
+  modalShadow: 'var(--dark01)',
 
   //img
   logo: LOGO_DARK,
@@ -171,6 +217,11 @@ export const darkModeTheme = {
   refreshIcon: REFRESH_CALENDAR_DARK,
   meetingAlarm: MEETING_ALARM_DARK,
   groupLeaderBadge: GROUP_LEADER_BADGE_DARK,
+  xCircle: X_CIRCLE_DARK,
+  check: INVITE_CHECK_DARK,
+  reject: INVITE_REJECT_DARK,
+  circle: CIRCLE_WHITE,
+  alertCircle: ALERT_CIRCLE_DARK,
 
   //other
   nickName: 'var(--dark07)',
@@ -181,8 +232,11 @@ export const darkModeTheme = {
   schedule: 'var(--dark05)',
   scheduleText: 'var(--dark07)',
   meetingDropDown: 'var(--dark07)',
+  box: 'var(--dark02)',
   boxShadow: 'rgba(22, 22, 22, 0.57)',
   dot: 'var(--yellow01)',
   percentBar: 'var(--dark06)',
   line: 'var(--gray02)',
+  input: 'var(--dark08)',
+  red: 'var(--red02)',
 };
