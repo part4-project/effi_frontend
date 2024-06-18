@@ -82,6 +82,8 @@ export const lightModeTheme = {
   text09: 'var(--gray06)',
   text10: 'var(--gray02)',
   text11: 'var(--gray01)',
+  text12: 'var(--blue01)',
+  text13: 'var(--gray01)',
 
   //button color
   button01: 'var(--blue02)',
@@ -142,6 +144,7 @@ export const lightModeTheme = {
   dot: 'var(--blue01)',
   percentBar: 'var(--blue04)',
   line: 'var(--blue02)',
+  hoverLine: 'var(--blue01)',
   input: 'var(--dark01)',
   red: 'var(--red01)',
 };
@@ -171,6 +174,8 @@ export const darkModeTheme = {
   text09: 'var(--dark07)',
   text10: 'var(--dark06)',
   text11: 'var(--dark08)',
+  text12: 'var(--gray01)',
+  text13: 'var(--dark01)',
 
   //button color
   button01: 'var(--dark07)',
@@ -231,6 +236,7 @@ export const darkModeTheme = {
   dot: 'var(--yellow01)',
   percentBar: 'var(--dark06)',
   line: 'var(--gray02)',
+  hoverLine: 'var(--gray02)',
   input: 'var(--dark08)',
   red: 'var(--red02)',
 };

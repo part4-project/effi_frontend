@@ -81,7 +81,7 @@ const S = {
     text-decoration: underline;
     &:hover {
       cursor: pointer;
-      color: #e74133;
+      color: ${(props) => props.theme.red};
     }
   `,
 };

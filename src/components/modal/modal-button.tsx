@@ -31,12 +31,20 @@ const S = {
             color: var(--dark08);
             background-color: ${theme.theme01};
             border: 1px solid transparent;
+            &:hover {
+              background-color: ${theme.theme02};
+            color: ${theme.text06};
+            }
             `;
         case 'secondary':
           return `
             background-color: var(--dark08);
             color: ${theme.theme01};
             border: 1px solid ${theme.text06};
+            &:hover {
+              background-color: ${theme.theme02};
+            color: ${theme.text06};
+            }
           `;
         case 'disable':
           return `
