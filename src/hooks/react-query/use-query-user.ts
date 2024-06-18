@@ -9,6 +9,7 @@ export const useUserQuery = () => {
   const query = useQuery({
     queryKey: [QUERY_KEY.userInfo],
     queryFn: async () => await userRequest.FetchUserData(),
+    gcTime: Infinity,
   });
   return query;
 };

@@ -1,6 +1,8 @@
 /* eslint-disable no-console */
 import { useEffect, useState } from 'react';
 import { MEETING_ROOM, TOPIC, GROUP_MEMBER } from '@constants/mockdata';
+import { useMeetingStore } from '@stores/meeting';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Chatting from './components/chatting';
 import ForceQuitToast from './components/force-quit-toast';
@@ -10,13 +12,17 @@ import RoomCamera from './components/room-camera';
 import Topics from './components/topics';
 import { ROOM_BUTTONS } from './constants';
 import useForceQuitToast from './hooks/use-force-quit-toast';
+import useHistoryBackBlock from './hooks/use-history-back-block';
+import useReloadBlock from './hooks/use-reload-block';
 
 const PARTICIPATED_MEMBER = [...GROUP_MEMBER.member_list];
 
 const MeetingRoom = () => {
+  const navigate = useNavigate();
   const [participatedMember, setParticipatedMember] = useState(PARTICIPATED_MEMBER);
   const [isMeetingFinished, setIsMeetingFinished] = useState(false);
   const { isToastOpen, handleToastChange, isToastAnimClose, handleToastClose } = useForceQuitToast();
+  const memberList = useMeetingStore((state) => state.memberList);
 
   const handleAddCamButtonClick = () => {
     setParticipatedMember([...participatedMember, { id: 1, name: '홍길동', is_admin: false }]);
@@ -37,6 +43,15 @@ const MeetingRoom = () => {
   useEffect(() => {
     if (isToastOpen && participatedMember.length !== 1) handleToastClose();
   }, [participatedMember.length, isToastOpen, handleToastClose]);
+
+  useEffect(() => {
+    if (memberList.length == 0) {
+      navigate('/meeting-loading');
+    }
+  });
+
+  useHistoryBackBlock(); // 뒤로가기 차단
+  useReloadBlock(); // 새로고침 차단
 
   return (
     <S.Container>
