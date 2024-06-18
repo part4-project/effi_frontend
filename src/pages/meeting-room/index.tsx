@@ -14,7 +14,6 @@ import { ROOM_BUTTONS } from './constants';
 import useForceQuitToast from './hooks/use-force-quit-toast';
 import useHistoryBackBlock from './hooks/use-history-back-block';
 import useReloadBlock from './hooks/use-reload-block';
-import { calculateDurationInSeconds } from './utils/calculate-duration-in-seconds';
 
 const PARTICIPATED_MEMBER = [...GROUP_MEMBER.member_list];
 
@@ -24,7 +23,7 @@ const MeetingRoom = () => {
   const [isMeetingFinished, setIsMeetingFinished] = useState(false);
   const { isToastOpen, handleToastChange, isToastAnimClose, handleToastClose } = useForceQuitToast();
   const memberList = useMeetingStore((state) => state.memberList);
-  console.log(memberList);
+
   const handleAddCamButtonClick = () => {
     setParticipatedMember([...participatedMember, { id: 1, name: '홍길동', is_admin: false }]);
   };

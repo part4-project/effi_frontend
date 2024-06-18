@@ -1,24 +1,22 @@
+import useTransformUser from '@hooks/use-transform-user';
 import { formatHoursAmPm } from '@pages/group-home/utils/format-hours-ampm';
+import { TChatSocketType } from '@pages/meeting-room/types';
 import styled from 'styled-components';
-import testProfile from '@/assets/profile-test-img.gif';
-
-interface ChattingListProps {
-  nickname: string;
-  chat: string;
-  sentTime: string;
-  type?: 'report-modal' | 'meeting-room';
-  //TODO: Profile 추가하기
+interface TChattingProp {
+  type: 'report-modal' | 'meeting-room';
+  socket: TChatSocketType;
 }
-
-const ChattingList = ({ nickname, chat, sentTime, type = 'report-modal' }: ChattingListProps) => {
+const ChattingList = ({ socket, type = 'report-modal' }: TChattingProp) => {
+  const chat = useTransformUser(socket);
+  if (!chat) return;
   return (
     <S.ChattingList>
-      <S.ChattingIcon src={testProfile} />
+      <S.ChattingIcon src={chat.profileImageUrl} alt="profile" />
       <S.ChattingBox>
-        <S.ChattingUserName>{nickname}</S.ChattingUserName>
-        <S.ChattingLog $type={type}>{chat}</S.ChattingLog>
+        <S.ChattingUserName>{chat.nickname}</S.ChattingUserName>
+        <S.ChattingLog $type={type}>{chat.message}</S.ChattingLog>
       </S.ChattingBox>
-      <S.ChattingSentTime>{formatHoursAmPm(sentTime)}</S.ChattingSentTime>
+      <S.ChattingSentTime>{chat.timeStamp}</S.ChattingSentTime>
     </S.ChattingList>
   );
 };

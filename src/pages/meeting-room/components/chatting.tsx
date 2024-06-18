@@ -1,25 +1,26 @@
 /* eslint-disable no-console */
 import ChattingList from '@components/meeting/chatting-list';
-import { CHAT } from '@constants/mockdata';
+import { SOCKET_TYPE } from '@constants/socket-type';
+import useChatSocket from '@hooks/socket/use-chat-socket';
 import styled from 'styled-components';
 import InputForm from './input-form';
 import useInputForm from '../hooks/use-input-form';
+import { TChatSocketType } from '../types';
 
 const Chatting = () => {
-  const { inputValue, handleSubmit, handleInputValueChange } = useInputForm(() => console.log('submitCb실행'));
+  const handleSendMessage = () => {
+    sendMessage(SOCKET_TYPE.CHAT, 'test');
+  };
+
+  const { inputValue, handleSubmit, handleInputValueChange } = useInputForm(handleSendMessage);
+  const { sendMessage, chatSocketList } = useChatSocket(1);
 
   return (
     <S.Container>
       <S.ChattingWrap>
         <S.ChattingContainer>
-          {CHAT.chat.map((chat) => (
-            <ChattingList
-              key={chat.id}
-              nickname={chat.nickname}
-              chat={chat.chat}
-              sentTime={chat.sentTime}
-              type="meeting-room"
-            />
+          {chatSocketList.map((chatSocket: TChatSocketType, idx) => (
+            <ChattingList key={idx} type="meeting-room" socket={chatSocket} />
           ))}
         </S.ChattingContainer>
       </S.ChattingWrap>
