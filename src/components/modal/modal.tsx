@@ -19,7 +19,6 @@ const Modal = ({ children, isOpen, onClose, headerTitle, isConfirmModal = false 
 
   const modalRef = useRef(null);
   useCloseModal(isOpen, onClose, modalRef);
-
   useEffect(() => {
     if (isOpen) {
       setShouldRender(true);
@@ -51,7 +50,7 @@ export default Modal;
 const fadeIn = keyframes`
   from {
     opacity: 0;
-    transform: translateY(-30px);
+    transform: translateY(-10px);
   }
   to {
     opacity: 1;
@@ -66,7 +65,7 @@ const fadeOut = keyframes`
   }
   to {
     opacity: 0;
-    transform: translateY(-30px);
+    transform: translateY(-10px);
   }
 `;
 
@@ -79,7 +78,7 @@ const S = {
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 100vh;
+    height: calc(100% + 10px);
     background: rgba(0, 0, 0, 0.6);
     animation: ${({ $isVisible }) => ($isVisible ? fadeIn : fadeOut)} 0.3s ease-in-out;
     z-index: ${zIndex.modal};
@@ -90,6 +89,7 @@ const S = {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
     margin: 24px;
     padding: 24px 34px;
     background: ${(props) => props.theme.modalBg};

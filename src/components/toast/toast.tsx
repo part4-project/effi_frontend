@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { zIndex } from '@styles/z-index';
-import styled from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 
 interface TToastProps {
   children: ReactNode;
@@ -16,12 +16,34 @@ function Toast({ children, show, error }: TToastProps) {
   );
 }
 
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+
+    }
+    to {
+      opacity: 0.8;
+      transform: translateY(0); 
+  }
+`;
+
+const fadeOut = keyframes`
+  from {
+    opacity: 0.8;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+`;
+
 const S = {
   Container: styled.div<{ $show: boolean; $error: boolean }>`
     position: fixed;
-    left: 50%;
+    left: calc(50% - 364px / 2);
     top: 70px;
-    transform: translateX(-50%);
     display: ${({ $show }) => ($show ? 'flex' : 'none')};
     align-items: center;
     justify-content: center;
@@ -33,6 +55,13 @@ const S = {
     z-index: ${zIndex.toast};
     border-radius: 10px;
     font-weight: bold;
+    ${({ $show }) =>
+      $show &&
+      css`
+        animation: ${css`
+          ${fadeIn} 0.2s ease-in-out, ${fadeOut} 0.2s 2.8s ease-in-out forwards
+        `};
+      `}
   `,
 };
 export default Toast;
