@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { TAxiosError } from '@api/axios';
 import meetingRequest from '@api/meeting/meeting-request';
 import { TMeetingCreateReq } from '@api/meeting/meeting-request.type';
