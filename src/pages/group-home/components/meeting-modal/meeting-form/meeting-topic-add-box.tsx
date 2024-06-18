@@ -52,5 +52,9 @@ const S = {
     font-size: 14px;
     font-weight: 700;
     padding: 10px;
+    &:hover {
+      background: ${(props) => props.theme.theme01};
+      color: var(--dark08);
+    }
   `,
 };
