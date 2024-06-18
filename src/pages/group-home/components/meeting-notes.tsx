@@ -1,4 +1,5 @@
-import { ChangeEvent, KeyboardEventHandler, useState } from 'react';
+import { ChangeEvent, KeyboardEventHandler, useEffect, useState } from 'react';
+import EmptyNotice from '@components/empty-notice';
 import { NOTES_DATAS } from '@constants/mockdata';
 import { TNoteItem } from '@constants/mockdata.type';
 import DateRangeCalendar from '@pages/group-home/components/date-range-calendar';
@@ -12,6 +13,7 @@ const MeetingNotes = () => {
   const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([null, null]);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [inputValue, setInputValue] = useState<string>('');
+  const [isSearching, setIsSearching] = useState(false);
 
   const filteredNotes = filteredNotesBySearchQuery(NOTES_DATAS, dateRange, searchQuery);
 
@@ -28,6 +30,14 @@ const MeetingNotes = () => {
       setSearchQuery(e.target.value);
     }
   };
+
+  useEffect(() => {
+    if (searchQuery) {
+      setIsSearching(true);
+    } else {
+      setIsSearching(false);
+    }
+  }, [searchQuery]);
 
   return (
     <S.Container>
@@ -50,7 +60,13 @@ const MeetingNotes = () => {
 
       <S.MeetingNotesLists>
         {filteredNotes.length === 0 ? (
-          <div>해당 조건의 회의록이 없습니다.</div>
+          <S.EmptyNoticeContaier>
+            <EmptyNotice>
+              {isSearching
+                ? '해당 조건의 리포트가 없습니다.'
+                : `회의 리포트가 없습니다.\n회의를 진행하고 기록을 남겨보세요!`}
+            </EmptyNotice>
+          </S.EmptyNoticeContaier>
         ) : (
           filteredNotes.map((note: TNoteItem) => (
             <S.MeetingNoteItem key={note.id}>
@@ -115,5 +131,10 @@ const S = {
     position: absolute;
     top: 18%;
     right: 4%;
+  `,
+  EmptyNoticeContaier: styled.div`
+    line-height: 22px; /* 137.5% */
+    height: 300px;
+    white-space: pre-line;
   `,
 };

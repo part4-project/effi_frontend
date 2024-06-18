@@ -1,3 +1,4 @@
+import EmptyNotice from '@components/empty-notice';
 import {
   useInvitedGroupAcceptMutation,
   useInvitedGroupQuery,
@@ -48,7 +49,9 @@ const InvitedList = () => {
             </S.InvitedGroup>
           ))
         ) : (
-          <S.EmptyInvitedGroup>초대받은 그룹이 없습니다!</S.EmptyInvitedGroup>
+          <S.EmptyNoticeContainer>
+            <EmptyNotice>초대받은 그룹이 없습니다!</EmptyNotice>
+          </S.EmptyNoticeContainer>
         )}
       </S.InvitedList>
     </S.Container>
@@ -157,12 +160,8 @@ const S = {
   RejectButton: styled.img`
     ${BaseButton}
   `,
-  EmptyInvitedGroup: styled.div`
+  EmptyNoticeContainer: styled.div`
     width: 100%;
     height: 143px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: ${(props) => props.theme.input};
   `,
 };

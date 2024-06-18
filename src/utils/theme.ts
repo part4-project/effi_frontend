@@ -8,6 +8,8 @@ import ALARM_DARK from '@assets/icons/alarm-dark.svg';
 import ALARM_EMPTY_DARK from '@assets/icons/alarm-empty-dark.svg';
 import ALARM_EMPTY from '@assets/icons/alarm-empty.svg';
 import ALARM from '@assets/icons/alarm.svg';
+import ALERT_CIRCLE_DARK from '@assets/icons/alert-circle-dark.svg';
+import ALERT_CIRCLE from '@assets/icons/alert-circle.svg';
 import ARROW_DOWN_DARK from '@assets/icons/arrow-down-dark.svg';
 import ARROW_DOWN from '@assets/icons/arrow-down.svg';
 import ARROW_RIGHT_DARK from '@assets/icons/arrow-right-dark.svg';
@@ -69,6 +71,7 @@ export const lightModeTheme = {
   theme08: 'var(--blue04)',
   theme09: 'var(--dark08)',
   theme10: 'var(--white)',
+  theme11: 'var(--blue03)',
 
   //text color
   text01: 'var(--white)',
@@ -129,6 +132,7 @@ export const lightModeTheme = {
   check: INVITE_CHECK,
   reject: INVITE_REJECT,
   circle: CIRCLE_BLUE_5,
+  alertCircle: ALERT_CIRCLE,
 
   //other
   nickName: 'var(--dark02)',
@@ -161,6 +165,7 @@ export const darkModeTheme = {
   theme08: 'var(--dark08)',
   theme09: 'var(--dark03)',
   theme10: 'var(--dark04)',
+  theme11: 'var(--dark08)',
 
   //text color
   text01: 'var(--dark01)',
@@ -221,6 +226,7 @@ export const darkModeTheme = {
   check: INVITE_CHECK_DARK,
   reject: INVITE_REJECT_DARK,
   circle: CIRCLE_WHITE,
+  alertCircle: ALERT_CIRCLE_DARK,
 
   //other
   nickName: 'var(--dark07)',
