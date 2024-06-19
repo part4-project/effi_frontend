@@ -1,15 +1,14 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
 import ChattingList from '@components/meeting/chatting-list';
 import { CHAT } from '@constants/mockdata';
+import { TChatSocketType } from '@pages/meeting-room/types';
 import styled from 'styled-components';
 
 const ReportChattingBox = () => {
   return (
     <S.Container>
       <S.ChattingLists>
-        {CHAT.chat.map((chat) => (
-          <ChattingList key={chat.id} nickname={chat.nickname} sentTime={chat.sentTime} chat={chat.chat} />
+        {CHAT.chat.map((chatSocket: TChatSocketType, idx) => (
+          <ChattingList key={idx} roomType="report-modal" socket={chatSocket} />
         ))}
       </S.ChattingLists>
     </S.Container>
@@ -34,5 +33,6 @@ const S = {
     flex-direction: column;
     padding: 20px;
     overflow: auto;
+    width: 100%;
   `,
 };
