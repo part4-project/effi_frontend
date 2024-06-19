@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import ProfileModalButton from '@components/modal/profile-modal/profile-modal-button';
 import { useUserNicknameUpdateMutation, useUserQuery } from '@hooks/react-query/use-query-user';
+import ProfileSkeleton from '@pages/nav-bar/components/profile-skeleton';
 import { createRandomNickName } from '@utils/createRandomNickname';
 import styled from 'styled-components';
 
@@ -14,7 +15,7 @@ const Profile = () => {
     }
   }, [isSuccess, userData, mutateAsync]);
 
-  if (isLoading) return 'Loading...';
+  if (isLoading) return <ProfileSkeleton />;
 
   if (isError) return 'Error...';
 

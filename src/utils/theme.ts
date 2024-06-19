@@ -151,6 +151,8 @@ export const lightModeTheme = {
   hoverLine: 'var(--blue01)',
   input: 'var(--dark01)',
   red: 'var(--red01)',
+  skeleton: 'var(--gray03)',
+  skeletonAnimation: 'var(--dark07)',
 };
 
 export const darkModeTheme = {
@@ -245,4 +247,6 @@ export const darkModeTheme = {
   hoverLine: 'var(--gray02)',
   input: 'var(--dark08)',
   red: 'var(--red02)',
+  skeleton: 'var(--dark07)',
+  skeletonAnimation: 'var(--gray03)',
 };

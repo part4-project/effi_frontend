@@ -12,7 +12,7 @@ const loading = keyframes`
 
 export const skeleton = css`
   position: relative;
-  background: #f2f2f2;
+  background: ${(props) => props.theme.skeleton};
   overflow: hidden;
 `;
 
@@ -23,6 +23,11 @@ export const skeletonAnimation = css`
   left: 0;
   width: 30px;
   height: 100%;
-  background: linear-gradient(to right, #f2f2f2, #ddd, #f2f2f2);
+  background: linear-gradient(
+    to right,
+    ${(props) => props.theme.skeleton},
+    ${(props) => props.theme.skeletonAnimation},
+    ${(props) => props.theme.skeleton}
+  );
   animation: ${loading} 2s infinite linear;
 `;
