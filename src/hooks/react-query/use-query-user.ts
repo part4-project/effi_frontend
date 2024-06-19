@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { TAxiosError } from '@api/axios';
 import userRequest from '@api/user/user-request';
 import { QUERY_KEY } from '@constants/query-key';
