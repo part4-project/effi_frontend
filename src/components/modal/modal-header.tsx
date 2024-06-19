@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import styled, { useTheme } from 'styled-components';
-import xCircle from '@/assets/icons/x-circle.svg';
+// import xCircle from '@/assets/icons/x-circle.svg';
 
 interface ReportHeaderProps {
   headerTitle?: string;
