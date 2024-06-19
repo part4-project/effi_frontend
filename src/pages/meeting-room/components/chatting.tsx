@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useEffect, useRef } from 'react';
 import ChattingList from '@components/meeting/chatting-list';
 import { SOCKET_TYPE } from '@constants/socket-type';

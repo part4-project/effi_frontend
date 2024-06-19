@@ -1,5 +1,6 @@
 import { TGroupFetchInfo } from '@api/group/group-request.type';
 import { useGroupQuery } from '@hooks/react-query/use-query-group';
+import GroupListSkeleton from '@pages/side-bar/components/group-list-skeleton';
 import { useGroupStore } from '@stores/group';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -18,7 +19,7 @@ const GroupList = () => {
     navigate('/group-home');
   };
 
-  if (isLoading) return 'Loading...';
+  if (isLoading) return <GroupListSkeleton />;
 
   if (isError) return 'Error...';
 
