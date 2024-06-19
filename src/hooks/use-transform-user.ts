@@ -1,9 +1,14 @@
 import { TGroupFetchMemberInfo } from '@api/group/group-request.type';
 import { TChatSocketType } from '@pages/meeting-room/types';
+import { useGroupStore } from '@stores/group';
 import { useMeetingStore } from '@stores/meeting';
+import { useGroupMemberQuery } from './react-query/use-query-group';
 
 const useTransformUser = (socketMsg: TChatSocketType) => {
-  const memberList = useMeetingStore((state) => state.memberList);
+  //const memberList = useMeetingStore((state) => state.memberList);
+  const {
+    data: { memberList },
+  } = useGroupMemberQuery(useGroupStore((state) => state.groupId));
   const member = memberList.find((member: TGroupFetchMemberInfo) => socketMsg.userId == member.id);
   let memberChat;
   if (member) {

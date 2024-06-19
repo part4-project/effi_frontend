@@ -40,6 +40,7 @@ export const DateSetUpMock = (initialDate: string) => {
 //처음과 끝 사이의 시간 구하기
 export const TimeCalculate = (startDate: Date, endDate: Date) => {
   if (endDate.getTime() - startDate.getTime() <= 0) {
+    console.log(startDate, endDate);
     return { hour: 0, minute: 0, second: 0 };
   }
 
