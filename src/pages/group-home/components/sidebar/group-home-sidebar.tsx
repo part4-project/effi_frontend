@@ -30,6 +30,7 @@ const GroupHomeSideBar = ({ isAdmin }: TGroupHomeSideBarProps) => {
       <S.GroupMemberLists>
         {groupData!.memberList.map((member: TGroupFetchMemberInfo) => (
           <S.GroupMemberList key={member.id}>
+            <S.MemberProfileImage src={member.profileImageUrl} />
             <span>{member.nickname}</span>
             {member.admin && <S.AdminIcon src={theme.groupLeaderBadge} />}
           </S.GroupMemberList>
@@ -47,7 +48,7 @@ const S = {
   Container: styled.div`
     background-color: ${(props) => props.theme.theme06};
     border-left: 4px solid ${(props) => props.theme.theme03};
-    width: 180px;
+    width: 240px;
     padding: 33px 28px;
     position: relative;
     border-radius: 0 20px 20px 0;
@@ -65,6 +66,13 @@ const S = {
     display: flex;
     align-items: center;
     gap: 6px;
+  `,
+
+  MemberProfileImage: styled.img`
+    width: 20px;
+    height: 20px;
+    border: 1px solid var(--gray02);
+    border-radius: 50px;
   `,
 
   AdminIcon: styled.img`
