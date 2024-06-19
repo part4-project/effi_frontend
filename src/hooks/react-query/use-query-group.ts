@@ -1,13 +1,13 @@
 /* eslint-disable no-console */
 import { TAxiosError } from '@api/axios';
 import groupRequest from '@api/group/group-request';
-import { TInvitedGroupFetchRes } from '@api/group/group-request.type';
+import { TGroupFetchInfo, TInvitedGroupFetchRes } from '@api/group/group-request.type';
 import { QUERY_KEY } from '@constants/query-key';
 import { useToast } from '@hooks/use-toast';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 export const useGroupQuery = () => {
-  const query = useQuery({
+  const query = useQuery<TGroupFetchInfo[], Error>({
     queryKey: [QUERY_KEY.groupList],
     queryFn: async () => await groupRequest.fetchGroup(),
   });

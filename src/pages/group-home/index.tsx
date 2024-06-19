@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { TGroupFetchMemberInfo } from '@api/group/group-request.type';
 import { TUserInfoRes } from '@api/user/user-request.type';
 import { MY_SCHEDULE_LIST } from '@constants/mockdata';
@@ -13,22 +14,27 @@ import { navBarHeight } from '@styles/subsection-size';
 import { useQueryClient } from '@tanstack/react-query';
 import styled from 'styled-components';
 import AdminHOC from './components/admin-hoc';
+import GroupHomeSidebarSkeleton from './components/skeleton/group-home-sidebar-skeleton';
 
 const GroupHome = () => {
   const { data: groupData, isError, isLoading } = useGroupMemberQuery(useGroupStore((state) => state.groupId));
   const userInfo = useQueryClient().getQueryData<TUserInfoRes>([QUERY_KEY.userInfo]);
-
-  if (isLoading) return 'Loading...';
-  if (isError) return 'Error...';
-
+  const [isAdmin, setIsAdmin] = useState(false);
   const scheduledMeeting = MY_SCHEDULE_LIST[0];
   const isOnLive = true;
-  const { id: adminId } = groupData.memberList.find((data: TGroupFetchMemberInfo) => data.admin);
-  const isAdmin = adminId == userInfo?.id;
+
+  useEffect(() => {
+    if (!isLoading) {
+      const { id: adminId } = groupData.memberList.find((data: TGroupFetchMemberInfo) => data.admin);
+      setIsAdmin(adminId == userInfo?.id);
+    }
+  }, [isLoading, userInfo, groupData]);
+
+  if (isError) return 'Error...';
 
   return (
     <S.Container>
-      <GroupHomeSideBar isAdmin={isAdmin} />
+      {isLoading ? <GroupHomeSidebarSkeleton /> : <GroupHomeSideBar isAdmin={isAdmin} />}
       <S.GroupHomeMain>
         {isAdmin && <GroupHomeHeader />}
         <Meetings isOnLive={isOnLive} isAdmin={isAdmin} scheduledMeeting={scheduledMeeting} />
