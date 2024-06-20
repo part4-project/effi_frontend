@@ -7,12 +7,10 @@ interface RoomCameraProps {
   name: string;
 }
 
-const RoomCamera = ({ cameraCount, name, videoElement }: RoomCameraProps) => {
-  console.log(videoElement);
+const RoomCamera = ({ cameraCount, name }: RoomCameraProps) => {
   return (
     <S.Container $cameraCount={cameraCount}>
-      {/* <S.Video src="" /> */}
-      {videoElement}
+      <S.Video src="" />
       <S.Name>{name}</S.Name>
     </S.Container>
   );
@@ -42,8 +40,7 @@ const S = {
     border-radius: 10px;
     background-color: var(--black);
   `,
-  Name: styled.span`
-    color: red;
+  Name: styled.p`
     position: absolute;
     background-color: #212322;
     padding: 5px 10px;

@@ -8,7 +8,6 @@ import Participant from '@pages/kurento-service/utils/kurento-service';
 import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import RoomCamera from './room-camera';
 
 const KurentoCameras = () => {
   const [cameraCnt, setCameraCnt] = useState(1);
