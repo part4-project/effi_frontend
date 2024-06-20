@@ -15,7 +15,7 @@ const KurentoService = () => {
   const userInfo = useQueryClient().getQueryData<TUserInfoRes>([QUERY_KEY.userInfo]);
   console.log(userInfo.id);
   let userId = userInfo.id;
-  let roomId = 1211231131387;
+  let roomId = 121123187;
   const ws = useRef(null);
   const participants = {};
 
