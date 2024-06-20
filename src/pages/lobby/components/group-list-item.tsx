@@ -11,7 +11,7 @@ const GroupListItem = ({ groupName, onClick, groupNameLength }: GroupListItemPro
   return (
     <MeetingModalButton title="회의 생성">
       <S.Container $groupNameLength={groupNameLength} onClick={onClick}>
-        <S.FileImg>{groupName} </S.FileImg>
+        <S.FileImg>{groupName}</S.FileImg>
       </S.Container>
     </MeetingModalButton>
   );
@@ -32,12 +32,13 @@ const S = {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--white);
+    color: ${(props) => props.theme.text01};
     font-size: 20px;
     font-weight: 900;
-    background-color: var(--blue04);
+    background-color: ${(props) => props.theme.theme08};
     &:hover {
-      background-color: var(--blue01);
+      background-color: ${(props) => props.theme.theme01};
+      color: ${(props) => props.theme.quickButtonHover};
     }
     &::before {
       content: '';
@@ -46,7 +47,7 @@ const S = {
       left: 0;
       width: 30px;
       aspect-ratio: 1 / 1;
-      background: linear-gradient(315deg, var(--blue02) 50%, transparent 50%);
+      background: linear-gradient(315deg, ${(props) => props.theme.theme02} 50%, transparent 50%);
     }
   `,
 };

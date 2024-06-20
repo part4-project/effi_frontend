@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { useGroupStore } from '@stores/group';
 import { navBarHeight } from '@styles/subsection-size';
 import styled from 'styled-components';
 import MakeMeetingButton from './components/make-meeting-button';
@@ -5,6 +7,12 @@ import ScheduleCalendar from './components/schedule-calendar';
 import UserInfoButton from './components/user-info-button';
 
 const Lobby = () => {
+  const initGroupId = useGroupStore((state) => state.initGroupId);
+
+  useEffect(() => {
+    initGroupId(); // 로비로 오면 활성화된 그룹 효과 제거
+  });
+
   return (
     <S.LobbyPageWrapper>
       <S.ButtonBox>
@@ -23,7 +31,7 @@ export default Lobby;
 const S = {
   LobbyPageWrapper: styled.div`
     width: 100%;
-    background: var(--blue02);
+    background: ${(props) => props.theme.theme02};
     padding: 52px 77px;
     display: flex;
     height: calc(100vh - ${navBarHeight.desktop});

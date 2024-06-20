@@ -1,7 +1,6 @@
 import { FormEvent, useEffect } from 'react';
 import refreshIcon from '@assets/icons/refresh.svg';
 import { useUserQuery, useUserNicknameUpdateMutation } from '@hooks/react-query/use-query-user';
-import { useToast } from '@hooks/use-toast';
 import useValidateText from '@hooks/use-validate-text';
 import { createRandomNickName } from '@utils/createRandomNickname';
 import styled, { css } from 'styled-components';
@@ -10,7 +9,6 @@ const NicknameInput = () => {
   const nickNameUpdate = useUserNicknameUpdateMutation();
   const { data: userData } = useUserQuery();
   const { inputValue, setInputValue, errorMessage, handleInputChange } = useValidateText(2, 7);
-  const { toast } = useToast();
 
   const handleNicknameRefreshButtonClick = () => {
     const newNickName = createRandomNickName();
@@ -19,14 +17,7 @@ const NicknameInput = () => {
 
   const handleNickNameSaveButtonClick = (e: FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    nickNameUpdate.mutate(inputValue, {
-      onSuccess: () => {
-        toast('닉네임이 저장 되었습니다.');
-      },
-      onError: () => {
-        toast('닉네임 저장에 실패했습니다.');
-      },
-    });
+    nickNameUpdate.mutate(inputValue);
   };
 
   useEffect(() => {
@@ -77,7 +68,7 @@ const S = {
   NicknameLabel: styled.label`
     font-size: 16px;
     font-weight: bold;
-    color: var(--blue05);
+    color: ${(props) => props.theme.text08};
   `,
 
   NicknameRefreshButton: styled.img`
@@ -94,6 +85,8 @@ const S = {
   `,
 
   NicknameInput: styled.input`
+    background: ${(props) => props.theme.modalBg};
+    color: ${(props) => props.theme.input};
     font-size: 16px;
     font-weight: bold;
     padding: 12px 10px;
@@ -110,10 +103,12 @@ const S = {
     padding: 6px 10px;
     border-radius: 4px;
     font-size: 12px;
-    color: var(--white);
-    background-color: var(--blue01);
+    font-weight: 600;
+    color: ${(props) => props.theme.text07};
+    background-color: ${(props) => props.theme.button03};
     &:hover {
-      background-color: var(--blue04);
+      color: ${(props) => props.theme.text06};
+      background-color: ${(props) => props.theme.theme04};
     }
     ${(props) =>
       props.disabled &&

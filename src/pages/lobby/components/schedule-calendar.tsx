@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import EmptyNotice from '@components/empty-notice';
 import { MY_SCHEDULE_LIST } from '@constants/mockdata';
 import { ko } from 'date-fns/locale';
 import DatePicker from 'react-datepicker';
@@ -6,7 +7,6 @@ import 'react-datepicker/dist/react-datepicker.css';
 import styled from 'styled-components';
 import DropDownBox from './dropdown-box';
 import ScheduleListItem from './schedule-list-item';
-import { useCalendarDropdown } from '../hooks/use-calendar-dropdown';
 import { ScheduleList } from '../types/type';
 import { addScheduleDot } from '../utils/add-schedule-dot';
 import { filterSchedule } from '../utils/filter-schedule';
@@ -18,42 +18,10 @@ const ScheduleCalendar = () => {
     filterSchedule(MY_SCHEDULE_LIST, selectedDate),
   );
   const [currMonth, setCurrMonth] = useState(new Date().getMonth() + 1);
-  const { isDropdownOpen, handleDropdownOpen, handleDropdownClose } = useCalendarDropdown();
-
-  const handleCalendarReset = () => {
-    if (selectedDate) {
-      setSelectedDate(null);
-      setFilterdScheduleList([]);
-    }
-  };
-
-  const handleCalendarOutsideClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    if (ref.current && !ref.current.contains(e.target as Node)) {
-      handleCalendarReset();
-    }
-  };
 
   useEffect(() => {
     addScheduleDot(MY_SCHEDULE_LIST);
   }, [currMonth]);
-
-  useEffect(() => {
-    if (filterdScheduleList.length) return handleDropdownOpen();
-    return handleDropdownClose();
-  }, [filterdScheduleList, handleDropdownOpen, handleDropdownClose]);
-
-  useEffect(() => {
-    const navigationButtons = document.querySelectorAll('.react-datepicker__navigation');
-    navigationButtons.forEach((button) => {
-      button.addEventListener('click', handleCalendarReset);
-    });
-
-    return () => {
-      navigationButtons.forEach((button) => {
-        button.removeEventListener('click', handleCalendarReset);
-      });
-    };
-  }, []);
 
   return (
     <S.Container ref={ref}>
@@ -67,15 +35,25 @@ const ScheduleCalendar = () => {
           setFilterdScheduleList(filterSchedule(MY_SCHEDULE_LIST, date));
         }}
         onMonthChange={(date) => setCurrMonth(date.getMonth() + 1)}
-        onClickOutside={handleCalendarOutsideClick}
         inline
         showDisabledMonthNavigation
         autoFocus={false}
       />
-      <DropDownBox type="schedule-calendar" isDropdownOpen={isDropdownOpen}>
-        {filterdScheduleList.map((schedule, idx) => (
-          <ScheduleListItem key={idx} groupId={schedule.id} groupName={schedule.group} meetingTitle={schedule.title} />
-        ))}
+      <DropDownBox type="schedule-calendar" isDropdownOpen={true}>
+        {filterdScheduleList.length ? (
+          filterdScheduleList.map((schedule) => (
+            <ScheduleListItem
+              key={schedule.id}
+              groupId={schedule.id}
+              groupName={schedule.group}
+              meetingTitle={schedule.title}
+            />
+          ))
+        ) : (
+          <S.EmptyNoticeContainer>
+            <EmptyNotice borderType="none">금일 스케줄이 없습니다.</EmptyNotice>
+          </S.EmptyNoticeContainer>
+        )}
       </DropDownBox>
     </S.Container>
   );
@@ -95,7 +73,7 @@ const S = {
       padding: 10% 8%;
       font-family: 'Pretendard';
       font-size: 16px;
-      background-color: var(--white);
+      background-color: ${(props) => props.theme.schedule};
       border: none;
       border-radius: 10px;
     }
@@ -123,7 +101,7 @@ const S = {
     .react-datepicker-time__header,
     .react-datepicker-year-header {
       margin-top: 0;
-      color: var(--black);
+      color: ${(props) => props.theme.scheduleText};
       font-weight: 700;
       font-size: 24px;
       margin-bottom: 0;
@@ -131,7 +109,7 @@ const S = {
 
     .react-datepicker__header {
       text-align: start;
-      background-color: var(--white);
+      background-color: ${(props) => props.theme.schedule};
       border-bottom: none;
       border-top-left-radius: 0.3rem;
       padding: 0;
@@ -188,10 +166,8 @@ const S = {
     .react-datepicker__day-name,
     .react-datepicker__day,
     .react-datepicker__time-name {
-      color: var(--black);
+      color: ${(props) => props.theme.scheduleText};
       display: inline-block;
-      width: 32px;
-      height: 32px;
       line-height: center;
       text-align: center;
       margin: 0;
@@ -208,7 +184,7 @@ const S = {
     .react-datepicker__quarter-text:hover,
     .react-datepicker__year-text:hover {
       border-radius: 100%;
-      background-color: var(--blue02);
+      background-color: ${(props) => props.theme.theme02};
     }
 
     .react-datepicker__day--selected:hover,
@@ -223,7 +199,7 @@ const S = {
     .react-datepicker__year-text--selected:hover,
     .react-datepicker__year-text--in-selecting-range:hover,
     .react-datepicker__year-text--in-range:hover {
-      background-color: var(--blue01);
+      background-color: ${(props) => props.theme.theme01};
     }
 
     .react-datepicker__day--selected,
@@ -239,8 +215,8 @@ const S = {
     .react-datepicker__year-text--in-selecting-range,
     .react-datepicker__year-text--in-range {
       border-radius: 100%;
-      background-color: var(--blue01);
-      color: var(--white);
+      background-color: ${(props) => props.theme.text02};
+      color: ${(props) => props.theme.schedule};
     }
 
     .react-datepicker__day--keyboard-selected,
@@ -248,12 +224,12 @@ const S = {
     .react-datepicker__quarter-text--keyboard-selected,
     .react-datepicker__year-text--keyboard-selected {
       border-radius: 100%;
-      background-color: var(--white);
+      background-color: ${(props) => props.theme.schedule};
     }
 
     .dot-container {
       position: absolute;
-      top: 120%;
+      top: calc(50% + 20px);
       left: 50%;
       transform: translate(-50%, -50%);
       display: flex;
@@ -263,8 +239,11 @@ const S = {
     .dot {
       width: 4px;
       height: 4px;
-      background-color: var(--blue01);
+      background-color: ${(props) => props.theme.dot};
       border-radius: 100%;
     }
+  `,
+  EmptyNoticeContainer: styled.div`
+    height: 15vh;
   `,
 };

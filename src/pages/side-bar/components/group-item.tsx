@@ -1,41 +1,37 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { TGroupFetchInfo } from '@api/group/group-request.type';
-import GroupBg from '@assets/group-bg.svg';
 import { device } from '@styles/breakpoints';
 import { zIndex } from '@styles/z-index';
-import styled from 'styled-components';
+import styled, { css, useTheme } from 'styled-components';
 
 interface GroupItemProp extends TGroupFetchInfo {
+  selectGroupId?: number;
   type?: 'side-bar' | 'calendar';
 }
 
-const GroupItem: React.FC<GroupItemProp> = ({ groupName, type = 'side-bar' }) => {
+const GroupItem: React.FC<GroupItemProp> = ({ selectGroupId, groupId, groupName, type = 'side-bar' }) => {
+  const theme = useTheme();
   const groupItemRef = useRef<HTMLDivElement>(null);
   const [isOverFlowText, setIsOverFlowText] = useState<boolean>(false);
+  const isSelect = selectGroupId == groupId;
 
-  useEffect(() => {
+  //img onload 사용해 실행
+  const checkOverflow = () => {
     // 뒷배경보다 텍스트 길이가 긴지 체크
-    const checkOverflow = () => {
-      if (groupItemRef.current) {
-        const roomName = groupItemRef.current.querySelector('div');
-        const bgImg = groupItemRef.current.querySelector('img');
-        if (roomName && bgImg) {
-          const isOverflowing = roomName.scrollWidth > bgImg.scrollWidth;
-          setIsOverFlowText(isOverflowing);
-        }
+    if (groupItemRef.current) {
+      const roomName = groupItemRef.current.querySelector('div');
+      const bgImg = groupItemRef.current.querySelector('img');
+      if (roomName && bgImg) {
+        const isOverflowing = roomName.scrollWidth > bgImg.scrollWidth;
+        setIsOverFlowText(isOverflowing);
       }
-    };
-    checkOverflow();
-    window.addEventListener('resize', checkOverflow);
-    return () => {
-      window.removeEventListener('resize', checkOverflow);
-    };
-  }, [isOverFlowText]);
+    }
+  };
 
   return (
     <S.Trigger>
-      <S.GroupItem ref={groupItemRef}>
-        <img src={GroupBg} alt="groupImg" />
+      <S.GroupItem ref={groupItemRef} $isSelect={isSelect}>
+        <img src={theme.groupBg} alt="groupImg" onLoad={checkOverflow} />
         <S.GroupName $isOverFlowText={isOverFlowText}>{groupName}</S.GroupName>
       </S.GroupItem>
       {type === 'side-bar' && <S.Balloon>{groupName}</S.Balloon>}
@@ -46,10 +42,16 @@ const GroupItem: React.FC<GroupItemProp> = ({ groupName, type = 'side-bar' }) =>
 export default GroupItem;
 
 const S = {
-  GroupItem: styled.div`
+  GroupItem: styled.div<{ $isSelect: boolean }>`
+    cursor: pointer;
     position: relative;
-    border-radius: 10%;
+    border-radius: 10px;
     overflow: hidden;
+    ${({ $isSelect }) =>
+      $isSelect &&
+      css`
+        border: 2px solid ${(props) => props.theme.theme01};
+      `}
   `,
   GroupName: styled.div<{ $isOverFlowText: boolean }>`
     position: absolute;
@@ -57,9 +59,9 @@ const S = {
     left: 50%;
     transform: translate3d(-50%, -50%, 0);
     white-space: nowrap;
-    color: var(--blue01);
+    color: ${(props) => props.theme.theme01};
     font-weight: 900;
-    font-size: ${({ $isOverFlowText }) => ($isOverFlowText ? '10px' : '16px')};
+    font-size: ${({ $isOverFlowText }) => ($isOverFlowText ? '12px' : '16px')};
     @media ${device.tablet} {
       font-size: ${({ $isOverFlowText }) => ($isOverFlowText ? '8px' : '12px')};
     }
@@ -85,7 +87,7 @@ const S = {
     top: 50%;
     left: 130%;
     transform: translate3d(0, -50%, 0);
-    background: var(--blue01);
+    background: ${(props) => props.theme.theme01};
     color: var(--white);
     font-size: 14px;
     border-radius: 10px;
@@ -99,7 +101,7 @@ const S = {
       content: '';
       width: 14px;
       height: 13px;
-      background: url('/polygon-left.svg');
+      background: url('${(props) => props.theme.polygonLeft}');
       position: absolute;
       top: 50%;
       left: -4px;

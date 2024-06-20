@@ -59,7 +59,7 @@ const S = {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: ${({ $isMeetingData }) => ($isMeetingData ? 'var(--blue01)' : 'var(--gray01)')};
+    background-color: ${({ $isMeetingData, theme }) => ($isMeetingData ? theme.theme01 : 'var(--gray01)')};
     border-radius: 10px;
     font-size: 20px;
     font-weight: 900;

@@ -28,15 +28,6 @@ const Topic = ({ isCompleted, topicName, onClick, type = 'report-modal' }: Topic
 export default Topic;
 
 const S = {
-  TopicAgenda: styled.p<{ $type: TopicProps['type'] }>`
-    background: ${({ $type }) => ($type === 'meeting-room' ? '#4D4F4E' : 'var(--white)')};
-    color: ${({ $type }) => ($type === 'meeting-room' ? '#9d9d9d' : 'var(--gray05)')};
-    font-size: 20px;
-    font-weight: 900;
-    line-height: 35px;
-    border-bottom: 1px solid ${({ $type }) => ($type === 'meeting-room' ? '#6F706F' : 'var(--gray03)')};
-    padding-bottom: 10px;
-  `,
   TopicList: styled.li<{ $type: string }>`
     display: flex;
     align-items: center;
@@ -44,10 +35,10 @@ const S = {
     margin-top: 8px;
     margin-right: 8px;
     padding: 4px;
-    border-bottom: 2px solid ${({ $type }) => ($type === 'meeting-room' ? '#6F706F' : 'var(--gray03)')};
+    border-bottom: 2px solid ${({ $type, theme }) => ($type === 'meeting-room' ? '#6F706F' : theme.box)};
   `,
   TopicInCompleted: styled.div<{ $isCompleted: boolean; $type: TopicProps['type'] }>`
-    background-color: ${({ $isCompleted }) => ($isCompleted ? 'var(--blue01)' : 'none')};
+    background-color: ${({ $isCompleted, theme }) => ($isCompleted ? theme.text02 : 'none')};
     border: ${({ $isCompleted }) => ($isCompleted ? 'none' : '2px solid var(--gray07)')};
     cursor: ${({ $type }) => ($type === 'meeting-room' ? 'pointer' : 'auto')};
     width: 25px;
@@ -65,7 +56,7 @@ const S = {
   `,
   TopicTitle: styled.p<{ $type: TopicProps['type'] }>`
     flex-grow: 1;
-    color: ${({ $type }) => ($type === 'meeting-room' ? 'var(--gray01)' : '#091a37')};
+    color: ${({ $type, theme }) => ($type === 'meeting-room' ? 'var(--gray01)' : theme.text11)};
     font-weight: 700;
     line-height: 28px;
     letter-spacing: -0.6px;

@@ -1,15 +1,23 @@
-import groupLeaderBadge from '@assets/icons/group-leader-badge.svg';
-import { GROUP_MEMBER } from '@constants/mockdata';
+import { TGroupFetchMemberInfo, TGroupMemberFetchRes } from '@api/group/group-request.type';
+import { QUERY_KEY } from '@constants/query-key';
 import GroupNameInput from '@pages/group-home/components/sidebar/group-name-input';
+import { useGroupStore } from '@stores/group';
+import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 
 interface TGroupHomeSideBarProps {
   isAdmin: boolean;
 }
 
 const GroupHomeSideBar = ({ isAdmin }: TGroupHomeSideBarProps) => {
+  const theme = useTheme();
   const navigate = useNavigate();
+
+  const groupData = useQueryClient().getQueryData<TGroupMemberFetchRes>([
+    QUERY_KEY.groupInfo,
+    useGroupStore((state) => state.groupId),
+  ]);
 
   const handleLeaveGroupButtonClick = () => {
     navigate('/');
@@ -17,13 +25,14 @@ const GroupHomeSideBar = ({ isAdmin }: TGroupHomeSideBarProps) => {
 
   return (
     <S.Container>
-      <GroupNameInput isAdmin={isAdmin} />
+      <GroupNameInput groupName={groupData!.groupName} groupCode={groupData!.code} isAdmin={isAdmin} />
 
       <S.GroupMemberLists>
-        {GROUP_MEMBER.member_list.map((member) => (
+        {groupData!.memberList.map((member: TGroupFetchMemberInfo) => (
           <S.GroupMemberList key={member.id}>
-            <span>{member.name}</span>
-            {member.is_admin && <S.AdminIcon src={groupLeaderBadge} />}
+            <S.MemberProfileImage src={member.profileImageUrl} />
+            <span>{member.nickname}</span>
+            {member.admin && <S.AdminIcon src={theme.groupLeaderBadge} />}
           </S.GroupMemberList>
         ))}
       </S.GroupMemberLists>
@@ -37,13 +46,13 @@ export default GroupHomeSideBar;
 
 const S = {
   Container: styled.div`
-    background-color: var(--white);
-    border-left: 4px solid var(--blue03);
-    width: 180px;
+    background-color: ${(props) => props.theme.theme06};
+    border-left: 4px solid ${(props) => props.theme.theme03};
+    width: 240px;
     padding: 33px 28px;
     position: relative;
     border-radius: 0 20px 20px 0;
-    color: var(--gray06);
+    color: ${(props) => props.theme.text05};
   `,
 
   GroupMemberLists: styled.ul`
@@ -59,13 +68,20 @@ const S = {
     gap: 6px;
   `,
 
+  MemberProfileImage: styled.img`
+    width: 20px;
+    height: 20px;
+    border: 1px solid var(--gray02);
+    border-radius: 50px;
+  `,
+
   AdminIcon: styled.img`
     width: 14px;
   `,
 
   LeaveGroupButton: styled.button`
-    background-color: var(--blue02);
-    color: var(--blue01);
+    background-color: ${(props) => props.theme.button01};
+    color: ${(props) => props.theme.theme01};
     font-size: 12px;
     font-weight: bold;
     width: 125px;

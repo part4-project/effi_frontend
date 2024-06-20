@@ -21,9 +21,10 @@ const S = {
     padding: 10px;
   `,
   StyledTitleInput: styled.input`
+    background: ${(props) => props.theme.modalBg};
     font-size: 32px;
     font-weight: 700;
     line-height: 35px;
-    color: var(--blue05);
+    color: ${(props) => props.theme.text08};
   `,
 };

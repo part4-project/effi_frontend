@@ -36,21 +36,25 @@ const S = {
     height: 40px;
     border-radius: 5px;
     border: 1px solid var(--gray01);
-    background: #fafafa;
+    background-color: ${(props) => props.theme.theme07};
     padding: 10px 15px;
 
     &::placeholder {
-      color: var(--gray02);
+      color: ${(props) => props.theme.text10};
     }
   `,
   TopicAddButton: styled.button`
     width: 25%;
     height: 40px;
     border-radius: 5px;
-    background: var(--blue02);
-    color: var(--blue01);
+    background: ${(props) => props.theme.theme02};
+    color: ${(props) => props.theme.text06};
     font-size: 14px;
     font-weight: 700;
     padding: 10px;
+    &:hover {
+      background: ${(props) => props.theme.theme01};
+      color: var(--dark08);
+    }
   `,
 };

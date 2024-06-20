@@ -1,16 +1,19 @@
-import { ChangeEvent, KeyboardEventHandler, useState } from 'react';
-import SearchIcon from '@assets/icons/search.svg';
+import { ChangeEvent, KeyboardEventHandler, useEffect, useState } from 'react';
+import EmptyNotice from '@components/empty-notice';
 import { NOTES_DATAS } from '@constants/mockdata';
 import { TNoteItem } from '@constants/mockdata.type';
 import DateRangeCalendar from '@pages/group-home/components/date-range-calendar';
 import MeetingNoteItem from '@pages/group-home/components/meeting-note-item';
 import { filteredNotesBySearchQuery } from '@pages/group-home/utils/date-range-filter';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 
 const MeetingNotes = () => {
+  const theme = useTheme();
+
   const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([null, null]);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [inputValue, setInputValue] = useState<string>('');
+  const [isSearching, setIsSearching] = useState(false);
 
   const filteredNotes = filteredNotesBySearchQuery(NOTES_DATAS, dateRange, searchQuery);
 
@@ -28,6 +31,14 @@ const MeetingNotes = () => {
     }
   };
 
+  useEffect(() => {
+    if (searchQuery) {
+      setIsSearching(true);
+    } else {
+      setIsSearching(false);
+    }
+  }, [searchQuery]);
+
   return (
     <S.Container>
       <S.MeetingNotesHeader>
@@ -42,14 +53,20 @@ const MeetingNotes = () => {
             onKeyDown={handleSearch}
           />
           <S.NotesSearchIcon>
-            <img src={SearchIcon} alt="search" />
+            <img src={theme.search} alt="search" />
           </S.NotesSearchIcon>
         </S.NotesSearchBarBox>
       </S.MeetingNotesHeader>
 
       <S.MeetingNotesLists>
         {filteredNotes.length === 0 ? (
-          <div>해당 조건의 회의록이 없습니다.</div>
+          <S.EmptyNoticeContaier>
+            <EmptyNotice>
+              {isSearching
+                ? '해당 조건의 리포트가 없습니다.'
+                : `회의 리포트가 없습니다.\n회의를 진행하고 기록을 남겨보세요!`}
+            </EmptyNotice>
+          </S.EmptyNoticeContaier>
         ) : (
           filteredNotes.map((note: TNoteItem) => (
             <S.MeetingNoteItem key={note.id}>
@@ -94,7 +111,7 @@ const S = {
       width: 8px;
     }
     &::-webkit-scrollbar-thumb {
-      background-color: var(--blue04);
+      background-color: ${(props) => props.theme.theme08};
       border-radius: 50px;
     }
     &::-webkit-scrollbar-track {
@@ -114,5 +131,10 @@ const S = {
     position: absolute;
     top: 18%;
     right: 4%;
+  `,
+  EmptyNoticeContaier: styled.div`
+    line-height: 22px; /* 137.5% */
+    height: 300px;
+    white-space: pre-line;
   `,
 };

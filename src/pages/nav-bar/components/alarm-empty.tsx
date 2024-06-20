@@ -1,12 +1,13 @@
-import AlarmEmptyIcon from '@assets/icons/alarm-empty.svg';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 
 const AlarmEmpty = () => {
+  const theme = useTheme();
+
   return (
     <S.AlarmWrap>
       <S.AlarmContent>
         <div>
-          <img src={AlarmEmptyIcon} alt="icon" />
+          <img src={theme.alarmEmpty} alt="icon" />
         </div>
         <div>
           <span>알림이 없습니다</span>
@@ -23,7 +24,7 @@ const S = {
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 2px solid var(--blue03, #edf7f8);
+    border: 2px solid ${(props) => props.theme.theme03};
     border-radius: 5px;
     padding-block: 20px;
   `,

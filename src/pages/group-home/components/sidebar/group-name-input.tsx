@@ -1,21 +1,21 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import editIcon from '@assets/icons/edit.svg';
-import { GROUP } from '@constants/mockdata';
 import { useGroupUpdateMutation } from '@hooks/react-query/use-query-group';
-import { useToast } from '@hooks/use-toast';
-import styled from 'styled-components';
 
+import { useGroupStore } from '@stores/group';
+import styled, { useTheme } from 'styled-components';
 interface TGroupNameInputProps {
+  groupName: string;
+  groupCode: string;
   isAdmin: boolean;
 }
 
-const GroupNameInput = ({ isAdmin }: TGroupNameInputProps) => {
-  const { toast } = useToast();
+const GroupNameInput = ({ groupName: groupNameProp, groupCode, isAdmin }: TGroupNameInputProps) => {
+  const theme = useTheme();
   const [isEditing, setIsEditing] = useState(false);
   const [isInputValueExist, setIsInputValueExist] = useState(true);
-  const [groupName, setGroupName] = useState(GROUP.room_name);
+  const [groupName, setGroupName] = useState(groupNameProp);
   const inputRef = useRef<HTMLTextAreaElement>(null);
-  const { mutateAsync } = useGroupUpdateMutation('31');
+  const { mutateAsync } = useGroupUpdateMutation(useGroupStore((state) => state.groupId));
 
   const handleGroupNameChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setGroupName(e.target.value);
@@ -30,11 +30,10 @@ const GroupNameInput = ({ isAdmin }: TGroupNameInputProps) => {
     if (groupName.length) {
       await mutateAsync(groupName);
       setIsEditing(false);
-      toast('그룹명이 변경되었습니다.');
     } else {
       setIsInputValueExist(false);
     }
-  }, [toast, mutateAsync, groupName]);
+  }, [mutateAsync, groupName]);
 
   useEffect(() => {
     if (isEditing && inputRef.current) {
@@ -54,8 +53,10 @@ const GroupNameInput = ({ isAdmin }: TGroupNameInputProps) => {
       return () => {
         input.removeEventListener('keydown', handleKeyDown);
       };
+    } else {
+      setGroupName(groupNameProp);
     }
-  }, [isEditing, handleEditCompleteButtonClick]);
+  }, [isEditing, handleEditCompleteButtonClick, groupNameProp]);
 
   return (
     <div>
@@ -71,7 +72,7 @@ const GroupNameInput = ({ isAdmin }: TGroupNameInputProps) => {
       )}
 
       <S.GroupNameSub>
-        <S.GroupCode>#{GROUP.code}</S.GroupCode>
+        <S.GroupCode>#{groupCode}</S.GroupCode>
         {isAdmin &&
           (isEditing ? (
             <S.EditButton onClick={handleEditCompleteButtonClick}>
@@ -79,7 +80,7 @@ const GroupNameInput = ({ isAdmin }: TGroupNameInputProps) => {
             </S.EditButton>
           ) : (
             <S.EditButton onClick={handleEditButtonClick}>
-              <img src={editIcon} />
+              <img src={theme.editIcon} />
             </S.EditButton>
           ))}
       </S.GroupNameSub>
@@ -105,7 +106,8 @@ const S = {
     resize: none;
     overflow: hidden;
     line-height: 1.3;
-    outline: ${({ $isInputValueExist }) => ($isInputValueExist ? '1px solid var(--blue02)' : '1px solid var(--red01)')};
+    outline: 1px solid ${({ $isInputValueExist, theme }) => ($isInputValueExist ? theme.theme02 : 'var(--red01)')};
+    color: var(--black);
   `,
 
   GroupNameSub: styled.div`
@@ -128,7 +130,7 @@ const S = {
   EditComplete: styled.span`
     padding: 2px 6px;
     border-radius: 5px;
-    background-color: var(--blue02);
-    color: var(--blue01);
+    background-color: ${(props) => props.theme.theme02};
+    color: ${(props) => props.theme.text02};
   `,
 };

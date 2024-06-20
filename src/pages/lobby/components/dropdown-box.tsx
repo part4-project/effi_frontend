@@ -1,7 +1,5 @@
 import React from 'react';
-import polygonTopIcon from '@assets/icons/polygon-top.svg';
-import polygonWhiteTopIcon from '@assets/icons/polygon-white-top.svg';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 
 interface DropDownBoxProps extends React.PropsWithChildren {
   type: 'make-meeting' | 'schedule-calendar';
@@ -9,9 +7,15 @@ interface DropDownBoxProps extends React.PropsWithChildren {
 }
 
 const DropDownBox = ({ type, isDropdownOpen, children }: DropDownBoxProps) => {
+  const theme = useTheme();
+
   return (
     <S.Container $type={type} $isDropdownOpen={isDropdownOpen}>
-      <S.Polygon $type={type} src={type === 'schedule-calendar' ? polygonWhiteTopIcon : polygonTopIcon} alt="위쪽" />
+      <S.Polygon
+        $type={type}
+        src={type === 'schedule-calendar' ? theme.polygonScheduleTop : theme.polygonMeetingTop}
+        alt="위쪽"
+      />
       <S.ListBox $type={type}>{children}</S.ListBox>
     </S.Container>
   );
@@ -23,25 +27,26 @@ const S = {
   Container: styled.div<{ $type: DropDownBoxProps['type']; $isDropdownOpen: boolean }>`
     display: ${({ $isDropdownOpen }) => ($isDropdownOpen ? 'block' : 'none')};
     gap: 13px;
-    padding: 18px 29px;
+    padding: 18px 22px;
     border-radius: 10px;
-    top: ${({ $type }) => $type === 'make-meeting' && '180%'};
+    top: ${({ $type }) => $type === 'make-meeting' && 'calc(180% + 5px)'};
     left: ${({ $type }) => $type === 'make-meeting' && '50%'};
     max-width: ${({ $type }) => $type === 'make-meeting' && '722px'};
     width: ${({ $type }) => $type === 'schedule-calendar' && '100%'};
     max-height: ${({ $type }) => $type === 'schedule-calendar' && '25vh'};
     margin-top: ${({ $type }) => $type === 'schedule-calendar' && '15px'};
-    background: ${({ $type }) => ($type === 'schedule-calendar' ? 'var(--white)' : 'var(--blue03)')};
+    background: ${({ $type, theme }) => ($type === 'schedule-calendar' ? theme.schedule : theme.meetingDropDown)};
     position: ${({ $type }) => ($type === 'schedule-calendar' ? 'auto' : 'absolute')};
     transform: ${({ $type }) => ($type === 'schedule-calendar' ? 'auto' : 'translate(-50%, -50%)')};
   `,
   ListBox: styled.div<{ $type: DropDownBoxProps['type'] }>`
     display: flex;
     max-width: 100%;
-    gap: 13px;
     overflow-x: ${({ $type }) => $type === 'make-meeting' && 'auto'};
     overflow-y: ${({ $type }) => $type === 'schedule-calendar' && 'auto'};
     max-height: ${({ $type }) => $type === 'schedule-calendar' && '20vh'};
+    padding: ${({ $type }) => $type === 'schedule-calendar' && '2px 7px'};
+    gap: ${({ $type }) => ($type === 'schedule-calendar' ? '4px' : '13px')};
     flex-direction: ${({ $type }) => ($type === 'schedule-calendar' ? 'column' : 'row')};
     padding-inline-end: ${({ $type }) => $type === 'schedule-calendar' && '9px'};
     &::-webkit-scrollbar {
@@ -51,12 +56,12 @@ const S = {
     }
 
     &::-webkit-scrollbar-thumb {
-      background: #d6d6d7;
+      background: ${(props) => props.theme.scrollBar};
       border-radius: 2px;
     }
 
     &::-webkit-scrollbar-track {
-      background: var(--gray03);
+      background: ${(props) => props.theme.scroll};
     }
   `,
   Polygon: styled.img<{ $type: DropDownBoxProps['type'] }>`

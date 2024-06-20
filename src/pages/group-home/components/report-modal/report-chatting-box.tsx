@@ -1,13 +1,14 @@
 import ChattingList from '@components/meeting/chatting-list';
 import { CHAT } from '@constants/mockdata';
+import { TChatSocketType } from '@pages/meeting-room/types';
 import styled from 'styled-components';
 
 const ReportChattingBox = () => {
   return (
     <S.Container>
       <S.ChattingLists>
-        {CHAT.chat.map((chat) => (
-          <ChattingList key={chat.id} nickname={chat.nickname} sentTime={chat.sentTime} chat={chat.chat} />
+        {CHAT.chat.map((chatSocket: TChatSocketType, idx) => (
+          <ChattingList key={idx} roomType="report-modal" socket={chatSocket} />
         ))}
       </S.ChattingLists>
     </S.Container>
@@ -21,10 +22,10 @@ const S = {
     grid-area: chat;
     display: flex;
     padding: 15px;
-    border: 2px solid var(--gray03);
+    border: 2px solid ${(props) => props.theme.box};
     border-radius: 10px;
     height: 654px;
-    background: var(--white);
+    background: ${(props) => props.theme.theme10};
   `,
   ChattingLists: styled.ul`
     display: flex;
@@ -32,5 +33,6 @@ const S = {
     flex-direction: column;
     padding: 20px;
     overflow: auto;
+    width: 100%;
   `,
 };

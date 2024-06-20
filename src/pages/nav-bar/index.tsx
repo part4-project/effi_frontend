@@ -1,26 +1,27 @@
-import Logo from '@assets/text-logo.svg';
 import { device } from '@styles/breakpoints';
 import { navBarHeight } from '@styles/subsection-size';
 import { zIndex } from '@styles/z-index';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 import Alarm from './components/alarm';
+import DarkModeButton from './components/dark-mode-button';
 import Profile from './components/profile';
-import SearchBar from './components/search-bar';
 
 const NavBar = () => {
+  const theme = useTheme();
+
   return (
     <S.NavWrap>
       <S.NavContainer>
         <S.FlexLeftBox>
           <div>
             <Link to={'/'}>
-              <img src={Logo} alt="text-logo" />
+              <img src={theme.textLogo} alt="text-logo" />
             </Link>
           </div>
         </S.FlexLeftBox>
         <S.FlexRightBox>
-          <SearchBar />
+          <DarkModeButton />
           <Alarm />
           <Profile />
         </S.FlexRightBox>
@@ -38,7 +39,7 @@ const S = {
     top: 0;
     left: 0;
     height: ${navBarHeight.desktop};
-    background-color: var(--blue04);
+    background-color: ${(props) => props.theme.theme04};
     z-index: ${zIndex.navBar};
     @media ${device.tablet} {
       height: ${navBarHeight.tablet};

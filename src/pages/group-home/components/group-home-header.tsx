@@ -1,23 +1,23 @@
-import createMeetingButton from '@assets/icons/plus-monitor.svg';
-import groupManageButton from '@assets/icons/setting.svg';
 import GroupModalButton from '@pages/group-home/components/group-modal/group-modal-button';
 import MeetingModalButton from '@pages/group-home/components/meeting-modal/meeting-modal-button';
 import { zIndex } from '@styles/z-index';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 
 const GroupHomeHeader = () => {
+  const theme = useTheme();
+
   return (
     <S.Container>
       <MeetingModalButton title="회의 생성">
         <S.Trigger>
           <S.Balloon>회의 생성</S.Balloon>
-          <img src={createMeetingButton} />
+          <img src={theme.monitorLeader} />
         </S.Trigger>
       </MeetingModalButton>
       <GroupModalButton>
         <S.Trigger>
           <S.Balloon>그룹 관리</S.Balloon>
-          <img src={groupManageButton} />
+          <img src={theme.setting} />
         </S.Trigger>
       </GroupModalButton>
     </S.Container>
@@ -54,7 +54,7 @@ const S = {
     top: 55px;
     left: 50%;
     transform: translateX(-50%);
-    background: var(--blue01);
+    background: ${(props) => props.theme.theme01};
     color: var(--white);
     font-size: 14px;
     border-radius: 10px;
@@ -65,7 +65,7 @@ const S = {
       visibility 0.2s ease-in-out;
 
     &:after {
-      background: url('/polygon-top-blue.svg');
+      background: url('${(props) => props.theme.polygonTopBlue}');
       content: '';
       width: 13px;
       height: 14px;

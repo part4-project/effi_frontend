@@ -10,7 +10,8 @@ import styled from 'styled-components';
 const Root = () => {
   const location = useLocation();
 
-  const nonSubSectionArray = ['/login', '/meeting-room', '/auth', '/kurento', '/kurento-service'];
+  const nonSubSectionArray = ['/login', '/meeting-room', '/auth', '/kurento-service', '/meeting-loading'];
+
   const isSubSection = !nonSubSectionArray.includes(location.pathname);
 
   return (

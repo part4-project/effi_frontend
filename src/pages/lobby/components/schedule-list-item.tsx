@@ -11,27 +11,37 @@ interface ScheduleListItemProps {
 
 const ScheduleListItem = ({ groupId, groupName, meetingTitle }: ScheduleListItemProps) => {
   return (
-    <S.Container to={'/meeting-room'}>
-      <S.LeftSection>
-        <S.GroupItemBox>
-          <GroupItem groupId={groupId} groupName={groupName} type="calendar" />
-        </S.GroupItemBox>
-        <S.GroupInfo>
-          <S.MeetingTitle>{meetingTitle}</S.MeetingTitle>
-          <S.GroupName>{groupName}</S.GroupName>
-        </S.GroupInfo>
-      </S.LeftSection>
-      <S.RightSection>
-        <S.WatchImg src={clockIcon} alt="시계" />
-        <S.Time>9 : 00</S.Time>
-      </S.RightSection>
-    </S.Container>
+    <S.BorderBox>
+      <S.Container to={'/meeting-room'}>
+        <S.LeftSection>
+          <S.GroupItemBox>
+            <GroupItem groupId={groupId} groupName={groupName} type="calendar" />
+          </S.GroupItemBox>
+          <S.GroupInfo>
+            <S.MeetingTitle>{meetingTitle}</S.MeetingTitle>
+            <S.GroupName>{groupName}</S.GroupName>
+          </S.GroupInfo>
+        </S.LeftSection>
+        <S.RightSection>
+          <S.WatchImg src={clockIcon} alt="시계" />
+          <S.Time>9 : 00</S.Time>
+        </S.RightSection>
+      </S.Container>
+    </S.BorderBox>
   );
 };
 
 export default ScheduleListItem;
 
 const S = {
+  BorderBox: styled.div`
+    padding-bottom: 4px;
+    border-bottom: 1px solid ${(props) => props.theme.line};
+
+    &:last-child {
+      border-bottom: none;
+    }
+  `,
   Container: styled(Link)`
     width: 100%;
     height: 82px;
@@ -39,16 +49,16 @@ const S = {
     display: flex;
     justify-content: space-between;
     border-radius: 10px;
-    background: var(--white);
-    box-shadow: 0px 4px 6.8px 0px rgba(166, 196, 213, 0.57);
+    background: ${(props) => props.theme.schedule};
+    box-shadow: 0px 4px 6.8px 0px ${(props) => props.theme.boxShadow};
     margin-block: 2px;
-    color: var(--blue05);
-    border: 1px solid var(--white);
+    color: ${(props) => props.theme.text03};
+    border: 1px solid ${(props) => props.theme.schedule};
     cursor: pointer;
     transition: all 0.2s ease-in-out;
 
     &:hover {
-      border: 1px solid var(--blue01);
+      border: 1px solid ${(props) => props.theme.text02};
       transform: translateY(-2px);
     }
   `,

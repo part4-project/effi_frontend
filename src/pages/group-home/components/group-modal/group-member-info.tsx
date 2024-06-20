@@ -1,13 +1,10 @@
 import { useState } from 'react';
-import styled from 'styled-components';
+import { TGroupFetchMemberInfo } from '@api/group/group-request.type';
+import styled, { useTheme } from 'styled-components';
 
-interface GroupMemberInfoProp {
-  id: number;
-  name: string;
-  is_admin: boolean;
-}
+const GroupMemberInfo: React.FC<TGroupFetchMemberInfo> = ({ nickname, email, admin }) => {
+  const theme = useTheme();
 
-const GroupMemberInfo: React.FC<GroupMemberInfoProp> = ({ name }) => {
   const [isExport, setIsExport] = useState<boolean>(false);
   const exportName = isExport ? '내보내기 취소' : '내보내기';
 
@@ -18,12 +15,18 @@ const GroupMemberInfo: React.FC<GroupMemberInfoProp> = ({ name }) => {
   return (
     <S.MemberInfoWrap>
       <S.MemberInfo>
-        <S.MemberName $isExport={isExport}>{name}</S.MemberName>
-        <S.MemberEmail>이메일</S.MemberEmail>
+        <S.MemberName $isExport={isExport}>{nickname}</S.MemberName>
+        <S.MemberEmail>{email}</S.MemberEmail>
       </S.MemberInfo>
-      <S.MemberExportBtn $isExport={isExport} onClick={handleExportClick}>
-        {exportName}
-      </S.MemberExportBtn>
+      {admin ? (
+        <S.AdminIconBox>
+          <S.AdminIcon src={theme.groupLeaderBadge} alt="admin" />
+        </S.AdminIconBox>
+      ) : (
+        <S.MemberExportBtn $isExport={isExport} onClick={handleExportClick}>
+          {exportName}
+        </S.MemberExportBtn>
+      )}
     </S.MemberInfoWrap>
   );
 };
@@ -41,25 +44,32 @@ const S = {
       border-bottom: 0;
     }
   `,
+  AdminIconBox: styled.div`
+    padding: 10px;
+  `,
+  AdminIcon: styled.img`
+    width: 14px;
+  `,
   MemberInfo: styled.div`
     display: flex;
     gap: 4px;
     align-items: end;
   `,
   MemberName: styled.div<{ $isExport: boolean }>`
-    color: ${({ $isExport }) => ($isExport ? '#C9C9C9' : 'var(--gray01)')};
+    color: ${({ $isExport, theme }) => ($isExport ? '#C9C9C9' : theme.text11)};
     font-size: 14px;
     font-weight: 500;
   `,
   MemberEmail: styled.div`
+    color: ${(props) => props.theme.text09};
     font-size: 10px;
   `,
   MemberExportBtn: styled.button<{ $isExport: boolean }>`
     padding: 10px;
     border-radius: 5px;
-    background-color: ${({ $isExport }) => ($isExport ? `var(--white)` : `var(--blue02)`)};
-    border: ${({ $isExport }) => ($isExport ? `1px solid var(--blue02)` : `1px solid transparent`)};
-    color: var(--blue01);
+    background-color: ${({ $isExport, theme }) => ($isExport ? `var(--white)` : theme.theme02)};
+    border: ${({ $isExport, theme }) => ($isExport ? `1px solid ${theme.theme02}` : `1px solid transparent`)};
+    color: ${(props) => props.theme.text06};
     font-size: 12px;
     font-weight: 700;
   `,

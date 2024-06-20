@@ -1,13 +1,20 @@
-import { GROUP_MEMBER } from '@constants/mockdata';
+import { TGroupFetchMemberInfo } from '@api/group/group-request.type';
+import { useGroupMemberQuery } from '@hooks/react-query/use-query-group';
+import { useGroupStore } from '@stores/group';
 import styled from 'styled-components';
 import GroupMemberInfo from './group-member-info';
 
 const GroupMemberList = () => {
+  const { data: groupData, isError, isLoading } = useGroupMemberQuery(useGroupStore((state) => state.groupId));
+
+  if (isLoading) return 'Loading...';
+  if (isError) return 'Error...';
+
   return (
     <div>
       <S.MemberListTitle>현재 맴버</S.MemberListTitle>
       <S.MemberListBox>
-        {GROUP_MEMBER.member_list.map((member) => {
+        {groupData.memberList.map((member: TGroupFetchMemberInfo) => {
           return <GroupMemberInfo key={member.id} {...member} />;
         })}
       </S.MemberListBox>
@@ -19,7 +26,7 @@ export default GroupMemberList;
 
 const S = {
   MemberListTitle: styled.p`
-    color: var(--gray06);
+    color: ${(props) => props.theme.text09};
     font-size: 18px;
     font-weight: 700;
     margin-bottom: 6px;

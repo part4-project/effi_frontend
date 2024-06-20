@@ -3,7 +3,8 @@ import GroupHome from '@pages/group-home';
 import KurentoService from '@pages/kurento-service';
 import Lobby from '@pages/lobby';
 import Login from '@pages/login';
+import MeetingLoading from '@pages/meeting-loading';
 import MeetingRoom from '@pages/meeting-room';
 import Root from '@pages/Root';
 
-export { Login, GroupHome, Lobby, Root, MeetingRoom, Auth, KurentoService };
+export { Login, GroupHome, Lobby, Root, MeetingRoom, Auth, KurentoService, MeetingLoading };

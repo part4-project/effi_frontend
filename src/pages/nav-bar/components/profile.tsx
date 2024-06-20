@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import ProfileModalButton from '@components/modal/profile-modal/profile-modal-button';
 import { useUserNicknameUpdateMutation, useUserQuery } from '@hooks/react-query/use-query-user';
+import ProfileSkeleton from '@pages/nav-bar/components/profile-skeleton';
 import { createRandomNickName } from '@utils/createRandomNickname';
 import styled from 'styled-components';
 
@@ -14,7 +15,7 @@ const Profile = () => {
     }
   }, [isSuccess, userData, mutateAsync]);
 
-  if (isLoading) return 'Loading...';
+  if (isLoading) return <ProfileSkeleton />;
 
   if (isError) return 'Error...';
 
@@ -40,12 +41,12 @@ const S = {
     gap: 10px;
   `,
   NickNameBox: styled.div`
-    color: #343c49;
+    color: ${(props) => props.theme.nickName};
     font-weight: 500;
   `,
   ProfileImgBox: styled.div`
     overflow: hidden;
-    border: 0.1px solid var(--blue01);
+    border: 0.1px solid ${(props) => props.theme.theme01};
     width: 20px;
     height: 20px;
     border-radius: 100%;

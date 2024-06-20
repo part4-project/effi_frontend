@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 import { QUICK_BUTTONS } from '../constants';
 
 interface QuickButtonProps {
@@ -7,13 +7,14 @@ interface QuickButtonProps {
 }
 
 const QuickButton = ({ onClick, type }: QuickButtonProps) => {
+  const theme = useTheme();
   const buttonDetails = QUICK_BUTTONS[type];
 
   return (
     <S.QuickButton onClick={onClick}>
-      <S.BackgroundImg src={buttonDetails.backgroundImg} alt="컨테이너" />
+      <S.BackgroundImg src={theme[buttonDetails.backgroundImg]} alt="컨테이너" />
       <S.InnerBox>
-        <S.InnerImg src={buttonDetails.innerImg} alt={buttonDetails.innerImgAlt} />
+        <S.InnerImg src={theme[buttonDetails.innerImg]} alt={buttonDetails.innerImgAlt} />
         <S.Label $type={type}>{buttonDetails.label}</S.Label>
       </S.InnerBox>
     </S.QuickButton>
@@ -50,7 +51,7 @@ const S = {
   `,
   Label: styled.p<{ $type: QuickButtonProps['type'] }>`
     width: 150px;
-    color: ${({ $type }) => ($type === 'make-meeting' ? 'var(--white)' : 'var(--blue01)')};
+    color: ${({ $type, theme }) => ($type === 'make-meeting' ? theme.text01 : theme.text02)};
     text-align: center;
     font-size: 26px;
     font-weight: 900;

@@ -5,8 +5,10 @@ const useInputForm = (submitCb: () => void) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    submitCb();
-    setInputValue('');
+    if (inputValue) {
+      submitCb();
+      setInputValue('');
+    }
   };
 
   const handleInputValueChange = (e: React.ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value);

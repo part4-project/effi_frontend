@@ -1,16 +1,17 @@
+import circleGray from '@assets/icons/circle-gray.svg';
 import { GROUP_MEMBER } from '@constants/mockdata';
-import styled from 'styled-components';
-import circleBlue5 from '@/assets/icons/circle-blue5.svg';
-import circleGray from '@/assets/icons/circle-gray.svg';
+import styled, { useTheme } from 'styled-components';
 
 const ReportMember = () => {
+  const theme = useTheme();
+
   return (
     <S.Container>
       <S.Participant>회의 참여자</S.Participant>
       <S.MemberLists>
         {GROUP_MEMBER.member_list.map((member) => (
           <S.MemberList key={member.id}>
-            {member.is_admin ? <S.MemberIcon src={circleBlue5} /> : <S.MemberIcon src={circleGray} />}
+            {member.is_admin ? <S.MemberIcon src={theme.circle} /> : <S.MemberIcon src={circleGray} />}
             <S.MemberName>{member.name}</S.MemberName>
           </S.MemberList>
         ))}
@@ -27,18 +28,19 @@ const S = {
     display: flex;
     flex-direction: column;
     border-radius: 10px;
-    border: 2px solid var(--gray03);
+    border: 2px solid ${(props) => props.theme.box};
     height: 180px;
     padding: 15px 10px 10px 15px;
+    background: ${(props) => props.theme.theme10};
   `,
 
   Participant: styled.p`
-    background: var(--white);
-    color: #9d9d9d;
+    background: ${(props) => props.theme.theme10};
+    color: ${(props) => props.theme.text11};
     font-size: 20px;
     font-weight: 900;
     line-height: 35px;
-    border-bottom: 1px solid var(--gray03);
+    border-bottom: 1px solid ${(props) => props.theme.box};
     padding-bottom: 10px;
   `,
 
@@ -56,7 +58,7 @@ const S = {
     gap: 10px;
     margin-top: 8px;
     padding: 4px;
-    color: #9d9d9d;
+    color: ${(props) => props.theme.text11};
     font-weight: 700;
   `,
 
