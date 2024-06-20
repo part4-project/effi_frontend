@@ -56,7 +56,7 @@ class Participant {
 
   offerToReceiveVideo(error, offerSdp, wp) {
     if (error) return console.error('sdp offer error');
-    console.log('Invoking SDP offer callback function');
+    // console.log('Invoking SDP offer callback function');
 
     const msg = {
       id: 'receiveVideoFrom',
@@ -67,7 +67,7 @@ class Participant {
   }
 
   onIceCandidate(candidate, wp) {
-    console.log('Local candidate' + JSON.stringify(candidate));
+    // console.log('Local candidate' + JSON.stringify(candidate));
 
     const message = {
       id: 'onIceCandidate',
@@ -78,7 +78,7 @@ class Participant {
   }
 
   dispose() {
-    console.log('Disposing participant ' + this.userId);
+    // console.log('Disposing participant ' + this.userId);
     if (this.rtcPeer) {
       this.rtcPeer.dispose();
     }

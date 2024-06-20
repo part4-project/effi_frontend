@@ -10,23 +10,18 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const KurentoCameras = () => {
-  const [cameraCnt, setCameraCnt] = useState(1);
+  // const [cameraCnt, setCameraCnt] = useState(1);
   const navigate = useNavigate();
   const userInfo = useQueryClient().getQueryData<TUserInfoRes>([QUERY_KEY.userInfo]);
 
   const userId = userInfo.id;
-  const roomId = 123123132143;
+  const roomId = 12312313317;
 
   const ws = useRef(null);
   const heartbeatInterval = useRef(null);
   const participants = {};
 
   const participantElementsRef = useRef(null);
-
-  useEffect(() => {
-    participantElementsRef.current = document.getElementsByClassName('participant');
-    setCameraCnt(participantElementsRef.current.length);
-  }, [participantElementsRef]);
 
   useEffect(() => {
     ws.current = new WebSocket('https://api.effi.club/signal/webrtc');
@@ -51,8 +46,7 @@ const KurentoCameras = () => {
       };
       sendMessage(message);
     };
-    ws.current.onclose = function (e) {
-      console.log(e);
+    ws.current.onclose = function () {
       console.log('WebSocket connection closed.');
       clearInterval(heartbeatInterval.current);
     };
@@ -95,15 +89,10 @@ const KurentoCameras = () => {
   }, []);
 
   const onNewParticipant = (request) => {
-    console.log(888888888888);
-    console.log(request);
-
     receiveVideo(parseInt(request.userId));
   };
 
   const receiveVideoResponse = (result) => {
-    console.log(result);
-    // participants 에서 참가자(result.name)와 연결된 rtcPeer 개체를 검색
     participants[result.sender].rtcPeer.processAnswer(
       result.sdpAnswer, // 원격 참가자로부터 받은 SDP 응답
       function (error) {
@@ -114,25 +103,18 @@ const KurentoCameras = () => {
 
   function onExistingParticipants(msg) {
     const constraints = {
-      audio: true,
       video: {
-        mandatory: {
-          maxWidth: 320,
-          maxFrameRate: 15,
-          minFrameRate: 15,
-        },
+        width: { max: 220, min: 200 },
+        frameRate: { max: 15, min: 15 },
       },
+      audio: true,
     };
-    // console.log(userId + ' 가 다음 방에 입장: ' + roomId);
+
     const participant = new Participant(userId, sendMessage);
 
     participants[userId] = participant;
 
-    // console.log(participants[userId] + '★');
-
     const video = participant.getVideoElement();
-
-    // console.log(participant.video);
 
     const options = {
       localVideo: video,
@@ -155,16 +137,13 @@ const KurentoCameras = () => {
       this.generateOffer(participant.offerToReceiveVideo.bind(participant));
     });
 
-    console.log(msg);
+    // console.log(msg);
     msg.userIdList.forEach((item) => {
       receiveVideo(item);
     });
   }
 
   function leaveRoom() {
-    // document.getElementById('container').style.visibility = 'visible';
-    // document.getElementById('leaveBtn').style.visibility = 'hidden';
-
     sendMessage({
       id: 'disconnect',
       userId: userId,
@@ -217,7 +196,6 @@ const KurentoCameras = () => {
 
   function sendMessage(message) {
     const jsonMessage = JSON.stringify(message);
-    // console.log('Sending message: ' + jsonMessage);
     if (ws.current && ws.current.readyState === WebSocket.OPEN) {
       ws.current.send(jsonMessage);
     }
@@ -230,7 +208,7 @@ const KurentoCameras = () => {
           {/* {participatedMember.map((member, idx) => (
             <RoomCamera key={idx} name={member.name} cameraCount={participatedMember.length} />
           ))} */}
-          <div className={`participants camera-count-${cameraCnt}`}></div>
+          <div ref={participantElementsRef} className="participants"></div>
         </S.RoomCameraBox>
       </S.RoomCameraContainer>
       <S.RoomButtonContainer className="room-button-container">
@@ -248,10 +226,6 @@ const KurentoCameras = () => {
 export default KurentoCameras;
 
 const S = {
-  // Container: styled.div`
-  //   border: 5px solid white;
-  // `,
-
   RoomCameraContainer: styled.div`
     display: flex;
     align-items: center;

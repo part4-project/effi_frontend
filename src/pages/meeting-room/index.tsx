@@ -77,20 +77,6 @@ const MeetingRoom = () => {
 
         <KurentoCameras />
 
-        {/* <S.RoomCameraContainer>
-          <S.RoomCameraBox>
-            {participatedMember.map((member, idx) => (
-              <RoomCamera key={idx} name={member.name} cameraCount={participatedMember.length} />
-            ))}
-          </S.RoomCameraBox>
-        </S.RoomCameraContainer>
-
-        <S.RoomButtonContainer className="room-button-container">
-          {ROOM_BUTTONS.map((btn, idx) => (
-            <RoomButton key={idx} type={btn.type} initialImg={btn.initialImg} changedImg={btn.changedImg} />
-          ))}
-        </S.RoomButtonContainer> */}
-
         <ForceQuitToast isToastOpen={isToastOpen} isToastAnimClose={isToastAnimClose} />
       </S.LeftSection>
       <S.RightSection>

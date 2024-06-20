@@ -15,8 +15,6 @@
   color: white;
   font-weight: bold;
   cursor: pointer;
-
-  z-index: 9999;
 }
 #leaveBtn:hover {
   background-color: #002602;
@@ -30,31 +28,29 @@
   justify-content: space-evenly;
 }
 
-.participants video {
-  /* position: absolute; */
-  width: 100%;
-  height: 100%;
+.participant video {
   border-radius: 10px;
   background-color: var(--black);
+  width: 520px;
 }
 
-.participants div {
+.participant {
   position: relative;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 16 / 10;
+  /* min-width: none; */
 }
 
-.participants .camera-count-1 {
-  width: calc(70% - 10px);
+/* .camera-count-1 div {
+  width: calc(100%);
   max-width: calc(70% - 10px);
 }
 
 .participants .camera-count-2 {
   width: calc(40% - 10px);
   max-width: calc(40% - 10px);
-}
+} */
 
-/* Adjustments for different.participants  camera counts */
-@media (min-width: 768px) {
+/* @media (min-width: 768px) {
   .participants .camera-count-1 {
     width: calc(70% - 10px);
     min-width: 330px;
@@ -64,9 +60,9 @@
     width: calc(40% - 10px);
     min-width: 330px;
   }
-}
+} */
 
-.participants span {
+.participant span {
   color: red;
   position: absolute;
   background-color: #212322;
