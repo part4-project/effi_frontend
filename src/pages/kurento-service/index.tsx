@@ -1,120 +1,37 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable no-console */
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 
 import { useEffect, useRef } from 'react';
-// import './App.css';
 import './kurento-service.style.css';
-
-const PARTICIPANT_MAIN_CLASS = 'participant main';
-const PARTICIPANT_CLASS = 'participant';
-
-class Participant {
-  constructor(userId, sendMessage) {
-    this.userId = userId;
-
-    this.container = document.createElement('div');
-    this.container.className = this.isPresentMainParticipant() ? PARTICIPANT_CLASS : PARTICIPANT_MAIN_CLASS;
-    this.container.id = userId;
-    this.span = document.createElement('span');
-    this.video = document.createElement('video');
-    this.rtcPeer = null;
-    this.sendMessage = sendMessage;
-    this.onIceCandidate = this.onIceCandidate.bind(this);
-
-    this.container.appendChild(this.video);
-    this.container.appendChild(this.span);
-    this.container.onclick = this.switchContainerClass.bind(this);
-    document.getElementById('participants').appendChild(this.container);
-
-    this.span.appendChild(document.createTextNode(userId));
-
-    this.video.id = 'video-' + userId;
-    this.video.autoplay = true;
-    this.video.controls = false;
-  }
-
-  getElement() {
-    return this.container;
-  }
-
-  getVideoElement() {
-    return this.video;
-  }
-
-  switchContainerClass() {
-    if (this.container.className === PARTICIPANT_CLASS) {
-      const elements = Array.prototype.slice.call(document.getElementsByClassName(PARTICIPANT_MAIN_CLASS));
-      elements.forEach(function (item) {
-        item.className = PARTICIPANT_CLASS;
-      });
-
-      this.container.className = PARTICIPANT_MAIN_CLASS;
-    } else {
-      this.container.className = PARTICIPANT_CLASS;
-    }
-  }
-
-  isPresentMainParticipant() {
-    return document.getElementsByClassName(PARTICIPANT_MAIN_CLASS).length !== 0;
-  }
-
-  offerToReceiveVideo(error, offerSdp, wp) {
-    if (error) return console.error('sdp offer error');
-    console.log('Invoking SDP offer callback function');
-
-    const msg = {
-      id: 'receiveVideoFrom',
-      sender: this.userId,
-      sdpOffer: offerSdp,
-    };
-    this.sendMessage(msg);
-  }
-
-  onIceCandidate(candidate, wp) {
-    console.log('Local candidate' + JSON.stringify(candidate));
-
-    const message = {
-      id: 'onIceCandidate',
-      userId: this.userId,
-      candidate: candidate,
-    };
-    this.sendMessage(message);
-  }
-
-  dispose() {
-    console.log('Disposing participant ' + this.userId);
-    if (this.rtcPeer) {
-      this.rtcPeer.dispose();
-    }
-    this.container.parentNode.removeChild(this.container);
-  }
-}
+import Participant from './utils/kurento-service';
+import { useNavigate } from 'react-router-dom';
+import { useQueryClient } from '@tanstack/react-query';
+import { TUserInfoRes } from '@api/user/user-request.type';
+import { QUERY_KEY } from '@constants/query-key';
 
 const KurentoService = () => {
+  const navigate = useNavigate();
+  const userInfo = useQueryClient().getQueryData<TUserInfoRes>([QUERY_KEY.userInfo]);
+  console.log(userInfo.id);
+  let userId = userInfo.id;
+  let roomId = 127877;
   const ws = useRef(null);
   const participants = {};
-  const userIdRef = useRef(null);
-  const roomIdRef = useRef(null);
-  const register = () => {
-    userIdRef.current = document.getElementById('userId').value;
-    roomIdRef.current = document.getElementById('roomId').value;
 
+  useEffect(() => {
     ws.current = new WebSocket('https://api.effi.club/signal/webrtc');
     ws.current.onopen = function () {
       console.log('WebSocket connection opened.');
       const message = {
         id: 'connect',
-        userId: parseInt(userIdRef.current),
-        roomId: parseInt(roomIdRef.current),
+        userId: userId,
+        roomId: roomId,
       };
       sendMessage(message);
     };
     ws.current.onmessage = function (message) {
       const parsedMessage = JSON.parse(message.data);
-      console.info('Received message: ' + message.data);
+      // console.info('Received message: ' + message.data);
 
       switch (parsedMessage.id) {
         case 'existingPeers':
@@ -141,16 +58,17 @@ const KurentoService = () => {
           console.error('Unrecognized message', parsedMessage);
       }
     };
-
-    document.getElementById('container').style.visibility = 'hidden';
-    document.getElementById('leaveBtn').style.visibility = 'visible';
-
     return () => {
       if (ws.current) {
         ws.current.close();
       }
     };
-  };
+  }, []);
+
+  // const register = () => {
+  //   document.getElementById('container').style.visibility = 'hidden';
+  //   document.getElementById('leaveBtn').style.visibility = 'visible';
+  // };
 
   const onNewParticipant = (request) => {
     console.log(888888888888);
@@ -181,12 +99,12 @@ const KurentoService = () => {
         },
       },
     };
-    console.log(userIdRef.current + ' 가 다음 방에 입장: ' + roomIdRef.current);
-    const participant = new Participant(parseInt(userIdRef.current), sendMessage);
+    console.log(userId + ' 가 다음 방에 입장: ' + roomId);
+    const participant = new Participant(userId, sendMessage);
 
-    participants[userIdRef.current] = participant;
+    participants[userId] = participant;
 
-    console.log(participants[userIdRef.current] + '★');
+    console.log(participants[userId] + '★');
 
     const video = participant.getVideoElement();
 
@@ -220,15 +138,16 @@ const KurentoService = () => {
   }
 
   function leaveRoom() {
-    document.getElementById('container').style.visibility = 'visible';
-    document.getElementById('leaveBtn').style.visibility = 'hidden';
+    // document.getElementById('container').style.visibility = 'visible';
+    // document.getElementById('leaveBtn').style.visibility = 'hidden';
 
     sendMessage({
       id: 'disconnect',
-      userId: parseInt(userIdRef.current),
+      userId: userId,
     });
+    navigate('/group-home');
 
-    window.location.reload();
+    // window.location.reload();
   }
 
   function receiveVideo(sender) {
@@ -274,7 +193,7 @@ const KurentoService = () => {
 
   function sendMessage(message) {
     const jsonMessage = JSON.stringify(message);
-    console.log('Sending message: ' + jsonMessage);
+    // console.log('Sending message: ' + jsonMessage);
     if (ws.current && ws.current.readyState === WebSocket.OPEN) {
       ws.current.send(jsonMessage);
     }
@@ -282,23 +201,20 @@ const KurentoService = () => {
 
   return (
     <div>
-      <div id="container">
-        <div className="title" style={{ display: 'flex', flexDirection: 'column' }}>
-          <span>😁EFFI😁</span>
-          <input type="text" id="userId" placeholder="userId 입력" />
-          <input type="text" id="roomId" placeholder="roomId 입력" />
-        </div>
+      {/* <div id="container">
         <button id="registerBtn" onClick={register}>
-          🔑Enter🔑
+          입장
         </button>
-      </div>
+      </div> */}
+
       <button id="leaveBtn" onClick={leaveRoom}>
-        🙌Leave🙌
+        🙌나가기🙌
       </button>
+
       <div id="participants">
         {Object.values(participants).map((participant) => (
           <div key={participant.userId}>
-            {participant.getVideoElement()} {/* 비디오 요소 사용 */}
+            {participant.getVideoElement()}
             <span>{participant.userId}</span>
           </div>
         ))}

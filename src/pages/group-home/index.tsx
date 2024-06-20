@@ -12,6 +12,7 @@ import { useGroupStore } from '@stores/group';
 import { device } from '@styles/breakpoints';
 import { navBarHeight } from '@styles/subsection-size';
 import { useQueryClient } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import AdminHOC from './components/admin-hoc';
 import GroupHomeSidebarSkeleton from './components/skeleton/group-home-sidebar-skeleton';
@@ -22,6 +23,10 @@ const GroupHome = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const scheduledMeeting = MY_SCHEDULE_LIST[0];
   const isOnLive = true;
+  const navigate = useNavigate();
+  const handleKurentoClick = () => {
+    navigate('/kurento-service');
+  };
 
   useEffect(() => {
     if (!isLoading) {
@@ -35,8 +40,10 @@ const GroupHome = () => {
   return (
     <S.Container>
       {isLoading ? <GroupHomeSidebarSkeleton /> : <GroupHomeSideBar isAdmin={isAdmin} />}
+
       <S.GroupHomeMain>
         {isAdmin && <GroupHomeHeader />}
+        <button onClick={handleKurentoClick}>쿠렌토로 이동</button>
         <Meetings isOnLive={isOnLive} isAdmin={isAdmin} scheduledMeeting={scheduledMeeting} />
         <MeetingNotes />
       </S.GroupHomeMain>
