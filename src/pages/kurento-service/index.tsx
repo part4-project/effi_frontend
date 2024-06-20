@@ -15,7 +15,7 @@ const KurentoService = () => {
   const userInfo = useQueryClient().getQueryData<TUserInfoRes>([QUERY_KEY.userInfo]);
 
   let userId = userInfo.id;
-  let roomId = 359;
+  let roomId = 360;
 
   const ws = useRef(null);
   const heartbeatInterval = useRef(null);
