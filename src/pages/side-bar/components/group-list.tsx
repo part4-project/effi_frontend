@@ -1,4 +1,3 @@
-import { TGroupFetchInfo } from '@api/group/group-request.type';
 import { useGroupQuery } from '@hooks/react-query/use-query-group';
 import GroupListSkeleton from '@pages/side-bar/components/group-list-skeleton';
 import { useGroupStore } from '@stores/group';
@@ -25,7 +24,7 @@ const GroupList = () => {
 
   return (
     <S.GroupListWrap>
-      {groupData.map((group: TGroupFetchInfo) => (
+      {groupData?.map((group) => (
         <div key={group.groupId} onClick={() => handleGroupClick(group.groupId)}>
           <GroupItem selectGroupId={groupId} {...group} />
         </div>

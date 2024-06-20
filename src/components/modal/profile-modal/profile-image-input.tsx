@@ -1,18 +1,13 @@
 import { ChangeEvent } from 'react';
+import { TUserInfoRes } from '@api/user/user-request.type';
 import refreshIcon from '@assets/icons/refresh.svg';
-import {
-  useUserProfileImgDefaultMutation,
-  useUserProfileImgUpdateMutation,
-  useUserQuery,
-} from '@hooks/react-query/use-query-user';
+import { QUERY_KEY } from '@constants/query-key';
+import { useUserProfileImgDefaultMutation, useUserProfileImgUpdateMutation } from '@hooks/react-query/use-query-user';
+import { useQueryClient } from '@tanstack/react-query';
 import styled from 'styled-components';
 
 const ProfileImageInput = () => {
-  const {
-    data: { profileImageUrl },
-    isLoading,
-    isError,
-  } = useUserQuery();
+  const userInfo = useQueryClient().getQueryData<TUserInfoRes>([QUERY_KEY.userInfo]);
   const { mutate: profileImgUpdateMutate, isPending: isProfileImgUpdatePending } = useUserProfileImgUpdateMutation();
   const { mutate: defaultImgMutate, isPending: isDefaultImgPending } = useUserProfileImgDefaultMutation();
 
@@ -27,10 +22,6 @@ const ProfileImageInput = () => {
     defaultImgMutate();
   };
 
-  if (isLoading) return 'Loading...';
-
-  if (isError) return 'Error...';
-
   return (
     <S.Container>
       <S.ProfileImgInputWrapper>
@@ -42,7 +33,7 @@ const ProfileImageInput = () => {
           onChange={handleImgInputChange}
           disabled={isProfileImgUpdatePending || isDefaultImgPending}
         />
-        <S.ProfileImg src={profileImageUrl} alt="Profile Image" />
+        <S.ProfileImg src={userInfo?.profileImageUrl} alt="Profile Image" />
       </S.ProfileImgInputWrapper>
       <S.DefaultImgButton src={refreshIcon} alt="기본 이미지 버튼" onClick={handleDefaultImgButtonClick} />
     </S.Container>

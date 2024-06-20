@@ -2,11 +2,11 @@ import { keyframes, css } from 'styled-components';
 
 const loading = keyframes`
   0% {
-    transform: translateX(0);
+    left: 0
   }
   50%,
   100% {
-    transform: translateX(460px);
+    left: 100%;
   }
 `;
 
