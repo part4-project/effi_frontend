@@ -5,9 +5,10 @@ import { useGroupStore } from '@stores/group';
 import { useMeetingStore } from '@stores/meeting';
 import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 
 const MeetingLoading = () => {
+  const theme = useTheme();
   const navigate = useNavigate();
   const groupInfo = useQueryClient().getQueryData<TGroupMemberFetchRes>([
     QUERY_KEY.groupInfo,
@@ -27,7 +28,12 @@ const MeetingLoading = () => {
     }
   });
 
-  return <S.MeetingLoadingContainer>회의실 입장 중입니다.</S.MeetingLoadingContainer>;
+  return (
+    <S.MeetingLoadingContainer>
+      <img src={theme.effiPhone} alt="effi_phone_icon" />
+      <h1>회의실 입장 중입니다.</h1>
+    </S.MeetingLoadingContainer>
+  );
 };
 
 export default MeetingLoading;
@@ -38,8 +44,19 @@ const S = {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 20px;
     height: 100vh;
     background-color: ${(props) => props.theme.theme02};
-    color: ${(props) => props.theme.button03};
+
+    img {
+      max-width: 64px;
+      width: 100%;
+      height: auto;
+    }
+
+    h1 {
+      color: ${(props) => props.theme.button03};
+      font-size: 28px;
+    }
   `,
 };
