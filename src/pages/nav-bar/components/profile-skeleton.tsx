@@ -22,6 +22,7 @@ const S = {
   NickNameBox: styled.div`
     width: 82px;
     height: 20px;
+    border-radius: 4px;
     ${skeleton}
     &::before {
       ${skeletonAnimation};

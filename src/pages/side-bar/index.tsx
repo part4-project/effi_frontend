@@ -1,5 +1,7 @@
+import { useRef } from 'react';
 import GroupList from '@pages/side-bar/components/group-list';
 import GroupCreateModalButton from '@pages/side-bar/components/modal/group-create-modal-button';
+import useRefSize from '@pages/side-bar/hooks/use-ref-size';
 import { device } from '@styles/breakpoints';
 import { navBarHeight, sideBarWidth } from '@styles/subsection-size';
 import { zIndex } from '@styles/z-index';
@@ -8,9 +10,11 @@ import styled, { useTheme } from 'styled-components';
 
 const SideBar = () => {
   const theme = useTheme();
+  const sideBarRef = useRef(null);
+  const { refHeight } = useRefSize(sideBarRef);
 
   return (
-    <S.SideWrap>
+    <S.SideWrap ref={sideBarRef}>
       <S.ButtonList>
         <S.Trigger>
           <Link to={'/'}>
@@ -24,7 +28,7 @@ const SideBar = () => {
           </GroupCreateModalButton>
           <S.Balloon>그룹 추가하기</S.Balloon>
         </S.Trigger>
-        <GroupList />
+        <GroupList sideBarHeight={refHeight} />
       </S.ButtonList>
     </S.SideWrap>
   );

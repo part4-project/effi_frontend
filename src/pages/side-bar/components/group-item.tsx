@@ -1,5 +1,6 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { TGroupFetchInfo } from '@api/group/group-request.type';
+import useRefSize from '@pages/side-bar/hooks/use-ref-size';
 import { device } from '@styles/breakpoints';
 import { zIndex } from '@styles/z-index';
 import styled, { css, useTheme } from 'styled-components';
@@ -12,7 +13,9 @@ interface GroupItemProp extends TGroupFetchInfo {
 const GroupItem: React.FC<GroupItemProp> = ({ selectGroupId, groupId, groupName, type = 'side-bar' }) => {
   const theme = useTheme();
   const groupItemRef = useRef<HTMLDivElement>(null);
-  const [isOverFlowText, setIsOverFlowText] = useState<boolean>(false);
+  const { handleResize, refWidth, refHeight, refTop, refLeft } = useRefSize(groupItemRef);
+  const [isOverFlowText, setIsOverFlowText] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   const isSelect = selectGroupId == groupId;
 
   //img onload 사용해 실행
@@ -28,13 +31,34 @@ const GroupItem: React.FC<GroupItemProp> = ({ selectGroupId, groupId, groupName,
     }
   };
 
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
+
+  useEffect(() => {
+    if (isHovered) {
+      handleResize();
+    }
+  }, [isHovered]);
+
   return (
     <S.Trigger>
-      <S.GroupItem ref={groupItemRef} $isSelect={isSelect}>
+      <S.GroupItem
+        ref={groupItemRef}
+        $isSelect={isSelect}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
         <img src={theme.groupBg} alt="groupImg" onLoad={checkOverflow} />
         <S.GroupName $isOverFlowText={isOverFlowText}>{groupName}</S.GroupName>
       </S.GroupItem>
-      {type === 'side-bar' && <S.Balloon>{groupName}</S.Balloon>}
+      {type === 'side-bar' && !!refWidth && !!refHeight && !!refTop && !!refLeft && (
+        <S.Balloon $groupItemRect={{ refWidth, refHeight, refTop, refLeft }}>{groupName}</S.Balloon>
+      )}
     </S.Trigger>
   );
 };
@@ -78,14 +102,14 @@ const S = {
     }
   `,
 
-  Balloon: styled.div`
+  Balloon: styled.div<{ $groupItemRect: { refWidth: number; refHeight: number; refTop: number; refLeft: number } }>`
     visibility: hidden;
     opacity: 0;
-    position: absolute;
+    position: fixed;
     width: max-content;
     max-width: 200%;
-    top: 50%;
-    left: 130%;
+    top: ${({ $groupItemRect }) => $groupItemRect.refTop + $groupItemRect.refHeight / 2}px;
+    left: ${({ $groupItemRect }) => $groupItemRect.refLeft + $groupItemRect.refWidth + 12}px;
     transform: translate3d(0, -50%, 0);
     background: ${(props) => props.theme.theme01};
     color: var(--white);
