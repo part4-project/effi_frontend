@@ -5,6 +5,7 @@ import { calculateEndDate } from '@pages/group-home/utils/calculate-end-date';
 import { formatDateToISOStringWithOffset } from '@pages/group-home/utils/format-date-to-string';
 import roundTo15minutes from '@pages/group-home/utils/round-to-15minutes';
 import { useGroupStore } from '@stores/group';
+import { useLobbyGroupStore } from '@stores/lobby-group';
 import styled from 'styled-components';
 import MeetingDate from './meeting-date';
 import MeetingExpectedTime from './meeting-expected-time';
@@ -18,7 +19,8 @@ interface TMeetingFormProps {
   topicData?: TTopic;
 }
 const MeetingForm = ({ data, topicData }: TMeetingFormProps) => {
-  const groupId = useGroupStore((state) => state.groupId);
+  const lobbyGroupId = useLobbyGroupStore((state) => state.lobbyGroupId);
+  const groupId = useGroupStore((state) => state.groupId) || lobbyGroupId;
   const meetingCreate = useMeetingCreateMutation(groupId);
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(roundTo15minutes(new Date()));
