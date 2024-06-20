@@ -15,7 +15,7 @@ const KurentoCameras = () => {
   const userInfo = useQueryClient().getQueryData<TUserInfoRes>([QUERY_KEY.userInfo]);
 
   const userId = userInfo.id;
-  const roomId = 1231231321402;
+  const roomId = 123123132143;
 
   const ws = useRef(null);
   const heartbeatInterval = useRef(null);
