@@ -2,7 +2,11 @@ import { device } from '@styles/breakpoints';
 import { skeleton, skeletonAnimation } from '@styles/skeleton';
 import styled from 'styled-components';
 
-const GroupListSkeleton = () => {
+interface GroupListSkeletonProps {
+  sideBarHeight: number;
+}
+
+const GroupListSkeleton = ({ sideBarHeight }: GroupListSkeletonProps) => {
   const groupBoxLength = () => {
     const gap = 9;
     const mobile = 23.7;
@@ -12,16 +16,16 @@ const GroupListSkeleton = () => {
 
     if (window.innerWidth <= 767) {
       // Mobile
-      groupBoxLength = Math.floor(window.innerHeight / (mobile + gap) - 4);
+      groupBoxLength = Math.floor(sideBarHeight / (mobile + gap) - 4);
     } else if (window.innerWidth <= 1280) {
       // Tablet
-      groupBoxLength = Math.floor(window.innerHeight / (tablet + gap) - 4);
+      groupBoxLength = Math.floor(sideBarHeight / (tablet + gap) - 4);
     } else {
       // Desktop
-      groupBoxLength = Math.floor(window.innerHeight / (desktop + gap) - 3);
+      groupBoxLength = Math.floor(sideBarHeight / (desktop + gap) - 4);
     }
 
-    return groupBoxLength;
+    return groupBoxLength / 2;
   };
 
   return (
