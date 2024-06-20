@@ -15,7 +15,7 @@ const KurentoService = () => {
   const userInfo = useQueryClient().getQueryData<TUserInfoRes>([QUERY_KEY.userInfo]);
   console.log(userInfo.id);
   let userId = userInfo.id;
-  let roomId = 121222123987;
+  let roomId = 1211231131387;
   const ws = useRef(null);
   const participants = {};
 
@@ -124,8 +124,8 @@ const KurentoService = () => {
         iceServers: [
           {
             urls: 'turn:34.64.222.23:3478?transport=tcp',
-            username: 'effi:1718876032',
-            credential: 'kh/O0LAxYIoSd2GpriYNfCcOK9I=',
+            username: 'effi:1718890764',
+            credential: 'aRLdOww6anhvYYDIiP2gqHcO1GU=',
           },
         ],
       },
@@ -168,8 +168,8 @@ const KurentoService = () => {
         iceServers: [
           {
             urls: 'turn:34.64.222.23:3478?transport=tcp',
-            username: 'effi:1718876032',
-            credential: 'kh/O0LAxYIoSd2GpriYNfCcOK9I=',
+            username: 'effi:1718890764',
+            credential: 'aRLdOww6anhvYYDIiP2gqHcO1GU=',
           },
         ],
       }, // 참가자가 생성한 ICE 후보를 처리하기 위한 콜백 함수를 지정
