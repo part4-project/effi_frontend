@@ -10,14 +10,12 @@ import { useQueryClient } from '@tanstack/react-query';
 import { TUserInfoRes } from '@api/user/user-request.type';
 import { QUERY_KEY } from '@constants/query-key';
 
-// 하트비팅 해야한다.
-
 const KurentoService = () => {
   const navigate = useNavigate();
   const userInfo = useQueryClient().getQueryData<TUserInfoRes>([QUERY_KEY.userInfo]);
 
   let userId = userInfo.id;
-  let roomId = 31129213;
+  let roomId = 359;
 
   const ws = useRef(null);
   const heartbeatInterval = useRef(null);
@@ -32,7 +30,7 @@ const KurentoService = () => {
       heartbeatInterval.current = setInterval(() => {
         if (ws.current.readyState === WebSocket.OPEN) {
           const message = {
-            id: 'heartbeat',
+            id: 'ping',
           };
           sendMessage(message);
           console.log('Sent heartbeat');
@@ -88,11 +86,6 @@ const KurentoService = () => {
       clearInterval(heartbeatInterval.current);
     };
   }, []);
-
-  // const register = () => {
-  //   document.getElementById('container').style.visibility = 'hidden';
-  //   document.getElementById('leaveBtn').style.visibility = 'visible';
-  // };
 
   const onNewParticipant = (request) => {
     console.log(888888888888);
@@ -170,6 +163,8 @@ const KurentoService = () => {
       userId: userId,
     });
     navigate('/group-home');
+
+    window.location.reload();
   }
 
   function receiveVideo(sender) {
@@ -222,9 +217,9 @@ const KurentoService = () => {
   }
 
   return (
-    <div>
+    <div style={{ height: '400px' }}>
       <button id="leaveBtn" onClick={leaveRoom}>
-        🙌나가기🙌
+        나가기
       </button>
 
       <div id="participants">
