@@ -3,7 +3,8 @@
 
 import { useEffect, useRef } from 'react';
 import './kurento-service.style.css';
-import Participant from './utils/kurento-service';
+
+import Participant from '@pages/kurento-service/utils/kurento-service';
 import { useNavigate } from 'react-router-dom';
 import { useQueryClient } from '@tanstack/react-query';
 import { TUserInfoRes } from '@api/user/user-request.type';
@@ -14,7 +15,7 @@ const KurentoService = () => {
   const userInfo = useQueryClient().getQueryData<TUserInfoRes>([QUERY_KEY.userInfo]);
   console.log(userInfo.id);
   let userId = userInfo.id;
-  let roomId = 1210033;
+  let roomId = 1212233987;
   const ws = useRef(null);
   const participants = {};
 
