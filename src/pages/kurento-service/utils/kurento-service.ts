@@ -20,7 +20,7 @@ class Participant {
     this.container.appendChild(this.video);
     this.container.appendChild(this.span);
     this.container.onclick = this.switchContainerClass.bind(this);
-    document.getElementById('participants').appendChild(this.container);
+    document.getElementsByClassName('participants')[0].appendChild(this.container);
 
     this.span.appendChild(document.createTextNode(userId));
 
@@ -82,7 +82,6 @@ class Participant {
     if (this.rtcPeer) {
       this.rtcPeer.dispose();
     }
-    console.log(this.container.parentNode);
     this.container.parentNode.removeChild(this.container);
   }
 }

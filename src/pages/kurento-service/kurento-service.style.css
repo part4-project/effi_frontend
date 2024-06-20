@@ -4,16 +4,14 @@
   height: 20px;
   display: flex;
   font-size: 20px;
-  top: 90%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+
   border-radius: 4px;
   border: none;
   padding: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: var(--blue01);
   color: white;
   font-weight: bold;
   cursor: pointer;
@@ -26,41 +24,57 @@
 }
 
 /*비디오 관련*/
-#participants {
+.participants {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
 }
 
-#participants video {
-  background-color: rgba(0, 0, 0, 0.1);
+.participants video {
+  /* position: absolute; */
+  width: 100%;
+  height: 100%;
   border-radius: 10px;
+  background-color: var(--black);
 }
 
-#participants div {
-  display: block;
-  margin-top: 20px;
-  /* margin-bottom: 200px; */
+.participants div {
   position: relative;
+  aspect-ratio: 16 / 9;
 }
 
-#participants span {
-  font-size: 13px;
-  background-color: var(--blue01);
-  width: 90px;
-  height: 25px;
-  color: #ffffff;
-  font-weight: bold;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.participants .camera-count-1 {
+  width: calc(70% - 10px);
+  max-width: calc(70% - 10px);
+}
+
+.participants .camera-count-2 {
+  width: calc(40% - 10px);
+  max-width: calc(40% - 10px);
+}
+
+/* Adjustments for different.participants  camera counts */
+@media (min-width: 768px) {
+  .participants .camera-count-1 {
+    width: calc(70% - 10px);
+    min-width: 330px;
+  }
+
+  .participants .camera-count-2 {
+    width: calc(40% - 10px);
+    min-width: 330px;
+  }
+}
+
+.participants span {
+  color: red;
   position: absolute;
-  bottom: 13px;
-  left: 10px;
-  border-radius: 10px;
-}
-
-.participant.main {
-  border: 5px solid var(--blue01);
-  border-radius: 10px;
+  background-color: #212322;
+  padding: 5px 10px;
+  border-radius: 5px;
+  opacity: 0.8;
+  color: var(--white);
+  font-weight: 700;
+  bottom: 8px;
+  left: 8px;
 }

@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Chatting from './components/chatting';
 import ForceQuitToast from './components/force-quit-toast';
+import KurentoCameras from './components/kurento-cameras';
 import MeetingRoomTimer from './components/meeting-room-timer';
 import RoomButton from './components/room-button';
 import RoomCamera from './components/room-camera';
@@ -74,7 +75,9 @@ const MeetingRoom = () => {
           />
         </S.Nav>
 
-        <S.RoomCameraContainer>
+        <KurentoCameras />
+
+        {/* <S.RoomCameraContainer>
           <S.RoomCameraBox>
             {participatedMember.map((member, idx) => (
               <RoomCamera key={idx} name={member.name} cameraCount={participatedMember.length} />
@@ -86,8 +89,8 @@ const MeetingRoom = () => {
           {ROOM_BUTTONS.map((btn, idx) => (
             <RoomButton key={idx} type={btn.type} initialImg={btn.initialImg} changedImg={btn.changedImg} />
           ))}
-        </S.RoomButtonContainer>
-        
+        </S.RoomButtonContainer> */}
+
         <ForceQuitToast isToastOpen={isToastOpen} isToastAnimClose={isToastAnimClose} />
       </S.LeftSection>
       <S.RightSection>
@@ -155,6 +158,7 @@ const S = {
     padding: 20px;
   `,
   RoomCameraBox: styled.div`
+    border: 10px solid red;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;

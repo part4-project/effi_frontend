@@ -1,25 +1,33 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 
-import { useEffect, useRef } from 'react';
-import './kurento-service.style.css';
-
-import Participant from '@pages/kurento-service/utils/kurento-service';
-import { useNavigate } from 'react-router-dom';
-import { useQueryClient } from '@tanstack/react-query';
+import { useEffect, useRef, useState } from 'react';
 import { TUserInfoRes } from '@api/user/user-request.type';
 import { QUERY_KEY } from '@constants/query-key';
+import Participant from '@pages/kurento-service/utils/kurento-service';
+import { useQueryClient } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import RoomCamera from './room-camera';
 
-const KurentoService = () => {
+const KurentoCameras = () => {
+  const [cameraCnt, setCameraCnt] = useState(1);
   const navigate = useNavigate();
   const userInfo = useQueryClient().getQueryData<TUserInfoRes>([QUERY_KEY.userInfo]);
 
-  let userId = userInfo.id;
-  let roomId = 362;
+  const userId = userInfo.id;
+  const roomId = 1231231321402;
 
   const ws = useRef(null);
   const heartbeatInterval = useRef(null);
   const participants = {};
+
+  const participantElementsRef = useRef(null);
+
+  useEffect(() => {
+    participantElementsRef.current = document.getElementsByClassName('participant');
+    setCameraCnt(participantElementsRef.current.length);
+  }, [participantElementsRef]);
 
   useEffect(() => {
     ws.current = new WebSocket('https://api.effi.club/signal/webrtc');
@@ -107,21 +115,13 @@ const KurentoService = () => {
 
   function onExistingParticipants(msg) {
     const constraints = {
-      audio: {
-        autoGainControl: true,
-        channelCount: 2,
-        echoCancellation: true,
-        latency: 0,
-        noiseSuppression: true,
-        sampleRate: 48000,
-        sampleSize: 16,
-        volume: 0.5,
-      },
+      audio: true,
       video: {
-        width: 1180,
-        height: 720,
-        maxFrameRate: 30,
-        minFrameRate: 15,
+        mandatory: {
+          maxWidth: 320,
+          maxFrameRate: 15,
+          minFrameRate: 15,
+        },
       },
     };
     // console.log(userId + ' 가 다음 방에 입장: ' + roomId);
@@ -129,7 +129,11 @@ const KurentoService = () => {
 
     participants[userId] = participant;
 
+    // console.log(participants[userId] + '★');
+
     const video = participant.getVideoElement();
+
+    // console.log(participant.video);
 
     const options = {
       localVideo: video,
@@ -221,21 +225,62 @@ const KurentoService = () => {
   }
 
   return (
-    <div style={{ height: '400px' }}>
-      <button id="leaveBtn" onClick={leaveRoom}>
-        나가기
-      </button>
-
-      <div id="participants">
-        {Object.values(participants).map((participant) => (
-          <div key={participant.userId}>
-            {participant.getVideoElement()}
-            <span>{participant.userId}</span>
-          </div>
-        ))}
-      </div>
-    </div>
+    <>
+      <S.RoomCameraContainer>
+        <S.RoomCameraBox>
+          {/* {participatedMember.map((member, idx) => (
+            <RoomCamera key={idx} name={member.name} cameraCount={participatedMember.length} />
+          ))} */}
+          <div className={`participants camera-count-${cameraCnt}`}></div>
+        </S.RoomCameraBox>
+      </S.RoomCameraContainer>
+      <S.RoomButtonContainer className="room-button-container">
+        {/* {ROOM_BUTTONS.map((btn, idx) => (
+          <RoomButton key={idx} type={btn.type} initialImg={btn.initialImg} changedImg={btn.changedImg} />
+        ))} */}
+        <button id="leaveBtn" onClick={leaveRoom}>
+          나가기
+        </button>
+      </S.RoomButtonContainer>
+    </>
   );
 };
 
-export default KurentoService;
+export default KurentoCameras;
+
+const S = {
+  // Container: styled.div`
+  //   border: 5px solid white;
+  // `,
+
+  RoomCameraContainer: styled.div`
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+  `,
+  RoomCameraBox: styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    gap: 10px;
+  `,
+  RoomButtonContainer: styled.div`
+    border: 1px solid white;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 34px;
+    padding: 20px;
+    visibility: hidden;
+    opacity: 0;
+    transition:
+      visibility 0.3s,
+      opacity 0.3s;
+    position: absolute;
+    bottom: 0;
+  `,
+};
