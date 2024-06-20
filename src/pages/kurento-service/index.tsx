@@ -14,7 +14,7 @@ const KurentoService = () => {
   const userInfo = useQueryClient().getQueryData<TUserInfoRes>([QUERY_KEY.userInfo]);
   console.log(userInfo.id);
   let userId = userInfo.id;
-  let roomId = 12787123;
+  let roomId = 1210033;
   const ws = useRef(null);
   const participants = {};
 
@@ -28,6 +28,9 @@ const KurentoService = () => {
         roomId: roomId,
       };
       sendMessage(message);
+    };
+    ws.current.onclose = function () {
+      console.log('WebSocket connection closed.');
     };
     ws.current.onmessage = function (message) {
       const parsedMessage = JSON.parse(message.data);
@@ -60,7 +63,9 @@ const KurentoService = () => {
     };
     return () => {
       if (ws.current) {
+        console.log('닫히기 전');
         ws.current.close();
+        console.log('닫힘!!!!');
       }
     };
   }, []);
@@ -146,8 +151,6 @@ const KurentoService = () => {
       userId: userId,
     });
     navigate('/group-home');
-
-    // window.location.reload();
   }
 
   function receiveVideo(sender) {
@@ -201,12 +204,6 @@ const KurentoService = () => {
 
   return (
     <div>
-      {/* <div id="container">
-        <button id="registerBtn" onClick={register}>
-          입장
-        </button>
-      </div> */}
-
       <button id="leaveBtn" onClick={leaveRoom}>
         🙌나가기🙌
       </button>

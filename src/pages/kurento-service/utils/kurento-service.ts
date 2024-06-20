@@ -82,6 +82,7 @@ class Participant {
     if (this.rtcPeer) {
       this.rtcPeer.dispose();
     }
+    console.log(this.container.parentNode);
     this.container.parentNode.removeChild(this.container);
   }
 }
