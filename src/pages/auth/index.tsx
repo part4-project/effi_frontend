@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { setCookie } from '@utils/cookie';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -23,7 +24,19 @@ const Auth = () => {
     handleSetCookie(code);
   }, [code]);
 
-  return <div>로그인 중~</div>;
+  return <S.AuthContainer>로그인 중입니다.</S.AuthContainer>;
 };
 
 export default Auth;
+
+const S = {
+  AuthContainer: styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: ${(props) => props.theme.theme02};
+    color: ${(props) => props.theme.button03};
+  `,
+};

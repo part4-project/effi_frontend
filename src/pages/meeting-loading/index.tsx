@@ -5,6 +5,7 @@ import { useGroupStore } from '@stores/group';
 import { useMeetingStore } from '@stores/meeting';
 import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 
 const MeetingLoading = () => {
   const navigate = useNavigate();
@@ -26,7 +27,19 @@ const MeetingLoading = () => {
     }
   });
 
-  return <div>회의실 진입 중~</div>;
+  return <S.MeetingLoadingContainer>회의실 입장 중입니다.</S.MeetingLoadingContainer>;
 };
 
 export default MeetingLoading;
+
+const S = {
+  MeetingLoadingContainer: styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: ${(props) => props.theme.theme02};
+    color: ${(props) => props.theme.button03};
+  `,
+};
