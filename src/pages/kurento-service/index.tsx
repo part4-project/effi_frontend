@@ -17,7 +17,7 @@ const KurentoService = () => {
   const userInfo = useQueryClient().getQueryData<TUserInfoRes>([QUERY_KEY.userInfo]);
 
   let userId = userInfo.id;
-  let roomId = 1211123923;
+  let roomId = 31129213;
 
   const ws = useRef(null);
   const heartbeatInterval = useRef(null);
@@ -31,7 +31,10 @@ const KurentoService = () => {
       // heart beating
       heartbeatInterval.current = setInterval(() => {
         if (ws.current.readyState === WebSocket.OPEN) {
-          ws.current.send(JSON.stringify({ type: 'heartbeat' }));
+          const message = {
+            id: 'heartbeat',
+          };
+          sendMessage(message);
           console.log('Sent heartbeat');
         }
       }, 30000);
@@ -43,7 +46,8 @@ const KurentoService = () => {
       };
       sendMessage(message);
     };
-    ws.current.onclose = function () {
+    ws.current.onclose = function (e) {
+      console.log(e);
       console.log('WebSocket connection closed.');
       clearInterval(heartbeatInterval.current);
     };
