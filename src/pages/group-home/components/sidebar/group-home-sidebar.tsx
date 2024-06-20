@@ -1,5 +1,7 @@
+import { useEffect } from 'react';
 import { TGroupFetchMemberInfo, TGroupMemberFetchRes } from '@api/group/group-request.type';
 import { QUERY_KEY } from '@constants/query-key';
+import { useWithdrawGroupMutation } from '@hooks/react-query/use-query-group';
 import GroupNameInput from '@pages/group-home/components/sidebar/group-name-input';
 import { useGroupStore } from '@stores/group';
 import { useQueryClient } from '@tanstack/react-query';
@@ -19,9 +21,13 @@ const GroupHomeSideBar = ({ isAdmin }: TGroupHomeSideBarProps) => {
     useGroupStore((state) => state.groupId),
   ]);
 
+  const { mutate: WithdrawGroupMutate, isSuccess } = useWithdrawGroupMutation(useGroupStore((state) => state.groupId));
+
   const handleLeaveGroupButtonClick = () => {
-    navigate('/');
+    WithdrawGroupMutate();
   };
+
+  if (isSuccess) navigate('/');
 
   return (
     <S.Container>

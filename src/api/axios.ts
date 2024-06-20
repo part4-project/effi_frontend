@@ -28,7 +28,7 @@ instance.interceptors.request.use(
     if (error.response.status === 401) {
       window.location.href = '/login';
     }
-    return error;
+    return Promise.reject(error);
   },
 );
 instance.interceptors.response.use(
@@ -43,7 +43,7 @@ instance.interceptors.response.use(
     if (error.response.status === 401) {
       window.location.href = '/login';
     }
-    return error;
+    return Promise.reject(error);
   },
 );
 

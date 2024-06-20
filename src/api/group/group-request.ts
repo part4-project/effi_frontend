@@ -114,6 +114,39 @@ const groupRequest = {
       return error;
     }
   },
+  exileGroupMember: async (groupId: number, groupMemberIdList: number[]) => {
+    try {
+      await axios.delete(`user/group/exile/${groupId}`, { data: { groupMemberIds: groupMemberIdList } });
+    } catch (error) {
+      if (isAxiosError(error)) {
+        if (error.response) {
+          throw {
+            errorMessage: error.response.data.errorMessage || 'errorMessage',
+            errorCode: error.response.data.errorCode || 'UNKNOWN_ERROR',
+            statusCode: error.response.status,
+          };
+        }
+      }
+      return error;
+    }
+  },
+  withdrawGroup: async (groupId: number) => {
+    try {
+      const response = await axios.delete(`user/group/withdraw/${groupId}`);
+      return response.data;
+    } catch (error) {
+      if (isAxiosError(error)) {
+        if (error.response) {
+          throw {
+            errorMessage: error.response.data.errorMessage || 'errorMessage',
+            errorCode: error.response.data.errorCode || 'UNKNOWN_ERROR',
+            statusCode: error.response.status,
+          };
+        }
+      }
+      return error;
+    }
+  },
 } as const;
 
 export default groupRequest;

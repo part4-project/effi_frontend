@@ -2,7 +2,21 @@ import { useState } from 'react';
 import { TGroupFetchMemberInfo } from '@api/group/group-request.type';
 import styled, { useTheme } from 'styled-components';
 
-const GroupMemberInfo: React.FC<TGroupFetchMemberInfo> = ({ nickname, email, admin }) => {
+interface GroupMemberInfoProps {
+  // eslint-disable-next-line no-unused-vars
+  onAddExileMember: (id: number) => void;
+  // eslint-disable-next-line no-unused-vars
+  onRemoveExileMember: (id: number) => void;
+}
+
+const GroupMemberInfo: React.FC<TGroupFetchMemberInfo & GroupMemberInfoProps> = ({
+  id,
+  nickname,
+  email,
+  admin,
+  onAddExileMember,
+  onRemoveExileMember,
+}) => {
   const theme = useTheme();
 
   const [isExport, setIsExport] = useState<boolean>(false);
@@ -10,6 +24,7 @@ const GroupMemberInfo: React.FC<TGroupFetchMemberInfo> = ({ nickname, email, adm
 
   const handleExportClick = () => {
     setIsExport((currentExport) => !currentExport);
+    !isExport ? onAddExileMember(id) : onRemoveExileMember(id);
   };
 
   return (

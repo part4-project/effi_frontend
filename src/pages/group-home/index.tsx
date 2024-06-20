@@ -26,7 +26,7 @@ const GroupHome = () => {
   useEffect(() => {
     if (!isLoading) {
       const { id: adminId } = groupData.memberList.find((data: TGroupFetchMemberInfo) => data.admin);
-      setIsAdmin(adminId == userInfo?.id);
+      setIsAdmin(adminId === userInfo?.id);
     }
   }, [isLoading, userInfo, groupData]);
 
