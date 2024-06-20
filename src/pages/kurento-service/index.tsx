@@ -10,19 +10,32 @@ import { useQueryClient } from '@tanstack/react-query';
 import { TUserInfoRes } from '@api/user/user-request.type';
 import { QUERY_KEY } from '@constants/query-key';
 
+// 하트비팅 해야한다.
+
 const KurentoService = () => {
   const navigate = useNavigate();
   const userInfo = useQueryClient().getQueryData<TUserInfoRes>([QUERY_KEY.userInfo]);
-  console.log(userInfo.id);
+
   let userId = userInfo.id;
-  let roomId = 121123187;
+  let roomId = 1211123923;
+
   const ws = useRef(null);
+  const heartbeatInterval = useRef(null);
   const participants = {};
 
   useEffect(() => {
     ws.current = new WebSocket('https://api.effi.club/signal/webrtc');
     ws.current.onopen = function () {
       console.log('WebSocket connection opened.');
+
+      // heart beating
+      heartbeatInterval.current = setInterval(() => {
+        if (ws.current.readyState === WebSocket.OPEN) {
+          ws.current.send(JSON.stringify({ type: 'heartbeat' }));
+          console.log('Sent heartbeat');
+        }
+      }, 30000);
+
       const message = {
         id: 'connect',
         userId: userId,
@@ -32,6 +45,7 @@ const KurentoService = () => {
     };
     ws.current.onclose = function () {
       console.log('WebSocket connection closed.');
+      clearInterval(heartbeatInterval.current);
     };
     ws.current.onmessage = function (message) {
       const parsedMessage = JSON.parse(message.data);
@@ -64,10 +78,10 @@ const KurentoService = () => {
     };
     return () => {
       if (ws.current) {
-        console.log('닫히기 전');
         ws.current.close();
         console.log('닫힘!!!!');
       }
+      clearInterval(heartbeatInterval.current);
     };
   }, []);
 
