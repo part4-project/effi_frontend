@@ -15,7 +15,7 @@ const GroupNameInput = ({ groupName: groupNameProp, groupCode, isAdmin }: TGroup
   const [isInputValueExist, setIsInputValueExist] = useState(true);
   const [groupName, setGroupName] = useState(groupNameProp);
   const inputRef = useRef<HTMLTextAreaElement>(null);
-  const { mutateAsync } = useGroupUpdateMutation(useGroupStore((state) => state.groupId));
+  const { mutate } = useGroupUpdateMutation(useGroupStore((state) => state.groupId));
 
   const handleGroupNameChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setGroupName(e.target.value);
@@ -28,12 +28,12 @@ const GroupNameInput = ({ groupName: groupNameProp, groupCode, isAdmin }: TGroup
 
   const handleEditCompleteButtonClick = useCallback(async () => {
     if (groupName.length) {
-      await mutateAsync(groupName);
+      mutate(groupName);
       setIsEditing(false);
     } else {
       setIsInputValueExist(false);
     }
-  }, [mutateAsync, groupName]);
+  }, [mutate, groupName]);
 
   useEffect(() => {
     if (isEditing && inputRef.current) {
