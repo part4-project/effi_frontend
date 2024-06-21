@@ -1,16 +1,36 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TGroupFetchMemberInfo } from '@api/group/group-request.type';
 import styled, { useTheme } from 'styled-components';
 
-const GroupMemberInfo: React.FC<TGroupFetchMemberInfo> = ({ nickname, email, admin }) => {
+interface GroupMemberInfoProps {
+  // eslint-disable-next-line no-unused-vars
+  onAddExileMember: (id: number) => void;
+  // eslint-disable-next-line no-unused-vars
+  onRemoveExileMember: (id: number) => void;
+  exileMemberList: number[];
+}
+
+const GroupMemberInfo: React.FC<TGroupFetchMemberInfo & GroupMemberInfoProps> = ({
+  id,
+  nickname,
+  email,
+  admin,
+  onAddExileMember,
+  onRemoveExileMember,
+  exileMemberList,
+}) => {
   const theme = useTheme();
 
   const [isExport, setIsExport] = useState<boolean>(false);
   const exportName = isExport ? '내보내기 취소' : '내보내기';
 
   const handleExportClick = () => {
-    setIsExport((currentExport) => !currentExport);
+    !isExport ? onAddExileMember(id) : onRemoveExileMember(id);
   };
+
+  useEffect(() => {
+    setIsExport(!!exileMemberList.includes(id));
+  }, [exileMemberList]);
 
   return (
     <S.MemberInfoWrap>
@@ -67,10 +87,14 @@ const S = {
   MemberExportBtn: styled.button<{ $isExport: boolean }>`
     padding: 10px;
     border-radius: 5px;
-    background-color: ${({ $isExport, theme }) => ($isExport ? `var(--white)` : theme.theme02)};
+    background-color: ${({ $isExport, theme }) => ($isExport ? theme.theme06 : theme.theme02)};
     border: ${({ $isExport, theme }) => ($isExport ? `1px solid ${theme.theme02}` : `1px solid transparent`)};
     color: ${(props) => props.theme.text06};
     font-size: 12px;
     font-weight: 700;
+    &:hover {
+      background: ${(props) => props.theme.theme01};
+      color: var(--dark08);
+    }
   `,
 };

@@ -1,8 +1,11 @@
+import { useEffect, useState } from 'react';
 import ConfirmModal from '@components/modal/confirm-modal/confirm-modal';
 import Modal from '@components/modal/modal';
 import ModalButton from '@components/modal/modal-button';
+import { useExileGroupMemberMutation } from '@hooks/react-query/use-query-group';
 import GroupInvite from '@pages/group-home/components/group-modal/group-invite';
 import GroupMemberList from '@pages/group-home/components/group-modal/group-member-list';
+import { useGroupStore } from '@stores/group';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -18,8 +21,19 @@ interface GroupModalProps {
 
 const GroupModal = ({ isOpen, onGroupClose, onConfirmClose, onConfirmOpen }: GroupModalProps) => {
   const navigate = useNavigate();
+  const { mutate: exileGroupMemberMutate } = useExileGroupMemberMutation(useGroupStore((state) => state.groupId));
+  const [exileMemberList, setExileMemberList] = useState<number[]>([]);
+
+  const handleAddExileMemberButtonClick = (id: number) => {
+    setExileMemberList((prev) => [...prev, id]);
+  };
+
+  const handleRemoveExileMemberButtonClick = (id: number) => {
+    setExileMemberList((prev) => prev.filter((memberId) => memberId !== id));
+  };
 
   const handleSaveGroupClick = () => {
+    exileGroupMemberMutate(exileMemberList);
     onGroupClose();
   };
 
@@ -29,16 +43,24 @@ const GroupModal = ({ isOpen, onGroupClose, onConfirmClose, onConfirmOpen }: Gro
     navigate('/');
   };
 
+  useEffect(() => {
+    setExileMemberList([]);
+  }, [isOpen]);
+
   return (
     <Modal isOpen={isOpen.group} onClose={onGroupClose} headerTitle="그룹관리">
       <S.ModalWrap>
         <S.ModalContent>
           <GroupInvite />
-          <GroupMemberList />
+          <GroupMemberList
+            onAddExileMember={handleAddExileMemberButtonClick}
+            onRemoveExileMember={handleRemoveExileMemberButtonClick}
+            exileMemberList={exileMemberList}
+          />
         </S.ModalContent>
         <S.ModalFooter>
           <S.GroupDisbandment onClick={onConfirmOpen}>그룹 해체하기</S.GroupDisbandment>
-          <ModalButton type="primary" onClick={handleSaveGroupClick}>
+          <ModalButton type={exileMemberList.length ? 'primary' : 'disable'} onClick={handleSaveGroupClick}>
             저장하기
           </ModalButton>
         </S.ModalFooter>

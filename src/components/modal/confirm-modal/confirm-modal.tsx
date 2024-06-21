@@ -38,7 +38,6 @@ export default ConfirmModal;
 const S = {
   ConfirmModalContent: styled.div`
     overflow: hidden;
-
     z-index: 9999;
   `,
 

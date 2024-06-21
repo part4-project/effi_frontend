@@ -1,5 +1,8 @@
+import { useState } from 'react';
 import { TGroupFetchMemberInfo, TGroupMemberFetchRes } from '@api/group/group-request.type';
 import { QUERY_KEY } from '@constants/query-key';
+import { useWithdrawGroupMutation } from '@hooks/react-query/use-query-group';
+import GroupLeaveModalButton from '@pages/group-home/components/sidebar/group-leave-modal-button';
 import GroupNameInput from '@pages/group-home/components/sidebar/group-name-input';
 import { useGroupStore } from '@stores/group';
 import { useQueryClient } from '@tanstack/react-query';
@@ -13,15 +16,21 @@ interface TGroupHomeSideBarProps {
 const GroupHomeSideBar = ({ isAdmin }: TGroupHomeSideBarProps) => {
   const theme = useTheme();
   const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
 
   const groupData = useQueryClient().getQueryData<TGroupMemberFetchRes>([
     QUERY_KEY.groupInfo,
     useGroupStore((state) => state.groupId),
   ]);
 
-  const handleLeaveGroupButtonClick = () => {
-    navigate('/');
+  const { mutate: WithdrawGroupMutate, isSuccess } = useWithdrawGroupMutation(useGroupStore((state) => state.groupId));
+
+  const handleLeaveGroupTextClick = () => {
+    WithdrawGroupMutate();
+    setIsOpen(false);
   };
+
+  if (isSuccess) navigate('/');
 
   return (
     <S.Container>
@@ -36,7 +45,11 @@ const GroupHomeSideBar = ({ isAdmin }: TGroupHomeSideBarProps) => {
           </S.GroupMemberList>
         ))}
       </S.GroupMemberLists>
-      {isAdmin || <S.LeaveGroupButton onClick={handleLeaveGroupButtonClick}>그룹 나가기</S.LeaveGroupButton>}
+      {isAdmin || (
+        <GroupLeaveModalButton isOpen={isOpen} setIsOpen={setIsOpen} onDeleteButton={handleLeaveGroupTextClick}>
+          <S.LeaveGroupText>그룹 탈퇴하기</S.LeaveGroupText>
+        </GroupLeaveModalButton>
+      )}
     </S.Container>
   );
 };
@@ -78,7 +91,10 @@ const S = {
     width: 14px;
   `,
 
-  LeaveGroupButton: styled.button`
+  LeaveGroupText: styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: ${(props) => props.theme.button01};
     color: ${(props) => props.theme.theme01};
     font-size: 12px;

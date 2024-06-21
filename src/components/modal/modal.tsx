@@ -14,7 +14,7 @@ interface ModalProps {
 }
 
 const Modal = ({ children, isOpen, onClose, headerTitle, isConfirmModal = false }: ModalProps) => {
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
   const [shouldRender, setShouldRender] = useState(isOpen);
 
   const modalRef = useRef(null);

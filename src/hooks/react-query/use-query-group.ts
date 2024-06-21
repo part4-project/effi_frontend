@@ -118,3 +118,36 @@ export const useGroupInviteMutation = (groupId: number) => {
   });
   return mutation;
 };
+
+export const useExileGroupMemberMutation = (groupId: number) => {
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: async (groupIdList: number[]) => await groupRequest.exileGroupMember(groupId, groupIdList),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.groupInfo, groupId] });
+      toast('그룹 멤버 추방이 완료되었습니다');
+    },
+    onError: (error: TAxiosError) => toast(error.errorMessage, true),
+  });
+
+  return mutation;
+};
+
+export const useWithdrawGroupMutation = (groupId: number) => {
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: async () => await groupRequest.withdrawGroup(groupId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.groupInfo, groupId] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.groupList] });
+      toast('그룹에 성공적으로 탈퇴했습니다');
+    },
+    onError: (error: TAxiosError) => toast(error.errorMessage, true),
+  });
+
+  return mutation;
+};

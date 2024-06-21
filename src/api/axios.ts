@@ -33,7 +33,7 @@ instance.interceptors.request.use(
     if (error.response.status === 404) {
       window.location.href = '/404';
     }
-    return error;
+    return Promise.reject(error);
   },
 );
 instance.interceptors.response.use(
@@ -53,7 +53,7 @@ instance.interceptors.response.use(
     if (error.response.status === 404) {
       window.location.href = '/404';
     }
-    return error;
+    return Promise.reject(error);
   },
 );
 
