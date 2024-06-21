@@ -26,7 +26,7 @@ const KurentoCameras = () => {
   ]);
 
   const userId = userInfo?.id;
-  const roomId = 111174;
+  const roomId = 111175;
   const memberList = groupInfo?.memberList;
 
   const ws = useRef(null);
