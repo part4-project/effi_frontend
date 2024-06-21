@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { TUserInfoRes } from '@api/user/user-request.type';
 import { QUERY_KEY } from '@constants/query-key';
 import Participant from '@pages/kurento-service/utils/kurento-service';
@@ -10,18 +10,25 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const KurentoCameras = () => {
-  // const [cameraCnt, setCameraCnt] = useState(1);
   const navigate = useNavigate();
   const userInfo = useQueryClient().getQueryData<TUserInfoRes>([QUERY_KEY.userInfo]);
 
   const userId = userInfo.id;
-  const roomId = 12312313337;
+  const roomId = 1231231336025;
 
   const ws = useRef(null);
   const heartbeatInterval = useRef(null);
-  const participants = {};
+  // const participants = {};
+  const [participants, setParticipants] = useState({});
+  const [cameraCount, setCameraCount] = useState(0);
 
   const participantElementsRef = useRef(null);
+
+  useEffect(() => {
+    const participantsContainer = participantElementsRef.current;
+    setCameraCount(Object.keys(participants).length);
+    participantsContainer.className = `participants participants-${cameraCount}`;
+  }, [cameraCount, participants]);
 
   useEffect(() => {
     ws.current = new WebSocket('https://api.effi.club/signal/webrtc');
@@ -65,7 +72,7 @@ const KurentoCameras = () => {
           receiveVideoResponse(parsedMessage);
           break;
         case 'iceCandidate':
-          participants[parsedMessage.userId].rtcPeer.addIceCandidate(parsedMessage.candidate, function (error) {
+          participants[parsedMessage.userId]?.rtcPeer.addIceCandidate(parsedMessage.candidate, function (error) {
             if (error) {
               console.error('Error adding candidate: ' + error);
               return;
@@ -93,7 +100,7 @@ const KurentoCameras = () => {
   };
 
   const receiveVideoResponse = (result) => {
-    participants[result.sender].rtcPeer.processAnswer(
+    participants[result.sender]?.rtcPeer.processAnswer(
       result.sdpAnswer, // 원격 참가자로부터 받은 SDP 응답
       function (error) {
         if (error) return console.error(error);
@@ -104,8 +111,8 @@ const KurentoCameras = () => {
   function onExistingParticipants(msg) {
     const constraints = {
       video: {
-        width: 1280,
-        frameRate: 40,
+        width: 1280, // 해상도
+        frameRate: 40, // 프레임
       },
       audio: {
         autoGainControl: true,
@@ -121,8 +128,10 @@ const KurentoCameras = () => {
 
     const participant = new Participant(userId, sendMessage);
 
-    participants[userId] = participant;
-
+    setParticipants((prevParticipants) => ({
+      ...prevParticipants,
+      [userId]: participant,
+    }));
     const video = participant.getVideoElement();
 
     const options = {
@@ -165,7 +174,10 @@ const KurentoCameras = () => {
   function receiveVideo(sender) {
     const participant = new Participant(sender, sendMessage); // 발신자(비디오를 보낼 참가자)에 대한 새로운 인스턴스 생성
 
-    participants[sender] = participant; // 발신자 이름을 키로 사용하여 참가자 개체를 participants 객체에 저장
+    setParticipants((prevParticipants) => ({
+      ...prevParticipants,
+      [sender]: participant,
+    }));
     const video = participant.getVideoElement(); // 참가자와 연결된 비디오 요소를 검색
     console.log(participant.getVideoElement());
 
@@ -200,7 +212,11 @@ const KurentoCameras = () => {
     console.log('Participant ' + request.userId + ' left');
     const participant = participants[request.userId];
     participant.dispose();
-    delete participants[request.userId];
+    setParticipants((prevParticipants) => {
+      const updatedParticipants = { ...prevParticipants };
+      delete updatedParticipants[request.userId];
+      return updatedParticipants;
+    });
   }
 
   function sendMessage(message) {
@@ -212,12 +228,31 @@ const KurentoCameras = () => {
 
   return (
     <>
+      <h1>{cameraCount}</h1>
       <S.RoomCameraContainer>
         <S.RoomCameraBox>
-          {/* {participatedMember.map((member, idx) => (
-            <RoomCamera key={idx} name={member.name} cameraCount={participatedMember.length} />
-          ))} */}
-          <div ref={participantElementsRef} className="participants"></div>
+          <div ref={participantElementsRef} className="participants">
+            {/* <div className="participant" id="6">
+              <video id="video-6" autoPlay></video>
+              <span>test</span>
+            </div>
+            <div className="participant" id="7">
+              <video id="video-7" autoPlay></video>
+              <span>test</span>
+            </div>
+            <div className="participant" id="7">
+              <video id="video-7" autoPlay></video>
+              <span>test</span>
+            </div>
+            <div className="participant" id="7">
+              <video id="video-7" autoPlay></video>
+              <span>test</span>
+            </div>
+            <div className="participant" id="7">
+              <video id="video-7" autoPlay></video>
+              <span>test</span>
+            </div> */}
+          </div>
         </S.RoomCameraBox>
       </S.RoomCameraContainer>
       <S.RoomButtonContainer className="room-button-container">

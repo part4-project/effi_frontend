@@ -4,18 +4,18 @@
 import { useEffect, useRef } from 'react';
 import './kurento-service.style.css';
 
-import Participant from '@pages/kurento-service/utils/kurento-service';
-import { useNavigate } from 'react-router-dom';
-import { useQueryClient } from '@tanstack/react-query';
 import { TUserInfoRes } from '@api/user/user-request.type';
 import { QUERY_KEY } from '@constants/query-key';
+import Participant from '@pages/kurento-service/utils/kurento-service';
+import { useQueryClient } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 
 const KurentoService = () => {
   const navigate = useNavigate();
   const userInfo = useQueryClient().getQueryData<TUserInfoRes>([QUERY_KEY.userInfo]);
 
-  let userId = userInfo.id;
-  let roomId = 362;
+  const userId = userInfo.id;
+  const roomId = 362;
 
   const ws = useRef(null);
   const heartbeatInterval = useRef(null);

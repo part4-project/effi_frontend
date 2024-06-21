@@ -96,6 +96,7 @@ const S = {
     height: 100vh;
     background-color: #212322;
   `,
+
   LeftSection: styled.div`
     flex: 1 1 75%;
     position: relative;

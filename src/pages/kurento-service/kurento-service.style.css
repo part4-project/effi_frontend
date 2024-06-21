@@ -23,21 +23,65 @@
 
 /*비디오 관련*/
 .participants {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  gap: 10px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.participant {
+  position: relative;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  /* aspect-ratio: 52/36; */
 }
 
 .participant video {
   border-radius: 10px;
   background-color: var(--black);
-  width: 520px;
+  width: 100%;
+  /* height: 100%;
+  max-width: 100%; */
+  aspect-ratio: 16 / 9;
 }
 
-.participant {
-  position: relative;
-  aspect-ratio: 16 / 10;
-  /* min-width: none; */
+.participants:only-child .participant {
+  width: 100%;
+  height: 100%;
+}
+
+/* Two participants */
+.participants.participants-2 {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+}
+
+/* Three participants */
+.participants.participants-3 {
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
+}
+
+/* Four participants */
+.participants.participants-4 {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+/* Five participants */
+.participants.participants-5 {
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+/* Six participants */
+.participants.participants-6 {
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
 }
 
 /* .camera-count-1 div {
@@ -63,7 +107,6 @@
 } */
 
 .participant span {
-  color: red;
   position: absolute;
   background-color: #212322;
   padding: 5px 10px;
