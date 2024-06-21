@@ -1,16 +1,25 @@
 import MeetingModalButton from '@pages/group-home/components/meeting-modal/meeting-modal-button';
+import { useLobbyGroupStore } from '@stores/lobby-group';
 import styled from 'styled-components';
 
 interface GroupListItemProps {
+  groupId: number;
   groupName: string;
   onClick: () => void;
   groupNameLength: 'short' | 'long';
 }
 
-const GroupListItem = ({ groupName, onClick, groupNameLength }: GroupListItemProps) => {
+const GroupListItem = ({ groupId, groupName, onClick, groupNameLength }: GroupListItemProps) => {
+  const setLobbyGroupId = useLobbyGroupStore((state) => state.setLobbyGroupId);
+
+  const handleGroupClick = () => {
+    setLobbyGroupId(groupId);
+    onClick();
+  };
+
   return (
     <MeetingModalButton title="회의 생성">
-      <S.Container $groupNameLength={groupNameLength} onClick={onClick}>
+      <S.Container $groupNameLength={groupNameLength} onClick={handleGroupClick}>
         <S.FileImg>{groupName}</S.FileImg>
       </S.Container>
     </MeetingModalButton>
