@@ -26,7 +26,7 @@ const KurentoCameras = () => {
   ]);
 
   const userId = userInfo?.id;
-  const roomId = 111176;
+  const roomId = 111185;
   const memberList = groupInfo?.memberList;
 
   const ws = useRef(null);
@@ -251,6 +251,7 @@ const KurentoCameras = () => {
         id: 'handleDevice',
         type: 'camera',
         userId: userId,
+        roomId: roomId,
         isOn: false,
       });
     } else {
@@ -263,6 +264,7 @@ const KurentoCameras = () => {
         id: 'handleDevice',
         type: 'camera',
         userId: userId,
+        roomId: roomId,
         isOn: true,
       });
     }
@@ -271,6 +273,8 @@ const KurentoCameras = () => {
   }
 
   function localAudioToggle() {
+    const myMuteIcon = document.getElementById(`muteIcon-${userInfo.id}`);
+
     const audioTrack = participants.current[userId].rtcPeer
       .getLocalStream()
       .getTracks()
@@ -281,10 +285,13 @@ const KurentoCameras = () => {
       setIsAudio(false);
       console.log('Audio Off');
 
+      myMuteIcon.style.opacity = 1;
+
       sendMessage({
         id: 'handleDevice',
         type: 'mic',
         userId: userId,
+        roomId: roomId,
         isOn: false,
       });
     } else {
@@ -292,25 +299,45 @@ const KurentoCameras = () => {
       setIsAudio(true);
       console.log('Audio On');
 
+      myMuteIcon.style.opacity = 0;
+
       sendMessage({
         id: 'handleDevice',
         type: 'mic',
         userId: userId,
+        roomId: roomId,
         isOn: true,
       });
     }
   }
 
   function onHandleDevice(data) {
-    if (userInfo.id == data.userId) return; // 바꾼사람이 나일 때는 실행 안함
-    const offedParticipant = document.getElementById(`profile-${data.userId}`);
-    console.log(offedParticipant);
-    if (data.isOn) {
-      offedParticipant.style.opacity = 0;
+    if (userInfo.id === data.userId) return;
+
+    if (data.type === 'camera') {
+      const profileImageElement = document.getElementById(`profile-${data.userId}`);
+      if (profileImageElement) {
+        if (data.isOn) {
+          profileImageElement.style.opacity = 0;
+        } else {
+          profileImageElement.style.opacity = 1;
+        }
+      } else {
+        console.error('상대방의 데이터를 받아오는데 실패했습니다.');
+      }
     } else {
-      offedParticipant.style.opacity = 1;
+      const muteIconElement = document.getElementById(`muteIcon-${data.userId}`);
+      if (muteIconElement) {
+        console.log(muteIconElement);
+        if (data.isOn) {
+          muteIconElement.style.opacity = 0;
+        } else {
+          muteIconElement.style.opacity = 1;
+        }
+      } else {
+        console.error('상대방의 데이터를 받아오는데 실패했습니다.');
+      }
     }
-    console.log('함수 실행');
   }
 
   return (

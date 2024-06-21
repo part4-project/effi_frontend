@@ -15,9 +15,12 @@ class Participant {
     this.video = document.createElement('video');
 
     this.img = document.createElement('img');
-    this.img.style.opacity = 0;
     this.img.id = 'profile-' + userId;
     this.img.src = userInfo.profileImageUrl;
+
+    this.muteIcon = document.createElement('span');
+    this.muteIcon.id = 'muteIcon-' + userId;
+    this.muteIcon.appendChild(document.createTextNode('꺼짐'));
 
     this.rtcPeer = null;
     this.sendMessage = sendMessage;
@@ -26,6 +29,7 @@ class Participant {
     this.container.appendChild(this.video);
     this.container.appendChild(this.span);
     this.container.appendChild(this.img);
+    this.container.appendChild(this.muteIcon);
 
     this.container.onclick = this.switchContainerClass.bind(this);
     document.getElementsByClassName('participants')[0].appendChild(this.container);

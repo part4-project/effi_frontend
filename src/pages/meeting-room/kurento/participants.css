@@ -58,7 +58,7 @@
   aspect-ratio: 16 / 9;
 }
 
-.participant span {
+.participant span:nth-child(2) {
   position: absolute;
   background-color: #212322;
   padding: 5px 10px;
@@ -73,9 +73,22 @@
 .participant img {
   position: absolute;
   top: calc(50% - 60px);
-  /* opacity: 0; */
+  opacity: 0;
   border: 3px solid var(--gray03);
   width: 120px;
   height: 120px;
   border-radius: 100px;
+}
+
+.participant span:nth-child(4) {
+  position: absolute;
+  background-color: #212322;
+  padding: 5px 10px;
+  border-radius: 5px;
+  opacity: 0;
+  color: var(--white);
+  font-weight: 700;
+
+  bottom: 8px;
+  right: 8px;
 }
