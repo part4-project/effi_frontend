@@ -26,7 +26,7 @@ const KurentoCameras = () => {
   ]);
 
   const userId = userInfo?.id;
-  const roomId = 111172;
+  const roomId = 111174;
   const memberList = groupInfo?.memberList;
 
   const ws = useRef(null);
@@ -233,7 +233,7 @@ const KurentoCameras = () => {
   }
 
   function localVideoToggle() {
-    const myProfileImage = document.getElementById(`profile-${userInfo.id}`);
+    // const myProfileImage = document.getElementById(`profile-${userInfo.id}`);
 
     const videoTrack = participants.current[userId].rtcPeer
       .getLocalStream()
@@ -245,7 +245,7 @@ const KurentoCameras = () => {
       setIsVideo(false);
       console.log('Video Off');
 
-      myProfileImage.style.opacity = '1';
+      // myProfileImage.style.opacity = '1';
 
       sendMessage({
         id: 'handleDevice',
@@ -257,7 +257,7 @@ const KurentoCameras = () => {
       videoTrack.enabled = true;
       setIsVideo(true);
       console.log('Video On');
-      myProfileImage.style.opacity = '0';
+      // myProfileImage.style.opacity = '0';
 
       sendMessage({
         id: 'handleDevice',
@@ -303,14 +303,16 @@ const KurentoCameras = () => {
 
   // data= {id: 8, status: false}
   function onHandleDevice(data) {
-    if (userInfo.id === data.userId) return; // 바꾼사람이 나일 때는 실행 안함
+    // if (userInfo.id == data.userId) return; // 바꾼사람이 나일 때는 실행 안함
     const offedParticipant = document.getElementById(`profile-${data.userId}`);
+    console.log(offedParticipant);
     if (data.isOn) {
       // 상대방 꺼 켜짐
       offedParticipant.style.opacity = '0';
     } else {
       offedParticipant.style.opacity = '1';
     }
+    console.log('함수 실행');
   }
 
   return (
