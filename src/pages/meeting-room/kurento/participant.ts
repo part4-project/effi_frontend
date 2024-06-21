@@ -15,6 +15,7 @@ class Participant {
     this.video = document.createElement('video');
 
     this.img = document.createElement('img');
+    this.img.style.opacity = 0;
     this.img.id = 'profile-' + userId;
     this.img.src = userInfo.profileImageUrl;
 
