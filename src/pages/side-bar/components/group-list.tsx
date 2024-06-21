@@ -1,3 +1,4 @@
+import { groupListHeight } from '@pages/side-bar/utils/group-list-constants';
 import { useState, useEffect } from 'react';
 import { useGroupQuery } from '@hooks/react-query/use-query-group';
 import GroupListSkeleton from '@pages/side-bar/components/group-list-skeleton';
@@ -25,24 +26,7 @@ const GroupList = ({ sideBarHeight }: GroupListProps) => {
   };
 
   useEffect(() => {
-    const gap = 9;
-    const mobile = 23.7;
-    const tablet = 32.8;
-    const desktop = 42;
-    let groupBoxHeight;
-
-    if (window.innerWidth <= 767) {
-      // Mobile
-      groupBoxHeight = sideBarHeight - 2 * (mobile + gap) - 80;
-    } else if (window.innerWidth <= 1280) {
-      // Tablet
-      groupBoxHeight = sideBarHeight - 2 * (tablet + gap) - 96;
-    } else {
-      // Desktop
-      groupBoxHeight = sideBarHeight - 2 * (desktop + gap) - 104;
-    }
-
-    setScrollHeight(groupBoxHeight);
+    setScrollHeight(groupListHeight(sideBarHeight));
   }, [sideBarHeight]);
 
   if (isLoading) return <GroupListSkeleton sideBarHeight={sideBarHeight} />;

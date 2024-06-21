@@ -87,10 +87,14 @@ const S = {
   MemberExportBtn: styled.button<{ $isExport: boolean }>`
     padding: 10px;
     border-radius: 5px;
-    background-color: ${({ $isExport, theme }) => ($isExport ? `var(--white)` : theme.theme02)};
+    background-color: ${({ $isExport, theme }) => ($isExport ? theme.theme06 : theme.theme02)};
     border: ${({ $isExport, theme }) => ($isExport ? `1px solid ${theme.theme02}` : `1px solid transparent`)};
     color: ${(props) => props.theme.text06};
     font-size: 12px;
     font-weight: 700;
+    &:hover {
+      background: ${(props) => props.theme.theme01};
+      color: var(--dark08);
+    }
   `,
 };
