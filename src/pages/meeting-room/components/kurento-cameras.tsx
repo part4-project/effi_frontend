@@ -15,7 +15,7 @@ const KurentoCameras = () => {
   const userInfo = useQueryClient().getQueryData<TUserInfoRes>([QUERY_KEY.userInfo]);
 
   const userId = userInfo.id;
-  const roomId = 12312313328;
+  const roomId = 12312313337;
 
   const ws = useRef(null);
   const heartbeatInterval = useRef(null);
@@ -104,8 +104,8 @@ const KurentoCameras = () => {
   function onExistingParticipants(msg) {
     const constraints = {
       video: {
-        width: { max: 220, min: 200 },
-        frameRate: { max: 40, min: 30 },
+        width: 1280,
+        frameRate: 40,
       },
       audio: {
         autoGainControl: true,
