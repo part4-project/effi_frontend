@@ -15,7 +15,7 @@ const KurentoCameras = () => {
   const userInfo = useQueryClient().getQueryData<TUserInfoRes>([QUERY_KEY.userInfo]);
 
   const userId = userInfo.id;
-  const roomId = 12312313320;
+  const roomId = 12312313323;
 
   const ws = useRef(null);
   const heartbeatInterval = useRef(null);
@@ -124,8 +124,8 @@ const KurentoCameras = () => {
         iceServers: [
           {
             urls: 'turn:34.64.222.23:3478?transport=tcp',
-            username: 'effi:1718952627',
-            credential: 'csHHLVmAsayzwwmCf7k/z05FL0Y=',
+            username: 'effi:1718953064',
+            credential: 'SiV56enhCXDBMFhXCQ+agtCBZdE=',
           },
         ],
       },
