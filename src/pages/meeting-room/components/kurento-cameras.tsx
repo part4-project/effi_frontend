@@ -15,7 +15,7 @@ const KurentoCameras = () => {
   const userInfo = useQueryClient().getQueryData<TUserInfoRes>([QUERY_KEY.userInfo]);
 
   const userId = userInfo.id;
-  const roomId = 12312313324;
+  const roomId = 12312313328;
 
   const ws = useRef(null);
   const heartbeatInterval = useRef(null);
@@ -105,9 +105,18 @@ const KurentoCameras = () => {
     const constraints = {
       video: {
         width: { max: 220, min: 200 },
-        frameRate: { max: 15, min: 15 },
+        frameRate: { max: 40, min: 30 },
       },
-      audio: true,
+      audio: {
+        autoGainControl: true,
+        channelCount: 2,
+        echoCancellation: true,
+        latency: 0,
+        noiseSuppression: true,
+        sampleRate: 48000,
+        sampleSize: 16,
+        volume: 0.5,
+      },
     };
 
     const participant = new Participant(userId, sendMessage);
@@ -124,8 +133,8 @@ const KurentoCameras = () => {
         iceServers: [
           {
             urls: 'turn:34.64.222.23:3478?transport=tcp',
-            username: 'effi:1718953064',
-            credential: 'SiV56enhCXDBMFhXCQ+agtCBZdE=',
+            username: 'effi:1718953288',
+            credential: 'kHnl+SMnlJuavkPb3QCgruvbI0k=',
           },
         ],
       },
