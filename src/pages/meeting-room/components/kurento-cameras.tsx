@@ -7,6 +7,7 @@ import { QUERY_KEY } from '@constants/query-key';
 import Participant from '@pages/meeting-room/kurento/participant';
 import { useGroupStore } from '@stores/group';
 import { useQueryClient } from '@tanstack/react-query';
+import { playSound } from '@utils/play-sound';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import '@pages/meeting-room/kurento/participants.css';
@@ -26,7 +27,7 @@ const KurentoCameras = () => {
   ]);
 
   const userId = userInfo?.id;
-  const roomId = 111190;
+  const roomId = 111205;
   const memberList = groupInfo?.memberList;
 
   const ws = useRef(null);
@@ -36,16 +37,13 @@ const KurentoCameras = () => {
   useEffect(() => {
     ws.current = new WebSocket('https://api.effi.club/signal/webrtc');
     ws.current.onopen = function () {
-      // console.log('WebSocket connection opened.');
-
-      // heart beating
+      setTimeout(() => playSound('enterRoom'), 100);
       heartbeatInterval.current = setInterval(() => {
         if (ws.current.readyState === WebSocket.OPEN) {
           const message = {
             id: 'ping',
           };
           sendMessage(message);
-          // console.log('Sent heartbeat');
         }
       }, 30000);
 
@@ -57,13 +55,10 @@ const KurentoCameras = () => {
       sendMessage(message);
     };
     ws.current.onclose = function () {
-      // console.log('WebSocket connection closed.');
       clearInterval(heartbeatInterval.current);
     };
     ws.current.onmessage = function (message) {
       const parsedMessage = JSON.parse(message.data);
-      // console.info('Received message: ' + message.data);
-
       switch (parsedMessage.id) {
         case 'existingPeers':
           onExistingParticipants(parsedMessage);
@@ -102,15 +97,13 @@ const KurentoCameras = () => {
 
   const onNewParticipant = (request) => {
     receiveVideo(parseInt(request.userId));
+    playSound('enterRoom');
   };
 
   const receiveVideoResponse = (result) => {
-    participants.current[result.sender].rtcPeer.processAnswer(
-      result.sdpAnswer, // 원격 참가자로부터 받은 SDP 응답
-      function (error) {
-        if (error) return console.error(error);
-      },
-    );
+    participants.current[result.sender].rtcPeer.processAnswer(result.sdpAnswer, function (error) {
+      if (error) return console.error(error);
+    });
   };
 
   async function onExistingParticipants(msg) {
@@ -182,10 +175,10 @@ const KurentoCameras = () => {
   async function receiveVideo(sender) {
     const senderInfo = memberList?.find((item) => item.id === sender);
 
-    const participant = new Participant(sender, senderInfo, sendMessage); // 발신자(비디오를 보낼 참가자)에 대한 새로운 인스턴스 생성
+    const participant = new Participant(sender, senderInfo, sendMessage);
 
-    participants.current[sender] = participant; // 발신자 이름을 키로 사용하여 참가자 개체를 participants 객체에 저장
-    const video = participant.getVideoElement(); // 참가자와 연결된 비디오 요소를 검색
+    participants.current[sender] = participant;
+    const video = participant.getVideoElement();
 
     const { turnIpAddress, turnPort, turnServerId, turnServerPassword } = await getIceServers();
 
@@ -198,19 +191,17 @@ const KurentoCameras = () => {
     ];
 
     const options = {
-      remoteVideo: video, // 수신된 비디오 스트림이 video 요소에서 렌더링되도록 설정
+      remoteVideo: video,
       onicecandidate: participant.onIceCandidate.bind(participant),
       configuration: {
         iceServers: newIceServersInfo,
-      }, // 참가자가 생성한 ICE 후보를 처리하기 위한 콜백 함수를 지정
+      },
     };
 
     participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(options, function (error) {
-      // 비디오 수신 전용(WebRtcPeerRecvonly)을 위해 WebRTC 피어 초기화
       if (error) {
         return console.error(error);
       }
-      // 피어에서 generateOffer를 호출하여 SDP 제안 프로세스를 시작
       this.generateOffer(participant.offerToReceiveVideo.bind(participant));
     });
 
@@ -218,11 +209,11 @@ const KurentoCameras = () => {
   }
 
   function onParticipantLeft(request) {
-    console.log('Participant ' + request.userId + ' left');
     const participant = participants.current[request.userId];
     participant.dispose();
     delete participants.current[request.userId];
     setCameraCount(Object.keys(participants.current).length);
+    playSound('leaveRoom');
   }
 
   function sendMessage(message) {
@@ -243,8 +234,6 @@ const KurentoCameras = () => {
     if (isVideo) {
       videoTrack.enabled = false;
       setIsVideo(false);
-      console.log('Video Off');
-
       myProfileImage.style.opacity = 1;
 
       sendMessage({
@@ -257,7 +246,6 @@ const KurentoCameras = () => {
     } else {
       videoTrack.enabled = true;
       setIsVideo(true);
-      console.log('Video On');
       myProfileImage.style.opacity = 0;
 
       sendMessage({
@@ -268,8 +256,6 @@ const KurentoCameras = () => {
         isOn: true,
       });
     }
-
-    console.log(participants.current);
   }
 
   function localAudioToggle() {
@@ -281,10 +267,9 @@ const KurentoCameras = () => {
       .filter((track) => track.kind === 'audio')[0];
 
     if (isAudio) {
+      playSound('audioMute');
       audioTrack.enabled = false;
       setIsAudio(false);
-      console.log('Audio Off');
-
       myMuteIcon.style.opacity = 1;
 
       sendMessage({
@@ -295,10 +280,9 @@ const KurentoCameras = () => {
         isOn: false,
       });
     } else {
+      playSound('audioUnmute');
       audioTrack.enabled = true;
       setIsAudio(true);
-      console.log('Audio On');
-
       myMuteIcon.style.opacity = 0;
 
       sendMessage({
@@ -328,7 +312,6 @@ const KurentoCameras = () => {
     } else {
       const muteIconElement = document.getElementById(`muteIcon-${data.userId}`);
       if (muteIconElement) {
-        console.log(muteIconElement);
         if (data.isOn) {
           muteIconElement.style.opacity = 0;
         } else {

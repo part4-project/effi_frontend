@@ -1,5 +1,6 @@
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { zIndex } from '@styles/z-index';
+import { playSound } from '@utils/play-sound';
 import styled, { css, keyframes } from 'styled-components';
 
 interface TToastProps {
@@ -9,6 +10,14 @@ interface TToastProps {
 }
 
 function Toast({ children, show, error }: TToastProps) {
+  console.log(error);
+  useEffect(() => {
+    if (error) {
+      playSound('toastError');
+    } else {
+      playSound('toast');
+    }
+  }, []);
   return (
     <S.Container $show={show} $error={error}>
       {children}
