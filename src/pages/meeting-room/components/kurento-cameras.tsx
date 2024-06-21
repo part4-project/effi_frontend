@@ -10,16 +10,16 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import '@pages/meeting-room/kurento/participants.css';
 import { ROOM_BUTTONS } from '../constants';
+import { getIceServers } from '../utils/get-ice-servers';
+
 const KurentoCameras = () => {
   const [isVideo, setIsVideo] = useState(true);
   const [isAudio, setIsAudio] = useState(true);
   const [cameraCount, setCameraCount] = useState(0);
   const navigate = useNavigate();
   const userInfo = useQueryClient().getQueryData<TUserInfoRes>([QUERY_KEY.userInfo]);
-
   const userId = userInfo.id;
-  const roomId = 111137;
-
+  const roomId = 111148;
   const ws = useRef(null);
   const heartbeatInterval = useRef(null);
   const participants = useRef({});
@@ -102,7 +102,7 @@ const KurentoCameras = () => {
     );
   };
 
-  function onExistingParticipants(msg) {
+  async function onExistingParticipants(msg) {
     const constraints = {
       video: {
         width: 1280,
@@ -126,20 +126,25 @@ const KurentoCameras = () => {
 
     const video = participant.getVideoElement();
 
+    const { turnIpAddress, turnPort, turnServerId, turnServerPassword } = await getIceServers();
+
+    const newIceServersInfo = [
+      {
+        urls: `turn:${turnIpAddress}:${turnPort}?transport=tcp`,
+        username: turnServerId,
+        credential: turnServerPassword,
+      },
+    ];
+
     const options = {
       localVideo: video,
       mediaConstraints: constraints,
       onicecandidate: participant.onIceCandidate.bind(participant),
       configuration: {
-        iceServers: [
-          {
-            urls: 'turn:34.64.222.23:3478?transport=tcp',
-            username: 'effi:1718964709',
-            credential: '3cr+Daog5niBCSXRIfj2JSdayGI=',
-          },
-        ],
+        iceServers: newIceServersInfo,
       },
     };
+
     participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options, function (error) {
       if (error) {
         return console.error(error);
@@ -147,7 +152,6 @@ const KurentoCameras = () => {
       this.generateOffer(participant.offerToReceiveVideo.bind(participant));
     });
 
-    // console.log(msg);
     msg.userIdList.forEach((item) => {
       receiveVideo(item);
     });
@@ -164,24 +168,28 @@ const KurentoCameras = () => {
     window.location.reload();
   }
 
-  function receiveVideo(sender) {
+  async function receiveVideo(sender) {
     const participant = new Participant(sender, sendMessage); // 발신자(비디오를 보낼 참가자)에 대한 새로운 인스턴스 생성
 
     participants.current[sender] = participant; // 발신자 이름을 키로 사용하여 참가자 개체를 participants 객체에 저장
     const video = participant.getVideoElement(); // 참가자와 연결된 비디오 요소를 검색
     console.log(participant.getVideoElement());
 
+    const { turnIpAddress, turnPort, turnServerId, turnServerPassword } = await getIceServers();
+
+    const newIceServersInfo = [
+      {
+        urls: `turn:${turnIpAddress}:${turnPort}?transport=tcp`,
+        username: turnServerId,
+        credential: turnServerPassword,
+      },
+    ];
+
     const options = {
       remoteVideo: video, // 수신된 비디오 스트림이 video 요소에서 렌더링되도록 설정
       onicecandidate: participant.onIceCandidate.bind(participant),
       configuration: {
-        iceServers: [
-          {
-            urls: 'turn:34.64.222.23:3478?transport=tcp',
-            username: 'effi:1718964709',
-            credential: '3cr+Daog5niBCSXRIfj2JSdayGI=',
-          },
-        ],
+        iceServers: newIceServersInfo,
       }, // 참가자가 생성한 ICE 후보를 처리하기 위한 콜백 함수를 지정
     };
 
