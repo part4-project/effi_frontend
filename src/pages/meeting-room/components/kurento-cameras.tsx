@@ -4,31 +4,24 @@
 import { useEffect, useRef, useState } from 'react';
 import { TUserInfoRes } from '@api/user/user-request.type';
 import { QUERY_KEY } from '@constants/query-key';
-import Participant from '@pages/kurento-service/utils/kurento-service';
+import Participant from '@pages/meeting-room/kurento/participant';
 import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { ROOM_BUTTONS } from '../constants';
 const KurentoCameras = () => {
+  const [isVideo, setIsVideo] = useState(true);
+  const [isAudio, setIsAudio] = useState(true);
   const navigate = useNavigate();
   const userInfo = useQueryClient().getQueryData<TUserInfoRes>([QUERY_KEY.userInfo]);
 
   const userId = userInfo.id;
-  const roomId = 1231231336025;
+  const roomId = 111113;
 
   const ws = useRef(null);
   const heartbeatInterval = useRef(null);
-  // const participants = {};
-  const participants = {};
-  // const [cameraCount, setCameraCount] = useState(0);
-
-  const participantElementsRef = useRef(null);
-
-  // useEffect(() => {
-  //   const participantsContainer = participantElementsRef.current;
-  //   setCameraCount(Object.keys(participants).length);
-  //   participantsContainer.className = `participants participants-${cameraCount}`;
-  // }, [cameraCount, participants]);
+  const participants = useRef({});
 
   useEffect(() => {
     ws.current = new WebSocket('https://api.effi.club/signal/webrtc');
@@ -72,7 +65,7 @@ const KurentoCameras = () => {
           receiveVideoResponse(parsedMessage);
           break;
         case 'iceCandidate':
-          participants[parsedMessage.userId].rtcPeer.addIceCandidate(parsedMessage.candidate, function (error) {
+          participants.current[parsedMessage.userId].rtcPeer.addIceCandidate(parsedMessage.candidate, function (error) {
             if (error) {
               console.error('Error adding candidate: ' + error);
               return;
@@ -100,7 +93,7 @@ const KurentoCameras = () => {
   };
 
   const receiveVideoResponse = (result) => {
-    participants[result.sender].rtcPeer.processAnswer(
+    participants.current[result.sender].rtcPeer.processAnswer(
       result.sdpAnswer, // 원격 참가자로부터 받은 SDP 응답
       function (error) {
         if (error) return console.error(error);
@@ -111,8 +104,8 @@ const KurentoCameras = () => {
   function onExistingParticipants(msg) {
     const constraints = {
       video: {
-        width: 1280, // 해상도
-        frameRate: 40, // 프레임
+        width: 400, // 해상도
+        frameRate: 15, // 프레임
       },
       audio: {
         autoGainControl: true,
@@ -128,7 +121,7 @@ const KurentoCameras = () => {
 
     const participant = new Participant(userId, sendMessage);
 
-    participants[userId] = participant;
+    participants.current[userId] = participant;
 
     const video = participant.getVideoElement();
 
@@ -172,8 +165,7 @@ const KurentoCameras = () => {
   function receiveVideo(sender) {
     const participant = new Participant(sender, sendMessage); // 발신자(비디오를 보낼 참가자)에 대한 새로운 인스턴스 생성
 
-    participants[sender] = participant; // 발신자 이름을 키로 사용하여 참가자 개체를 participants 객체에 저장
-
+    participants.current[sender] = participant; // 발신자 이름을 키로 사용하여 참가자 개체를 participants 객체에 저장
     const video = participant.getVideoElement(); // 참가자와 연결된 비디오 요소를 검색
     console.log(participant.getVideoElement());
 
@@ -196,9 +188,6 @@ const KurentoCameras = () => {
       if (error) {
         return console.error(error);
       }
-
-      console.log(participant);
-      console.log(participants);
       // 피어에서 generateOffer를 호출하여 SDP 제안 프로세스를 시작
       this.generateOffer(participant.offerToReceiveVideo.bind(participant));
     });
@@ -206,9 +195,9 @@ const KurentoCameras = () => {
 
   function onParticipantLeft(request) {
     console.log('Participant ' + request.userId + ' left');
-    const participant = participants[request.userId];
+    const participant = participants.current[request.userId];
     participant.dispose();
-    delete participants[request.userId];
+    delete participants.current[request.userId];
   }
 
   function sendMessage(message) {
@@ -218,9 +207,42 @@ const KurentoCameras = () => {
     }
   }
 
+  function localVideoToggle() {
+    const videoTrack = participants.current[userId].rtcPeer
+      .getLocalStream()
+      .getTracks()
+      .filter((track) => track.kind === 'video')[0];
+
+    if (isVideo) {
+      videoTrack.enabled = false;
+      setIsVideo(false);
+      console.log('Video Off');
+    } else {
+      videoTrack.enabled = true;
+      setIsVideo(true);
+      console.log('Video On');
+    }
+  }
+
+  function localAudioToggle() {
+    const audioTrack = participants.current[userId].rtcPeer
+      .getLocalStream()
+      .getTracks()
+      .filter((track) => track.kind === 'audio')[0];
+
+    if (isAudio) {
+      audioTrack.enabled = false;
+      setIsAudio(false);
+      console.log('Audio Off');
+    } else {
+      audioTrack.enabled = true;
+      setIsAudio(true);
+      console.log('Audio On');
+    }
+  }
+
   return (
     <>
-      {/* <h1>{cameraCount}</h1> */}
       <S.RoomCameraContainer>
         <S.RoomCameraBox>
           <div className="participants">
@@ -248,12 +270,15 @@ const KurentoCameras = () => {
         </S.RoomCameraBox>
       </S.RoomCameraContainer>
       <S.RoomButtonContainer className="room-button-container">
-        {/* {ROOM_BUTTONS.map((btn, idx) => (
-          <RoomButton key={idx} type={btn.type} initialImg={btn.initialImg} changedImg={btn.changedImg} />
-        ))} */}
-        <button id="leaveBtn" onClick={leaveRoom}>
-          나가기
-        </button>
+        <S.RoomButton onClick={localVideoToggle}>
+          <S.Img src={isVideo ? ROOM_BUTTONS[0].changedImg : ROOM_BUTTONS[0].initialImg} />
+        </S.RoomButton>
+        <S.RoomButton onClick={localAudioToggle}>
+          <S.Img src={isAudio ? ROOM_BUTTONS[1].changedImg : ROOM_BUTTONS[1].initialImg} />
+        </S.RoomButton>
+        <S.RoomButton onClick={leaveRoom}>
+          <S.Img src={ROOM_BUTTONS[2].initialImg} />
+        </S.RoomButton>
       </S.RoomButtonContainer>
     </>
   );
@@ -277,8 +302,6 @@ const S = {
     gap: 10px;
   `,
   RoomButtonContainer: styled.div`
-    border: 1px solid white;
-
     display: flex;
     justify-content: center;
     align-items: center;
@@ -291,5 +314,19 @@ const S = {
       opacity 0.3s;
     position: absolute;
     bottom: 0;
+  `,
+
+  RoomButton: styled.button`
+    width: 80px;
+    height: 80px;
+    background: #4d4f4e;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  `,
+  Img: styled.img`
+    width: 50px;
+    height: 50px;
   `,
 };
