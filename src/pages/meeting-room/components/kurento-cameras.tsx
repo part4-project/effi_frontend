@@ -19,16 +19,16 @@ const KurentoCameras = () => {
   const ws = useRef(null);
   const heartbeatInterval = useRef(null);
   // const participants = {};
-  const [participants, setParticipants] = useState({});
-  const [cameraCount, setCameraCount] = useState(0);
+  const participants = {};
+  // const [cameraCount, setCameraCount] = useState(0);
 
   const participantElementsRef = useRef(null);
 
-  useEffect(() => {
-    const participantsContainer = participantElementsRef.current;
-    setCameraCount(Object.keys(participants).length);
-    participantsContainer.className = `participants participants-${cameraCount}`;
-  }, [cameraCount, participants]);
+  // useEffect(() => {
+  //   const participantsContainer = participantElementsRef.current;
+  //   setCameraCount(Object.keys(participants).length);
+  //   participantsContainer.className = `participants participants-${cameraCount}`;
+  // }, [cameraCount, participants]);
 
   useEffect(() => {
     ws.current = new WebSocket('https://api.effi.club/signal/webrtc');
@@ -72,7 +72,7 @@ const KurentoCameras = () => {
           receiveVideoResponse(parsedMessage);
           break;
         case 'iceCandidate':
-          participants[parsedMessage.userId]?.rtcPeer.addIceCandidate(parsedMessage.candidate, function (error) {
+          participants[parsedMessage.userId].rtcPeer.addIceCandidate(parsedMessage.candidate, function (error) {
             if (error) {
               console.error('Error adding candidate: ' + error);
               return;
@@ -100,7 +100,7 @@ const KurentoCameras = () => {
   };
 
   const receiveVideoResponse = (result) => {
-    participants[result.sender]?.rtcPeer.processAnswer(
+    participants[result.sender].rtcPeer.processAnswer(
       result.sdpAnswer, // 원격 참가자로부터 받은 SDP 응답
       function (error) {
         if (error) return console.error(error);
@@ -128,10 +128,8 @@ const KurentoCameras = () => {
 
     const participant = new Participant(userId, sendMessage);
 
-    setParticipants((prevParticipants) => ({
-      ...prevParticipants,
-      [userId]: participant,
-    }));
+    participants[userId] = participant;
+
     const video = participant.getVideoElement();
 
     const options = {
@@ -174,10 +172,8 @@ const KurentoCameras = () => {
   function receiveVideo(sender) {
     const participant = new Participant(sender, sendMessage); // 발신자(비디오를 보낼 참가자)에 대한 새로운 인스턴스 생성
 
-    setParticipants((prevParticipants) => ({
-      ...prevParticipants,
-      [sender]: participant,
-    }));
+    participants[sender] = participant; // 발신자 이름을 키로 사용하여 참가자 개체를 participants 객체에 저장
+
     const video = participant.getVideoElement(); // 참가자와 연결된 비디오 요소를 검색
     console.log(participant.getVideoElement());
 
@@ -212,11 +208,7 @@ const KurentoCameras = () => {
     console.log('Participant ' + request.userId + ' left');
     const participant = participants[request.userId];
     participant.dispose();
-    setParticipants((prevParticipants) => {
-      const updatedParticipants = { ...prevParticipants };
-      delete updatedParticipants[request.userId];
-      return updatedParticipants;
-    });
+    delete participants[request.userId];
   }
 
   function sendMessage(message) {
@@ -228,10 +220,10 @@ const KurentoCameras = () => {
 
   return (
     <>
-      <h1>{cameraCount}</h1>
+      {/* <h1>{cameraCount}</h1> */}
       <S.RoomCameraContainer>
         <S.RoomCameraBox>
-          <div ref={participantElementsRef} className="participants">
+          <div className="participants">
             {/* <div className="participant" id="6">
               <video id="video-6" autoPlay></video>
               <span>test</span>
