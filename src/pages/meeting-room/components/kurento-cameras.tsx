@@ -15,7 +15,7 @@ const KurentoCameras = () => {
   const userInfo = useQueryClient().getQueryData<TUserInfoRes>([QUERY_KEY.userInfo]);
 
   const userId = userInfo.id;
-  const roomId = 12312313323;
+  const roomId = 12312313324;
 
   const ws = useRef(null);
   const heartbeatInterval = useRef(null);
@@ -167,8 +167,8 @@ const KurentoCameras = () => {
         iceServers: [
           {
             urls: 'turn:34.64.222.23:3478?transport=tcp',
-            username: 'effi:1718890764',
-            credential: 'aRLdOww6anhvYYDIiP2gqHcO1GU=',
+            username: 'effi:1718953288',
+            credential: 'kHnl+SMnlJuavkPb3QCgruvbI0k=',
           },
         ],
       }, // 참가자가 생성한 ICE 후보를 처리하기 위한 콜백 함수를 지정
