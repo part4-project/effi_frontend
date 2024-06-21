@@ -54,6 +54,12 @@ const S = {
     align-items: center;
     height: 100%;
     padding-inline: 22px 27px;
+    @media ${device.tablet} {
+      padding-inline: 62px 67px;
+    }
+    @media ${device.mobile} {
+      padding-inline: 22px 27px;
+    }
   `,
   FlexLeftBox: styled.div``,
   FlexRightBox: styled.div`
