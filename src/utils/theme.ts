@@ -2,6 +2,10 @@ import ADD_GROUP_BTN_DARK from '@assets/add-group-btn-dark.svg';
 import ADD_GROUP_BTN from '@assets/add-group-btn.svg';
 import GROUP_BG_DARK from '@assets/group-bg-dark.svg';
 import GROUP_BG from '@assets/group-bg.svg';
+import DOOR_404_DARK from '@assets/icons/404-door-dark.svg';
+import DOOR_404 from '@assets/icons/404-door.svg';
+import ICON_404_DARK from '@assets/icons/404-icon-dark.svg';
+import ICON_404 from '@assets/icons/404-icon.svg';
 import ALARM_ACTIVE_DARK from '@assets/icons/alarm-active-dark.svg';
 import ALARM_ACTIVE from '@assets/icons/alarm-active.svg';
 import ALARM_DARK from '@assets/icons/alarm-dark.svg';
@@ -16,6 +20,8 @@ import ARROW_RIGHT_DARK from '@assets/icons/arrow-right-dark.svg';
 import ARROW_RIGHT from '@assets/icons/arrow-right.svg';
 import CALENDAR_ICON_DARK from '@assets/icons/calendar-dark.svg';
 import CALENDAR_ICON from '@assets/icons/calendar.svg';
+import CIRCLE_BLUE_5 from '@assets/icons/circle-blue5.svg';
+import CIRCLE_WHITE from '@assets/icons/circle-white.svg';
 import EDIT_ICON_WHITE from '@assets/icons/edit-white.svg';
 import EDIT_ICON from '@assets/icons/edit.svg';
 import FOLDER_BLUE from '@assets/icons/folder-blue.svg';
@@ -48,16 +54,16 @@ import SEARCH_ICON_DARK from '@assets/icons/search-dark.svg';
 import SEARCH_ICON from '@assets/icons/search.svg';
 import SETTING_GRAY from '@assets/icons/setting-gray.svg';
 import SETTING from '@assets/icons/setting.svg';
+import X_CIRCLE_DARK from '@assets/icons/x-circle-dark.svg';
+import X_CIRCLE from '@assets/icons/x-circle.svg';
 import LOBBY_BTN_DARK from '@assets/lobby-btn-dark.svg';
 import LOBBY_BTN from '@assets/lobby-btn.svg';
 import LOGO_DARK from '@assets/logo-dark.svg';
 import LOGO from '@assets/logo.svg';
 import TEXT_LOGO_DARK from '@assets/text-logo-dark.svg';
 import TEXT_LOGO from '@assets/text-logo.svg';
-import CIRCLE_BLUE_5 from '@/assets/icons/circle-blue5.svg';
-import CIRCLE_WHITE from '@/assets/icons/circle-white.svg';
-import X_CIRCLE_DARK from '@/assets/icons/x-circle-dark.svg';
-import X_CIRCLE from '@/assets/icons/x-circle.svg';
+import EFFI_PHONE_DARK from '@assets/icons/effi-phone-dark.svg';
+import EFFI_PHONE from '@assets/icons/effi-phone-blue.svg';
 
 export const lightModeTheme = {
   //color
@@ -87,6 +93,7 @@ export const lightModeTheme = {
   text11: 'var(--gray01)',
   text12: 'var(--blue01)',
   text13: 'var(--gray01)',
+  text14: 'var(--blue03)',
 
   //button color
   button01: 'var(--blue02)',
@@ -133,6 +140,9 @@ export const lightModeTheme = {
   reject: INVITE_REJECT,
   circle: CIRCLE_BLUE_5,
   alertCircle: ALERT_CIRCLE,
+  door404: DOOR_404,
+  icon404: ICON_404,
+  effiPhone: EFFI_PHONE,
 
   //other
   nickName: 'var(--dark02)',
@@ -183,6 +193,7 @@ export const darkModeTheme = {
   text11: 'var(--dark08)',
   text12: 'var(--gray01)',
   text13: 'var(--dark01)',
+  text14: 'var(--dark01)',
 
   //button color
   button01: 'var(--dark07)',
@@ -229,6 +240,9 @@ export const darkModeTheme = {
   reject: INVITE_REJECT_DARK,
   circle: CIRCLE_WHITE,
   alertCircle: ALERT_CIRCLE_DARK,
+  door404: DOOR_404_DARK,
+  icon404: ICON_404_DARK,
+  effiPhone: EFFI_PHONE_DARK,
 
   //other
   nickName: 'var(--dark07)',

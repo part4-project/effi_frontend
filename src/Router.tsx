@@ -12,6 +12,7 @@ const Router = () => {
           <Route path="meeting-room" element={<Page.MeetingRoom />} />
           <Route path="auth" element={<Page.Auth />} />
           <Route path="meeting-loading" element={<Page.MeetingLoading />} />
+          <Route path="*" element={<Page.NotFound />} />
         </Route>
       </Routes>
     </BrowserRouter>
