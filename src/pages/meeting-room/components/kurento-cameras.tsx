@@ -142,8 +142,8 @@ const KurentoCameras = () => {
         iceServers: [
           {
             urls: 'turn:34.64.222.23:3478?transport=tcp',
-            username: 'effi:1718953288',
-            credential: 'kHnl+SMnlJuavkPb3QCgruvbI0k=',
+            username: 'effi:1718964709',
+            credential: '3cr+Daog5niBCSXRIfj2JSdayGI=',
           },
         ],
       },
@@ -188,8 +188,8 @@ const KurentoCameras = () => {
         iceServers: [
           {
             urls: 'turn:34.64.222.23:3478?transport=tcp',
-            username: 'effi:1718953288',
-            credential: 'kHnl+SMnlJuavkPb3QCgruvbI0k=',
+            username: 'effi:1718964709',
+            credential: '3cr+Daog5niBCSXRIfj2JSdayGI=',
           },
         ],
       }, // 참가자가 생성한 ICE 후보를 처리하기 위한 콜백 함수를 지정
