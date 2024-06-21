@@ -5,8 +5,8 @@ const sideBarWidth = {
 };
 
 const navBarHeight = {
-  mobile: `40px`,
-  tablet: `48px`,
+  mobile: `56px`,
+  tablet: `56px`,
   desktop: `52px`,
 };
 
