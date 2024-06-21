@@ -8,16 +8,17 @@ import Participant from '@pages/meeting-room/kurento/participant';
 import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-
+import '@pages/meeting-room/kurento/participants.css';
 import { ROOM_BUTTONS } from '../constants';
 const KurentoCameras = () => {
   const [isVideo, setIsVideo] = useState(true);
   const [isAudio, setIsAudio] = useState(true);
+  const [cameraCount, setCameraCount] = useState(0);
   const navigate = useNavigate();
   const userInfo = useQueryClient().getQueryData<TUserInfoRes>([QUERY_KEY.userInfo]);
 
   const userId = userInfo.id;
-  const roomId = 111113;
+  const roomId = 111137;
 
   const ws = useRef(null);
   const heartbeatInterval = useRef(null);
@@ -104,8 +105,8 @@ const KurentoCameras = () => {
   function onExistingParticipants(msg) {
     const constraints = {
       video: {
-        width: 400, // 해상도
-        frameRate: 15, // 프레임
+        width: 1280,
+        frameRate: 40,
       },
       audio: {
         autoGainControl: true,
@@ -150,6 +151,8 @@ const KurentoCameras = () => {
     msg.userIdList.forEach((item) => {
       receiveVideo(item);
     });
+
+    setCameraCount(Object.keys(participants.current).length);
   }
 
   function leaveRoom() {
@@ -158,7 +161,6 @@ const KurentoCameras = () => {
       userId: userId,
     });
     navigate('/group-home');
-
     window.location.reload();
   }
 
@@ -191,6 +193,8 @@ const KurentoCameras = () => {
       // 피어에서 generateOffer를 호출하여 SDP 제안 프로세스를 시작
       this.generateOffer(participant.offerToReceiveVideo.bind(participant));
     });
+
+    setCameraCount(Object.keys(participants.current).length);
   }
 
   function onParticipantLeft(request) {
@@ -198,6 +202,7 @@ const KurentoCameras = () => {
     const participant = participants.current[request.userId];
     participant.dispose();
     delete participants.current[request.userId];
+    setCameraCount(Object.keys(participants.current).length);
   }
 
   function sendMessage(message) {
@@ -243,31 +248,9 @@ const KurentoCameras = () => {
 
   return (
     <>
+      <h1 style={{ color: 'var(--blue01)' }}>{cameraCount}</h1>
       <S.RoomCameraContainer>
-        <S.RoomCameraBox>
-          <div className="participants">
-            {/* <div className="participant" id="6">
-              <video id="video-6" autoPlay></video>
-              <span>test</span>
-            </div>
-            <div className="participant" id="7">
-              <video id="video-7" autoPlay></video>
-              <span>test</span>
-            </div>
-            <div className="participant" id="7">
-              <video id="video-7" autoPlay></video>
-              <span>test</span>
-            </div>
-            <div className="participant" id="7">
-              <video id="video-7" autoPlay></video>
-              <span>test</span>
-            </div>
-            <div className="participant" id="7">
-              <video id="video-7" autoPlay></video>
-              <span>test</span>
-            </div> */}
-          </div>
-        </S.RoomCameraBox>
+        <div className="participants" data-count={cameraCount}></div>
       </S.RoomCameraContainer>
       <S.RoomButtonContainer className="room-button-container">
         <S.RoomButton onClick={localVideoToggle}>
@@ -290,17 +273,13 @@ const S = {
   RoomCameraContainer: styled.div`
     display: flex;
     align-items: center;
+    justify-content: center;
     width: 100%;
     height: 100%;
     padding: 20px;
+    min-width: 600px;
   `,
-  RoomCameraBox: styled.div`
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 100%;
-    gap: 10px;
-  `,
+
   RoomButtonContainer: styled.div`
     display: flex;
     justify-content: center;
