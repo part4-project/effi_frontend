@@ -2,8 +2,10 @@ import { useEffect } from 'react';
 import { setCookie } from '@utils/cookie';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import styled, { useTheme } from 'styled-components';
 
 const Auth = () => {
+  const theme = useTheme();
   const navigate = useNavigate();
   const params = new URLSearchParams(window.location.search);
   const code = params.get('code');
@@ -23,7 +25,35 @@ const Auth = () => {
     handleSetCookie(code);
   }, [code]);
 
-  return <div>로그인 중~</div>;
+  return (
+    <S.AuthContainer>
+      <img src={theme.effiPhone} alt="effi_phone_icon" />
+      <h1>로그인 중입니다.</h1>
+    </S.AuthContainer>
+  );
 };
 
 export default Auth;
+
+const S = {
+  AuthContainer: styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    height: 100vh;
+    background-color: ${(props) => props.theme.theme02};
+
+    img {
+      max-width: 64px;
+      width: 100%;
+      height: auto;
+    }
+
+    h1 {
+      color: ${(props) => props.theme.button03};
+      font-size: 28px;
+    }
+  `,
+};

@@ -45,9 +45,11 @@ const GroupHomeSideBar = ({ isAdmin }: TGroupHomeSideBarProps) => {
           </S.GroupMemberList>
         ))}
       </S.GroupMemberLists>
-      <GroupLeaveModalButton isOpen={isOpen} setIsOpen={setIsOpen} onDeleteButton={handleLeaveGroupTextClick}>
-        <S.LeaveGroupText>그룹 탈퇴하기</S.LeaveGroupText>
-      </GroupLeaveModalButton>
+      {isAdmin || (
+        <GroupLeaveModalButton isOpen={isOpen} setIsOpen={setIsOpen} onDeleteButton={handleLeaveGroupTextClick}>
+          <S.LeaveGroupText>그룹 탈퇴하기</S.LeaveGroupText>
+        </GroupLeaveModalButton>
+      )}
     </S.Container>
   );
 };
