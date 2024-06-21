@@ -1,7 +1,7 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { TUserInfoRes } from '@api/user/user-request.type';
 import { QUERY_KEY } from '@constants/query-key';
 import Participant from '@pages/kurento-service/utils/kurento-service';
@@ -15,7 +15,7 @@ const KurentoCameras = () => {
   const userInfo = useQueryClient().getQueryData<TUserInfoRes>([QUERY_KEY.userInfo]);
 
   const userId = userInfo.id;
-  const roomId = 12312313317;
+  const roomId = 12312313318;
 
   const ws = useRef(null);
   const heartbeatInterval = useRef(null);
