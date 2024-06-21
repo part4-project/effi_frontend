@@ -5,7 +5,7 @@ const PARTICIPANT_MAIN_CLASS = 'participant main';
 const PARTICIPANT_CLASS = 'participant';
 
 class Participant {
-  constructor(userId, sendMessage) {
+  constructor(userId, userInfo, sendMessage) {
     this.userId = userId;
 
     this.container = document.createElement('div');
@@ -13,16 +13,23 @@ class Participant {
     this.container.id = userId;
     this.span = document.createElement('span');
     this.video = document.createElement('video');
+
+    this.img = document.createElement('img');
+    this.img.id = 'profile-' + userId;
+    this.img.src = userInfo.profileImageUrl;
+
     this.rtcPeer = null;
     this.sendMessage = sendMessage;
     this.onIceCandidate = this.onIceCandidate.bind(this);
 
     this.container.appendChild(this.video);
     this.container.appendChild(this.span);
+    this.container.appendChild(this.img);
+
     this.container.onclick = this.switchContainerClass.bind(this);
     document.getElementsByClassName('participants')[0].appendChild(this.container);
 
-    this.span.appendChild(document.createTextNode(userId));
+    this.span.appendChild(document.createTextNode(userInfo.nickname));
 
     this.video.id = 'video-' + userId;
     this.video.autoplay = true;

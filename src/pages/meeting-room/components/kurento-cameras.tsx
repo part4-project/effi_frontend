@@ -5,12 +5,14 @@ import { useEffect, useRef, useState } from 'react';
 import { TUserInfoRes } from '@api/user/user-request.type';
 import { QUERY_KEY } from '@constants/query-key';
 import Participant from '@pages/meeting-room/kurento/participant';
+import { useGroupStore } from '@stores/group';
 import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import '@pages/meeting-room/kurento/participants.css';
 import { ROOM_BUTTONS } from '../constants';
 import { getIceServers } from '../utils/get-ice-servers';
+import { TGroupMemberFetchRes } from '@api/group/group-request.type';
 
 const KurentoCameras = () => {
   const [isVideo, setIsVideo] = useState(true);
@@ -18,8 +20,15 @@ const KurentoCameras = () => {
   const [cameraCount, setCameraCount] = useState(0);
   const navigate = useNavigate();
   const userInfo = useQueryClient().getQueryData<TUserInfoRes>([QUERY_KEY.userInfo]);
-  const userId = userInfo.id;
-  const roomId = 111148;
+  const groupInfo = useQueryClient().getQueryData<TGroupMemberFetchRes>([
+    QUERY_KEY.groupInfo,
+    useGroupStore((state) => state.groupId),
+  ]);
+
+  const userId = userInfo?.id;
+  const roomId = 111171;
+  const memberList = groupInfo?.memberList;
+
   const ws = useRef(null);
   const heartbeatInterval = useRef(null);
   const participants = useRef({});
@@ -27,7 +36,7 @@ const KurentoCameras = () => {
   useEffect(() => {
     ws.current = new WebSocket('https://api.effi.club/signal/webrtc');
     ws.current.onopen = function () {
-      console.log('WebSocket connection opened.');
+      // console.log('WebSocket connection opened.');
 
       // heart beating
       heartbeatInterval.current = setInterval(() => {
@@ -36,7 +45,7 @@ const KurentoCameras = () => {
             id: 'ping',
           };
           sendMessage(message);
-          console.log('Sent heartbeat');
+          // console.log('Sent heartbeat');
         }
       }, 30000);
 
@@ -48,7 +57,7 @@ const KurentoCameras = () => {
       sendMessage(message);
     };
     ws.current.onclose = function () {
-      console.log('WebSocket connection closed.');
+      // console.log('WebSocket connection closed.');
       clearInterval(heartbeatInterval.current);
     };
     ws.current.onmessage = function (message) {
@@ -76,6 +85,9 @@ const KurentoCameras = () => {
         case 'peerDisconnect':
           onParticipantLeft(parsedMessage);
           break;
+        case 'onHandleDevice':
+          onHandleDevice(parsedMessage);
+          break;
         default:
           console.error('Unrecognized message', parsedMessage);
       }
@@ -83,7 +95,6 @@ const KurentoCameras = () => {
     return () => {
       if (ws.current) {
         ws.current.close();
-        console.log('닫힘!!!!');
       }
       clearInterval(heartbeatInterval.current);
     };
@@ -120,7 +131,7 @@ const KurentoCameras = () => {
       },
     };
 
-    const participant = new Participant(userId, sendMessage);
+    const participant = new Participant(userId, userInfo, sendMessage);
 
     participants.current[userId] = participant;
 
@@ -169,11 +180,12 @@ const KurentoCameras = () => {
   }
 
   async function receiveVideo(sender) {
-    const participant = new Participant(sender, sendMessage); // 발신자(비디오를 보낼 참가자)에 대한 새로운 인스턴스 생성
+    const senderInfo = memberList?.find((item) => item.id === sender);
+
+    const participant = new Participant(sender, senderInfo, sendMessage); // 발신자(비디오를 보낼 참가자)에 대한 새로운 인스턴스 생성
 
     participants.current[sender] = participant; // 발신자 이름을 키로 사용하여 참가자 개체를 participants 객체에 저장
     const video = participant.getVideoElement(); // 참가자와 연결된 비디오 요소를 검색
-    console.log(participant.getVideoElement());
 
     const { turnIpAddress, turnPort, turnServerId, turnServerPassword } = await getIceServers();
 
@@ -221,6 +233,8 @@ const KurentoCameras = () => {
   }
 
   function localVideoToggle() {
+    const myProfileImage = document.getElementById(`profile-${userInfo.id}`);
+
     const videoTrack = participants.current[userId].rtcPeer
       .getLocalStream()
       .getTracks()
@@ -230,11 +244,30 @@ const KurentoCameras = () => {
       videoTrack.enabled = false;
       setIsVideo(false);
       console.log('Video Off');
+
+      myProfileImage.style.opacity = '1';
+
+      sendMessage({
+        id: 'handleDevice',
+        type: 'camera',
+        userId: userId,
+        isOn: false,
+      });
     } else {
       videoTrack.enabled = true;
       setIsVideo(true);
       console.log('Video On');
+      myProfileImage.style.opacity = '0';
+
+      sendMessage({
+        id: 'handleDevice',
+        type: 'camera',
+        userId: userId,
+        isOn: true,
+      });
     }
+
+    console.log(participants.current);
   }
 
   function localAudioToggle() {
@@ -247,10 +280,36 @@ const KurentoCameras = () => {
       audioTrack.enabled = false;
       setIsAudio(false);
       console.log('Audio Off');
+
+      sendMessage({
+        id: 'handleDevice',
+        type: 'mic',
+        userId: userId,
+        isOn: false,
+      });
     } else {
       audioTrack.enabled = true;
       setIsAudio(true);
       console.log('Audio On');
+
+      sendMessage({
+        id: 'handleDevice',
+        type: 'mic',
+        userId: userId,
+        isOn: true,
+      });
+    }
+  }
+
+  // data= {id: 8, status: false}
+  function onHandleDevice(data) {
+    if (userInfo.id === data.userId) return; // 바꾼사람이 나일 때는 실행 안함
+    const offedParticipant = document.getElementById(`profile-${data.userId}`);
+    if (data.isOn) {
+      // 상대방 꺼 켜짐
+      offedParticipant.style.opacity = '0';
+    } else {
+      offedParticipant.style.opacity = '1';
     }
   }
 
