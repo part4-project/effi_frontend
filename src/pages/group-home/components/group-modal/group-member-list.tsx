@@ -9,9 +9,10 @@ interface GroupMemberListProps {
   onAddExileMember: (id: number) => void;
   // eslint-disable-next-line no-unused-vars
   onRemoveExileMember: (id: number) => void;
+  exileMemberList: number[];
 }
 
-const GroupMemberList = ({ onAddExileMember, onRemoveExileMember }: GroupMemberListProps) => {
+const GroupMemberList = ({ onAddExileMember, onRemoveExileMember, exileMemberList }: GroupMemberListProps) => {
   const { data: groupData, isError, isLoading } = useGroupMemberQuery(useGroupStore((state) => state.groupId));
 
   if (isLoading) return 'Loading...';
@@ -28,6 +29,7 @@ const GroupMemberList = ({ onAddExileMember, onRemoveExileMember }: GroupMemberL
               {...member}
               onAddExileMember={onAddExileMember}
               onRemoveExileMember={onRemoveExileMember}
+              exileMemberList={exileMemberList}
             />
           );
         })}

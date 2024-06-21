@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TGroupFetchMemberInfo } from '@api/group/group-request.type';
 import styled, { useTheme } from 'styled-components';
 
@@ -7,6 +7,7 @@ interface GroupMemberInfoProps {
   onAddExileMember: (id: number) => void;
   // eslint-disable-next-line no-unused-vars
   onRemoveExileMember: (id: number) => void;
+  exileMemberList: number[];
 }
 
 const GroupMemberInfo: React.FC<TGroupFetchMemberInfo & GroupMemberInfoProps> = ({
@@ -16,6 +17,7 @@ const GroupMemberInfo: React.FC<TGroupFetchMemberInfo & GroupMemberInfoProps> = 
   admin,
   onAddExileMember,
   onRemoveExileMember,
+  exileMemberList,
 }) => {
   const theme = useTheme();
 
@@ -23,9 +25,12 @@ const GroupMemberInfo: React.FC<TGroupFetchMemberInfo & GroupMemberInfoProps> = 
   const exportName = isExport ? '내보내기 취소' : '내보내기';
 
   const handleExportClick = () => {
-    setIsExport((currentExport) => !currentExport);
     !isExport ? onAddExileMember(id) : onRemoveExileMember(id);
   };
+
+  useEffect(() => {
+    setIsExport(!!exileMemberList.includes(id));
+  }, [exileMemberList]);
 
   return (
     <S.MemberInfoWrap>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ConfirmModal from '@components/modal/confirm-modal/confirm-modal';
 import Modal from '@components/modal/modal';
 import ModalButton from '@components/modal/modal-button';
@@ -43,6 +43,10 @@ const GroupModal = ({ isOpen, onGroupClose, onConfirmClose, onConfirmOpen }: Gro
     navigate('/');
   };
 
+  useEffect(() => {
+    setExileMemberList([]);
+  }, [isOpen]);
+
   return (
     <Modal isOpen={isOpen.group} onClose={onGroupClose} headerTitle="그룹관리">
       <S.ModalWrap>
@@ -51,6 +55,7 @@ const GroupModal = ({ isOpen, onGroupClose, onConfirmClose, onConfirmOpen }: Gro
           <GroupMemberList
             onAddExileMember={handleAddExileMemberButtonClick}
             onRemoveExileMember={handleRemoveExileMemberButtonClick}
+            exileMemberList={exileMemberList}
           />
         </S.ModalContent>
         <S.ModalFooter>
