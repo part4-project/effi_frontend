@@ -28,8 +28,10 @@ const Meetings = ({ isAdmin, scheduledMeeting }: TMeetingProps) => {
   const { data: meetingData, isLoading, isError } = useMeetingQuery(useGroupStore((state) => state.groupId));
   const [isOnLive, setIsOnLive] = useState(false);
 
+  const liveMeetingDateTitle = isLoading || meetingData[0].meetingTitle;
+
   const handleMeetingClick = () => {
-    navigate('/meeting-loading', { state: { roomId: 100000000040 } });
+    navigate('/meeting-loading');
   };
 
   const liveMeetingProps = {
@@ -38,7 +40,9 @@ const Meetings = ({ isAdmin, scheduledMeeting }: TMeetingProps) => {
     onClick: isOnLive ? handleMeetingClick : undefined,
     src: isOnLive ? theme.onLiveCharacter : noDataCharacter,
     title: isOnLive ? 'LIVE ON' : 'LIVE OFF',
-    comments: isOnLive ? 'Live 중입니다!\n얼른 참여하세요!' : '현재 진행중인\n회의가 없습니다.',
+    comments: isOnLive
+      ? `'${liveMeetingDateTitle}' Live 중입니다!\n얼른 참여하세요!`
+      : '현재 진행중인\n회의가 없습니다.',
   };
 
   const scheduledMeetingProps = {
