@@ -174,8 +174,8 @@ const KurentoCameras = ({ roomId }: TKurentoCamerasProps) => {
       id: 'disconnect',
       userId: userId,
     });
+    localStorage.setItem('isFromMeeting', 'true');
     navigate('/group-home');
-    window.location.reload();
   }
 
   async function receiveVideo(sender) {

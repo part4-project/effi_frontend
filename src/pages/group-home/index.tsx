@@ -22,6 +22,7 @@ const GroupHome = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const scheduledMeeting = MY_SCHEDULE_LIST[0];
   const isOnLive = true;
+  const isFromMeeting = localStorage.getItem('isFromMeeting');
 
   useEffect(() => {
     if (!isLoading) {
@@ -29,6 +30,13 @@ const GroupHome = () => {
       setIsAdmin(adminId == userInfo?.id);
     }
   }, [isLoading, userInfo, groupData]);
+
+  useEffect(() => {
+    if (isFromMeeting === 'true') {
+      window.location.reload();
+      localStorage.removeItem('isFromMeeting');
+    }
+  }, [isFromMeeting]);
 
   if (isError) return 'Error...';
 
