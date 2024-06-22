@@ -70,6 +70,8 @@
 }
 
 .participant video {
+  transform: scaleX(-1);
+
   border-radius: 10px;
   background-color: var(--black);
   width: 100%;
