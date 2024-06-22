@@ -24,6 +24,23 @@ const meetingRequest = {
       return error;
     }
   },
+  fetchMeeting: async (groupId: number) => {
+    try {
+      const { data } = await axios.get(`user/group/${groupId}/meeting/view/available`);
+      return data;
+    } catch (error) {
+      if (isAxiosError(error)) {
+        if (error.response) {
+          throw {
+            errorMessage: error.response.data.errorMessage || 'errorMessage',
+            errorCode: error.response.data.errorCode || 'UNKNOWN_ERROR',
+            statusCode: error.response.status,
+          };
+        }
+      }
+      return error;
+    }
+  },
 } as const;
 
 export default meetingRequest;

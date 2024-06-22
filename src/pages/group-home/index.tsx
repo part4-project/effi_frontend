@@ -21,7 +21,6 @@ const GroupHome = () => {
   const userInfo = useQueryClient().getQueryData<TUserInfoRes>([QUERY_KEY.userInfo]);
   const [isAdmin, setIsAdmin] = useState(false);
   const scheduledMeeting = MY_SCHEDULE_LIST[0];
-  const isOnLive = true;
 
   useEffect(() => {
     if (!isLoading) {
@@ -37,7 +36,7 @@ const GroupHome = () => {
       {isLoading ? <GroupHomeSidebarSkeleton /> : <GroupHomeSideBar isAdmin={isAdmin} />}
       <S.GroupHomeMain>
         {isAdmin && <GroupHomeHeader />}
-        <Meetings isOnLive={isOnLive} isAdmin={isAdmin} scheduledMeeting={scheduledMeeting} />
+        <Meetings isAdmin={isAdmin} scheduledMeeting={scheduledMeeting} />
         <MeetingNotes />
       </S.GroupHomeMain>
     </S.Container>
