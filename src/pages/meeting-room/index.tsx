@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { MEETING_ROOM, TOPIC, GROUP_MEMBER } from '@constants/mockdata';
 import { useMeetingStore } from '@stores/meeting';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Chatting from './components/chatting';
 import ForceQuitToast from './components/force-quit-toast';
@@ -23,7 +23,8 @@ const MeetingRoom = () => {
   const [isMeetingFinished, setIsMeetingFinished] = useState(false);
   const { isToastOpen, handleToastChange, isToastAnimClose, handleToastClose } = useForceQuitToast();
   const memberList = useMeetingStore((state) => state.memberList);
-
+  const location = useLocation();
+  console.log(location.state);
   const handleAddCamButtonClick = () => {
     setParticipatedMember([...participatedMember, { id: 1, name: '홍길동', is_admin: false }]);
   };
