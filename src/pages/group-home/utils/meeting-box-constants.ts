@@ -1,4 +1,4 @@
-import { parseISO, isWithinInterval } from 'date-fns';
+import { parseISO, isWithinInterval, format, parse } from 'date-fns';
 import { formatDateToString } from './format-date-to-string';
 
 interface MeetingDataType {
@@ -9,6 +9,13 @@ interface MeetingDataType {
   modifiedAt: string;
   startDate: string;
 }
+
+const convertFormatDate = (date: string) => {
+  const parseDate = parse(date, 'yyyy-MM-dd a hh:mm', new Date());
+
+  // 원하는 형식으로 포맷합니다.
+  return format(parseDate, 'MM-dd HH:mm');
+};
 
 export const withinIntervalDate = (startDate: string, endDate: string) => {
   const currentDate = new Date();
@@ -41,14 +48,14 @@ export const checkScheduledMeetingDataTitle = (meetingData: MeetingDataType[], i
   }
 
   if (meetingData.length >= 2) {
-    return formatDateToString(parseISO(meetingData[isOnLive ? 1 : 0].startDate));
+    return convertFormatDate(formatDateToString(parseISO(meetingData[isOnLive ? 1 : 0].startDate)));
   }
 
   if (isOnLive) {
     return 'NOT YET';
   }
 
-  return formatDateToString(parseISO(meetingData[0].startDate));
+  return convertFormatDate(formatDateToString(parseISO(meetingData[0].startDate)));
 };
 
 export const checkScheduledMeetingDataComment = (meetingData: MeetingDataType[], isOnLive: boolean) => {

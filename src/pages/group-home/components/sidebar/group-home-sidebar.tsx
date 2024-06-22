@@ -5,15 +5,18 @@ import { useWithdrawGroupMutation } from '@hooks/react-query/use-query-group';
 import GroupLeaveModalButton from '@pages/group-home/components/sidebar/group-leave-modal-button';
 import GroupNameInput from '@pages/group-home/components/sidebar/group-name-input';
 import { useGroupStore } from '@stores/group';
+import { device } from '@styles/breakpoints';
+import { zIndex } from '@styles/z-index';
 import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import styled, { useTheme } from 'styled-components';
 
 interface TGroupHomeSideBarProps {
   isAdmin: boolean;
+  isSideBarOpen: boolean;
 }
 
-const GroupHomeSideBar = ({ isAdmin }: TGroupHomeSideBarProps) => {
+const GroupHomeSideBar = ({ isAdmin, isSideBarOpen }: TGroupHomeSideBarProps) => {
   const theme = useTheme();
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
@@ -33,9 +36,8 @@ const GroupHomeSideBar = ({ isAdmin }: TGroupHomeSideBarProps) => {
   if (isSuccess) navigate('/');
 
   return (
-    <S.Container>
+    <S.Container $isSideBarOpen={isSideBarOpen}>
       <GroupNameInput groupName={groupData!.groupName} groupCode={groupData!.code} isAdmin={isAdmin} />
-
       <S.GroupMemberLists>
         {groupData!.memberList.map((member: TGroupFetchMemberInfo) => (
           <S.GroupMemberList key={member.id}>
@@ -57,7 +59,7 @@ const GroupHomeSideBar = ({ isAdmin }: TGroupHomeSideBarProps) => {
 export default GroupHomeSideBar;
 
 const S = {
-  Container: styled.div`
+  Container: styled.div<{ $isSideBarOpen: boolean }>`
     background-color: ${(props) => props.theme.theme06};
     border-left: 4px solid ${(props) => props.theme.theme03};
     width: 240px;
@@ -65,6 +67,14 @@ const S = {
     position: relative;
     border-radius: 0 20px 20px 0;
     color: ${(props) => props.theme.text05};
+    @media ${device.mobile} {
+      ${({ $isSideBarOpen }) => ($isSideBarOpen ? 'display: block;' : 'display: none;')}
+      position: fixed;
+      top: 56px;
+      bottom: 0;
+      z-index: ${zIndex.groupHomeSideBar};
+      width: 183px;
+    }
   `,
 
   GroupMemberLists: styled.ul`

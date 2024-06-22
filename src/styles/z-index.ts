@@ -5,7 +5,9 @@ const zIndex = {
   popOver: 98,
   navBar: 97,
   sideBar: 97,
-  balloon: 10,
+  balloon: 90,
+  groupHomeSideBarButton: 10,
+  groupHomeSideBar: 9,
 };
 
 export { zIndex };
