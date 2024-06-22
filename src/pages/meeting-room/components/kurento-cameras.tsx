@@ -338,15 +338,15 @@ const KurentoCameras = ({ roomId }: TKurentoCamerasProps) => {
       </S.RoomCameraContainer>
 
       <S.RoomButtonContainer className="room-button-container">
-        <S.RoomButton onClick={handleVideoButtonClick}>
+        <S.RoomButton onClick={handleVideoButtonClick} $isActive={isVideo}>
           <S.Img src={isVideo ? ROOM_BUTTONS[0].changedImg : ROOM_BUTTONS[0].initialImg} />
         </S.RoomButton>
-        <S.RoomButton onClick={localAudioToggle}>
+        <S.RoomButton onClick={localAudioToggle} $isActive={isAudio}>
           <S.Img src={isAudio ? ROOM_BUTTONS[1].changedImg : ROOM_BUTTONS[1].initialImg} />
         </S.RoomButton>
-        <S.RoomButton onClick={leaveRoom}>
+        <S.LeaveRoomButton onClick={leaveRoom}>
           <S.Img src={ROOM_BUTTONS[2].initialImg} />
-        </S.RoomButton>
+        </S.LeaveRoomButton>
       </S.RoomButtonContainer>
     </>
   );
@@ -380,17 +380,27 @@ const S = {
     bottom: 0;
   `,
 
-  RoomButton: styled.button`
-    width: 80px;
-    height: 80px;
-    background: #4d4f4e;
+  RoomButton: styled.button<{ $isActive: boolean }>`
+    width: 60px;
+    height: 60px;
+    background: ${(props) => (props.$isActive ? 'var(--white)' : '#4d4f4e')};
     border-radius: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
   `,
   Img: styled.img`
-    width: 50px;
-    height: 50px;
+    width: 20px;
+    height: 20px;
+  `,
+
+  LeaveRoomButton: styled.button`
+    width: 60px;
+    height: 60px;
+    background: var(--red01);
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   `,
 };
