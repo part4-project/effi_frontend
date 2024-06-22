@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { useEffect, useState } from 'react';
-import { MEETING_ROOM, TOPIC } from '@constants/mockdata';
+import { TOPIC } from '@constants/mockdata';
 import { useMeetingStore } from '@stores/meeting';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -20,6 +20,10 @@ const MeetingRoom = () => {
   const [isMeetingFinished, setIsMeetingFinished] = useState(false);
   // const { isToastOpen, handleToastChange, isToastAnimClose, handleToastClose } = useForceQuitToast();
   const memberList = useMeetingStore((state) => state.memberList);
+
+  console.log(location.state);
+
+  const { id, meetingTitle, startDate, expectedEndDate } = location.state;
 
   const handleMeetingFinsishButtonClick = () => {
     setIsMeetingFinished(true);
@@ -46,18 +50,14 @@ const MeetingRoom = () => {
     <S.Container>
       <S.LeftSection>
         <S.Nav className="nav">
-          <S.Title>{MEETING_ROOM.title}</S.Title>
+          <S.Title>{meetingTitle}</S.Title>
           <button onClick={handleMeetingFinsishButtonClick} style={{ zIndex: 99, color: 'var(--gray05)' }}>
             Meeting 끝: 시간 콘솔 출력
           </button>
-          <MeetingRoomTimer
-            startDate={MEETING_ROOM.start_date}
-            endDate={MEETING_ROOM.expected_end_date}
-            isMeetingFinished={isMeetingFinished}
-          />
+          <MeetingRoomTimer startDate={startDate} endDate={expectedEndDate} isMeetingFinished={isMeetingFinished} />
         </S.Nav>
 
-        <KurentoCameras roomId={roomId} />
+        <KurentoCameras roomId={id} />
 
         {/* <ForceQuitToast isToastOpen={isToastOpen} isToastAnimClose={isToastAnimClose} /> */}
       </S.LeftSection>

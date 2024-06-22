@@ -89,6 +89,8 @@ const KurentoCameras = ({ roomId }: TKurentoCamerasProps) => {
         case 'onHandleDevice':
           onHandleDevice(parsedMessage);
           break;
+        case 'pong':
+          break;
         default:
           console.error('Unrecognized message', parsedMessage);
       }
