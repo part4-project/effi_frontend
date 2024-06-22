@@ -38,7 +38,7 @@ const S = {
     width: 100%;
     height: 100%;
     border-radius: 10px;
-    background-color: var(--black);
+    background-color: var(--red);
   `,
   Name: styled.p`
     position: absolute;

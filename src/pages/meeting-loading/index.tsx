@@ -15,10 +15,12 @@ const MeetingLoading = () => {
     QUERY_KEY.groupInfo,
     useGroupStore((state) => state.groupId),
   ]);
+
   const meetingInfo = useQueryClient().getQueryData<TMeetingFetchRes>([
     QUERY_KEY.meetingList,
     useGroupStore((state) => state.groupId),
   ]);
+
   const removeMemberList = useMeetingStore((state) => state.removeMemberList);
   const setMemberList = useMeetingStore((state) => state.setMemberList);
 

@@ -24,6 +24,7 @@ const GroupHome = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const scheduledMeeting = MY_SCHEDULE_LIST[0];
+  const isFromMeeting = localStorage.getItem('isFromMeeting');
 
   const handleSideBarButtonClick = () => {
     setIsSideBarOpen((prev) => !prev);
@@ -36,6 +37,13 @@ const GroupHome = () => {
     }
   }, [isLoading, userInfo, groupData]);
 
+  useEffect(() => {
+    if (isFromMeeting === 'true') {
+      window.location.reload();
+      localStorage.removeItem('isFromMeeting');
+    }
+  }, [isFromMeeting]);
+
   if (isError) return 'Error...';
 
   return (
@@ -44,6 +52,7 @@ const GroupHome = () => {
       <button onClick={handleSideBarButtonClick}>
         <S.SideBarControlImage src={ARROW_RIGHT_ICON} alt="GroupHome SideBar Button" />
       </button>
+
       <S.GroupHomeMain>
         {isAdmin && <GroupHomeHeader />}
         <Meetings isAdmin={isAdmin} scheduledMeeting={scheduledMeeting} />
