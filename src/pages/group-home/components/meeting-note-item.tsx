@@ -1,6 +1,7 @@
 import testImg from '@assets/default-profile.png';
 import { TNoteItem } from '@constants/mockdata.type';
 import ReportModalButton from '@pages/group-home/components/report-modal/report-modal-button';
+import { device } from '@styles/breakpoints';
 import styled from 'styled-components';
 import { calculateCompletedPercentage } from '../utils/completed-percentage-calculate';
 
@@ -20,25 +21,27 @@ const MeetingNoteItem = ({ note }: TMeetingNoteItemProps) => {
             <S.NoteCreatedAt>{note.createdAt}</S.NoteCreatedAt>
           </S.MeetingTitleAndTimeContainer>
 
-          <S.PercentageContainer>
-            <S.PercentageTitle>진행률</S.PercentageTitle>
-            <S.PercentageBar>
-              <S.CompletedPercentageBar $percentage={percentageCompleted}></S.CompletedPercentageBar>
-            </S.PercentageBar>
-            <S.Percentage>{percentageCompleted}%</S.Percentage>
-          </S.PercentageContainer>
+          <S.MeetingInfoContainer>
+            <S.PercentageContainer>
+              <S.PercentageTitle>진행률</S.PercentageTitle>
+              <S.PercentageBar>
+                <S.CompletedPercentageBar $percentage={percentageCompleted}></S.CompletedPercentageBar>
+              </S.PercentageBar>
+              <S.Percentage>{percentageCompleted}%</S.Percentage>
+            </S.PercentageContainer>
 
-          <S.MemberImgContainer>
-            <div>
-              <img src={testImg} />
-            </div>
-            <div>
-              <img src={testImg} />
-            </div>
-            <div>
-              <img src={testImg} />
-            </div>
-          </S.MemberImgContainer>
+            <S.MemberImgContainer>
+              <div>
+                <img src={testImg} />
+              </div>
+              <div>
+                <img src={testImg} />
+              </div>
+              <div>
+                <img src={testImg} />
+              </div>
+            </S.MemberImgContainer>
+          </S.MeetingInfoContainer>
         </S.MeetingNotesList>
       </ReportModalButton>
     </S.Container>
@@ -71,12 +74,30 @@ const S = {
         color: ${(props) => props.theme.theme05};
       }
     }
+    @media ${device.tablet} {
+      flex-direction: column;
+      justify-content: center;
+      gap: 4px;
+    }
   `,
 
   MeetingTitleAndTimeContainer: styled.div`
     width: 40%;
     display: flex;
     align-items: center;
+    @media ${device.tablet} {
+      width: 100%;
+    }
+  `,
+
+  MeetingInfoContainer: styled.div`
+    display: flex;
+    width: 65%;
+    justify-content: space-between;
+    align-items: center;
+    @media ${device.tablet} {
+      width: 100%;
+    }
   `,
 
   NoteTitle: styled.span`
@@ -92,9 +113,15 @@ const S = {
   `,
 
   PercentageContainer: styled.div`
-    width: 50%;
+    width: 80%;
     display: flex;
     align-items: center;
+    @media ${device.tablet} {
+      width: 70%;
+    }
+    @media ${device.mobile} {
+      width: 50%;
+    }
   `,
 
   PercentageTitle: styled.span`
@@ -103,6 +130,12 @@ const S = {
     color: ${(props) => props.theme.text03};
     font-weight: 500;
     font-size: 18px;
+    @media ${device.tablet} {
+      text-align: start;
+    }
+    @media ${device.mobile} {
+      display: none;
+    }
   `,
 
   PercentageBar: styled.div`
@@ -126,6 +159,9 @@ const S = {
     color: ${(props) => props.theme.text03};
     font-size: 16px;
     width: 100px;
+    @media ${device.mobile} {
+      display: none;
+    }
   `,
 
   MemberImgContainer: styled.span`

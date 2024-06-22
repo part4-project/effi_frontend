@@ -1,3 +1,4 @@
+import { device } from '@styles/breakpoints';
 import { skeleton, skeletonAnimation } from '@styles/skeleton';
 import styled from 'styled-components';
 
@@ -35,6 +36,10 @@ const S = {
     position: relative;
     border-radius: 0 20px 20px 0;
     color: ${(props) => props.theme.text05};
+
+    @media ${device.mobile} {
+      display: none;
+    }
   `,
   GroupNameInput: styled.div`
     width: 100%;
