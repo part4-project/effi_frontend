@@ -3,7 +3,7 @@ import meetingRequest from '@api/meeting/meeting-request';
 import { TMeetingCreateReq } from '@api/meeting/meeting-request.type';
 import { QUERY_KEY } from '@constants/query-key';
 import { useToast } from '@hooks/use-toast';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 export const useMeetingCreateMutation = (groupId: number) => {
   const { toast } = useToast();
@@ -20,4 +20,12 @@ export const useMeetingCreateMutation = (groupId: number) => {
   });
 
   return mutation;
+};
+
+export const useMeetingQuery = (groupId: number) => {
+  const query = useQuery({
+    queryKey: [QUERY_KEY.meetingList, groupId],
+    queryFn: async () => await meetingRequest.fetchMeeting(groupId),
+  });
+  return query;
 };
