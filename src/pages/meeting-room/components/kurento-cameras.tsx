@@ -333,7 +333,6 @@ const KurentoCameras = ({ roomId }: TKurentoCamerasProps) => {
 
   return (
     <>
-      <h1 style={{ color: 'var(--blue01)' }}>{roomId} 번 방 입장</h1>
       <S.RoomCameraContainer>
         <div className="participants" data-count={cameraCount}></div>
       </S.RoomCameraContainer>

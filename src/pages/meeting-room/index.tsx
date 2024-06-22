@@ -1,48 +1,38 @@
 /* eslint-disable no-console */
 import { useEffect, useState } from 'react';
-import { MEETING_ROOM, TOPIC, GROUP_MEMBER } from '@constants/mockdata';
+import { MEETING_ROOM, TOPIC } from '@constants/mockdata';
 import { useMeetingStore } from '@stores/meeting';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Chatting from './components/chatting';
-import ForceQuitToast from './components/force-quit-toast';
+// import ForceQuitToast from './components/force-quit-toast';
 import KurentoCameras from './components/kurento-cameras';
 import MeetingRoomTimer from './components/meeting-room-timer';
 import Topics from './components/topics';
-import useForceQuitToast from './hooks/use-force-quit-toast';
+// import useForceQuitToast from './hooks/use-force-quit-toast';
 import useHistoryBackBlock from './hooks/use-history-back-block';
 import useReloadBlock from './hooks/use-reload-block';
-
-const PARTICIPATED_MEMBER = [...GROUP_MEMBER.member_list];
 
 const MeetingRoom = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [participatedMember, setParticipatedMember] = useState(PARTICIPATED_MEMBER);
+
   const [isMeetingFinished, setIsMeetingFinished] = useState(false);
-  const { isToastOpen, handleToastChange, isToastAnimClose, handleToastClose } = useForceQuitToast();
+  // const { isToastOpen, handleToastChange, isToastAnimClose, handleToastClose } = useForceQuitToast();
   const memberList = useMeetingStore((state) => state.memberList);
   const { roomId } = location.state || {};
-
-  const handleAddCamButtonClick = () => {
-    setParticipatedMember([...participatedMember, { id: 1, name: '홍길동', is_admin: false }]);
-  };
-
-  const handleRemoveCamButtonClick = () => {
-    setParticipatedMember(participatedMember.slice(0, participatedMember.length - 1));
-  };
 
   const handleMeetingFinsishButtonClick = () => {
     setIsMeetingFinished(true);
   };
 
-  useEffect(() => {
-    if (participatedMember.length === 1) handleToastChange(true);
-  }, [participatedMember.length, handleToastChange]);
+  // useEffect(() => {
+  //   if (participatedMember.length === 1) handleToastChange(true);
+  // }, [participatedMember.length, handleToastChange]);
 
-  useEffect(() => {
-    if (isToastOpen && participatedMember.length !== 1) handleToastClose();
-  }, [participatedMember.length, isToastOpen, handleToastClose]);
+  // useEffect(() => {
+  //   if (isToastOpen && participatedMember.length !== 1) handleToastClose();
+  // }, [participatedMember.length, isToastOpen, handleToastClose]);
 
   useEffect(() => {
     if (memberList.length == 0) {
@@ -50,20 +40,14 @@ const MeetingRoom = () => {
     }
   });
 
-  useHistoryBackBlock(); // 뒤로가기 차단
-  useReloadBlock(); // 새로고침 차단
+  useHistoryBackBlock();
+  useReloadBlock();
 
   return (
     <S.Container>
       <S.LeftSection>
         <S.Nav className="nav">
           <S.Title>{MEETING_ROOM.title}</S.Title>
-          <button onClick={handleAddCamButtonClick} style={{ zIndex: 99, color: 'var(--gray05)' }}>
-            AddCam +
-          </button>
-          <button onClick={handleRemoveCamButtonClick} style={{ zIndex: 99, color: 'var(--gray05)' }}>
-            RemoveCam -
-          </button>
           <button onClick={handleMeetingFinsishButtonClick} style={{ zIndex: 99, color: 'var(--gray05)' }}>
             Meeting 끝: 시간 콘솔 출력
           </button>
@@ -76,8 +60,9 @@ const MeetingRoom = () => {
 
         <KurentoCameras roomId={roomId} />
 
-        <ForceQuitToast isToastOpen={isToastOpen} isToastAnimClose={isToastAnimClose} />
+        {/* <ForceQuitToast isToastOpen={isToastOpen} isToastAnimClose={isToastAnimClose} /> */}
       </S.LeftSection>
+
       <S.RightSection>
         <Topics topicList={TOPIC.topic_list} />
         <Chatting />
@@ -136,35 +121,7 @@ const S = {
     font-weight: 900;
     line-height: 35px;
   `,
-  RoomCameraContainer: styled.div`
-    display: flex;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    padding: 20px;
-  `,
-  RoomCameraBox: styled.div`
-    border: 10px solid red;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 100%;
-    gap: 10px;
-  `,
-  RoomButtonContainer: styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 34px;
-    padding: 20px;
-    visibility: hidden;
-    opacity: 0;
-    transition:
-      visibility 0.3s,
-      opacity 0.3s;
-    position: absolute;
-    bottom: 0;
-  `,
+
   RightSection: styled.div`
     flex: 1 1 25%;
     display: flex;
