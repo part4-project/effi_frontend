@@ -4,7 +4,15 @@ import { useGroupStore } from '@stores/group';
 import styled from 'styled-components';
 import GroupMemberInfo from './group-member-info';
 
-const GroupMemberList = () => {
+interface GroupMemberListProps {
+  // eslint-disable-next-line no-unused-vars
+  onAddExileMember: (id: number) => void;
+  // eslint-disable-next-line no-unused-vars
+  onRemoveExileMember: (id: number) => void;
+  exileMemberList: number[];
+}
+
+const GroupMemberList = ({ onAddExileMember, onRemoveExileMember, exileMemberList }: GroupMemberListProps) => {
   const { data: groupData, isError, isLoading } = useGroupMemberQuery(useGroupStore((state) => state.groupId));
 
   if (isLoading) return 'Loading...';
@@ -15,7 +23,15 @@ const GroupMemberList = () => {
       <S.MemberListTitle>현재 맴버</S.MemberListTitle>
       <S.MemberListBox>
         {groupData.memberList.map((member: TGroupFetchMemberInfo) => {
-          return <GroupMemberInfo key={member.id} {...member} />;
+          return (
+            <GroupMemberInfo
+              key={member.id}
+              {...member}
+              onAddExileMember={onAddExileMember}
+              onRemoveExileMember={onRemoveExileMember}
+              exileMemberList={exileMemberList}
+            />
+          );
         })}
       </S.MemberListBox>
     </div>

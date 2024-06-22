@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import EmptyNotice from '@components/empty-notice';
 import { MY_SCHEDULE_LIST } from '@constants/mockdata';
 import { ko } from 'date-fns/locale';
@@ -12,7 +12,6 @@ import { addScheduleDot } from '../utils/add-schedule-dot';
 import { filterSchedule } from '../utils/filter-schedule';
 
 const ScheduleCalendar = () => {
-  const ref = useRef<HTMLDivElement>(null);
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
   const [filterdScheduleList, setFilterdScheduleList] = useState<ScheduleList[]>(
     filterSchedule(MY_SCHEDULE_LIST, selectedDate),
@@ -24,7 +23,7 @@ const ScheduleCalendar = () => {
   }, [currMonth]);
 
   return (
-    <S.Container ref={ref}>
+    <S.Container>
       <DatePicker
         locale={ko}
         dateFormat="yyyy.MM.dd"
@@ -34,6 +33,33 @@ const ScheduleCalendar = () => {
           setSelectedDate(date);
           setFilterdScheduleList(filterSchedule(MY_SCHEDULE_LIST, date));
         }}
+        renderCustomHeader={({
+          date,
+          decreaseMonth,
+          increaseMonth,
+          prevMonthButtonDisabled,
+          nextMonthButtonDisabled,
+        }) => (
+          <S.CustomHeaderContainer>
+            <S.CustomHeaderDate>{`${date.getFullYear()}년 ${date.getMonth() + 1}월`}</S.CustomHeaderDate>
+            <S.CustomHeaderButtonBox>
+              <button
+                onClick={decreaseMonth}
+                disabled={prevMonthButtonDisabled}
+                className="react-datepicker__navigation react-datepicker__navigation--previous"
+              >
+                <span className="react-datepicker__navigation-icon react-datepicker__navigation-icon--previous"></span>
+              </button>
+              <button
+                onClick={increaseMonth}
+                disabled={nextMonthButtonDisabled}
+                className="react-datepicker__navigation react-datepicker__navigation--next"
+              >
+                <span className="react-datepicker__navigation-icon react-datepicker__navigation-icon--next"></span>
+              </button>
+            </S.CustomHeaderButtonBox>
+          </S.CustomHeaderContainer>
+        )}
         onMonthChange={(date) => setCurrMonth(date.getMonth() + 1)}
         inline
         showDisabledMonthNavigation
@@ -62,6 +88,19 @@ const ScheduleCalendar = () => {
 export default ScheduleCalendar;
 
 const S = {
+  CustomHeaderContainer: styled.div`
+    display: flex;
+    justify-content: space-between;
+  `,
+  CustomHeaderDate: styled.div`
+    color: ${(props) => props.theme.scheduleText};
+    font-weight: 700;
+    font-size: 24px;
+    padding-inline: 5px;
+  `,
+  CustomHeaderButtonBox: styled.div`
+    display: flex;
+  `,
   Container: styled.div`
     width: 100%;
     height: 70%;
@@ -83,13 +122,19 @@ const S = {
       padding: 0;
     }
 
+    .react-datepicker__navigation-icon {
+      width: auto;
+      &::before {
+        position: static;
+      }
+    }
+
     .react-datepicker__navigation--previous {
-      left: auto;
-      right: 12%;
+      position: static;
     }
 
     .react-datepicker__navigation--next {
-      right: 6%;
+      position: static;
     }
 
     .react-datepicker__month-container {

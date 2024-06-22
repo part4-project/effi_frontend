@@ -13,7 +13,7 @@ interface MeetingModalProps {
 const MeetingModal = ({ isOpen, onClose, title, data, topicData }: MeetingModalProps) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose} headerTitle={title}>
-      <MeetingForm data={data} topicData={topicData} />
+      <MeetingForm data={data} topicData={topicData} onClose={onClose} />
     </Modal>
   );
 };

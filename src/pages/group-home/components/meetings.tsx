@@ -1,21 +1,32 @@
+import { useState, useEffect } from 'react';
 import editMeetingIcon from '@assets/icons/kebab.svg';
 import noDataCharacter from '@assets/icons/meeting-no-data-character.svg';
 import { MEETING_ROOM, TOPIC } from '@constants/mockdata';
 import { TMyScheduleItem } from '@constants/mockdata.type';
+import { useMeetingQuery } from '@hooks/react-query/use-query-meeting';
 import MeetingBox from '@pages/group-home/components/meeting-box';
+import { useGroupStore } from '@stores/group';
 import { useNavigate } from 'react-router-dom';
 import styled, { useTheme } from 'styled-components';
 import MeetingModalButton from './meeting-modal/meeting-modal-button';
+import MeetingsSkeleton from './skeleton/meetings-skeleton';
+import {
+  withinIntervalDate,
+  checkScheduledMeetingDataTitle,
+  checkScheduledMeetingDataComment,
+  checkScheduledMeetingData,
+} from '../utils/meeting-box-constants';
 
 interface TMeetingProps {
-  isOnLive: boolean;
   isAdmin: boolean;
   scheduledMeeting: TMyScheduleItem;
 }
 
-const Meetings = ({ isOnLive, isAdmin, scheduledMeeting }: TMeetingProps) => {
+const Meetings = ({ isAdmin, scheduledMeeting }: TMeetingProps) => {
   const navigate = useNavigate();
   const theme = useTheme();
+  const { data: meetingData, isLoading, isError } = useMeetingQuery(useGroupStore((state) => state.groupId));
+  const [isOnLive, setIsOnLive] = useState(false);
 
   const handleMeetingClick = () => {
     navigate('/meeting-loading', { state: { roomId: 100000000040 } });
@@ -31,11 +42,28 @@ const Meetings = ({ isOnLive, isAdmin, scheduledMeeting }: TMeetingProps) => {
   };
 
   const scheduledMeetingProps = {
-    isMeetingData: !!scheduledMeeting,
-    src: scheduledMeeting ? theme.onScheduledCharacter : noDataCharacter,
-    title: scheduledMeeting ? scheduledMeeting.start_date : 'NOT YET',
-    comments: scheduledMeeting ? `'${scheduledMeeting.title}'\n회의가 진행됩니다.` : `현재 예정인\n회의가 없습니다.`,
+    isMeetingData: checkScheduledMeetingData(meetingData, isOnLive),
+    src: checkScheduledMeetingData(meetingData, isOnLive) ? theme.onScheduledCharacter : noDataCharacter,
+    title: checkScheduledMeetingDataTitle(meetingData, isOnLive),
+    comments: checkScheduledMeetingDataComment(meetingData, isOnLive),
   };
+
+  useEffect(() => {
+    if (meetingData && meetingData.length > 0) {
+      setIsOnLive(withinIntervalDate(meetingData[0].startDate, meetingData[0].expectedEndDate));
+
+      const interval = setInterval(() => {
+        setIsOnLive(withinIntervalDate(meetingData[0].startDate, meetingData[0].expectedEndDate));
+      }, 60000); // 1분마다 확인
+
+      return () => clearInterval(interval);
+    } else {
+      setIsOnLive(false);
+    }
+  }, [meetingData]);
+
+  if (isLoading) return <MeetingsSkeleton />;
+  if (isError) return 'Error...';
 
   return (
     <S.Container>

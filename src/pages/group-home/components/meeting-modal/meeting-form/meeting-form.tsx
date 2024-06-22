@@ -5,6 +5,7 @@ import { calculateEndDate } from '@pages/group-home/utils/calculate-end-date';
 import { formatDateToISOStringWithOffset } from '@pages/group-home/utils/format-date-to-string';
 import roundTo15minutes from '@pages/group-home/utils/round-to-15minutes';
 import { useGroupStore } from '@stores/group';
+import { useLobbyGroupStore } from '@stores/lobby-group';
 import styled from 'styled-components';
 import MeetingDate from './meeting-date';
 import MeetingExpectedTime from './meeting-expected-time';
@@ -16,9 +17,14 @@ import MeetingTopicList from './meeting-topic-list';
 interface TMeetingFormProps {
   data?: TMeetingRoom;
   topicData?: TTopic;
+  onClose: () => void;
 }
-const MeetingForm = ({ data, topicData }: TMeetingFormProps) => {
-  const groupId = useGroupStore((state) => state.groupId);
+const MeetingForm = ({ data, topicData, onClose }: TMeetingFormProps) => {
+  const { lobbyGroupId, initLobbyGroupId } = useLobbyGroupStore((state) => ({
+    lobbyGroupId: state.lobbyGroupId,
+    initLobbyGroupId: state.initLobbyGroupId,
+  }));
+  const groupId = useGroupStore((state) => state.groupId) || lobbyGroupId;
   const meetingCreate = useMeetingCreateMutation(groupId);
 
   const [selectedDate, setSelectedDate] = useState<Date | null>(roundTo15minutes(new Date()));
@@ -72,8 +78,15 @@ const MeetingForm = ({ data, topicData }: TMeetingFormProps) => {
     setTopic('');
   };
 
-  const handleSubmitButtonClick = () => {
-    meetingCreate.mutate(meetingData);
+  const handleSubmitButtonClick = async () => {
+    try {
+      await meetingCreate.mutateAsync(meetingData);
+      if (lobbyGroupId) initLobbyGroupId();
+      onClose();
+    } catch (error) {
+      setSelectedDate(roundTo15minutes(new Date()));
+      setSelectedTime('회의 시간을 선택해 주세요!');
+    }
   };
 
   useEffect(() => {

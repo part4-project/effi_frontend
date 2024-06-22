@@ -1,32 +1,16 @@
+import { groupListSkeletonLength } from '@pages/side-bar/utils/group-list-constants';
 import { device } from '@styles/breakpoints';
 import { skeleton, skeletonAnimation } from '@styles/skeleton';
 import styled from 'styled-components';
 
-const GroupListSkeleton = () => {
-  const groupBoxLength = () => {
-    const gap = 9;
-    const mobile = 23.7;
-    const tablet = 32.8;
-    const desktop = 42;
-    let groupBoxLength;
+interface GroupListSkeletonProps {
+  sideBarHeight: number;
+}
 
-    if (window.innerWidth <= 767) {
-      // Mobile
-      groupBoxLength = Math.floor(window.innerHeight / (mobile + gap) - 4);
-    } else if (window.innerWidth <= 1280) {
-      // Tablet
-      groupBoxLength = Math.floor(window.innerHeight / (tablet + gap) - 4);
-    } else {
-      // Desktop
-      groupBoxLength = Math.floor(window.innerHeight / (desktop + gap) - 3);
-    }
-
-    return groupBoxLength;
-  };
-
+const GroupListSkeleton = ({ sideBarHeight }: GroupListSkeletonProps) => {
   return (
     <>
-      {Array.from({ length: groupBoxLength() }).map((_, index) => (
+      {Array.from({ length: groupListSkeletonLength(sideBarHeight) }).map((_, index) => (
         <S.GroupListBox key={index} />
       ))}
     </>

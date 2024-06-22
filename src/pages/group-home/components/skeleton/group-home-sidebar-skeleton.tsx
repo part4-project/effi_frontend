@@ -39,6 +39,7 @@ const S = {
   GroupNameInput: styled.div`
     width: 100%;
     height: 70px;
+    border-radius: 6px;
     ${skeleton}
     &::before {
       ${skeletonAnimation}
@@ -68,6 +69,7 @@ const S = {
   Name: styled.div`
     flex-grow: 1;
     height: 19px;
+    border-radius: 4px;
     ${skeleton}
     &::before {
       ${skeletonAnimation}

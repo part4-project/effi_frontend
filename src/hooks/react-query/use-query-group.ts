@@ -1,7 +1,7 @@
-/* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
 import { TAxiosError } from '@api/axios';
 import groupRequest from '@api/group/group-request';
-import { TGroupFetchInfo, TInvitedGroupFetchRes } from '@api/group/group-request.type';
+import { TGroupFetchInfo, TGroupMemberFetchRes, TInvitedGroupFetchRes } from '@api/group/group-request.type';
 import { QUERY_KEY } from '@constants/query-key';
 import { useToast } from '@hooks/use-toast';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -44,12 +44,23 @@ export const useGroupUpdateMutation = (groupId: number) => {
 
   const mutation = useMutation({
     mutationFn: async (groupName: string) => await groupRequest.updateGroup(groupName, groupId),
+    onMutate: async (groupName: string) => {
+      await queryClient.cancelQueries({ queryKey: [QUERY_KEY.groupInfo, groupId] });
+      const previousGroupInfo = queryClient.getQueryData<TGroupMemberFetchRes>([QUERY_KEY.groupInfo, groupId]);
+      const newGroupData = { ...previousGroupInfo, groupName: groupName };
+      queryClient.setQueryData([QUERY_KEY.groupInfo, groupId], newGroupData);
+
+      return { previousGroupInfo, groupName, groupId };
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.groupInfo, groupId] });
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.groupList] });
       toast('그룹명이 변경되었습니다');
     },
-    onError: (error: TAxiosError) => toast(error.errorMessage, true),
+    onError: (error: TAxiosError, _, context) => {
+      toast(error.errorMessage, true);
+      queryClient.setQueryData([QUERY_KEY.groupInfo, context?.groupId], context?.previousGroupInfo);
+    },
   });
 
   return mutation;
@@ -105,5 +116,38 @@ export const useGroupInviteMutation = (groupId: number) => {
     onSuccess: () => toast('초대가 완료되었습니다'),
     onError: (error: TAxiosError) => toast(error.errorMessage, true),
   });
+  return mutation;
+};
+
+export const useExileGroupMemberMutation = (groupId: number) => {
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: async (groupIdList: number[]) => await groupRequest.exileGroupMember(groupId, groupIdList),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.groupInfo, groupId] });
+      toast('그룹 멤버 추방이 완료되었습니다');
+    },
+    onError: (error: TAxiosError) => toast(error.errorMessage, true),
+  });
+
+  return mutation;
+};
+
+export const useWithdrawGroupMutation = (groupId: number) => {
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: async () => await groupRequest.withdrawGroup(groupId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.groupInfo, groupId] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.groupList] });
+      toast('그룹에 성공적으로 탈퇴했습니다');
+    },
+    onError: (error: TAxiosError) => toast(error.errorMessage, true),
+  });
+
   return mutation;
 };

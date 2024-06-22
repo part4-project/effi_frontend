@@ -20,6 +20,7 @@ const MyGroupList = ({ isLoading, onClick, groupData }: MyGroupListProps) => {
     .map((group) => (
       <GroupListItem
         key={group.groupId}
+        groupId={group.groupId}
         groupName={group.groupName}
         onClick={onClick}
         groupNameLength={checkGroupNameLong(group.groupName)}

@@ -20,7 +20,6 @@ const MeetingRoom = () => {
   const [isMeetingFinished, setIsMeetingFinished] = useState(false);
   // const { isToastOpen, handleToastChange, isToastAnimClose, handleToastClose } = useForceQuitToast();
   const memberList = useMeetingStore((state) => state.memberList);
-  const { roomId } = location.state || {};
 
   const handleMeetingFinsishButtonClick = () => {
     setIsMeetingFinished(true);

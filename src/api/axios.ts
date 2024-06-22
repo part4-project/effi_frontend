@@ -25,10 +25,15 @@ instance.interceptors.request.use(
     }
   },
   (error) => {
+    //인증 오류
     if (error.response.status === 401) {
       window.location.href = '/login';
     }
-    return error;
+    //서버 오류
+    if (error.response.status === 404) {
+      window.location.href = '/404';
+    }
+    return Promise.reject(error);
   },
 );
 instance.interceptors.response.use(
@@ -40,10 +45,15 @@ instance.interceptors.response.use(
     return config;
   },
   (error) => {
+    //인증 오류
     if (error.response.status === 401) {
       window.location.href = '/login';
     }
-    return error;
+    //서버 오류
+    if (error.response.status === 404) {
+      window.location.href = '/404';
+    }
+    return Promise.reject(error);
   },
 );
 

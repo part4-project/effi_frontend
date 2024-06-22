@@ -21,13 +21,12 @@ const GroupHome = () => {
   const userInfo = useQueryClient().getQueryData<TUserInfoRes>([QUERY_KEY.userInfo]);
   const [isAdmin, setIsAdmin] = useState(false);
   const scheduledMeeting = MY_SCHEDULE_LIST[0];
-  const isOnLive = true;
   const isFromMeeting = localStorage.getItem('isFromMeeting');
 
   useEffect(() => {
     if (!isLoading) {
       const { id: adminId } = groupData.memberList.find((data: TGroupFetchMemberInfo) => data.admin);
-      setIsAdmin(adminId == userInfo?.id);
+      setIsAdmin(adminId === userInfo?.id);
     }
   }, [isLoading, userInfo, groupData]);
 
@@ -46,7 +45,7 @@ const GroupHome = () => {
 
       <S.GroupHomeMain>
         {isAdmin && <GroupHomeHeader />}
-        <Meetings isOnLive={isOnLive} isAdmin={isAdmin} scheduledMeeting={scheduledMeeting} />
+        <Meetings isAdmin={isAdmin} scheduledMeeting={scheduledMeeting} />
         <MeetingNotes />
       </S.GroupHomeMain>
     </S.Container>
