@@ -64,7 +64,7 @@ const MeetingRoom = () => {
 
       <S.RightSection>
         <Topics topicList={TOPIC.topic_list} />
-        <Chatting />
+        <Chatting roomId={id} />
       </S.RightSection>
     </S.Container>
   );

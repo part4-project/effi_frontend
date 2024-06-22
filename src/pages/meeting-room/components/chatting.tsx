@@ -7,13 +7,17 @@ import InputForm from './input-form';
 import useInputForm from '../hooks/use-input-form';
 import { TChatSocketType } from '../types';
 
-const Chatting = () => {
+interface TChattingProps {
+  roomId: number;
+}
+
+const Chatting = ({ roomId }: TChattingProps) => {
   const handleSendMessage = () => {
     sendMessage(SOCKET_TYPE.CHAT, inputValue);
   };
 
   const { inputValue, handleSubmit, handleInputValueChange } = useInputForm(handleSendMessage);
-  const { sendMessage, chatSocketList } = useChatSocket(1);
+  const { sendMessage, chatSocketList } = useChatSocket(roomId);
   const chatContainerRef = useRef<HTMLUListElement>(null);
 
   useEffect(() => {
