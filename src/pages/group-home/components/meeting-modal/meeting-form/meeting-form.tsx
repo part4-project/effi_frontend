@@ -17,9 +17,13 @@ import MeetingTopicList from './meeting-topic-list';
 interface TMeetingFormProps {
   data?: TMeetingRoom;
   topicData?: TTopic;
+  onClose: () => void;
 }
-const MeetingForm = ({ data, topicData }: TMeetingFormProps) => {
-  const lobbyGroupId = useLobbyGroupStore((state) => state.lobbyGroupId);
+const MeetingForm = ({ data, topicData, onClose }: TMeetingFormProps) => {
+  const { lobbyGroupId, initLobbyGroupId } = useLobbyGroupStore((state) => ({
+    lobbyGroupId: state.lobbyGroupId,
+    initLobbyGroupId: state.initLobbyGroupId,
+  }));
   const groupId = useGroupStore((state) => state.groupId) || lobbyGroupId;
   const meetingCreate = useMeetingCreateMutation(groupId);
 
@@ -74,8 +78,15 @@ const MeetingForm = ({ data, topicData }: TMeetingFormProps) => {
     setTopic('');
   };
 
-  const handleSubmitButtonClick = () => {
-    meetingCreate.mutate(meetingData);
+  const handleSubmitButtonClick = async () => {
+    try {
+      await meetingCreate.mutateAsync(meetingData);
+      if (lobbyGroupId) initLobbyGroupId();
+      onClose();
+    } catch (error) {
+      setSelectedDate(roundTo15minutes(new Date()));
+      setSelectedTime('회의 시간을 선택해 주세요!');
+    }
   };
 
   useEffect(() => {

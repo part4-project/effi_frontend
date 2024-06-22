@@ -1,14 +1,6 @@
-import { parseISO, isWithinInterval, format, parse } from 'date-fns';
+import { TMeetingFetchRes } from '@api/meeting/meeting-request.type';
+import { parseISO, isWithinInterval, parse, format } from 'date-fns';
 import { formatDateToString } from './format-date-to-string';
-
-interface MeetingDataType {
-  createdAt: string;
-  expectedEndDate: string;
-  id: number;
-  meetingTitle: string;
-  modifiedAt: string;
-  startDate: string;
-}
 
 const convertFormatDate = (date: string) => {
   const parseDate = parse(date, 'yyyy-MM-dd a hh:mm', new Date());
@@ -26,7 +18,7 @@ export const withinIntervalDate = (startDate: string, endDate: string) => {
   return isWithin;
 };
 
-export const checkScheduledMeetingData = (meetingData: MeetingDataType[], isOnLive: boolean) => {
+export const checkScheduledMeetingData = (meetingData: TMeetingFetchRes, isOnLive: boolean) => {
   if (!meetingData || meetingData.length === 0) {
     return false;
   }
@@ -42,7 +34,7 @@ export const checkScheduledMeetingData = (meetingData: MeetingDataType[], isOnLi
   return true;
 };
 
-export const checkScheduledMeetingDataTitle = (meetingData: MeetingDataType[], isOnLive: boolean) => {
+export const checkScheduledMeetingDataTitle = (meetingData: TMeetingFetchRes, isOnLive: boolean) => {
   if (!meetingData || meetingData.length === 0) {
     return 'NOT YET';
   }
@@ -58,7 +50,7 @@ export const checkScheduledMeetingDataTitle = (meetingData: MeetingDataType[], i
   return convertFormatDate(formatDateToString(parseISO(meetingData[0].startDate)));
 };
 
-export const checkScheduledMeetingDataComment = (meetingData: MeetingDataType[], isOnLive: boolean) => {
+export const checkScheduledMeetingDataComment = (meetingData: TMeetingFetchRes, isOnLive: boolean) => {
   if (!meetingData || meetingData.length === 0) {
     return `현재 예정인\n회의가 없습니다.`;
   }
