@@ -75,7 +75,7 @@ const S = {
 
   MeetingBoxTitle: styled.div<{ $isMeetingData: boolean }>`
     margin: 16px 0;
-    padding: 8px 20px;
+    padding: 8px 12px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -85,9 +85,6 @@ const S = {
     font-size: 20px;
     font-weight: 900;
     color: var(--white);
-    @media ${device.tablet} {
-      padding: 8px 10px;
-    }
     @media ${device.mobile} {
       margin: 4px 0;
     }
