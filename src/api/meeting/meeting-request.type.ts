@@ -21,3 +21,13 @@ export interface TMeetingCreateRes {
   modifiedAt: string | null;
   topicList: Topic[];
 }
+
+export interface TMeetingFetchInfo {
+  id: number;
+  meetingTitle: string;
+  startDate: string;
+  expectedEndDate: string;
+  createdAt: string;
+  modifiedAt: string;
+}
+export type TMeetingFetchRes = TMeetingFetchInfo[];
