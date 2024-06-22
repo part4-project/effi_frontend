@@ -14,17 +14,20 @@ class Participant {
     this.span = document.createElement('span');
     this.video = document.createElement('video');
 
-    // dummy
+    // dummy comtainer
     this.dummy = document.createElement('div');
     this.dummy.id = 'dummy-' + userId;
-    this.img = document.createElement('img');
-    this.img.id = 'profile-' + userId;
-    this.img.src = userInfo.profileImageUrl;
-    this.dummy.appendChild(this.img);
+    this.profileImg = document.createElement('img');
+    this.profileImg.id = 'profile-' + userId;
+    this.profileImg.src = userInfo.profileImageUrl;
+    this.dummy.appendChild(this.profileImg);
 
+    //audio mute icon
     this.muteIcon = document.createElement('span');
     this.muteIcon.id = 'muteIcon-' + userId;
-    this.muteIcon.appendChild(document.createTextNode('꺼짐'));
+    this.muteIconImage = document.createElement('img');
+    this.muteIconImage.src = '/mute-icon.svg';
+    this.muteIcon.appendChild(this.muteIconImage);
 
     this.rtcPeer = null;
     this.sendMessage = sendMessage;
