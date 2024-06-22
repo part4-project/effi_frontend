@@ -1,5 +1,5 @@
 import { device } from '@styles/breakpoints';
-import styled from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
 
 interface TMeetingBoxProps {
   onClick?: () => void;
@@ -21,10 +21,10 @@ const MeetingBox = ({
   children,
 }: TMeetingBoxProps) => {
   return (
-    <S.Container onClick={onClick} $isLiveMeetingBox={isLiveMeetingBox}>
-      <S.CharacterImage src={src} />
+    <S.Container onClick={onClick}>
+      <S.CharacterImage src={src} $isLiveMeetingBox={isLiveMeetingBox} />
       {children}
-      <S.MeetingBoxContent>
+      <S.MeetingBoxContent $isLiveMeetingBox={isLiveMeetingBox}>
         <S.MeetingBoxTitle $isMeetingData={isMeetingData}>{title}</S.MeetingBoxTitle>
         <S.MeetingBoxComments>{comments}</S.MeetingBoxComments>
       </S.MeetingBoxContent>
@@ -34,8 +34,17 @@ const MeetingBox = ({
 
 export default MeetingBox;
 
+const heartbeat = keyframes`
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+`;
+
 const S = {
-  Container: styled.div<{ $isLiveMeetingBox: boolean }>`
+  Container: styled.div`
     position: relative;
     background-color: var(--white);
     border-radius: 20px;
@@ -48,7 +57,7 @@ const S = {
     align-items: center;
     justify-content: center;
     padding: 20px;
-    cursor: ${({ $isLiveMeetingBox }) => $isLiveMeetingBox && 'pointer'};
+    cursor: ${({ onClick }) => onClick && 'pointer'};
     @media ${device.mobile} {
       min-width: 228px;
       width: 100%;
@@ -60,17 +69,27 @@ const S = {
     }
   `,
 
-  CharacterImage: styled.img`
+  CharacterImage: styled.img<{ $isLiveMeetingBox: boolean }>`
     width: 70px;
     height: 70px;
     object-fit: contain;
+    ${({ $isLiveMeetingBox }) =>
+      $isLiveMeetingBox &&
+      css`
+        animation: ${heartbeat} 1.5s infinite;
+      `};
   `,
 
-  MeetingBoxContent: styled.div`
+  MeetingBoxContent: styled.div<{ $isLiveMeetingBox: boolean }>`
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    ${({ $isLiveMeetingBox }) =>
+      $isLiveMeetingBox &&
+      css`
+        animation: ${heartbeat} 1.5s infinite;
+      `};
   `,
 
   MeetingBoxTitle: styled.div<{ $isMeetingData: boolean }>`
