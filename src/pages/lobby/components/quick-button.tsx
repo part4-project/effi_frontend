@@ -29,10 +29,15 @@ const S = {
     height: 138px;
     position: relative;
     cursor: pointer;
+    transition: transform 0.2s ease;
+    &:hover {
+      transform: translateY(-5px);
+    }
   `,
   BackgroundImg: styled.img`
     width: 100%;
     height: 100%;
+    filter: drop-shadow(1px 10px 5px rgba(0, 0, 0, 0.2));
   `,
   InnerBox: styled.div`
     position: absolute;
