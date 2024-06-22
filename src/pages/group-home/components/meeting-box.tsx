@@ -1,3 +1,4 @@
+import { device } from '@styles/breakpoints';
 import styled from 'styled-components';
 
 interface TMeetingBoxProps {
@@ -23,8 +24,10 @@ const MeetingBox = ({
     <S.Container onClick={onClick} $isLiveMeetingBox={isLiveMeetingBox}>
       <S.CharacterImage src={src} />
       {children}
-      <S.MeetingBoxTitle $isMeetingData={isMeetingData}>{title}</S.MeetingBoxTitle>
-      <S.MeetingBoxComments>{comments}</S.MeetingBoxComments>
+      <S.MeetingBoxContent>
+        <S.MeetingBoxTitle $isMeetingData={isMeetingData}>{title}</S.MeetingBoxTitle>
+        <S.MeetingBoxComments>{comments}</S.MeetingBoxComments>
+      </S.MeetingBoxContent>
     </S.Container>
   );
 };
@@ -38,6 +41,7 @@ const S = {
     border-radius: 20px;
     aspect-ratio: 7/4;
     width: 472px;
+    height: 274px;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 10px;
     display: flex;
     flex-direction: column;
@@ -45,6 +49,15 @@ const S = {
     justify-content: center;
     padding: 20px;
     cursor: ${({ $isLiveMeetingBox }) => $isLiveMeetingBox && 'pointer'};
+    @media ${device.mobile} {
+      min-width: 228px;
+      width: 100%;
+      height: 114px;
+      flex-direction: row;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 0 12px;
+    }
   `,
 
   CharacterImage: styled.img`
@@ -53,17 +66,28 @@ const S = {
     object-fit: contain;
   `,
 
+  MeetingBoxContent: styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  `,
+
   MeetingBoxTitle: styled.div<{ $isMeetingData: boolean }>`
     margin: 16px 0;
-    padding: 8px 40px;
+    padding: 8px 12px;
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 160px;
     background-color: ${({ $isMeetingData, theme }) => ($isMeetingData ? theme.theme01 : 'var(--gray01)')};
     border-radius: 10px;
     font-size: 20px;
     font-weight: 900;
     color: var(--white);
+    @media ${device.mobile} {
+      margin: 4px 0;
+    }
   `,
 
   MeetingBoxComments: styled.p`

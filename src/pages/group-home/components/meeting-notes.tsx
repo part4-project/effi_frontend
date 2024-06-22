@@ -5,6 +5,7 @@ import { TNoteItem } from '@constants/mockdata.type';
 import DateRangeCalendar from '@pages/group-home/components/date-range-calendar';
 import MeetingNoteItem from '@pages/group-home/components/meeting-note-item';
 import { filteredNotesBySearchQuery } from '@pages/group-home/utils/date-range-filter';
+import { device } from '@styles/breakpoints';
 import styled, { useTheme } from 'styled-components';
 
 const MeetingNotes = () => {
@@ -47,7 +48,7 @@ const MeetingNotes = () => {
         <S.NotesSearchBarBox>
           <S.NotesSearchBar
             type="text"
-            placeholder="일자 또는 회의 이름으로 검색"
+            placeholder="일자 또는 회의 이름 검색"
             value={inputValue}
             onChange={handleSearchInputChange}
             onKeyDown={handleSearch}
@@ -87,17 +88,25 @@ const S = {
     display: flex;
     flex-direction: column;
     overflow-y: auto;
+    min-width: 228px;
   `,
 
   MeetingNotesHeader: styled.div`
     display: flex;
     justify-content: space-between;
+    gap: 12px;
+    @media ${device.mobile} {
+      flex-direction: column;
+    }
   `,
 
   NotesSearchBar: styled.input`
     width: 260px;
     padding: 10px 35px 10px 10px;
     border-radius: 10px;
+    @media ${device.tablet} {
+      width: 100%;
+    }
   `,
 
   MeetingNotesLists: styled.ul`
@@ -125,6 +134,9 @@ const S = {
 
   NotesSearchBarBox: styled.div`
     position: relative;
+    @media ${device.mobile} {
+      width: 183px;
+    }
   `,
 
   NotesSearchIcon: styled.div`
@@ -132,6 +144,7 @@ const S = {
     top: 18%;
     right: 4%;
   `,
+
   EmptyNoticeContaier: styled.div`
     line-height: 22px; /* 137.5% */
     height: 300px;

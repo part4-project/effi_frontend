@@ -6,6 +6,7 @@ import { TMyScheduleItem } from '@constants/mockdata.type';
 import { useMeetingQuery } from '@hooks/react-query/use-query-meeting';
 import MeetingBox from '@pages/group-home/components/meeting-box';
 import { useGroupStore } from '@stores/group';
+import { device } from '@styles/breakpoints';
 import { useNavigate } from 'react-router-dom';
 import styled, { useTheme } from 'styled-components';
 import MeetingModalButton from './meeting-modal/meeting-modal-button';
@@ -16,6 +17,7 @@ import {
   checkScheduledMeetingDataComment,
   checkScheduledMeetingData,
 } from '../utils/meeting-box-constants';
+import useCheckMinuteTime from '../hooks/use-check-minute-time';
 
 interface TMeetingProps {
   isAdmin: boolean;
@@ -25,6 +27,7 @@ interface TMeetingProps {
 const Meetings = ({ isAdmin, scheduledMeeting }: TMeetingProps) => {
   const navigate = useNavigate();
   const theme = useTheme();
+  const checkMinuteTime = useCheckMinuteTime();
   const { data: meetingData, isLoading, isError } = useMeetingQuery(useGroupStore((state) => state.groupId));
   const [isOnLive, setIsOnLive] = useState(false);
 
@@ -55,16 +58,8 @@ const Meetings = ({ isAdmin, scheduledMeeting }: TMeetingProps) => {
   useEffect(() => {
     if (meetingData && meetingData.length > 0) {
       setIsOnLive(withinIntervalDate(meetingData[0].startDate, meetingData[0].expectedEndDate));
-
-      const interval = setInterval(() => {
-        setIsOnLive(withinIntervalDate(meetingData[0].startDate, meetingData[0].expectedEndDate));
-      }, 60000); // 1분마다 확인
-
-      return () => clearInterval(interval);
-    } else {
-      setIsOnLive(false);
     }
-  }, [meetingData]);
+  }, [checkMinuteTime]);
 
   if (isLoading) return <MeetingsSkeleton />;
   if (isError) return 'Error...';
@@ -72,7 +67,6 @@ const Meetings = ({ isAdmin, scheduledMeeting }: TMeetingProps) => {
   return (
     <S.Container>
       <MeetingBox {...liveMeetingProps} />
-
       <MeetingBox {...scheduledMeetingProps}>
         {scheduledMeeting && (
           <S.StyledModal>
@@ -96,6 +90,13 @@ const S = {
     justify-content: center;
     gap: 30px;
     margin-bottom: 90px;
+    @media ${device.tablet} {
+      margin-bottom: 60px;
+    }
+    @media ${device.mobile} {
+      flex-direction: column;
+      margin-bottom: 30px;
+    }
   `,
 
   StyledModal: styled.div`
@@ -103,6 +104,11 @@ const S = {
     position: absolute;
     right: 28px;
     top: 25px;
+
+    @media ${device.mobile} {
+      left: 12px;
+      top: 8px;
+    }
   `,
 
   EditIcon: styled.img`

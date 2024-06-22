@@ -60,7 +60,7 @@ const S = {
     gap: 21px;
     padding: 9px 6px 9px 17px;
     cursor: pointer;
-    width: 220px;
+    width: 183px;
   `,
 
   CalendarIcon: styled.img`

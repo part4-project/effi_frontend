@@ -1,4 +1,5 @@
 import { skeleton, skeletonAnimation } from '@styles/skeleton';
+import { device } from '@styles/breakpoints';
 import styled from 'styled-components';
 
 const MeetingsSkeleton = () => {
@@ -18,6 +19,13 @@ const S = {
     justify-content: center;
     gap: 30px;
     margin-bottom: 90px;
+    @media ${device.tablet} {
+      margin-bottom: 60px;
+    }
+    @media ${device.mobile} {
+      flex-direction: column;
+      margin-bottom: 30px;
+    }
   `,
   MeetingBox: styled.div`
     position: relative;
@@ -25,6 +33,7 @@ const S = {
     border-radius: 20px;
     aspect-ratio: 7/4;
     width: 472px;
+    height: 274px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -33,6 +42,15 @@ const S = {
     ${skeleton}
     &::before {
       ${skeletonAnimation}
+    }
+    @media ${device.mobile} {
+      min-width: 228px;
+      width: 100%;
+      height: 114px;
+      flex-direction: row;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 0 12px;
     }
   `,
 };

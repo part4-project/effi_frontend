@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { TGroupFetchMemberInfo } from '@api/group/group-request.type';
 import { TUserInfoRes } from '@api/user/user-request.type';
+import ARROW_RIGHT_ICON from '@assets/icons/arrow-right.svg';
 import { MY_SCHEDULE_LIST } from '@constants/mockdata';
 import { QUERY_KEY } from '@constants/query-key';
 import { useGroupMemberQuery } from '@hooks/react-query/use-query-group';
@@ -11,6 +12,7 @@ import GroupHomeSideBar from '@pages/group-home/components/sidebar/group-home-si
 import { useGroupStore } from '@stores/group';
 import { device } from '@styles/breakpoints';
 import { navBarHeight } from '@styles/subsection-size';
+import { zIndex } from '@styles/z-index';
 import { useQueryClient } from '@tanstack/react-query';
 import styled from 'styled-components';
 import AdminHOC from './components/admin-hoc';
@@ -20,8 +22,13 @@ const GroupHome = () => {
   const { data: groupData, isError, isLoading } = useGroupMemberQuery(useGroupStore((state) => state.groupId));
   const userInfo = useQueryClient().getQueryData<TUserInfoRes>([QUERY_KEY.userInfo]);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const scheduledMeeting = MY_SCHEDULE_LIST[0];
   const isFromMeeting = localStorage.getItem('isFromMeeting');
+
+  const handleSideBarButtonClick = () => {
+    setIsSideBarOpen((prev) => !prev);
+  };
 
   useEffect(() => {
     if (!isLoading) {
@@ -41,7 +48,10 @@ const GroupHome = () => {
 
   return (
     <S.Container>
-      {isLoading ? <GroupHomeSidebarSkeleton /> : <GroupHomeSideBar isAdmin={isAdmin} />}
+      {isLoading ? <GroupHomeSidebarSkeleton /> : <GroupHomeSideBar isAdmin={isAdmin} isSideBarOpen={isSideBarOpen} />}
+      <button onClick={handleSideBarButtonClick}>
+        <S.SideBarControlImage src={ARROW_RIGHT_ICON} alt="GroupHome SideBar Button" />
+      </button>
 
       <S.GroupHomeMain>
         {isAdmin && <GroupHomeHeader />}
@@ -60,6 +70,21 @@ const S = {
     background-color: ${(props) => props.theme.theme02};
   `,
 
+  SideBarControlImage: styled.img`
+    position: fixed;
+    top: 60px;
+    left: 60px;
+    width: 40px;
+    height: 40px;
+    display: none;
+    position: fixed;
+
+    z-index: ${zIndex.groupHomeSideBarButton};
+    @media ${device.mobile} {
+      display: block;
+    }
+  `,
+
   GroupHomeMain: styled.div`
     width: 100%;
     height: calc(100vh - ${navBarHeight.desktop});
@@ -74,6 +99,7 @@ const S = {
     }
     @media ${device.mobile} {
       height: calc(100vh - ${navBarHeight.mobile});
+      padding: 80px 40px 20px;
     }
   `,
 };
