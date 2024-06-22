@@ -11,13 +11,13 @@ import { useNavigate } from 'react-router-dom';
 import styled, { useTheme } from 'styled-components';
 import MeetingModalButton from './meeting-modal/meeting-modal-button';
 import MeetingsSkeleton from './skeleton/meetings-skeleton';
+import useCheckMinuteTime from '../hooks/use-check-minute-time';
 import {
   withinIntervalDate,
   checkScheduledMeetingDataTitle,
   checkScheduledMeetingDataComment,
   checkScheduledMeetingData,
 } from '../utils/meeting-box-constants';
-import useCheckMinuteTime from '../hooks/use-check-minute-time';
 
 interface TMeetingProps {
   isAdmin: boolean;
@@ -30,8 +30,9 @@ const Meetings = ({ isAdmin, scheduledMeeting }: TMeetingProps) => {
   const checkMinuteTime = useCheckMinuteTime();
   const { data: meetingData, isLoading, isError } = useMeetingQuery(useGroupStore((state) => state.groupId));
   const [isOnLive, setIsOnLive] = useState(false);
+  console.log(meetingData);
 
-  const liveMeetingDateTitle = isLoading || meetingData[0].meetingTitle;
+  const liveMeetingDateTitle = isLoading || (meetingData !== '' && meetingData[0].meetingTitle);
 
   const handleMeetingClick = () => {
     navigate('/meeting-loading');
@@ -58,8 +59,10 @@ const Meetings = ({ isAdmin, scheduledMeeting }: TMeetingProps) => {
   useEffect(() => {
     if (meetingData && meetingData.length > 0) {
       setIsOnLive(withinIntervalDate(meetingData[0].startDate, meetingData[0].expectedEndDate));
+    } else {
+      setIsOnLive(false);
     }
-  }, [checkMinuteTime]);
+  }, [checkMinuteTime, meetingData]);
 
   if (isLoading) return <MeetingsSkeleton />;
   if (isError) return 'Error...';
