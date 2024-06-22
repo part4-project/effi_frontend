@@ -2,16 +2,13 @@
 import { useEffect, useState } from 'react';
 import { MEETING_ROOM, TOPIC, GROUP_MEMBER } from '@constants/mockdata';
 import { useMeetingStore } from '@stores/meeting';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Chatting from './components/chatting';
 import ForceQuitToast from './components/force-quit-toast';
 import KurentoCameras from './components/kurento-cameras';
 import MeetingRoomTimer from './components/meeting-room-timer';
-// import RoomButton from './components/room-button';
-// import RoomCamera from './components/room-camera';
 import Topics from './components/topics';
-// import { ROOM_BUTTONS } from './constants';
 import useForceQuitToast from './hooks/use-force-quit-toast';
 import useHistoryBackBlock from './hooks/use-history-back-block';
 import useReloadBlock from './hooks/use-reload-block';
@@ -19,11 +16,13 @@ import useReloadBlock from './hooks/use-reload-block';
 const PARTICIPATED_MEMBER = [...GROUP_MEMBER.member_list];
 
 const MeetingRoom = () => {
+  const location = useLocation();
   const navigate = useNavigate();
   const [participatedMember, setParticipatedMember] = useState(PARTICIPATED_MEMBER);
   const [isMeetingFinished, setIsMeetingFinished] = useState(false);
   const { isToastOpen, handleToastChange, isToastAnimClose, handleToastClose } = useForceQuitToast();
   const memberList = useMeetingStore((state) => state.memberList);
+  const { roomId } = location.state || {};
 
   const handleAddCamButtonClick = () => {
     setParticipatedMember([...participatedMember, { id: 1, name: '홍길동', is_admin: false }]);
@@ -75,7 +74,7 @@ const MeetingRoom = () => {
           />
         </S.Nav>
 
-        <KurentoCameras />
+        <KurentoCameras roomId={roomId} />
 
         <ForceQuitToast isToastOpen={isToastOpen} isToastAnimClose={isToastAnimClose} />
       </S.LeftSection>

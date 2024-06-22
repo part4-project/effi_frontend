@@ -2,8 +2,10 @@
 // @ts-nocheck
 
 import { useEffect, useRef, useState } from 'react';
+import { TGroupMemberFetchRes } from '@api/group/group-request.type';
 import { TUserInfoRes } from '@api/user/user-request.type';
 import { QUERY_KEY } from '@constants/query-key';
+import useThrottle from '@hooks/use-throttle';
 import Participant from '@pages/meeting-room/kurento/participant';
 import { useGroupStore } from '@stores/group';
 import { useQueryClient } from '@tanstack/react-query';
@@ -13,12 +15,16 @@ import styled from 'styled-components';
 import '@pages/meeting-room/kurento/participants.css';
 import { ROOM_BUTTONS } from '../constants';
 import { getIceServers } from '../utils/get-ice-servers';
-import { TGroupMemberFetchRes } from '@api/group/group-request.type';
 
-const KurentoCameras = () => {
+interface TKurentoCamerasProps {
+  roomId: number;
+}
+
+const KurentoCameras = ({ roomId }: TKurentoCamerasProps) => {
   const [isVideo, setIsVideo] = useState(true);
   const [isAudio, setIsAudio] = useState(true);
   const [cameraCount, setCameraCount] = useState(0);
+
   const navigate = useNavigate();
   const userInfo = useQueryClient().getQueryData<TUserInfoRes>([QUERY_KEY.userInfo]);
   const groupInfo = useQueryClient().getQueryData<TGroupMemberFetchRes>([
@@ -27,7 +33,7 @@ const KurentoCameras = () => {
   ]);
 
   const userId = userInfo?.id;
-  const roomId = 111205;
+
   const memberList = groupInfo?.memberList;
 
   const ws = useRef(null);
@@ -224,7 +230,7 @@ const KurentoCameras = () => {
   }
 
   function localVideoToggle() {
-    const myProfileImage = document.getElementById(`profile-${userInfo.id}`);
+    const dummyContainer = document.getElementById(`dummy-${userInfo.id}`);
 
     const videoTrack = participants.current[userId].rtcPeer
       .getLocalStream()
@@ -234,7 +240,7 @@ const KurentoCameras = () => {
     if (isVideo) {
       videoTrack.enabled = false;
       setIsVideo(false);
-      myProfileImage.style.opacity = 1;
+      dummyContainer.style.opacity = 1;
 
       sendMessage({
         id: 'handleDevice',
@@ -246,7 +252,7 @@ const KurentoCameras = () => {
     } else {
       videoTrack.enabled = true;
       setIsVideo(true);
-      myProfileImage.style.opacity = 0;
+      dummyContainer.style.opacity = 0;
 
       sendMessage({
         id: 'handleDevice',
@@ -295,16 +301,18 @@ const KurentoCameras = () => {
     }
   }
 
+  const handleVideoButtonClick = useThrottle(localVideoToggle, 500);
+
   function onHandleDevice(data) {
     if (userInfo.id === data.userId) return;
 
     if (data.type === 'camera') {
-      const profileImageElement = document.getElementById(`profile-${data.userId}`);
-      if (profileImageElement) {
+      const dummyContainer = document.getElementById(`dummy-${data.userId}`);
+      if (dummyContainer) {
         if (data.isOn) {
-          profileImageElement.style.opacity = 0;
+          dummyContainer.style.opacity = 0;
         } else {
-          profileImageElement.style.opacity = 1;
+          dummyContainer.style.opacity = 1;
         }
       } else {
         console.error('상대방의 데이터를 받아오는데 실패했습니다.');
@@ -325,12 +333,13 @@ const KurentoCameras = () => {
 
   return (
     <>
-      <h1 style={{ color: 'var(--blue01)' }}>{cameraCount}</h1>
+      <h1 style={{ color: 'var(--blue01)' }}>{roomId} 번 방 입장</h1>
       <S.RoomCameraContainer>
         <div className="participants" data-count={cameraCount}></div>
       </S.RoomCameraContainer>
+
       <S.RoomButtonContainer className="room-button-container">
-        <S.RoomButton onClick={localVideoToggle}>
+        <S.RoomButton onClick={handleVideoButtonClick}>
           <S.Img src={isVideo ? ROOM_BUTTONS[0].changedImg : ROOM_BUTTONS[0].initialImg} />
         </S.RoomButton>
         <S.RoomButton onClick={localAudioToggle}>

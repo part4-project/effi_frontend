@@ -18,7 +18,7 @@ const Meetings = ({ isOnLive, isAdmin, scheduledMeeting }: TMeetingProps) => {
   const theme = useTheme();
 
   const handleMeetingClick = () => {
-    navigate('/meeting-loading');
+    navigate('/meeting-loading', { state: { roomId: 10000000001 } });
   };
 
   const liveMeetingProps = {

@@ -4,14 +4,16 @@ import { QUERY_KEY } from '@constants/query-key';
 import { useGroupStore } from '@stores/group';
 import { useMeetingStore } from '@stores/meeting';
 import { useQueryClient } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const MeetingLoading = () => {
+  const location = useLocation();
   const navigate = useNavigate();
   const groupInfo = useQueryClient().getQueryData<TGroupMemberFetchRes>([
     QUERY_KEY.groupInfo,
     useGroupStore((state) => state.groupId),
   ]);
+  const { roomId } = location.state || {};
 
   const removeMemberList = useMeetingStore((state) => state.removeMemberList);
   const setMemberList = useMeetingStore((state) => state.setMemberList);
@@ -20,7 +22,7 @@ const MeetingLoading = () => {
     if (groupInfo) {
       removeMemberList();
       setMemberList(groupInfo.memberList.map((member) => member));
-      navigate('/meeting-room');
+      navigate('/meeting-room', { state: { roomId: roomId } });
     } else {
       navigate('/group-home');
     }

@@ -11,27 +11,42 @@
 .participants[data-count='1'] {
   div {
     width: 80%;
+    div {
+      width: 100%;
+    }
   }
 }
 .participants[data-count='2'] {
   div {
     width: calc(50% - 10px / 2);
+    div {
+      width: 100%;
+    }
   }
 }
 .participants[data-count='3'] {
   div {
     width: calc(50% - 10px / 2);
+    div {
+      width: 100%;
+    }
   }
 }
 .participants[data-count='4'] {
   div {
     width: calc(50% - 10px / 2);
+    div {
+      width: 100%;
+    }
   }
 }
 .participants[data-count='5'] {
   div {
     width: calc(30% - 10px / 2);
     min-width: 250px;
+    div {
+      width: 100%;
+    }
   }
 }
 .participants[data-count='6'] {
@@ -39,6 +54,9 @@
   div {
     width: calc(30% - 10px / 2);
     min-width: 250px;
+    div {
+      width: 100%;
+    }
   }
 }
 
@@ -68,18 +86,30 @@
   font-weight: 700;
   bottom: 8px;
   left: 8px;
+  z-index: 1;
+}
+
+/* dummy */
+.participants div div {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  background-color: var(--dark02);
+  height: 100%;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .participant img {
-  position: absolute;
-  top: calc(50% - 60px);
-  opacity: 0;
-  border: 3px solid var(--gray03);
+  border: 3px solid var(--gray01);
   width: 120px;
   height: 120px;
   border-radius: 100px;
 }
 
+/* audio mute */
 .participant span:nth-child(4) {
   position: absolute;
   background-color: #212322;
@@ -88,7 +118,7 @@
   opacity: 0;
   color: var(--white);
   font-weight: 700;
-
   bottom: 8px;
   right: 8px;
+  z-index: 1;
 }

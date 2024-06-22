@@ -14,9 +14,13 @@ class Participant {
     this.span = document.createElement('span');
     this.video = document.createElement('video');
 
+    // dummy
+    this.dummy = document.createElement('div');
+    this.dummy.id = 'dummy-' + userId;
     this.img = document.createElement('img');
     this.img.id = 'profile-' + userId;
     this.img.src = userInfo.profileImageUrl;
+    this.dummy.appendChild(this.img);
 
     this.muteIcon = document.createElement('span');
     this.muteIcon.id = 'muteIcon-' + userId;
@@ -28,7 +32,7 @@ class Participant {
 
     this.container.appendChild(this.video);
     this.container.appendChild(this.span);
-    this.container.appendChild(this.img);
+    this.container.appendChild(this.dummy);
     this.container.appendChild(this.muteIcon);
 
     this.container.onclick = this.switchContainerClass.bind(this);
