@@ -10,13 +10,13 @@ export const groupListHeight = (sideBarHeight: number) => {
 
   if (window.innerWidth <= size.mobile) {
     // Mobile
-    groupBoxHeight = sideBarHeight - 2 * (mobile + gap) - 80;
+    groupBoxHeight = sideBarHeight - 2 * (mobile + gap) - 104;
   } else if (window.innerWidth <= size.tablet) {
     // Tablet
-    groupBoxHeight = sideBarHeight - 2 * (tablet + gap) - 96;
+    groupBoxHeight = sideBarHeight - 2 * (tablet + gap) - 112;
   } else {
     // Desktop
-    groupBoxHeight = sideBarHeight - 2 * (desktop + gap) - 104;
+    groupBoxHeight = sideBarHeight - 2 * (desktop + gap) - 112;
   }
 
   return groupBoxHeight;
