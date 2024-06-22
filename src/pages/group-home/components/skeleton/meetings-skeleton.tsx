@@ -45,6 +45,7 @@ const S = {
     }
     @media ${device.mobile} {
       min-width: 228px;
+      width: 100%;
       height: 114px;
       flex-direction: row;
       justify-content: space-between;
