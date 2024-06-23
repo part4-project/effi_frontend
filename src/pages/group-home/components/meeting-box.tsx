@@ -24,8 +24,10 @@ const MeetingBox = ({
     <S.Container onClick={onClick}>
       <S.CharacterImage src={src} $isLiveMeetingBox={isLiveMeetingBox} />
       {children}
-      <S.MeetingBoxContent $isLiveMeetingBox={isLiveMeetingBox}>
-        <S.MeetingBoxTitle $isMeetingData={isMeetingData}>{title}</S.MeetingBoxTitle>
+      <S.MeetingBoxContent>
+        <S.MeetingBoxTitle $isLiveMeetingBox={isLiveMeetingBox} $isMeetingData={isMeetingData}>
+          {title}
+        </S.MeetingBoxTitle>
         <S.MeetingBoxComments>{comments}</S.MeetingBoxComments>
       </S.MeetingBoxContent>
     </S.Container>
@@ -73,26 +75,16 @@ const S = {
     width: 70px;
     height: 70px;
     object-fit: contain;
-    ${({ $isLiveMeetingBox }) =>
-      $isLiveMeetingBox &&
-      css`
-        animation: ${heartbeat} 1.5s infinite;
-      `};
   `,
 
-  MeetingBoxContent: styled.div<{ $isLiveMeetingBox: boolean }>`
+  MeetingBoxContent: styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    ${({ $isLiveMeetingBox }) =>
-      $isLiveMeetingBox &&
-      css`
-        animation: ${heartbeat} 1.5s infinite;
-      `};
   `,
 
-  MeetingBoxTitle: styled.div<{ $isMeetingData: boolean }>`
+  MeetingBoxTitle: styled.div<{ $isLiveMeetingBox: boolean; $isMeetingData: boolean }>`
     margin: 16px 0;
     padding: 8px 12px;
     display: flex;
@@ -104,6 +96,13 @@ const S = {
     font-size: 20px;
     font-weight: 900;
     color: var(--white);
+
+    ${({ $isLiveMeetingBox }) =>
+      $isLiveMeetingBox &&
+      css`
+        animation: ${heartbeat} 1.5s infinite;
+      `};
+
     @media ${device.mobile} {
       margin: 4px 0;
     }
