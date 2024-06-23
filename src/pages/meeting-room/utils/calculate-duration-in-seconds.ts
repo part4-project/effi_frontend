@@ -1,8 +1,8 @@
-import { parse, differenceInSeconds } from 'date-fns';
+import { parseISO, differenceInSeconds } from 'date-fns';
 
 export const calculateDurationInSeconds = (startDateStr: string, expectedEndDateStr: string) => {
-  const startDate = parse(startDateStr.replace(/오전|오후/g, ''), 'yyyy. M. d.  HH:mm', new Date());
-  const expectedEndDate = parse(expectedEndDateStr.replace(/오전|오후/g, ''), 'yyyy. M. d.  HH:mm', new Date());
+  const startDate = parseISO(startDateStr);
+  const expectedEndDate = parseISO(expectedEndDateStr);
   const targetDurationInSeconds = differenceInSeconds(expectedEndDate, startDate);
   return targetDurationInSeconds;
 };
