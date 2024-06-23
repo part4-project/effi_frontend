@@ -48,7 +48,7 @@ const heartbeat = keyframes`
 const S = {
   Container: styled.div`
     position: relative;
-    background-color: var(--white);
+    background-color: ${(props) => props.theme.theme06};
     border-radius: 20px;
     aspect-ratio: 7/4;
     width: 472px;

@@ -75,7 +75,7 @@ const Meetings = ({ isAdmin, scheduledMeeting }: TMeetingProps) => {
           <S.StyledModal>
             {isAdmin && (
               <MeetingModalButton title="회의 수정" data={MEETING_ROOM} topicData={TOPIC}>
-                <S.EditIcon src={editMeetingIcon} />
+                <S.EditIcon src={theme.editIcon} />
               </MeetingModalButton>
             )}
           </S.StyledModal>
