@@ -57,7 +57,7 @@ const MeetingRoom = () => {
           <MeetingRoomTimer startDate={startDate} endDate={expectedEndDate} isMeetingFinished={isMeetingFinished} />
         </S.Nav>
 
-        <KurentoCameras roomId={id} />
+        <KurentoCameras roomId={id} startDate={startDate} endDate={expectedEndDate} />
 
         {/* <ForceQuitToast isToastOpen={isToastOpen} isToastAnimClose={isToastAnimClose} /> */}
       </S.LeftSection>

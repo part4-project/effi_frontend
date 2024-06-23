@@ -14,13 +14,16 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import '@pages/meeting-room/kurento/participants.css';
 import { ROOM_BUTTONS } from '../constants';
+import useMeetingRoomTimer from '../hooks/use-meeting-room-timer';
 import { getIceServers } from '../utils/get-ice-servers';
 
 interface TKurentoCamerasProps {
   roomId: number;
+  startDate: string;
+  endDate: string;
 }
 
-const KurentoCameras = ({ roomId }: TKurentoCamerasProps) => {
+const KurentoCameras = ({ roomId, startDate, endDate }: TKurentoCamerasProps) => {
   const [isVideo, setIsVideo] = useState(true);
   const [isAudio, setIsAudio] = useState(true);
   const [cameraCount, setCameraCount] = useState(0);
@@ -39,6 +42,14 @@ const KurentoCameras = ({ roomId }: TKurentoCamerasProps) => {
   const ws = useRef(null);
   const heartbeatInterval = useRef(null);
   const participants = useRef({});
+
+  const { isDurationOver } = useMeetingRoomTimer(startDate, endDate);
+
+  useEffect(() => {
+    if (cameraCount === 1 && isDurationOver) {
+      setTimeout(leaveRoom, 10000);
+    }
+  }, [cameraCount, isDurationOver]);
 
   useEffect(() => {
     ws.current = new WebSocket('https://api.effi.club/signal/webrtc');
