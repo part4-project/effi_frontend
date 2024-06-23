@@ -24,6 +24,8 @@ import CIRCLE_BLUE_5 from '@assets/icons/circle-blue5.svg';
 import CIRCLE_WHITE from '@assets/icons/circle-white.svg';
 import EDIT_ICON_WHITE from '@assets/icons/edit-white.svg';
 import EDIT_ICON from '@assets/icons/edit.svg';
+import EFFI_PHONE from '@assets/icons/effi-phone-blue.svg';
+import EFFI_PHONE_DARK from '@assets/icons/effi-phone-dark.svg';
 import FOLDER_BLUE from '@assets/icons/folder-blue.svg';
 import FOLDER_DARK from '@assets/icons/folder-dark.svg';
 import FOLDER_GRAY from '@assets/icons/folder-gray.svg';
@@ -62,8 +64,6 @@ import LOGO_DARK from '@assets/logo-dark.svg';
 import LOGO from '@assets/logo.svg';
 import TEXT_LOGO_DARK from '@assets/text-logo-dark.svg';
 import TEXT_LOGO from '@assets/text-logo.svg';
-import EFFI_PHONE_DARK from '@assets/icons/effi-phone-dark.svg';
-import EFFI_PHONE from '@assets/icons/effi-phone-blue.svg';
 
 export const lightModeTheme = {
   //color
@@ -115,6 +115,7 @@ export const lightModeTheme = {
   alarm: ALARM,
   alarmEmpty: ALARM_EMPTY,
   alarmActive: ALARM_ACTIVE,
+  themeBtnImg: '/light-mode-toggle-btn.svg',
   polygonTopWhite: '/polygon-top-white.svg',
   polygonTopBlue: '/polygon-top-blue.svg',
   polygonLeft: '/polygon-left.svg',
@@ -215,6 +216,7 @@ export const darkModeTheme = {
   alarm: ALARM_DARK,
   alarmEmpty: ALARM_EMPTY_DARK,
   alarmActive: ALARM_ACTIVE_DARK,
+  themeBtnImg: '/dark-mode-toggle-btn.svg',
   polygonTopWhite: '/polygon-top-gray.svg',
   polygonTopBlue: '/polygon-top-dark.svg',
   polygonLeft: '/polygon-left-dark.svg',
