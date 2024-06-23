@@ -28,9 +28,8 @@ const Meetings = ({ isAdmin, scheduledMeeting }: TMeetingProps) => {
   const navigate = useNavigate();
   const theme = useTheme();
   const checkMinuteTime = useCheckMinuteTime();
-  const { data: meetingData, isLoading, isError } = useMeetingQuery(useGroupStore((state) => state.groupId));
+  const { data: meetingData, isLoading, isError, refetch } = useMeetingQuery(useGroupStore((state) => state.groupId));
   const [isOnLive, setIsOnLive] = useState(false);
-  console.log(meetingData);
 
   const liveMeetingDateTitle = isLoading || (meetingData !== '' && meetingData[0].meetingTitle);
 
@@ -57,12 +56,13 @@ const Meetings = ({ isAdmin, scheduledMeeting }: TMeetingProps) => {
   };
 
   useEffect(() => {
+    refetch();
     if (meetingData && meetingData.length > 0) {
       setIsOnLive(withinIntervalDate(meetingData[0].startDate, meetingData[0].expectedEndDate));
     } else {
       setIsOnLive(false);
     }
-  }, [checkMinuteTime, meetingData]);
+  }, [checkMinuteTime, meetingData, refetch]);
 
   if (isLoading) return <MeetingsSkeleton />;
   if (isError) return 'Error...';
