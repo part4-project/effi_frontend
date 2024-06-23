@@ -1,5 +1,5 @@
 import { device } from '@styles/breakpoints';
-import styled from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
 
 interface TMeetingBoxProps {
   onClick?: () => void;
@@ -21,11 +21,13 @@ const MeetingBox = ({
   children,
 }: TMeetingBoxProps) => {
   return (
-    <S.Container onClick={onClick} $isLiveMeetingBox={isLiveMeetingBox}>
-      <S.CharacterImage src={src} />
+    <S.Container onClick={onClick}>
+      <S.CharacterImage src={src} $isLiveMeetingBox={isLiveMeetingBox} />
       {children}
       <S.MeetingBoxContent>
-        <S.MeetingBoxTitle $isMeetingData={isMeetingData}>{title}</S.MeetingBoxTitle>
+        <S.MeetingBoxTitle $isLiveMeetingBox={isLiveMeetingBox} $isMeetingData={isMeetingData}>
+          {title}
+        </S.MeetingBoxTitle>
         <S.MeetingBoxComments>{comments}</S.MeetingBoxComments>
       </S.MeetingBoxContent>
     </S.Container>
@@ -34,8 +36,17 @@ const MeetingBox = ({
 
 export default MeetingBox;
 
+const heartbeat = keyframes`
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+`;
+
 const S = {
-  Container: styled.div<{ $isLiveMeetingBox: boolean }>`
+  Container: styled.div`
     position: relative;
     background-color: var(--white);
     border-radius: 20px;
@@ -48,7 +59,7 @@ const S = {
     align-items: center;
     justify-content: center;
     padding: 20px;
-    cursor: ${({ $isLiveMeetingBox }) => $isLiveMeetingBox && 'pointer'};
+    cursor: ${({ onClick }) => onClick && 'pointer'};
     @media ${device.mobile} {
       min-width: 228px;
       width: 100%;
@@ -60,7 +71,7 @@ const S = {
     }
   `,
 
-  CharacterImage: styled.img`
+  CharacterImage: styled.img<{ $isLiveMeetingBox: boolean }>`
     width: 70px;
     height: 70px;
     object-fit: contain;
@@ -73,7 +84,7 @@ const S = {
     align-items: center;
   `,
 
-  MeetingBoxTitle: styled.div<{ $isMeetingData: boolean }>`
+  MeetingBoxTitle: styled.div<{ $isLiveMeetingBox: boolean; $isMeetingData: boolean }>`
     margin: 16px 0;
     padding: 8px 12px;
     display: flex;
@@ -85,6 +96,13 @@ const S = {
     font-size: 20px;
     font-weight: 900;
     color: var(--white);
+
+    ${({ $isLiveMeetingBox }) =>
+      $isLiveMeetingBox &&
+      css`
+        animation: ${heartbeat} 1.5s infinite;
+      `};
+
     @media ${device.mobile} {
       margin: 4px 0;
     }
