@@ -20,6 +20,15 @@ const MeetingDate = ({ selectedDate, onChange }: MeetingDateProps) => {
   const currentDateTime = new Date();
   const currentHour = currentDateTime.getHours();
   const currentMinute = currentDateTime.getMinutes();
+
+  const isToday = selectedDate && selectedDate.toDateString() === currentDateTime.toDateString();
+  const minTime = isToday
+    ? currentHour === 23
+      ? new Date()
+      : new Date(currentDateTime.setHours(currentHour, currentMinute))
+    : new Date(currentDateTime.setHours(0, 0, 0, 0));
+  const maxTime = new Date(currentDateTime.setHours(23, 59));
+
   return (
     <S.MeetingDateContainer>
       <DatePicker
@@ -29,8 +38,8 @@ const MeetingDate = ({ selectedDate, onChange }: MeetingDateProps) => {
         showTimeSelect
         timeIntervals={15}
         minDate={new Date()}
-        minTime={currentHour === 23 ? new Date() : new Date(currentDateTime.setHours(currentHour, currentMinute))}
-        maxTime={new Date(currentDateTime.setHours(23, 59))}
+        minTime={minTime}
+        maxTime={maxTime}
         customInput={<DatePickerCustomInput />}
       />
       <S.SelectedValue>{formatDateToString(selectedDate)}</S.SelectedValue>

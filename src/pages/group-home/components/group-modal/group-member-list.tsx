@@ -20,7 +20,7 @@ const GroupMemberList = ({ onAddExileMember, onRemoveExileMember, exileMemberLis
 
   return (
     <div>
-      <S.MemberListTitle>현재 맴버</S.MemberListTitle>
+      <S.MemberListTitle>현재 멤버</S.MemberListTitle>
       <S.MemberListBox>
         {groupData.memberList.map((member: TGroupFetchMemberInfo) => {
           return (
