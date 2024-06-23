@@ -1,3 +1,4 @@
+import { ko } from 'date-fns/locale';
 import DatePicker from 'react-datepicker';
 import styled, { useTheme } from 'styled-components';
 
@@ -20,6 +21,7 @@ const DateRangeCalendar = ({ dateRange, setDateRange }: TDateRangeCalendarProps)
     <S.Container>
       <S.DatepickerWrapper>
         <S.StyledDatePicker
+          locale={ko}
           portalId="root-portal"
           placeholderText="일자 선택"
           selectsRange={true}
@@ -54,13 +56,13 @@ const S = {
 
   StyledDatePicker: styled(DatePicker)`
     background-color: var(--white);
-    color: var(--blue01);
+    color: ${(props) => props.theme.theme04};
     font-size: 14px;
     border-radius: 10px;
     gap: 21px;
     padding: 9px 6px 9px 17px;
     cursor: pointer;
-    width: 183px;
+    width: 210px;
   `,
 
   CalendarIcon: styled.img`
