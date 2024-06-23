@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { parse } from 'date-fns';
+import { parseISO } from 'date-fns';
 import { calculateDurationInSeconds } from '../utils/calculate-duration-in-seconds';
 
 const useMeetingRoomTimer = (startDateStr: string, endDateStr: string) => {
@@ -8,8 +8,8 @@ const useMeetingRoomTimer = (startDateStr: string, endDateStr: string) => {
   const targetDuration = calculateDurationInSeconds(startDateStr, endDateStr);
 
   useEffect(() => {
-    const startDate = parse(startDateStr.replace(/오전|오후/g, ''), 'yyyy. M. d.  HH:mm', new Date());
-    const endDate = parse(endDateStr.replace(/오전|오후/g, ''), 'yyyy. M. d.  HH:mm', new Date());
+    const startDate = parseISO(startDateStr);
+    const endDate = parseISO(endDateStr);
 
     const timer = setInterval(() => {
       const now = new Date();
