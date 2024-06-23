@@ -360,6 +360,10 @@ const KurentoCameras = ({ roomId, startDate, endDate }: TKurentoCamerasProps) =>
     }
   }
 
+  window.onbeforeunload = function () {
+    leaveRoom();
+  };
+
   return (
     <>
       <S.RoomCameraContainer>
