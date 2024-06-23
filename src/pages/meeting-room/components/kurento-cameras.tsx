@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import { TGroupMemberFetchRes } from '@api/group/group-request.type';
 import { TUserInfoRes } from '@api/user/user-request.type';
 import { QUERY_KEY } from '@constants/query-key';
+import { useUpdateMeetingEndDate } from '@hooks/react-query/use-query-meeting';
 import useThrottle from '@hooks/use-throttle';
 import Participant from '@pages/meeting-room/kurento/participant';
 import { useGroupStore } from '@stores/group';
@@ -38,10 +39,10 @@ const KurentoCameras = ({ roomId, startDate, endDate }: TKurentoCamerasProps) =>
     QUERY_KEY.groupInfo,
     useGroupStore((state) => state.groupId),
   ]);
-
+  const groupId = useGroupStore((state) => state.groupId);
   const userId = userInfo?.id;
-
   const memberList = groupInfo?.memberList;
+  const meetingEndDateMutation = useUpdateMeetingEndDate(groupId, roomId);
 
   const ws = useRef(null);
   const heartbeatInterval = useRef(null);
@@ -191,7 +192,13 @@ const KurentoCameras = ({ roomId, startDate, endDate }: TKurentoCamerasProps) =>
     setCameraCount(Object.keys(participants.current).length);
   }
 
-  function leaveRoom() {
+  async function leaveRoom() {
+    if (cameraCount === 1 && isDurationOver) {
+      const currentDateTime = new Date();
+      currentDateTime.setHours(currentDateTime.getHours() + 9);
+      const isoDateTime = currentDateTime.toISOString();
+      await meetingEndDateMutation.mutateAsync(isoDateTime);
+    }
     sendMessage({
       id: 'disconnect',
       userId: userId,

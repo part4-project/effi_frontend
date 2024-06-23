@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import editMeetingIcon from '@assets/icons/kebab.svg';
 import noDataCharacter from '@assets/icons/meeting-no-data-character.svg';
 import { MEETING_ROOM, TOPIC } from '@constants/mockdata';
 import { TMyScheduleItem } from '@constants/mockdata.type';

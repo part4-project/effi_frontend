@@ -1,5 +1,4 @@
 /* eslint-disable no-console */
-import { useEffect } from 'react';
 import clockOverIcon from '@assets/icons/clock-over.svg';
 import clockIcon from '@assets/icons/clock.svg';
 import styled from 'styled-components';
@@ -9,24 +8,12 @@ import { formatDurationFromSeconds } from '../utils/format-duration-from-seconds
 interface TimerProps {
   startDate: string;
   endDate: string;
-  isMeetingFinished: boolean;
 }
 
-const MeetingRoomTimer = ({ startDate, endDate, isMeetingFinished }: TimerProps) => {
-  const { currElapsedSeconds, targetDuration, isDurationOver } = useMeetingRoomTimer(startDate, endDate);
+const MeetingRoomTimer = ({ startDate, endDate }: TimerProps) => {
+  const { currElapsedSeconds, isDurationOver } = useMeetingRoomTimer(startDate, endDate);
 
-  useEffect(() => {
-    if (isMeetingFinished) {
-      const totalTime = formatDurationFromSeconds(
-        isDurationOver ? currElapsedSeconds + targetDuration : currElapsedSeconds,
-        'api',
-      );
-      const overTime = formatDurationFromSeconds(isDurationOver ? currElapsedSeconds : 0, 'api');
-      console.log('total: ', totalTime, 'over', overTime); //api 전송 데이터
-    }
-  }, [isMeetingFinished]);
-
-  if (!currElapsedSeconds) return <S.CalculteNotice>시간을 계산중...</S.CalculteNotice>;
+  if (!currElapsedSeconds) return <S.CalculateNotice>시간을 계산중...</S.CalculateNotice>;
 
   return (
     <S.Container>
@@ -56,7 +43,7 @@ const S = {
     line-height: 28px;
     letter-spacing: -0.6px;
   `,
-  CalculteNotice: styled.div`
+  CalculateNotice: styled.div`
     display: flex;
     align-items: center;
     color: var(--gray01);
