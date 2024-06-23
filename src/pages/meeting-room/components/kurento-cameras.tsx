@@ -380,6 +380,7 @@ const S = {
       opacity 0.3s;
     position: absolute;
     bottom: 0;
+    z-index: 10;
   `,
 
   RoomButton: styled.button<{ $isActive: boolean }>`
