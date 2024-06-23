@@ -13,7 +13,9 @@ import { playSound } from '@utils/play-sound';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import '@pages/meeting-room/kurento/participants.css';
+import ForceQuitToast from './force-quit-toast';
 import { ROOM_BUTTONS } from '../constants';
+import useForceQuitToast from '../hooks/use-force-quit-toast';
 import useMeetingRoomTimer from '../hooks/use-meeting-room-timer';
 import { getIceServers } from '../utils/get-ice-servers';
 
@@ -24,6 +26,8 @@ interface TKurentoCamerasProps {
 }
 
 const KurentoCameras = ({ roomId, startDate, endDate }: TKurentoCamerasProps) => {
+  const { isToastOpen, handleToastChange, isToastAnimClose, handleToastClose } = useForceQuitToast();
+
   const [isVideo, setIsVideo] = useState(true);
   const [isAudio, setIsAudio] = useState(true);
   const [cameraCount, setCameraCount] = useState(0);
@@ -47,9 +51,14 @@ const KurentoCameras = ({ roomId, startDate, endDate }: TKurentoCamerasProps) =>
 
   useEffect(() => {
     if (cameraCount === 1 && isDurationOver) {
-      setTimeout(leaveRoom, 10000);
+      handleToastChange(true);
+      setTimeout(leaveRoom, 500000);
     }
-  }, [cameraCount, isDurationOver]);
+  }, [cameraCount, isDurationOver, handleToastChange]);
+
+  useEffect(() => {
+    if (isToastOpen && cameraCount !== 1) handleToastClose();
+  }, [cameraCount, isToastOpen, handleToastClose]);
 
   useEffect(() => {
     ws.current = new WebSocket('https://api.effi.club/signal/webrtc');
@@ -347,6 +356,7 @@ const KurentoCameras = ({ roomId, startDate, endDate }: TKurentoCamerasProps) =>
   return (
     <>
       <S.RoomCameraContainer>
+        <ForceQuitToast isToastOpen={isToastOpen} isToastAnimClose={isToastAnimClose} />
         <div className="participants" data-count={cameraCount}></div>
       </S.RoomCameraContainer>
 
@@ -369,6 +379,7 @@ export default KurentoCameras;
 
 const S = {
   RoomCameraContainer: styled.div`
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
