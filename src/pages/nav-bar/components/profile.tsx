@@ -1,30 +1,18 @@
-import { useEffect } from 'react';
+import { TUserInfoRes } from '@api/user/user-request.type';
 import ProfileModalButton from '@components/modal/profile-modal/profile-modal-button';
-import { useUserNicknameUpdateMutation, useUserQuery } from '@hooks/react-query/use-query-user';
-import ProfileSkeleton from '@pages/nav-bar/components/profile-skeleton';
-import { createRandomNickName } from '@utils/createRandomNickname';
+import { QUERY_KEY } from '@constants/query-key';
+import { useQueryClient } from '@tanstack/react-query';
 import styled from 'styled-components';
 
 const Profile = () => {
-  const { data: userData, isLoading, isError, isSuccess } = useUserQuery();
-  const { mutateAsync } = useUserNicknameUpdateMutation();
-
-  useEffect(() => {
-    if (isSuccess && userData?.nickname.length === 0) {
-      mutateAsync(createRandomNickName());
-    }
-  }, [isSuccess, userData, mutateAsync]);
-
-  if (isLoading) return <ProfileSkeleton />;
-
-  if (isError) return 'Error...';
+  const userData = useQueryClient().getQueryData<TUserInfoRes>([QUERY_KEY.userInfo]);
 
   return (
     <ProfileModalButton>
       <S.ProfileBox>
-        <S.NickNameBox>{userData.nickname}</S.NickNameBox>
+        <S.NickNameBox>{userData?.nickname}</S.NickNameBox>
         <S.ProfileImgBox>
-          <img src={userData.profileImageUrl} alt="test" />
+          <img src={userData?.profileImageUrl} alt="test" />
         </S.ProfileImgBox>
       </S.ProfileBox>
     </ProfileModalButton>

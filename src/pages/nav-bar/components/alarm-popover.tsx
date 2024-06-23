@@ -2,10 +2,22 @@ import { zIndex } from '@styles/z-index';
 import styled from 'styled-components';
 import AlarmList from './alarm-list';
 
-const AlarmPopOver = () => {
+type TAlarm = {
+  id: string;
+  message: string;
+  receiverId: number;
+  title: string;
+};
+
+interface AlarmPopOverProps {
+  alarmSocketList: TAlarm[];
+  handleDropdownClose: () => void;
+}
+
+const AlarmPopOver = ({ alarmSocketList, handleDropdownClose }: AlarmPopOverProps) => {
   return (
     <S.PopOverWrap>
-      <AlarmList />
+      <AlarmList alarmSocketList={alarmSocketList} handleDropdownClose={handleDropdownClose} />
     </S.PopOverWrap>
   );
 };

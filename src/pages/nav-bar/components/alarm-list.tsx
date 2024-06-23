@@ -1,30 +1,30 @@
-import { ALARM_LIST } from '@constants/mockdata';
 import styled from 'styled-components';
 import AlarmEmpty from './alarm-empty';
 import AlarmInvite from './alarm-invite';
-import AlarmMeeting from './alarm-meeting';
 
-const AlarmList = () => {
-  const isAlarmList = !!ALARM_LIST.length;
+type TAlarm = {
+  id: string;
+  message: string;
+  receiverId: number;
+  title: string;
+};
+
+interface AlarmListProps {
+  alarmSocketList: TAlarm[];
+  handleDropdownClose: () => void;
+}
+
+const AlarmList = ({ alarmSocketList, handleDropdownClose }: AlarmListProps) => {
+  const isAlarmList = !!alarmSocketList.length;
   return (
     <S.AlarmListWrap $isAlarmList={isAlarmList}>
       <S.AlarmListContent $isAlarmList={isAlarmList}>
         {isAlarmList ? (
-          ALARM_LIST.map((alarmList) => {
-            if (alarmList.type === 'meeting') {
-              return (
-                <S.AlarmItemWrap key={alarmList.id}>
-                  <AlarmMeeting {...alarmList} />
-                </S.AlarmItemWrap>
-              );
-            } else if (alarmList.type === 'invite') {
-              return (
-                <S.AlarmItemWrap key={alarmList.id}>
-                  <AlarmInvite {...alarmList} />
-                </S.AlarmItemWrap>
-              );
-            }
-          })
+          alarmSocketList.map((alarmList, idx) => (
+            <S.AlarmItemWrap key={idx}>
+              <AlarmInvite {...alarmList} handleDropdownClose={handleDropdownClose} />
+            </S.AlarmItemWrap>
+          ))
         ) : (
           <AlarmEmpty />
         )}
