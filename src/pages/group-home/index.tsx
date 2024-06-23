@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { TGroupFetchMemberInfo } from '@api/group/group-request.type';
 import { TUserInfoRes } from '@api/user/user-request.type';
-import ARROW_RIGHT_ICON from '@assets/icons/arrow-right.svg';
 import { MY_SCHEDULE_LIST } from '@constants/mockdata';
 import { QUERY_KEY } from '@constants/query-key';
 import { useGroupMemberQuery } from '@hooks/react-query/use-query-group';
@@ -14,11 +13,12 @@ import { device } from '@styles/breakpoints';
 import { navBarHeight } from '@styles/subsection-size';
 import { zIndex } from '@styles/z-index';
 import { useQueryClient } from '@tanstack/react-query';
-import styled from 'styled-components';
+import styled, { useTheme } from 'styled-components';
 import AdminHOC from './components/admin-hoc';
 import GroupHomeSidebarSkeleton from './components/skeleton/group-home-sidebar-skeleton';
 
 const GroupHome = () => {
+  const theme = useTheme();
   const { data: groupData, isError, isLoading } = useGroupMemberQuery(useGroupStore((state) => state.groupId));
   const userInfo = useQueryClient().getQueryData<TUserInfoRes>([QUERY_KEY.userInfo]);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -50,7 +50,10 @@ const GroupHome = () => {
     <S.Container>
       {isLoading ? <GroupHomeSidebarSkeleton /> : <GroupHomeSideBar isAdmin={isAdmin} isSideBarOpen={isSideBarOpen} />}
       <button onClick={handleSideBarButtonClick}>
-        <S.SideBarControlImage src={ARROW_RIGHT_ICON} alt="GroupHome SideBar Button" />
+        <S.SideBarControlImage
+          src={!isSideBarOpen ? theme.sideBarOpen : theme.sideBarClose}
+          alt="GroupHome SideBar Button"
+        />
       </button>
 
       <S.GroupHomeMain>
@@ -72,10 +75,10 @@ const S = {
 
   SideBarControlImage: styled.img`
     position: fixed;
-    top: 60px;
-    left: 60px;
-    width: 40px;
-    height: 40px;
+    top: 66px;
+    left: 28px;
+    width: 28px;
+    height: 28px;
     display: none;
     position: fixed;
 

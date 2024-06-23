@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import editMeetingIcon from '@assets/icons/kebab.svg';
 import noDataCharacter from '@assets/icons/meeting-no-data-character.svg';
 import { MEETING_ROOM, TOPIC } from '@constants/mockdata';
 import { TMyScheduleItem } from '@constants/mockdata.type';
@@ -43,9 +42,9 @@ const Meetings = ({ isAdmin, scheduledMeeting }: TMeetingProps) => {
     onClick: isOnLive ? handleMeetingClick : undefined,
     src: isOnLive ? theme.onLiveCharacter : noDataCharacter,
     title: isOnLive ? 'LIVE ON' : 'LIVE OFF',
-    comments: isOnLive
-      ? `'${liveMeetingDateTitle}' Live 중입니다!\n얼른 참여하세요!`
-      : '현재 진행중인\n회의가 없습니다.',
+    comments: isOnLive ? `'${liveMeetingDateTitle}'` : '현재 진행중인\n회의가 없습니다.',
+    liveComments: isOnLive ? 'Live 중입니다!' : '',
+    meetingComments: isOnLive ? '얼른 참여하세요!' : '',
   };
 
   const scheduledMeetingProps = {
@@ -91,6 +90,7 @@ const S = {
   Container: styled.div`
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 30px;
     margin-bottom: 90px;
     @media ${device.tablet} {
@@ -109,12 +109,15 @@ const S = {
     top: 25px;
 
     @media ${device.mobile} {
-      left: 12px;
-      top: 8px;
+      left: 14px;
+      top: 10px;
     }
   `,
 
   EditIcon: styled.img`
     width: 20px;
+    @media ${device.mobile} {
+      width: 16px;
+    }
   `,
 };
