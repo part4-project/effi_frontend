@@ -14,11 +14,12 @@ const AlarmList = ({ handleProfileModalOpen, handleDropdownClose }: AlarmListPro
   const alarmSocketList = useQueryClient().getQueryData<TAlarm[]>([QUERY_KEY.alarmList]);
 
   const isAlarmList = !!alarmSocketList?.length;
+
   return (
     <S.AlarmListWrap $isAlarmList={isAlarmList}>
       <S.AlarmListContent $isAlarmList={isAlarmList}>
         {isAlarmList ? (
-          alarmSocketList.map((alarmList, idx) => (
+          alarmSocketList.reverse().map((alarmList, idx) => (
             <S.AlarmItemWrap key={idx}>
               <AlarmInvite
                 {...alarmList}
