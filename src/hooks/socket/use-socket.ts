@@ -13,12 +13,10 @@ const useSocket = () => {
     stompClientRef.current = stompClient;
 
     stompClient.onConnect = () => {
-      console.log('STOMP 연결됨');
       setIsConnected(true);
     };
 
     stompClient.onDisconnect = () => {
-      console.log('STOMP 연결 끊어짐');
       setIsConnected(false);
     };
 
@@ -26,7 +24,6 @@ const useSocket = () => {
 
     return () => {
       if (stompClient.connected) {
-        console.log('자동해제');
         stompClient.deactivate();
       }
     };

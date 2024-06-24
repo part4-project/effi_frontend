@@ -13,10 +13,6 @@ const ForceQuitToast = ({ isToastOpen, isToastAnimClose }: ForceQuitToastProps) 
   const { currElapsedSeconds, isDurationOver, resetTimer } = useForceQuitToastTimer(300);
 
   useEffect(() => {
-    if (isDurationOver) console.log('방 폭파 함수 넣기!');
-  }, [isDurationOver]);
-
-  useEffect(() => {
     if (isToastOpen) resetTimer();
   }, [isToastOpen]);
 
