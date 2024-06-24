@@ -1,45 +1,51 @@
 /* eslint-disable no-console */
-import { useState } from 'react';
+import { TReportTopic } from '@api/report/report-request.type';
 import Topic from '@components/meeting/topic';
+import { useMeetingQuery } from '@hooks/react-query/use-query-meeting';
+import { useTopicCheckMutation } from '@hooks/react-query/use-query-topic';
+import useTopicSocket from '@hooks/socket/use-topic-socket';
+import { useGroupStore } from '@stores/group';
 import styled from 'styled-components';
-import InputForm from './input-form';
-import useInputForm from '../hooks/use-input-form';
 
-type TopicListType = {
-  id: number;
-  topic_name: string;
-  is_completed: boolean;
-};
-
-interface TopicsProps {
-  topicList: TopicListType[];
+interface TTopics {
+  roomId: number;
 }
+const Topics = ({ roomId }: TTopics) => {
+  const { data: meetingData, isLoading, isError, refetch } = useMeetingQuery(roomId);
+  const { mutate } = useTopicCheckMutation(
+    useGroupStore((state) => state.groupId),
+    meetingData?.id,
+  );
+  useTopicSocket(roomId, () => refetch);
 
-const Topics = ({ topicList }: TopicsProps) => {
-  const [meetingRoomTopicList, setMeetingRoomTopicList] = useState(topicList);
-  const { inputValue, handleSubmit, handleInputValueChange } = useInputForm(() => console.log('submitCb실행'));
+  if (isLoading) return 'Loading...';
+  if (isError) return 'Error...';
 
-  const handleCheckClick = (id: number) => {
-    setMeetingRoomTopicList((prev: TopicListType[]) =>
-      prev.map((topic: TopicListType) => (topic.id === id ? { ...topic, is_completed: !topic.is_completed } : topic)),
+  const { topicList } = meetingData;
+  topicList.sort((a: TReportTopic, b: TReportTopic) => a.orderIndex - b.orderIndex);
+
+  const handleCheckClick = (orderIndex: number) => {
+    const topicStateList = topicList.map((topic: TReportTopic) =>
+      topic.orderIndex == orderIndex ? !topic.isCompleted : topic.isCompleted,
     );
+
+    mutate(topicStateList);
   };
 
   return (
     <S.Container>
       <S.TopicAgenda>회의 안건</S.TopicAgenda>
       <S.TopicContainer>
-        {meetingRoomTopicList.map((topic) => (
+        {meetingData.topicList.map((topic: TReportTopic) => (
           <Topic
-            key={topic.id}
-            isCompleted={topic.is_completed}
-            topicName={topic.topic_name}
+            key={topic.orderIndex}
+            isCompleted={topic.isCompleted}
+            topicName={topic.topicName}
             type="meeting-room"
-            onClick={() => handleCheckClick(topic.id)}
+            onClick={() => handleCheckClick(topic.orderIndex)}
           />
         ))}
       </S.TopicContainer>
-      <InputForm type="topic" inputValue={inputValue} onSubmit={handleSubmit} onChange={handleInputValueChange} />
     </S.Container>
   );
 };
