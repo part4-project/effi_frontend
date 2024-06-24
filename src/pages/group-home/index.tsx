@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { TGroupFetchMemberInfo } from '@api/group/group-request.type';
 import { TUserInfoRes } from '@api/user/user-request.type';
-import ARROW_RIGHT_ICON from '@assets/icons/arrow-right.svg';
 import { QUERY_KEY } from '@constants/query-key';
 import { useGroupMemberQuery } from '@hooks/react-query/use-query-group';
 import GroupHomeHeader from '@pages/group-home/components/group-home-header';
