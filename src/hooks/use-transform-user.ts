@@ -4,21 +4,23 @@ import { useGroupStore } from '@stores/group';
 // import { useMeetingStore } from '@stores/meeting';
 import { useGroupMemberQuery } from './react-query/use-query-group';
 
-const useTransformUser = (socketMsg: TChatSocketType) => {
+const useTransformUser = (socketMsg: TChatSocketType | null) => {
   //const memberList = useMeetingStore((state) => state.memberList);
   const {
     data: { memberList },
   } = useGroupMemberQuery(useGroupStore((state) => state.groupId));
-  const member = memberList.find((member: TGroupFetchMemberInfo) => socketMsg.userId == member.id);
+  const member = memberList.find((member: TGroupFetchMemberInfo) => socketMsg?.userId == member.id);
   let memberChat;
   if (member) {
     memberChat = {
       ...member,
-      message: socketMsg.message,
-      timeStamp: socketMsg.timeStamp,
-      type: socketMsg.type,
-      userId: socketMsg.userId,
+      message: socketMsg?.message,
+      timeStamp: socketMsg?.timeStamp,
+      type: socketMsg?.type,
+      userId: socketMsg?.userId,
     };
+  } else {
+    return null;
   }
 
   return memberChat;
