@@ -1,6 +1,6 @@
 import { TAxiosError } from '@api/axios';
 import meetingRequest from '@api/meeting/meeting-request';
-import { TMeetingCreateReq } from '@api/meeting/meeting-request.type';
+import { TCalendarMeetingFetchInfo, TMeetingCreateReq } from '@api/meeting/meeting-request.type';
 import { QUERY_KEY } from '@constants/query-key';
 import { useToast } from '@hooks/use-toast';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -14,6 +14,7 @@ export const useMeetingCreateMutation = (groupId: number) => {
     mutationFn: async (meetingData: TMeetingCreateReq) => await meetingRequest.createMeeting(meetingData, groupId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.meetingList, groupId] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.calendarMeetingList] });
       toast('회의가 생성되었습니다');
     },
     onError: (error: TAxiosError) => toast(error.errorMessage, true),
@@ -72,4 +73,12 @@ export const useUpdateMeetingEndDate = (groupId: number, meetingId: number) => {
   });
 
   return mutation;
+};
+
+export const useCalendarMeetingQuery = (startMonth: string, endMonth: string) => {
+  const query = useQuery<TCalendarMeetingFetchInfo[], Error>({
+    queryKey: [QUERY_KEY.calendarMeetingList],
+    queryFn: async () => await meetingRequest.fetchCalendarMeeting(startMonth, endMonth),
+  });
+  return query;
 };

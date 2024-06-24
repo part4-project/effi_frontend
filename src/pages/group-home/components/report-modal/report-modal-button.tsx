@@ -3,9 +3,11 @@ import ReportModal from '@pages/group-home/components/report-modal/report-modal'
 
 interface ReportModalProps {
   children: React.ReactNode;
+  groupId: number;
+  meetingId: number;
 }
 
-const ReportModalButton = ({ children }: ReportModalProps) => {
+const ReportModalButton = ({ children, groupId, meetingId }: ReportModalProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleModalClose = () => {
@@ -19,7 +21,7 @@ const ReportModalButton = ({ children }: ReportModalProps) => {
   return (
     <>
       <button onClick={handleOpenModalButtonClick}>{children}</button>
-      <ReportModal isOpen={isOpen} onClose={handleModalClose} />
+      <ReportModal isOpen={isOpen} onClose={handleModalClose} groupId={groupId} meetingId={meetingId} />
     </>
   );
 };

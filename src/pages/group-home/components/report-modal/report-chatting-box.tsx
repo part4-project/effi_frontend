@@ -1,14 +1,44 @@
-import ChattingList from '@components/meeting/chatting-list';
-import { CHAT } from '@constants/mockdata';
-import { TChatSocketType } from '@pages/meeting-room/types';
+import { TGroupFetchMemberInfo } from '@api/group/group-request.type';
+import { TUserInfoRes } from '@api/user/user-request.type';
+import { QUERY_KEY } from '@constants/query-key';
+import { useGroupMemberQuery } from '@hooks/react-query/use-query-group';
+import { useGroupStore } from '@stores/group';
+import { useQueryClient } from '@tanstack/react-query';
 import styled from 'styled-components';
+import ReportChattingList from './report-chatting-list';
 
-const ReportChattingBox = () => {
+interface TReportChattingBox {
+  chattingList: TReportChatting[];
+}
+interface TReportChatting {
+  message: string;
+  nickName: string;
+  profileImageUrl: string;
+  roomId: number;
+  timeStamp: string;
+  userId: number;
+  isMe: boolean;
+}
+const ReportChattingBox = ({ chattingList }: TReportChattingBox) => {
+  const {
+    data: { memberList },
+  } = useGroupMemberQuery(useGroupStore((state) => state.groupId));
+  const userInfo = useQueryClient().getQueryData<TUserInfoRes>([QUERY_KEY.userInfo]);
+  const memberChatList = chattingList.map((chat: TReportChatting) => {
+    const memberInfo = memberList.find((member: TGroupFetchMemberInfo) => chat.userId == member.id);
+    const chatData = {
+      ...chat,
+      nickName: memberInfo.nickname,
+      profileImageUrl: memberInfo.profileImageUrl,
+      isMe: userInfo?.id == memberInfo.id,
+    };
+    return chatData;
+  });
   return (
     <S.Container>
       <S.ChattingLists>
-        {CHAT.chat.map((chatSocket: TChatSocketType, idx) => (
-          <ChattingList key={idx} roomType="report-modal" socket={chatSocket} />
+        {memberChatList.map((chat: TReportChatting, idx) => (
+          <ReportChattingList key={idx} {...chat} />
         ))}
       </S.ChattingLists>
     </S.Container>

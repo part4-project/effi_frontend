@@ -7,7 +7,6 @@ import { useQueryClient } from '@tanstack/react-query';
 
 interface TUserHOCProp {
   key: number;
-  roomType: 'report-modal' | 'meeting-room';
   socket: TChatSocketType;
   prevSocket: TChatSocketType | null;
   currentIndex: number;

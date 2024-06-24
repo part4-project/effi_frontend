@@ -1,14 +1,31 @@
+import { useEffect } from 'react';
+import { useAlarmQuery } from '@hooks/react-query/use-query-alarm';
+import { useUserNicknameUpdateMutation, useUserQuery } from '@hooks/react-query/use-query-user';
 import { device } from '@styles/breakpoints';
 import { navBarHeight } from '@styles/subsection-size';
 import { zIndex } from '@styles/z-index';
+import { createRandomNickName } from '@utils/createRandomNickname';
 import { Link } from 'react-router-dom';
 import styled, { useTheme } from 'styled-components';
 import Alarm from './components/alarm';
 import DarkModeButton from './components/dark-mode-button';
 import Profile from './components/profile';
+import ProfileSkeleton from './components/profile-skeleton';
 
 const NavBar = () => {
   const theme = useTheme();
+
+  const { data: userData, isLoading, isError, isSuccess } = useUserQuery();
+  const { isLoading: isAlarmLoading } = useAlarmQuery();
+  const { mutateAsync } = useUserNicknameUpdateMutation();
+
+  useEffect(() => {
+    if (isSuccess && userData?.nickname.length === 0) {
+      mutateAsync(createRandomNickName());
+    }
+  }, [isSuccess, userData, mutateAsync]);
+
+  if (isError) return 'Error...';
 
   return (
     <S.NavWrap>
@@ -22,8 +39,16 @@ const NavBar = () => {
         </S.FlexLeftBox>
         <S.FlexRightBox>
           <DarkModeButton />
-          <Alarm />
-          <Profile />
+          {isAlarmLoading && isLoading ? (
+            <ProfileSkeleton />
+          ) : (
+            <>
+              <Alarm />
+              <Profile />
+            </>
+          )}
+          {/* <Alarm /> */}
+          {/* {isLoading ? <ProfileSkeleton /> : <Profile />} */}
         </S.FlexRightBox>
       </S.NavContainer>
     </S.NavWrap>

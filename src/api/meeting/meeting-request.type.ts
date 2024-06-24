@@ -47,3 +47,9 @@ export interface TMeetingInfo {
   modifiedAt: string;
   topicList: TMeetingTopic[];
 }
+
+export interface TCalendarMeetingFetchInfo extends TMeetingFetchInfo {
+  groupId: number;
+  groupName: string;
+  actualEndDate: string | null;
+}

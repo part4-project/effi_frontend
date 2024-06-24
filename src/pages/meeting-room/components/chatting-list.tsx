@@ -2,11 +2,9 @@ import { useState, useLayoutEffect } from 'react';
 import { formatHoursAmPm } from '@pages/group-home/utils/format-hours-ampm';
 import { TChatType, TChatSocketType } from '@pages/meeting-room/types';
 import styled, { css } from 'styled-components';
-import UserHOC from './user-hoc';
-interface TChattingProp {
-  roomType: 'report-modal' | 'meeting-room';
-}
-interface ChatProps extends TChattingProp {
+import UserHOC from '../../../components/meeting/user-hoc';
+
+interface ChatProps {
   chat: TChatType;
   prevChat?: TChatType | null;
   isMe: boolean;
@@ -14,7 +12,7 @@ interface ChatProps extends TChattingProp {
   chatSocketList: TChatSocketType[];
 }
 
-const ChattingList = ({ chat, prevChat, currentIndex, chatSocketList, isMe, roomType = 'report-modal' }: ChatProps) => {
+const ChattingList = ({ chat, prevChat, currentIndex, chatSocketList, isMe }: ChatProps) => {
   const [isCurrentUserChatting, setIsCurrentUserChatting] = useState({
     sameUser: false,
     sameTime: false,
@@ -66,7 +64,7 @@ const ChattingList = ({ chat, prevChat, currentIndex, chatSocketList, isMe, room
       )}
       <S.ChattingBox $isSameUser={isCurrentUserChatting.sameUser}>
         {!isSameUserChatting && <S.ChattingUserName $isMe={isMe}>{chat.nickname}</S.ChattingUserName>}
-        <S.ChattingLog $type={roomType}>{chat.message}</S.ChattingLog>
+        <S.ChattingLog>{chat.message}</S.ChattingLog>
       </S.ChattingBox>
       {isCurrentUserTime && <S.ChattingSentTime>{formatHoursAmPm(chat.timeStamp)}</S.ChattingSentTime>}
     </S.ChattingList>
@@ -124,9 +122,9 @@ const S = {
         display: none;
       `}
   `,
-  ChattingLog: styled.p<{ $type: TChattingProp['roomType'] }>`
+  ChattingLog: styled.p`
     border-radius: 16px;
-    background: ${({ $type, theme }) => ($type === 'meeting-room' ? 'var(--gray06)' : theme.theme01)};
+    background: var(--gray06);
     padding: 6px 20px;
     color: var(--white);
     line-height: 28px;

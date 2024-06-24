@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
-import ChattingList from '@components/meeting/chatting-list';
 import useChatSocket from '@hooks/socket/use-chat-socket';
 import styled from 'styled-components';
+import ChattingList from './chatting-list';
 import InputForm from './input-form';
 import { TChatSocketType } from '../types';
 

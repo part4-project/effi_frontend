@@ -1,18 +1,29 @@
 import clockIcon from '@assets/icons/clock.svg';
 import GroupItem from '@pages/side-bar/components/group-item';
-import { Link } from 'react-router-dom';
+import { useGroupStore } from '@stores/group';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { formatCalenderListTime } from '../utils/format-date';
 
 interface ScheduleListItemProps {
   groupId: number;
-  groupName: string;
+  startDate: string;
   meetingTitle: string;
+  groupName: string;
 }
 
-const ScheduleListItem = ({ groupId, groupName, meetingTitle }: ScheduleListItemProps) => {
+const ScheduleListItem = ({ groupId, groupName, startDate, meetingTitle }: ScheduleListItemProps) => {
+  const setGroupId = useGroupStore((state) => state.setGroupId);
+  const navigate = useNavigate();
+
+  const handleListClick = () => {
+    setGroupId(groupId);
+    navigate('/group-home');
+  };
+
   return (
-    <S.BorderBox>
-      <S.Container to={'/meeting-room'}>
+    <S.BorderBox onClick={handleListClick}>
+      <S.Container>
         <S.LeftSection>
           <S.GroupItemBox>
             <GroupItem groupId={groupId} groupName={groupName} type="calendar" />
@@ -24,7 +35,7 @@ const ScheduleListItem = ({ groupId, groupName, meetingTitle }: ScheduleListItem
         </S.LeftSection>
         <S.RightSection>
           <S.WatchImg src={clockIcon} alt="시계" />
-          <S.Time>9 : 00</S.Time>
+          <S.Time>{formatCalenderListTime(startDate)}</S.Time>
         </S.RightSection>
       </S.Container>
     </S.BorderBox>
@@ -42,7 +53,7 @@ const S = {
       border-bottom: none;
     }
   `,
-  Container: styled(Link)`
+  Container: styled.div`
     width: 100%;
     height: 82px;
     padding: 20px 24px;
