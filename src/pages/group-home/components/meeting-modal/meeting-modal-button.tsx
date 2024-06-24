@@ -1,16 +1,14 @@
 import { useState } from 'react';
-import { TMeetingRoom, TTopic } from '@constants/mockdata.type';
+import { useMeetingQuery } from '@hooks/react-query/use-query-meeting';
 import { useLobbyGroupStore } from '@stores/lobby-group';
 import MeetingModal from '@/pages/group-home/components/meeting-modal/meeting-modal';
 
 interface MeetingModalButtonProps {
   children: React.ReactNode;
   title: string;
-  data?: TMeetingRoom;
-  topicData?: TTopic;
 }
 
-const MeetingModalButton = ({ children, title, data, topicData }: MeetingModalButtonProps) => {
+const MeetingModalButton = ({ children, title }: MeetingModalButtonProps) => {
   const { lobbyGroupId, initLobbyGroupId } = useLobbyGroupStore((state) => ({
     lobbyGroupId: state.lobbyGroupId,
     initLobbyGroupId: state.initLobbyGroupId,
@@ -29,7 +27,7 @@ const MeetingModalButton = ({ children, title, data, topicData }: MeetingModalBu
   return (
     <>
       <button onClick={handleOpenModalButtonClick}>{children}</button>
-      <MeetingModal isOpen={isOpen} onClose={handleModalClose} title={title} data={data} topicData={topicData} />
+      <MeetingModal isOpen={isOpen} onClose={handleModalClose} title={title} />
     </>
   );
 };

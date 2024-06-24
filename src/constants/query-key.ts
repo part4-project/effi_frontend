@@ -4,4 +4,5 @@ export const QUERY_KEY = {
   groupList: 'groupList',
   invitedGroupList: 'invitedGroupList',
   meetingList: 'meetingList',
+  meetingInfo: 'meetingInfo',
 } as const;

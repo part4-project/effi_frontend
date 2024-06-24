@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
-import { TMeetingRoom, TTopic } from '@constants/mockdata.type';
-import { useMeetingCreateMutation } from '@hooks/react-query/use-query-meeting';
+import { TMeetingInfo } from '@api/meeting/meeting-request.type';
+import { useMeetingCreateMutation, useMeetingUpdateMutation } from '@hooks/react-query/use-query-meeting';
 import { calculateEndDate } from '@pages/group-home/utils/calculate-end-date';
 import { formatDateToISOStringWithOffset } from '@pages/group-home/utils/format-date-to-string';
 import roundTo15minutes from '@pages/group-home/utils/round-to-15minutes';
+import { TimeCalculate, TimeString } from '@pages/group-home/utils/time-calculate';
 import { useGroupStore } from '@stores/group';
 import { useLobbyGroupStore } from '@stores/lobby-group';
 import styled from 'styled-components';
@@ -15,20 +16,24 @@ import MeetingTopicAddBox from './meeting-topic-add-box';
 import MeetingTopicList from './meeting-topic-list';
 
 interface TMeetingFormProps {
-  data?: TMeetingRoom;
-  topicData?: TTopic;
+  data?: TMeetingInfo;
   onClose: () => void;
 }
-const MeetingForm = ({ data, topicData, onClose }: TMeetingFormProps) => {
+const MeetingForm = ({ data, onClose }: TMeetingFormProps) => {
   const { lobbyGroupId, initLobbyGroupId } = useLobbyGroupStore((state) => ({
     lobbyGroupId: state.lobbyGroupId,
     initLobbyGroupId: state.initLobbyGroupId,
   }));
   const groupId = useGroupStore((state) => state.groupId) || lobbyGroupId;
   const meetingCreate = useMeetingCreateMutation(groupId);
-
-  const [selectedDate, setSelectedDate] = useState<Date | null>(roundTo15minutes(new Date()));
-  const [selectedTime, setSelectedTime] = useState<string>('회의 시간을 선택해 주세요!');
+  const meetingUpdate = useMeetingUpdateMutation(groupId, data?.id);
+  const dateTime = data
+    ? TimeString(TimeCalculate(new Date(data.startDate), new Date(data.expectedEndDate))).trim()
+    : '회의 시간을 선택해 주세요!';
+  const [selectedDate, setSelectedDate] = useState<Date | null>(
+    data ? roundTo15minutes(new Date(data.startDate)) : roundTo15minutes(new Date()),
+  );
+  const [selectedTime, setSelectedTime] = useState<string>(dateTime);
   const [title, setTitle] = useState('');
   const [topic, setTopic] = useState('');
   const [topicList, setTopicList] = useState<string[]>([]);
@@ -80,23 +85,28 @@ const MeetingForm = ({ data, topicData, onClose }: TMeetingFormProps) => {
 
   const handleSubmitButtonClick = async () => {
     try {
-      await meetingCreate.mutateAsync(meetingData);
+      isEditMode ? await meetingUpdate.mutateAsync(meetingData) : await meetingCreate.mutateAsync(meetingData);
+
       if (lobbyGroupId) initLobbyGroupId();
       onClose();
     } catch (error) {
-      setSelectedDate(roundTo15minutes(new Date()));
-      setSelectedTime('회의 시간을 선택해 주세요!');
+      setSelectedDate(data ? roundTo15minutes(new Date(data.startDate)) : roundTo15minutes(new Date()));
+      setSelectedTime(dateTime);
     }
   };
 
   useEffect(() => {
     if (data) {
-      setTitle(data.title || '');
+      setTitle(data.meetingTitle || '');
     }
-    if (topicData) {
-      setTopicList(topicData.topic_list.map((t) => t.topic_name));
+    if (data?.topicList) {
+      const topicList = data.topicList
+        .map((t) => t)
+        .sort((a, b) => a.orderIndex - b.orderIndex)
+        .map((t) => t.topicName);
+      setTopicList(topicList);
     }
-  }, [data, topicData]);
+  }, [data]);
 
   return (
     <S.Container>

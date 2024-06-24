@@ -1,7 +1,7 @@
-import { groupListHeight } from '@pages/side-bar/utils/group-list-constants';
 import { useState, useEffect } from 'react';
 import { useGroupQuery } from '@hooks/react-query/use-query-group';
 import GroupListSkeleton from '@pages/side-bar/components/group-list-skeleton';
+import { groupListHeight } from '@pages/side-bar/utils/group-list-constants';
 import { useGroupStore } from '@stores/group';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';

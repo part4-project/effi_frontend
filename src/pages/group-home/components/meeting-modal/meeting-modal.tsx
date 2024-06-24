@@ -1,19 +1,18 @@
+import { TMeetingInfo } from '@api/meeting/meeting-request.type';
 import Modal from '@components/modal/modal';
-import { TMeetingRoom, TTopic } from '@constants/mockdata.type';
 import MeetingForm from './meeting-form/meeting-form';
 
 interface MeetingModalProps {
   isOpen: boolean;
   onClose: () => void;
   title: string;
-  data?: TMeetingRoom;
-  topicData?: TTopic;
+  data?: TMeetingInfo;
 }
 
-const MeetingModal = ({ isOpen, onClose, title, data, topicData }: MeetingModalProps) => {
+const MeetingModal = ({ isOpen, onClose, title, data }: MeetingModalProps) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose} headerTitle={title}>
-      <MeetingForm data={data} topicData={topicData} onClose={onClose} />
+      <MeetingForm onClose={onClose} data={data} />
     </Modal>
   );
 };
