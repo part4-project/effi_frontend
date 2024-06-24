@@ -79,7 +79,8 @@ const Meetings = ({ isAdmin }: TMeetingProps) => {
   if (isLoading) return <MeetingsSkeleton />;
   if (isError) return 'Error...';
 
-  const isEdit = isAdmin && meetingData;
+  const isEdit =
+    isAdmin && meetingData && ((isOnLive && meetingData.length > 1) || (!isOnLive && meetingData.length === 1));
 
   return (
     <>
