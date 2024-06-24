@@ -27,7 +27,6 @@ const Chatting = ({ roomId }: TChattingProps) => {
           {chatSocketList.map((chatSocket: TChatSocketType, idx) => (
             <ChattingList
               key={idx}
-              roomType="meeting-room"
               socket={chatSocket}
               prevSocket={idx >= 1 ? chatSocketList[idx - 1] : null}
               currentIndex={idx}
