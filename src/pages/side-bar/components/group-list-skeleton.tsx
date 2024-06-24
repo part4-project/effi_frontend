@@ -32,9 +32,5 @@ const S = {
       width: 36px;
       height: 32.8px;
     }
-    @media ${device.mobile} {
-      width: 26px;
-      height: 23.7px;
-    }
   `,
 };

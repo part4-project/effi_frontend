@@ -17,6 +17,7 @@ const S = {
   Container: styled.div`
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 30px;
     margin-bottom: 90px;
     @media ${device.tablet} {
@@ -44,8 +45,9 @@ const S = {
       ${skeletonAnimation}
     }
     @media ${device.mobile} {
-      min-width: 228px;
       width: 100%;
+      min-width: 230px;
+      max-width: 360px;
       height: 114px;
       flex-direction: row;
       justify-content: space-between;

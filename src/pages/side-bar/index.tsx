@@ -51,8 +51,7 @@ const S = {
       top: ${navBarHeight.tablet};
     }
     @media ${device.mobile} {
-      width: ${sideBarWidth.mobile};
-      top: ${navBarHeight.mobile};
+      padding: 48px 18px;
     }
   `,
 

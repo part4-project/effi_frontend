@@ -3,10 +3,10 @@ const zIndex = {
   modal: 100,
   backdrop: 99,
   popOver: 98,
-  navBar: 97,
-  sideBar: 97,
-  balloon: 90,
-  groupHomeSideBarButton: 10,
+  groupHomeSideBarButton: 97,
+  navBar: 96,
+  sideBar: 96,
+  balloon: 10,
   groupHomeSideBar: 9,
 };
 

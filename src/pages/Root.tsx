@@ -34,7 +34,7 @@ export default Root;
 
 const S = {
   Main: styled.main<{ $isSubSection: boolean }>`
-    min-width: 360px;
+    min-width: 298px;
     ${({ $isSubSection }) =>
       $isSubSection &&
       `

@@ -104,7 +104,12 @@ const S = {
     width: 260px;
     padding: 10px 35px 10px 10px;
     border-radius: 10px;
+    font-size: 14px;
     @media ${device.tablet} {
+      width: 100%;
+      font-size: 11px;
+    }
+    @media ${device.mobile} {
       width: 100%;
     }
   `,
@@ -135,7 +140,7 @@ const S = {
   NotesSearchBarBox: styled.div`
     position: relative;
     @media ${device.mobile} {
-      width: 183px;
+      width: 100%;
     }
   `,
 
@@ -143,6 +148,9 @@ const S = {
     position: absolute;
     top: 18%;
     right: 4%;
+    @media ${device.mobile} {
+      right: 1%;
+    }
   `,
 
   EmptyNoticeContaier: styled.div`
