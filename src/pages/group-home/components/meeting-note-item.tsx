@@ -1,6 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck
-
 import { TReportInfo } from '@api/report/report-request.type';
 
 import { useMeetingQuery } from '@hooks/react-query/use-query-meeting';
@@ -18,7 +15,7 @@ const MeetingNoteItem = ({ report, groupId }: TMeetingNoteItemProps) => {
   const { data: meetingData } = useMeetingQuery(report.meetingId);
   const meetingTitle = meetingData?.meetingTitle;
 
-  const percentageCompleted = calculateCompletedPercentage(report.topicList);
+  const percentageCompleted = calculateCompletedPercentage(report.topicList).toString();
 
   const isoDateString = report.startDate;
   const date = new Date(isoDateString);
