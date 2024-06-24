@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import ModifyDeleteButton from './modify-delete-button';
 import checkMark from '@/assets/icons/check.svg';
 
 interface TopicProps {
@@ -20,7 +19,6 @@ const Topic = ({ isCompleted, topicName, onClick, type = 'report-modal' }: Topic
         {isCompleted && <S.CheckImg src={checkMark} alt="체크" />}
       </S.TopicInCompleted>
       <S.TopicTitle $type={type}>{topicName}</S.TopicTitle>
-      {type === 'meeting-room' && <ModifyDeleteButton />}
     </S.TopicList>
   );
 };
