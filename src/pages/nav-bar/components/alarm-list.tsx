@@ -1,30 +1,33 @@
-import { ALARM_LIST } from '@constants/mockdata';
+import { TAlarm } from '@api/alarm/alarm-request.type';
+import { QUERY_KEY } from '@constants/query-key';
+import { useQueryClient } from '@tanstack/react-query';
 import styled from 'styled-components';
 import AlarmEmpty from './alarm-empty';
 import AlarmInvite from './alarm-invite';
-import AlarmMeeting from './alarm-meeting';
 
-const AlarmList = () => {
-  const isAlarmList = !!ALARM_LIST.length;
+interface AlarmListProps {
+  handleDropdownClose: () => void;
+  handleProfileModalOpen: () => void;
+}
+
+const AlarmList = ({ handleProfileModalOpen, handleDropdownClose }: AlarmListProps) => {
+  const alarmSocketList = useQueryClient().getQueryData<TAlarm[]>([QUERY_KEY.alarmList]);
+
+  const isAlarmList = !!alarmSocketList?.length;
+
   return (
     <S.AlarmListWrap $isAlarmList={isAlarmList}>
       <S.AlarmListContent $isAlarmList={isAlarmList}>
         {isAlarmList ? (
-          ALARM_LIST.map((alarmList) => {
-            if (alarmList.type === 'meeting') {
-              return (
-                <S.AlarmItemWrap key={alarmList.id}>
-                  <AlarmMeeting {...alarmList} />
-                </S.AlarmItemWrap>
-              );
-            } else if (alarmList.type === 'invite') {
-              return (
-                <S.AlarmItemWrap key={alarmList.id}>
-                  <AlarmInvite {...alarmList} />
-                </S.AlarmItemWrap>
-              );
-            }
-          })
+          alarmSocketList.reverse().map((alarmList, idx) => (
+            <S.AlarmItemWrap key={idx}>
+              <AlarmInvite
+                {...alarmList}
+                handleProfileModalOpen={handleProfileModalOpen}
+                handleDropdownClose={handleDropdownClose}
+              />
+            </S.AlarmItemWrap>
+          ))
         ) : (
           <AlarmEmpty />
         )}
