@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { TGroupFetchMemberInfo } from '@api/group/group-request.type';
 import { TUserInfoRes } from '@api/user/user-request.type';
-import { MY_SCHEDULE_LIST } from '@constants/mockdata';
+import ARROW_RIGHT_ICON from '@assets/icons/arrow-right.svg';
 import { QUERY_KEY } from '@constants/query-key';
 import { useGroupMemberQuery } from '@hooks/react-query/use-query-group';
 import GroupHomeHeader from '@pages/group-home/components/group-home-header';
@@ -23,7 +23,6 @@ const GroupHome = () => {
   const userInfo = useQueryClient().getQueryData<TUserInfoRes>([QUERY_KEY.userInfo]);
   const [isAdmin, setIsAdmin] = useState(false);
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
-  const scheduledMeeting = MY_SCHEDULE_LIST[0];
   const isFromMeeting = localStorage.getItem('isFromMeeting');
 
   const handleSideBarButtonClick = () => {
@@ -58,7 +57,7 @@ const GroupHome = () => {
 
       <S.GroupHomeMain>
         {isAdmin && <GroupHomeHeader />}
-        <Meetings isAdmin={isAdmin} scheduledMeeting={scheduledMeeting} />
+        <Meetings isAdmin={isAdmin} />
         <MeetingNotes />
       </S.GroupHomeMain>
     </S.Container>
