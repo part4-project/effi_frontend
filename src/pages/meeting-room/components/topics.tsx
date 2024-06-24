@@ -16,7 +16,7 @@ const Topics = ({ roomId }: TTopics) => {
     useGroupStore((state) => state.groupId),
     meetingData?.id,
   );
-  useTopicSocket(roomId, () => refetch);
+  useTopicSocket(roomId, refetch);
 
   if (isLoading) return 'Loading...';
   if (isError) return 'Error...';
