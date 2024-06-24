@@ -1,42 +1,21 @@
 /* eslint-disable no-console */
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { TOPIC } from '@constants/mockdata';
 import { useMeetingStore } from '@stores/meeting';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Chatting from './components/chatting';
-// import ForceQuitToast from './components/force-quit-toast';
 import KurentoCameras from './components/kurento-cameras';
 import MeetingRoomTimer from './components/meeting-room-timer';
 import Topics from './components/topics';
-// import useForceQuitToast from './hooks/use-force-quit-toast';
 import useHistoryBackBlock from './hooks/use-history-back-block';
 import useReloadBlock from './hooks/use-reload-block';
 
 const MeetingRoom = () => {
   const location = useLocation();
   const navigate = useNavigate();
-
-  const [isMeetingFinished, setIsMeetingFinished] = useState(false);
-  // const { isToastOpen, handleToastChange, isToastAnimClose, handleToastClose } = useForceQuitToast();
   const memberList = useMeetingStore((state) => state.memberList);
-
-  console.log(location.state);
-
   const { id, meetingTitle, startDate, expectedEndDate } = location.state;
-
-  const handleMeetingFinsishButtonClick = () => {
-    setIsMeetingFinished(true);
-  };
-
-  // useEffect(() => {
-  //   if (participatedMember.length === 1) handleToastChange(true);
-  // }, [participatedMember.length, handleToastChange]);
-
-  // useEffect(() => {
-  //   if (isToastOpen && participatedMember.length !== 1) handleToastClose();
-  // }, [participatedMember.length, isToastOpen, handleToastClose]);
-
   useEffect(() => {
     if (memberList.length == 0) {
       navigate('/meeting-loading');
@@ -51,15 +30,10 @@ const MeetingRoom = () => {
       <S.LeftSection>
         <S.Nav className="nav">
           <S.Title>{meetingTitle}</S.Title>
-          <button onClick={handleMeetingFinsishButtonClick} style={{ zIndex: 99, color: 'var(--gray05)' }}>
-            Meeting 끝: 시간 콘솔 출력
-          </button>
-          <MeetingRoomTimer startDate={startDate} endDate={expectedEndDate} isMeetingFinished={isMeetingFinished} />
+          <MeetingRoomTimer startDate={startDate} endDate={expectedEndDate} />
         </S.Nav>
 
-        <KurentoCameras roomId={id} />
-
-        {/* <ForceQuitToast isToastOpen={isToastOpen} isToastAnimClose={isToastAnimClose} /> */}
+        <KurentoCameras roomId={id} startDate={startDate} endDate={expectedEndDate} />
       </S.LeftSection>
 
       <S.RightSection>

@@ -54,9 +54,9 @@ const meetingRequest = {
       return error;
     }
   },
-  fetchMeeting: async (meetingId: number | null) => {
+  updateMeetingEndDate: async (groupId: number, meetingId: number, actualEndDate: string) => {
     try {
-      const { data } = await axios.get(`user/group/meeting/view/${meetingId}`);
+      const { data } = await axios.patch(`user/group/${groupId}/meeting/${meetingId}/end`, { actualEndDate });
       return data;
     } catch (error) {
       if (isAxiosError(error)) {

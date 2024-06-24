@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import { TGroupMemberFetchRes } from '@api/group/group-request.type';
 import { TUserInfoRes } from '@api/user/user-request.type';
 import { QUERY_KEY } from '@constants/query-key';
+import { useUpdateMeetingEndDate } from '@hooks/react-query/use-query-meeting';
 import useThrottle from '@hooks/use-throttle';
 import Participant from '@pages/meeting-room/kurento/participant';
 import { useGroupStore } from '@stores/group';
@@ -13,14 +14,21 @@ import { playSound } from '@utils/play-sound';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import '@pages/meeting-room/kurento/participants.css';
+import ForceQuitToast from './force-quit-toast';
 import { ROOM_BUTTONS } from '../constants';
+import useForceQuitToast from '../hooks/use-force-quit-toast';
+import useMeetingRoomTimer from '../hooks/use-meeting-room-timer';
 import { getIceServers } from '../utils/get-ice-servers';
 
 interface TKurentoCamerasProps {
   roomId: number;
+  startDate: string;
+  endDate: string;
 }
 
-const KurentoCameras = ({ roomId }: TKurentoCamerasProps) => {
+const KurentoCameras = ({ roomId, startDate, endDate }: TKurentoCamerasProps) => {
+  const { isToastOpen, handleToastChange, isToastAnimClose, handleToastClose } = useForceQuitToast();
+
   const [isVideo, setIsVideo] = useState(true);
   const [isAudio, setIsAudio] = useState(true);
   const [cameraCount, setCameraCount] = useState(0);
@@ -31,14 +39,27 @@ const KurentoCameras = ({ roomId }: TKurentoCamerasProps) => {
     QUERY_KEY.groupInfo,
     useGroupStore((state) => state.groupId),
   ]);
-
+  const groupId = useGroupStore((state) => state.groupId);
   const userId = userInfo?.id;
-
   const memberList = groupInfo?.memberList;
+  const meetingEndDateMutation = useUpdateMeetingEndDate(groupId, roomId);
 
   const ws = useRef(null);
   const heartbeatInterval = useRef(null);
   const participants = useRef({});
+
+  const { isDurationOver } = useMeetingRoomTimer(startDate, endDate);
+
+  useEffect(() => {
+    if (cameraCount === 1 && isDurationOver) {
+      handleToastChange(true);
+      setTimeout(leaveRoom, 500000);
+    }
+  }, [cameraCount, isDurationOver, handleToastChange]);
+
+  useEffect(() => {
+    if (isToastOpen && cameraCount !== 1) handleToastClose();
+  }, [cameraCount, isToastOpen, handleToastClose]);
 
   useEffect(() => {
     ws.current = new WebSocket('https://api.effi.club/signal/webrtc');
@@ -171,7 +192,13 @@ const KurentoCameras = ({ roomId }: TKurentoCamerasProps) => {
     setCameraCount(Object.keys(participants.current).length);
   }
 
-  function leaveRoom() {
+  async function leaveRoom() {
+    if (cameraCount === 1 && isDurationOver) {
+      const currentDateTime = new Date();
+      currentDateTime.setHours(currentDateTime.getHours() + 9);
+      const isoDateTime = currentDateTime.toISOString();
+      await meetingEndDateMutation.mutateAsync(isoDateTime);
+    }
     sendMessage({
       id: 'disconnect',
       userId: userId,
@@ -336,6 +363,7 @@ const KurentoCameras = ({ roomId }: TKurentoCamerasProps) => {
   return (
     <>
       <S.RoomCameraContainer>
+        <ForceQuitToast isToastOpen={isToastOpen} isToastAnimClose={isToastAnimClose} />
         <div className="participants" data-count={cameraCount}></div>
       </S.RoomCameraContainer>
 
@@ -358,6 +386,7 @@ export default KurentoCameras;
 
 const S = {
   RoomCameraContainer: styled.div`
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
