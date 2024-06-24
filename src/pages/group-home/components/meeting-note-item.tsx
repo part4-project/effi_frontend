@@ -1,45 +1,63 @@
-import testImg from '@assets/default-profile.png';
-import { TNoteItem } from '@constants/mockdata.type';
+import { TReportInfo } from '@api/report/report-request.type';
+
+import { useMeetingQuery } from '@hooks/react-query/use-query-meeting';
 import ReportModalButton from '@pages/group-home/components/report-modal/report-modal-button';
 import { device } from '@styles/breakpoints';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { calculateCompletedPercentage } from '../utils/completed-percentage-calculate';
 
 interface TMeetingNoteItemProps {
-  note: TNoteItem;
+  report: TReportInfo;
+  groupId: number;
 }
 
-const MeetingNoteItem = ({ note }: TMeetingNoteItemProps) => {
-  const percentageCompleted = calculateCompletedPercentage(note);
+const MeetingNoteItem = ({ report, groupId }: TMeetingNoteItemProps) => {
+  const { data: meetingData } = useMeetingQuery(report.meetingId);
+  const meetingTitle = meetingData?.meetingTitle;
+
+  const percentageCompleted = calculateCompletedPercentage(report.topicList);
+
+  const isoDateString = report.startDate;
+  const date = new Date(isoDateString);
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const year = String(date.getFullYear()).slice(-2);
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+
+  const formattedDate = `${year}-${month}-${day}`;
+  const formattedTime = `${hours}:${minutes}`;
 
   return (
     <S.Container>
-      <ReportModalButton groupId={groupId} meetingId={meetingId}>
+      <ReportModalButton groupId={groupId} meetingId={report.meetingId}>
         <S.MeetingNotesList>
           <S.MeetingTitleAndTimeContainer>
-            <S.NoteTitle>{note.title}</S.NoteTitle>
-            <S.NoteCreatedAt>{note.createdAt}</S.NoteCreatedAt>
+            <S.NoteTitle>{meetingTitle}</S.NoteTitle>
+            <S.NoteCreatedAt>
+              {formattedDate}
+              <S.NoteCreatedAtTime>{formattedTime}</S.NoteCreatedAtTime>
+            </S.NoteCreatedAt>
           </S.MeetingTitleAndTimeContainer>
 
           <S.MeetingInfoContainer>
             <S.PercentageContainer>
               <S.PercentageTitle>진행률</S.PercentageTitle>
+
               <S.PercentageBar>
                 <S.CompletedPercentageBar $percentage={percentageCompleted}></S.CompletedPercentageBar>
               </S.PercentageBar>
-              <S.Percentage>{percentageCompleted}%</S.Percentage>
             </S.PercentageContainer>
 
             <S.MemberImgContainer>
-              <div>
-                <img src={testImg} />
-              </div>
-              <div>
-                <img src={testImg} />
-              </div>
-              <div>
-                <img src={testImg} />
-              </div>
+              {report.participantList.length > 3 && (
+                <S.MoreParticipants>+{report.participantList.length - 3}</S.MoreParticipants>
+              )}
+              {report.participantList.slice(0, 3).map((participant) => (
+                <div key={participant.userId}>
+                  <img src={participant.profileImageUrl} />
+                </div>
+              ))}
             </S.MemberImgContainer>
           </S.MeetingInfoContainer>
         </S.MeetingNotesList>
@@ -50,6 +68,15 @@ const MeetingNoteItem = ({ note }: TMeetingNoteItemProps) => {
 
 export default MeetingNoteItem;
 
+const animateWidth = keyframes`
+  from {
+    width: 0;
+  }
+  to {
+    width: var(--percentage);
+  }
+`;
+
 const S = {
   Container: styled.div`
     display: flex;
@@ -59,27 +86,23 @@ const S = {
 
   MeetingNotesList: styled.li`
     background-color: rgba(255, 255, 255, 0.4);
-    height: 72px;
     border-radius: 10px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
     padding: 0 36px;
-
     cursor: pointer;
     transition: background-color 0.2s ease;
+    flex-direction: column;
+    justify-content: center;
+    gap: 12px;
+    height: 107px;
     &:hover {
       background-color: var(--white);
       span {
         color: ${(props) => props.theme.theme05};
       }
     }
-    @media ${device.tablet} {
-      flex-direction: column;
-      justify-content: center;
-      gap: 12px;
-      height: 107px;
-    }
+
     @media ${device.mobile} {
       gap: 8px;
       height: 106px;
@@ -88,12 +111,10 @@ const S = {
   `,
 
   MeetingTitleAndTimeContainer: styled.div`
-    width: 40%;
+    width: 100%;
     display: flex;
     align-items: center;
-    @media ${device.tablet} {
-      width: 100%;
-    }
+
     @media ${device.mobile} {
       flex-direction: column;
       align-items: flex-start;
@@ -103,50 +124,59 @@ const S = {
 
   MeetingInfoContainer: styled.div`
     display: flex;
-    width: 65%;
+    width: 100%;
     justify-content: space-between;
     align-items: center;
-    @media ${device.tablet} {
-      width: 100%;
-    }
   `,
 
   NoteTitle: styled.span`
+    width: 100%;
+    text-align: left;
     font-size: 20px;
     margin-right: 17px;
     color: ${(props) => props.theme.text06};
     font-weight: bold;
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     @media ${device.mobile} {
       font-size: 18px;
     }
   `,
 
   NoteCreatedAt: styled.span`
-    font-size: 14px;
+    letter-spacing: 1.5px;
+    width: 90%;
+    text-align: right;
+    font-size: 17px;
     color: ${(props) => props.theme.text06};
+    font-weight: 600;
+  `,
+
+  NoteCreatedAtTime: styled.span`
+    font-size: 15px;
+    margin-left: 7px;
+    font-weight: 500;
   `,
 
   PercentageContainer: styled.div`
-    width: 80%;
+    width: 100%;
     display: flex;
     align-items: center;
-    @media ${device.tablet} {
-      width: 70%;
-    }
     @media ${device.mobile} {
       width: 100%;
     }
   `,
 
   PercentageTitle: styled.span`
+    width: 70px;
     margin-right: 10px;
-    width: 170px;
     color: ${(props) => props.theme.text03};
     font-weight: 500;
     font-size: 18px;
-    @media ${device.tablet} {
-      text-align: start;
-    }
+    text-align: start;
+
     @media ${device.mobile} {
       display: none;
     }
@@ -155,7 +185,7 @@ const S = {
   PercentageBar: styled.div`
     background-color: ${(props) => props.theme.percentBar};
     display: flex;
-    width: 365px;
+    width: 70%;
     height: 15px;
     border-radius: 50px;
     @media ${device.mobile} {
@@ -164,11 +194,13 @@ const S = {
   `,
 
   CompletedPercentageBar: styled.div<{ $percentage: string }>`
+    --percentage: ${({ $percentage }) => `${$percentage}%`};
     background-color: ${(props) => props.theme.theme01};
     display: flex;
-    width: ${({ $percentage }) => `${$percentage}%`};
+    width: var(--percentage);
     height: 15px;
     border-radius: 50px;
+    animation: ${animateWidth} 1s cubic-bezier(0.3, 0, 0.2, 1);
   `,
 
   Percentage: styled.span`
@@ -190,7 +222,8 @@ const S = {
     div {
       width: 28px;
       height: 28px;
-      background-color: var(--blue01);
+      background-color: ${(props) => props.theme.theme02};
+      color: ${(props) => props.theme.text02};
       border: 1px solid var(--blue05);
       border-radius: 50px;
       position: absolute;
@@ -198,36 +231,64 @@ const S = {
     }
     div:nth-child(1) {
       right: 0;
-      z-index: 2;
+      z-index: 3;
     }
     div:nth-child(2) {
       right: 22px;
-      z-index: 1;
+      z-index: 2;
     }
     div:nth-child(3) {
       right: 44px;
+      z-index: 1;
+    }
+    div:nth-child(4) {
+      right: 66px;
       z-index: 0;
     }
     @media ${device.mobile} {
       position: absolute;
-      top: 44%;
-      right: 5%;
+      top: 25%;
+      right: 15px;
       div {
-        width: 18px;
-        height: 18px;
+        width: 26px;
+        height: 26px;
       }
       div:nth-child(1) {
         right: 20px;
-        z-index: 2;
+        z-index: 3;
       }
       div:nth-child(2) {
-        right: 32px;
-        z-index: 1;
+        right: 40px;
+        z-index: 2;
       }
       div:nth-child(3) {
-        right: 44px;
+        right: 60px;
+        z-index: 1;
+      }
+      div:nth-child(4) {
+        right: 80px;
         z-index: 0;
       }
+    }
+  `,
+
+  MoreParticipants: styled.div`
+    width: 28px;
+    height: 28px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 66px;
+    color: white;
+    font-size: 12px;
+    z-index: 0;
+    @media ${device.mobile} {
+      width: 18px;
+      height: 18px;
+      right: 56px;
+      font-size: 10px;
     }
   `,
 };
