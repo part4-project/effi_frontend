@@ -31,3 +31,25 @@ export interface TMeetingFetchInfo {
   modifiedAt: string;
 }
 export type TMeetingFetchRes = TMeetingFetchInfo[];
+
+export interface TMeetingTopic {
+  topicName: string;
+  isCompleted: boolean;
+  orderIndex: number;
+}
+
+export interface TMeetingInfo {
+  id: number;
+  meetingTitle: string;
+  startDate: string;
+  expectedEndDate: string;
+  createdAt: string;
+  modifiedAt: string;
+  topicList: TMeetingTopic[];
+}
+
+export interface TCalendarMeetingFetchInfo extends TMeetingFetchInfo {
+  groupId: number;
+  groupName: string;
+  actualEndDate: string | null;
+}

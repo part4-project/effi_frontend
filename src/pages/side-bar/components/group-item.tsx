@@ -89,9 +89,6 @@ const S = {
     @media ${device.tablet} {
       font-size: ${({ $isOverFlowText }) => ($isOverFlowText ? '8px' : '12px')};
     }
-    @media ${device.mobile} {
-      font-size: ${({ $isOverFlowText }) => ($isOverFlowText ? '6px' : '8px')};
-    }
   `,
   Trigger: styled.div`
     position: relative;
@@ -101,7 +98,6 @@ const S = {
       opacity: 1;
     }
   `,
-
   Balloon: styled.div<{ $groupItemRect: { refWidth: number; refHeight: number; refTop: number; refLeft: number } }>`
     visibility: hidden;
     opacity: 0;

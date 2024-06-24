@@ -1,3 +1,4 @@
+import { device } from '@styles/breakpoints';
 import { ko } from 'date-fns/locale';
 import DatePicker from 'react-datepicker';
 import styled, { useTheme } from 'styled-components';
@@ -60,9 +61,12 @@ const S = {
     font-size: 14px;
     border-radius: 10px;
     gap: 21px;
-    padding: 9px 6px 9px 17px;
+    padding: 10px 55px 10px 10px;
     cursor: pointer;
-    width: 210px;
+    @media ${device.tablet} {
+      width: 200px;
+      font-size: 11px;
+    }
   `,
 
   CalendarIcon: styled.img`

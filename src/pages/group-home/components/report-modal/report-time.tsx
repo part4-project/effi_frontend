@@ -1,13 +1,15 @@
-import { MEETING_ROOM } from '@constants/mockdata';
-import { DateSetUpMock, TimeCalculate, TimeString } from '@pages/group-home/utils/time-calculate';
+import { TimeCalculate, TimeString } from '@pages/group-home/utils/time-calculate';
 import styled from 'styled-components';
 
-const ReportTime = () => {
-  const startDate = DateSetUpMock(MEETING_ROOM.start_date);
-  const endDateAct = DateSetUpMock(MEETING_ROOM.actual_end_date);
-  const endDateExp = DateSetUpMock(MEETING_ROOM.expected_end_date);
-  const allTime = TimeString(TimeCalculate(startDate, endDateAct));
-  const overTime = TimeString(TimeCalculate(endDateExp, endDateAct));
+interface TReportTime {
+  startDate: string;
+  expectedEndDate: string;
+  actualEndDate: string;
+}
+
+const ReportTime = ({ startDate, expectedEndDate, actualEndDate }: TReportTime) => {
+  const allTime = TimeString(TimeCalculate(new Date(startDate), new Date(actualEndDate)));
+  const overTime = TimeString(TimeCalculate(new Date(expectedEndDate), new Date(actualEndDate)));
   return (
     <S.Container>
       <S.TimeContent>
@@ -74,5 +76,6 @@ const S = {
     text-align: center;
     font-size: 30px;
     font-weight: 900;
+    word-break: keep-all;
   `,
 };

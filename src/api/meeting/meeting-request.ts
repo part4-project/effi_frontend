@@ -6,11 +6,7 @@ const meetingRequest = {
   createMeeting: async (meetingData: TMeetingCreateReq, groupId: number) => {
     try {
       const response = await axios.post(`user/group/${groupId}/meeting/create`, meetingData);
-      if (response.status == 200) {
-        return response.data;
-      } else {
-        throw response;
-      }
+      return response.data;
     } catch (error) {
       if (isAxiosError(error)) {
         if (error.response) {
@@ -24,9 +20,79 @@ const meetingRequest = {
       return error;
     }
   },
-  fetchMeeting: async (groupId: number) => {
+  updateMeeting: async (meetingData: TMeetingCreateReq, groupId: number, meetingId: number | undefined) => {
+    try {
+      const response = await axios.patch(`user/group/${groupId}/meeting/${meetingId}/modify`, meetingData);
+      return response.data;
+    } catch (error) {
+      if (isAxiosError(error)) {
+        if (error.response) {
+          throw {
+            errorMessage: error.response.data.errorMessage || 'errorMessage',
+            errorCode: error.response.data.errorCode || 'UNKNOWN_ERROR',
+            statusCode: error.response.status,
+          };
+        }
+      }
+      return error;
+    }
+  },
+  fetchMeetingList: async (groupId: number) => {
     try {
       const { data } = await axios.get(`user/group/${groupId}/meeting/view/available`);
+      return data;
+    } catch (error) {
+      if (isAxiosError(error)) {
+        if (error.response) {
+          throw {
+            errorMessage: error.response.data.errorMessage || 'errorMessage',
+            errorCode: error.response.data.errorCode || 'UNKNOWN_ERROR',
+            statusCode: error.response.status,
+          };
+        }
+      }
+      return error;
+    }
+  },
+  fetchMeeting: async (meetingId: number | null) => {
+    try {
+      const { data } = await axios.get(`user/group/meeting/view/${meetingId}`);
+      return data;
+    } catch (error) {
+      if (isAxiosError(error)) {
+        if (error.response) {
+          throw {
+            errorMessage: error.response.data.errorMessage || 'errorMessage',
+            errorCode: error.response.data.errorCode || 'UNKNOWN_ERROR',
+            statusCode: error.response.status,
+          };
+        }
+      }
+      return error;
+    }
+  },
+  updateMeetingEndDate: async (groupId: number, meetingId: number, actualEndDate: string) => {
+    try {
+      const { data } = await axios.patch(`user/group/${groupId}/meeting/${meetingId}/end`, { actualEndDate });
+      return data;
+    } catch (error) {
+      if (isAxiosError(error)) {
+        if (error.response) {
+          throw {
+            errorMessage: error.response.data.errorMessage || 'errorMessage',
+            errorCode: error.response.data.errorCode || 'UNKNOWN_ERROR',
+            statusCode: error.response.status,
+          };
+        }
+      }
+      return error;
+    }
+  },
+  fetchCalendarMeeting: async (startMonth: string, endMonth: string) => {
+    try {
+      const { data } = await axios.get(
+        `user/group/meeting/view/calendar?startMonth=${startMonth}&endMonth=${endMonth}`,
+      );
       return data;
     } catch (error) {
       if (isAxiosError(error)) {

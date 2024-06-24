@@ -30,7 +30,6 @@ const S = {
     background-color: ${({ $isDarkMode, theme }) => ($isDarkMode ? theme.theme06 : theme.theme03)};
     border-radius: 30px;
     inset: 0;
-    transition: background-color 0.3s;
     &:before {
       content: '';
       position: absolute;

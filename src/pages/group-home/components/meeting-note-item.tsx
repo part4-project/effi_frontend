@@ -14,7 +14,7 @@ const MeetingNoteItem = ({ note }: TMeetingNoteItemProps) => {
 
   return (
     <S.Container>
-      <ReportModalButton>
+      <ReportModalButton groupId={groupId} meetingId={meetingId}>
         <S.MeetingNotesList>
           <S.MeetingTitleAndTimeContainer>
             <S.NoteTitle>{note.title}</S.NoteTitle>
@@ -77,7 +77,13 @@ const S = {
     @media ${device.tablet} {
       flex-direction: column;
       justify-content: center;
-      gap: 4px;
+      gap: 12px;
+      height: 107px;
+    }
+    @media ${device.mobile} {
+      gap: 8px;
+      height: 106px;
+      position: relative;
     }
   `,
 
@@ -87,6 +93,11 @@ const S = {
     align-items: center;
     @media ${device.tablet} {
       width: 100%;
+    }
+    @media ${device.mobile} {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
     }
   `,
 
@@ -105,6 +116,9 @@ const S = {
     margin-right: 17px;
     color: ${(props) => props.theme.text06};
     font-weight: bold;
+    @media ${device.mobile} {
+      font-size: 18px;
+    }
   `,
 
   NoteCreatedAt: styled.span`
@@ -120,7 +134,7 @@ const S = {
       width: 70%;
     }
     @media ${device.mobile} {
-      width: 50%;
+      width: 100%;
     }
   `,
 
@@ -144,6 +158,9 @@ const S = {
     width: 365px;
     height: 15px;
     border-radius: 50px;
+    @media ${device.mobile} {
+      width: 586px;
+    }
   `,
 
   CompletedPercentageBar: styled.div<{ $percentage: string }>`
@@ -190,6 +207,27 @@ const S = {
     div:nth-child(3) {
       right: 44px;
       z-index: 0;
+    }
+    @media ${device.mobile} {
+      position: absolute;
+      top: 44%;
+      right: 5%;
+      div {
+        width: 18px;
+        height: 18px;
+      }
+      div:nth-child(1) {
+        right: 20px;
+        z-index: 2;
+      }
+      div:nth-child(2) {
+        right: 32px;
+        z-index: 1;
+      }
+      div:nth-child(3) {
+        right: 44px;
+        z-index: 0;
+      }
     }
   `,
 };

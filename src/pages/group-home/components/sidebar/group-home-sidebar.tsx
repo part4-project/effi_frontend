@@ -73,7 +73,7 @@ const S = {
       top: 56px;
       bottom: 0;
       z-index: ${zIndex.groupHomeSideBar};
-      width: 183px;
+      width: 273px;
     }
   `,
 

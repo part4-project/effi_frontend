@@ -28,6 +28,7 @@ const SideBar = () => {
           </GroupCreateModalButton>
           <S.Balloon>그룹 추가하기</S.Balloon>
         </S.Trigger>
+        <S.SideBarLine />
         <GroupList sideBarHeight={refHeight} />
       </S.ButtonList>
     </S.SideWrap>
@@ -51,8 +52,7 @@ const S = {
       top: ${navBarHeight.tablet};
     }
     @media ${device.mobile} {
-      width: ${sideBarWidth.mobile};
-      top: ${navBarHeight.mobile};
+      padding: 48px 18px;
     }
   `,
 
@@ -102,6 +102,17 @@ const S = {
       top: 50%;
       left: -4px;
       transform: translate3d(-50%, -50%, 0);
+    }
+  `,
+
+  SideBarLine: styled.div`
+    margin-bottom: 3px;
+    width: 42px;
+    height: 1px;
+    background: ${(props) => props.theme.button01};
+    border-radius: 8px;
+    @media ${device.tablet} {
+      width: 32.8px;
     }
   `,
 };

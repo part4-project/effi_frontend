@@ -6,6 +6,8 @@ interface TMeetingBoxProps {
   src: string;
   title: string;
   comments: string;
+  liveComments?: string;
+  meetingComments?: string;
   isLiveMeetingBox?: boolean;
   isMeetingData?: boolean;
   children?: React.ReactElement;
@@ -16,6 +18,8 @@ const MeetingBox = ({
   src,
   title,
   comments,
+  liveComments = '',
+  meetingComments = '',
   isLiveMeetingBox = false,
   isMeetingData = false,
   children,
@@ -28,7 +32,13 @@ const MeetingBox = ({
         <S.MeetingBoxTitle $isLiveMeetingBox={isLiveMeetingBox} $isMeetingData={isMeetingData}>
           {title}
         </S.MeetingBoxTitle>
-        <S.MeetingBoxComments>{comments}</S.MeetingBoxComments>
+        <S.MeetingBoxComment>
+          <S.MeetingBoxComments>
+            {comments} <span>{liveComments}</span>
+          </S.MeetingBoxComments>
+          <S.MeetingBoxLiveComments>{liveComments}</S.MeetingBoxLiveComments>
+        </S.MeetingBoxComment>
+        <S.MeetingBoxMeetingComments>{meetingComments}</S.MeetingBoxMeetingComments>
       </S.MeetingBoxContent>
     </S.Container>
   );
@@ -48,7 +58,7 @@ const heartbeat = keyframes`
 const S = {
   Container: styled.div`
     position: relative;
-    background-color: var(--white);
+    background-color: ${(props) => props.theme.theme06};
     border-radius: 20px;
     aspect-ratio: 7/4;
     width: 472px;
@@ -61,11 +71,12 @@ const S = {
     padding: 20px;
     cursor: ${({ onClick }) => onClick && 'pointer'};
     @media ${device.mobile} {
-      min-width: 228px;
       width: 100%;
+      min-width: 230px;
+      max-width: 360px;
       height: 114px;
       flex-direction: row;
-      justify-content: space-between;
+      justify-content: space-around;
       gap: 10px;
       padding: 0 12px;
     }
@@ -75,6 +86,10 @@ const S = {
     width: 70px;
     height: 70px;
     object-fit: contain;
+    @media ${device.mobile} {
+      width: 60px;
+      height: 60px;
+    }
   `,
 
   MeetingBoxContent: styled.div`
@@ -105,14 +120,58 @@ const S = {
 
     @media ${device.mobile} {
       margin: 4px 0;
+      width: 120px;
+      font-size: 14px;
+    }
+  `,
+
+  MeetingBoxComment: styled.div`
+    white-space: nowrap;
+
+    span {
+      display: inline;
+      @media ${device.mobile} {
+        display: none;
+      }
     }
   `,
 
   MeetingBoxComments: styled.p`
+    width: 100%;
     font-size: 16px;
     color: var(--gray01);
     text-align: center;
     line-height: 24px;
     white-space: pre-line;
+
+    @media ${device.mobile} {
+      font-size: 14px;
+    }
+  `,
+
+  MeetingBoxLiveComments: styled.p`
+    width: 100%;
+    font-size: 16px;
+    color: var(--gray01);
+    text-align: center;
+    line-height: 24px;
+    display: none;
+
+    @media ${device.mobile} {
+      font-size: 14px;
+      display: inline;
+    }
+  `,
+
+  MeetingBoxMeetingComments: styled.p`
+    width: 100%;
+    font-size: 16px;
+    color: var(--gray01);
+    text-align: center;
+    line-height: 24px;
+
+    @media ${device.mobile} {
+      display: none;
+    }
   `,
 };

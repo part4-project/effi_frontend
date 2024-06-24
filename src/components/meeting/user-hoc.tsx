@@ -6,7 +6,6 @@ import { TChatSocketType } from '@pages/meeting-room/types';
 import { useQueryClient } from '@tanstack/react-query';
 
 interface TUserHOCProp {
-  roomType: 'report-modal' | 'meeting-room';
   socket: TChatSocketType;
 }
 interface WithChatProp {

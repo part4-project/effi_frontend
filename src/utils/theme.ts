@@ -56,6 +56,10 @@ import SEARCH_ICON_DARK from '@assets/icons/search-dark.svg';
 import SEARCH_ICON from '@assets/icons/search.svg';
 import SETTING_GRAY from '@assets/icons/setting-gray.svg';
 import SETTING from '@assets/icons/setting.svg';
+import SIDE_BAR_ARROW_CLOSE_ICON_DARK from '@assets/icons/sidebar-arrow-close-dark.svg';
+import SIDE_BAR_ARROW_CLOSE_ICON from '@assets/icons/sidebar-arrow-close.svg';
+import SIDE_BAR_ARROW_ICON_DARK from '@assets/icons/sidebar-arrow-dark.svg';
+import SIDE_BAR_ARROW_ICON from '@assets/icons/sidebar-arrow.svg';
 import X_CIRCLE_DARK from '@assets/icons/x-circle-dark.svg';
 import X_CIRCLE from '@assets/icons/x-circle.svg';
 import LOBBY_BTN_DARK from '@assets/lobby-btn-dark.svg';
@@ -144,6 +148,8 @@ export const lightModeTheme = {
   door404: DOOR_404,
   icon404: ICON_404,
   effiPhone: EFFI_PHONE,
+  sideBarOpen: SIDE_BAR_ARROW_ICON,
+  sideBarClose: SIDE_BAR_ARROW_CLOSE_ICON,
 
   //other
   nickName: 'var(--dark02)',
@@ -245,6 +251,8 @@ export const darkModeTheme = {
   door404: DOOR_404_DARK,
   icon404: ICON_404_DARK,
   effiPhone: EFFI_PHONE_DARK,
+  sideBarOpen: SIDE_BAR_ARROW_ICON_DARK,
+  sideBarClose: SIDE_BAR_ARROW_CLOSE_ICON_DARK,
 
   //other
   nickName: 'var(--dark07)',
