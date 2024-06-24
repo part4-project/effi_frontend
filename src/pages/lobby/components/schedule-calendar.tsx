@@ -1,26 +1,39 @@
 import { useEffect, useState } from 'react';
+import { TCalendarMeetingFetchInfo } from '@api/meeting/meeting-request.type';
 import EmptyNotice from '@components/empty-notice';
-import { MY_SCHEDULE_LIST } from '@constants/mockdata';
+import { useCalendarMeetingQuery } from '@hooks/react-query/use-query-meeting';
+import { addMonths, format, subMonths } from 'date-fns';
 import { ko } from 'date-fns/locale';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import styled from 'styled-components';
 import DropDownBox from './dropdown-box';
 import ScheduleListItem from './schedule-list-item';
-import { ScheduleList } from '../types/type';
+import ScheduleListItemSkeleton from './skeleton/schedule-list-item-skeleton';
 import { addScheduleDot } from '../utils/add-schedule-dot';
 import { filterSchedule } from '../utils/filter-schedule';
 
 const ScheduleCalendar = () => {
   const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
-  const [filterdScheduleList, setFilterdScheduleList] = useState<ScheduleList[]>(
-    filterSchedule(MY_SCHEDULE_LIST, selectedDate),
+  const [currMonthDate, setCurrMonthDate] = useState(new Date());
+  const { data: scheduleMeetings, isLoading } = useCalendarMeetingQuery(
+    format(subMonths(currMonthDate, 1), 'yyyy-MM'),
+    format(addMonths(currMonthDate, 1), 'yyyy-MM'),
   );
-  const [currMonth, setCurrMonth] = useState(new Date().getMonth() + 1);
+
+  const [filterdScheduleList, setFilterdScheduleList] = useState<TCalendarMeetingFetchInfo[]>([]);
 
   useEffect(() => {
-    addScheduleDot(MY_SCHEDULE_LIST);
-  }, [currMonth]);
+    if (scheduleMeetings) {
+      setFilterdScheduleList(filterSchedule(selectedDate, scheduleMeetings));
+    }
+  }, [scheduleMeetings, selectedDate]);
+
+  useEffect(() => {
+    if (scheduleMeetings) {
+      addScheduleDot(scheduleMeetings);
+    }
+  }, [scheduleMeetings, currMonthDate]);
 
   return (
     <S.Container>
@@ -31,7 +44,7 @@ const ScheduleCalendar = () => {
         selected={selectedDate}
         onChange={(date) => {
           setSelectedDate(date);
-          setFilterdScheduleList(filterSchedule(MY_SCHEDULE_LIST, date));
+          setFilterdScheduleList(filterSchedule(date, scheduleMeetings));
         }}
         renderCustomHeader={({
           date,
@@ -60,19 +73,22 @@ const ScheduleCalendar = () => {
             </S.CustomHeaderButtonBox>
           </S.CustomHeaderContainer>
         )}
-        onMonthChange={(date) => setCurrMonth(date.getMonth() + 1)}
+        onMonthChange={(date) => setCurrMonthDate(date)}
         inline
         showDisabledMonthNavigation
         autoFocus={false}
       />
       <DropDownBox type="schedule-calendar" isDropdownOpen={true}>
-        {filterdScheduleList.length ? (
-          filterdScheduleList.map((schedule) => (
+        {isLoading ? (
+          new Array(3).fill(0).map((_, i) => <ScheduleListItemSkeleton key={i} />)
+        ) : filterdScheduleList.length ? (
+          filterdScheduleList.map((meeting) => (
             <ScheduleListItem
-              key={schedule.id}
-              groupId={schedule.id}
-              groupName={schedule.group}
-              meetingTitle={schedule.title}
+              key={meeting.id}
+              groupId={meeting.groupId}
+              groupName={meeting.groupName}
+              startDate={meeting.startDate}
+              meetingTitle={meeting.meetingTitle}
             />
           ))
         ) : (
