@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useMeetingQuery } from '@hooks/react-query/use-query-meeting';
 import { useLobbyGroupStore } from '@stores/lobby-group';
 import MeetingModal from '@/pages/group-home/components/meeting-modal/meeting-modal';
 
