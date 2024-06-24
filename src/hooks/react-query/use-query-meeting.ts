@@ -29,3 +29,21 @@ export const useMeetingQuery = (groupId: number) => {
   });
   return query;
 };
+
+export const useUpdateMeetingEndDate = (groupId: number, meetingId: number) => {
+  const { toast } = useToast();
+
+  const mutation = useMutation({
+    mutationFn: async (actualEndDate: string) =>
+      await meetingRequest.updateMeetingEndDate(groupId, meetingId, actualEndDate),
+
+    onSuccess: () => {
+      toast('리포트가 생성되었습니다');
+    },
+    onError: (error: TAxiosError) => {
+      toast(error.errorMessage, true);
+    },
+  });
+
+  return mutation;
+};
