@@ -26,7 +26,7 @@ const ScheduleListItem = ({ groupId, groupName, startDate, meetingTitle }: Sched
       <S.Container>
         <S.LeftSection>
           <S.GroupItemBox>
-            <GroupItem groupId={groupId} groupName={startDate} type="calendar" />
+            <GroupItem groupId={groupId} groupName={groupName} type="calendar" />
           </S.GroupItemBox>
           <S.GroupInfo>
             <S.MeetingTitle>{meetingTitle}</S.MeetingTitle>
