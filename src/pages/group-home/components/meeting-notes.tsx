@@ -9,6 +9,7 @@ import { useGroupStore } from '@stores/group';
 import { device } from '@styles/breakpoints';
 import styled, { useTheme } from 'styled-components';
 import MeetingNotesSkeleton from './skeleton/meeting-notes-skeleton';
+import { formatDateToISOStringWithOffset } from '../utils/format-date-to-string';
 import { getCurrentMonthRange } from '../utils/get-current-month-range';
 
 const MeetingNotes = () => {
@@ -21,8 +22,10 @@ const MeetingNotes = () => {
   const [inputValue, setInputValue] = useState<string>('');
   const [isSearching, setIsSearching] = useState(false);
 
-  const startDate = dateRange[0]?.toISOString().split('T')[0];
-  const endDate = dateRange[1]?.toISOString().split('T')[0];
+  const [startUTF, endUTF] = dateRange;
+
+  const startDate = formatDateToISOStringWithOffset(startUTF).split('T')[0];
+  const endDate = formatDateToISOStringWithOffset(endUTF).split('T')[0];
 
   const { data: reportListData, isLoading, refetch } = useReportListQuery(groupId, startDate, endDate);
   const filteredNotes = filteredNotesBySearchQuery(reportListData, searchQuery);

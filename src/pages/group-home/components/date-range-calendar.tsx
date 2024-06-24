@@ -18,8 +18,10 @@ const DateRangeCalendar = ({ dateRange, setDateRange, currentMonthRange, refetch
   const [startDate, endDate] = dateRange;
 
   useEffect(() => {
-    setTimeout(() => refetch(), 10);
-  }, [endDate, refetch]);
+    if (startDate && endDate) {
+      setTimeout(() => refetch(), 0);
+    }
+  }, [endDate, refetch, startDate]);
 
   const handleClickCalendarRefreshButton = () => {
     setDateRange(currentMonthRange);
