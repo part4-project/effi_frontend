@@ -1,14 +1,12 @@
 import { useState, useEffect } from 'react';
 import noDataCharacter from '@assets/icons/meeting-no-data-character.svg';
-import { MEETING_ROOM, TOPIC } from '@constants/mockdata';
-import { TMyScheduleItem } from '@constants/mockdata.type';
-import { useMeetingQuery } from '@hooks/react-query/use-query-meeting';
+import { useMeetingListQuery, useMeetingQuery } from '@hooks/react-query/use-query-meeting';
 import MeetingBox from '@pages/group-home/components/meeting-box';
 import { useGroupStore } from '@stores/group';
 import { device } from '@styles/breakpoints';
 import { useNavigate } from 'react-router-dom';
 import styled, { useTheme } from 'styled-components';
-import MeetingModalButton from './meeting-modal/meeting-modal-button';
+import MeetingModal from './meeting-modal/meeting-modal';
 import MeetingsSkeleton from './skeleton/meetings-skeleton';
 import useCheckMinuteTime from '../hooks/use-check-minute-time';
 import {
@@ -20,22 +18,37 @@ import {
 
 interface TMeetingProps {
   isAdmin: boolean;
-  scheduledMeeting: TMyScheduleItem;
 }
 
-const Meetings = ({ isAdmin, scheduledMeeting }: TMeetingProps) => {
+const Meetings = ({ isAdmin }: TMeetingProps) => {
   const navigate = useNavigate();
   const theme = useTheme();
   const checkMinuteTime = useCheckMinuteTime();
-  const { data: meetingData, isLoading, isError, refetch } = useMeetingQuery(useGroupStore((state) => state.groupId));
-  const [isOnLive, setIsOnLive] = useState(false);
+  const {
+    data: meetingData,
+    isLoading,
+    isError,
+    refetch,
+  } = useMeetingListQuery(useGroupStore((state) => state.groupId));
+  const [selectedMeetingId, setSelectedMeetingId] = useState<number | null>(null);
+
+  const { data: selectedMeetingData, isLoading: isMeetingLoading } = useMeetingQuery(selectedMeetingId);
+  const [isOnLive, setIsOnLive] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const liveMeetingDateTitle = isLoading || (meetingData !== '' && meetingData[0].meetingTitle);
 
   const handleMeetingClick = () => {
     navigate('/meeting-loading');
   };
-
+  const handleModalClose = () => {
+    setIsOpen(false);
+    setSelectedMeetingId(null);
+  };
+  const handleModalOpen = (meetingId: number) => {
+    setSelectedMeetingId(meetingId);
+    setIsOpen(true);
+  };
   const liveMeetingProps = {
     isLiveMeetingBox: isOnLive,
     isMeetingData: isOnLive,
@@ -66,21 +79,37 @@ const Meetings = ({ isAdmin, scheduledMeeting }: TMeetingProps) => {
   if (isLoading) return <MeetingsSkeleton />;
   if (isError) return 'Error...';
 
+  const isEdit = isAdmin && meetingData;
+
   return (
-    <S.Container>
-      <MeetingBox {...liveMeetingProps} />
-      <MeetingBox {...scheduledMeetingProps}>
-        {scheduledMeeting && (
+    <>
+      {isOpen && !isMeetingLoading && (
+        <MeetingModal title="회의 수정" onClose={handleModalClose} isOpen={isOpen} data={selectedMeetingData} />
+      )}
+      <S.Container>
+        <MeetingBox {...liveMeetingProps} />
+        <MeetingBox {...scheduledMeetingProps}>
           <S.StyledModal>
-            {isAdmin && (
-              <MeetingModalButton title="회의 수정" data={MEETING_ROOM} topicData={TOPIC}>
-                <S.EditIcon src={theme.editIcon} />
-              </MeetingModalButton>
+            {isEdit && (
+              <S.EditIcon
+                src={theme.editIcon}
+                onClick={() => {
+                  if (meetingData.length == 1) {
+                    handleModalOpen(meetingData[0]?.id);
+                  } else {
+                    if (isOnLive) {
+                      handleModalOpen(meetingData[1]?.id);
+                    } else {
+                      handleModalOpen(meetingData[0]?.id);
+                    }
+                  }
+                }}
+              />
             )}
           </S.StyledModal>
-        )}
-      </MeetingBox>
-    </S.Container>
+        </MeetingBox>
+      </S.Container>
+    </>
   );
 };
 
@@ -115,5 +144,6 @@ const S = {
 
   EditIcon: styled.img`
     width: 20px;
+    cursor: pointer;
   `,
 };
