@@ -43,12 +43,13 @@ const S = {
   NickNameBox: styled.div`
     color: ${(props) => props.theme.nickName};
     font-weight: 500;
+    font-size: 14px;
   `,
   ProfileImgBox: styled.div`
     overflow: hidden;
     border: 0.1px solid ${(props) => props.theme.theme01};
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
     border-radius: 100%;
   `,
 };
