@@ -40,7 +40,7 @@ const GlobalStyle = createGlobalStyle`
 }
 
 #root-portal .react-datepicker-popper .react-datepicker__triangle {
-  stroke: var(--white);
+  stroke:  ${(props) => props.theme.schedule};
 }
 #root-portal .react-datepicker {
   width: 300px;
