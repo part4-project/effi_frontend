@@ -15,7 +15,7 @@ interface ReportModalProps {
 const ReportModal = ({ isOpen, onClose, groupId, meetingId }: ReportModalProps) => {
   const { data: reportData, isLoading, isError } = useReportQuery(groupId, meetingId);
 
-  if (isLoading) return 'Loading...';
+  if (isLoading) return '';
   if (isError) return 'Error...';
 
   const { startDate, expectedEndDate, actualEndDate, topicList, participantList, chattingList } = reportData;
