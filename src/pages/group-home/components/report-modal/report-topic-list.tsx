@@ -1,14 +1,17 @@
+import { TReportTopic } from '@api/report/report-request.type';
 import Topic from '@components/meeting/topic';
-import { TOPIC } from '@constants/mockdata';
 import styled from 'styled-components';
-
-const ReportTopicList = () => {
+interface TReportTopicList {
+  topicList: TReportTopic[];
+}
+const ReportTopicList = ({ topicList }: TReportTopicList) => {
+  topicList.sort((a, b) => a.orderIndex - b.orderIndex);
   return (
     <S.Container>
       <S.TopicAgenda>회의 안건</S.TopicAgenda>
       <S.TopicLists>
-        {TOPIC.topic_list.map((topic) => (
-          <Topic key={topic.id} isCompleted={topic.is_completed} topicName={topic.topic_name} />
+        {topicList.map((topic: TReportTopic, idx) => (
+          <Topic key={idx} isCompleted={topic.isCompleted} topicName={topic.topicName} />
         ))}
       </S.TopicLists>
     </S.Container>
