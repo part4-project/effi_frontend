@@ -1,19 +1,13 @@
 /* eslint-disable no-unused-vars */
 import { useCallback, useEffect } from 'react';
-import { IMessage } from '@stomp/stompjs';
 import useSocket from './use-socket';
 
 const useTopicSocket = (meetingId: number, onRefetch: () => void) => {
   const { stompClientRef: chatSocketClient, isConnected } = useSocket();
 
-  const handleReceivedMessage = useCallback(
-    (message: IMessage) => {
-      const msg = JSON.parse(message.body);
-      console.log('서버로부터 메시지 수신:', msg);
-      onRefetch();
-    },
-    [onRefetch],
-  );
+  const handleReceivedMessage = useCallback(() => {
+    onRefetch();
+  }, [onRefetch]);
   useEffect(() => {
     if (isConnected && chatSocketClient.current) {
       const client = chatSocketClient.current;

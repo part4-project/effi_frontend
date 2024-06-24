@@ -8,8 +8,12 @@ interface TReportTime {
 }
 
 const ReportTime = ({ startDate, expectedEndDate, actualEndDate }: TReportTime) => {
-  const allTime = TimeString(TimeCalculate(new Date(startDate), new Date(actualEndDate)));
+  const allTimeResult = TimeString(TimeCalculate(new Date(startDate), new Date(actualEndDate)));
+  const expectedTimeResult = TimeString(TimeCalculate(new Date(startDate), new Date(expectedEndDate)));
   const overTime = TimeString(TimeCalculate(new Date(expectedEndDate), new Date(actualEndDate)));
+  // allTimeResult가 잘못된 값인지 확인
+  const allTime = allTimeResult.trim() === '' ? expectedTimeResult : allTimeResult;
+
   return (
     <S.Container>
       <S.TimeContent>
@@ -19,7 +23,7 @@ const ReportTime = ({ startDate, expectedEndDate, actualEndDate }: TReportTime) 
         </S.TimeBox>
         <S.TimeBox>
           <S.TimeTitle>초과된 시간</S.TimeTitle>
-          {overTime ? <S.Timer $overTime={!!overTime}>{overTime}</S.Timer> : <S.Timer>-</S.Timer>}
+          {overTime.trim() !== '' ? <S.Timer $overTime={!!overTime}>{overTime}</S.Timer> : <S.Timer>-</S.Timer>}
         </S.TimeBox>
       </S.TimeContent>
     </S.Container>

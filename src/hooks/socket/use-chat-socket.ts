@@ -28,7 +28,6 @@ const useChatSocket = (meetingId: number) => {
           destination: `/signal/pub/meeting/${meetingId}/${type.toLowerCase()}`,
           body: JSON.stringify(messageObject),
         });
-        console.log('Message sent to server:', messageObject);
       } else {
         console.error('WebSocket 연결이 필요합니다.');
       }
@@ -37,7 +36,6 @@ const useChatSocket = (meetingId: number) => {
   );
   const handleReceivedMessage = (message: IMessage) => {
     const msg = JSON.parse(message.body);
-    console.log('서버로부터 메시지 수신:', msg);
     setChatSocketList((prevData) => [...prevData, msg]);
   };
   useEffect(() => {
