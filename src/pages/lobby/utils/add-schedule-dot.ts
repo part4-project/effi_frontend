@@ -1,9 +1,10 @@
-import { formatDate } from './format-date';
-import { ScheduleList } from '../types/type';
+import { TCalendarMeetingFetchInfo } from '@api/meeting/meeting-request.type';
+import { formatCalendarDate } from './format-date';
 
-export const addScheduleDot = (scheduleList: ScheduleList[]) => {
-  scheduleList.forEach((schedule) => {
-    const formattedDate = formatDate(schedule.start_date);
+export const addScheduleDot = (Meetings: TCalendarMeetingFetchInfo[]) => {
+  Meetings.forEach((meeting) => {
+    const formattedDate = formatCalendarDate(meeting.startDate);
+
     const elements = document.querySelectorAll(`[aria-label*='${formattedDate}']`);
 
     elements.forEach((element) => {
@@ -15,7 +16,7 @@ export const addScheduleDot = (scheduleList: ScheduleList[]) => {
         element.removeChild(existingDots);
       }
       //임시용 필터링
-      const schedulesOnDate = scheduleList.filter((s) => formatDate(s.start_date) === formattedDate);
+      const schedulesOnDate = Meetings.filter((s) => formatCalendarDate(s.startDate) === formattedDate);
       const numberOfDots = Math.min(3, schedulesOnDate.length);
 
       for (let i = 0; i < numberOfDots; i++) {

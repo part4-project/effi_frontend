@@ -1,49 +1,68 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
+import { TAlarm } from '@api/alarm/alarm-request.type';
+import ProfileModalButton from '@components/modal/profile-modal/profile-modal-button';
+import { QUERY_KEY } from '@constants/query-key';
+import { useAlarmDeleteMutation } from '@hooks/react-query/use-query-alarm';
 import { device } from '@styles/breakpoints';
+import { useQueryClient } from '@tanstack/react-query';
 import styled, { useTheme } from 'styled-components';
 interface AlarmInviteProp {
-  id: number;
-  type: string;
-  group_name: string;
-  remind_time: number;
+  alarmId: string;
+  message: string;
+  title: string;
+  handleDropdownClose: () => void;
+  handleProfileModalOpen: () => void;
 }
-const AlarmInvite = ({ group_name }: AlarmInviteProp) => {
+const AlarmInvite = ({ title, alarmId, handleProfileModalOpen, handleDropdownClose }: AlarmInviteProp) => {
   const theme = useTheme();
   const groupItemRef = useRef<HTMLDivElement>(null);
   const [isOverFlowText, setIsOverFlowText] = useState<boolean>(false);
+  const queryClient = useQueryClient();
+  const { mutate: deleteAlarmMutate } = useAlarmDeleteMutation();
 
-  useEffect(() => {
+  const checkOverflow = () => {
     // 뒷배경보다 텍스트 길이가 긴지 체크
-    const checkOverflow = () => {
-      if (groupItemRef.current) {
-        const roomName = groupItemRef.current.querySelector('div');
-        const bgImg = groupItemRef.current.querySelector('img');
-        if (roomName && bgImg) {
-          const isOverflowing = roomName.scrollWidth > bgImg.scrollWidth;
-          setIsOverFlowText(isOverflowing);
-        }
+    if (groupItemRef.current) {
+      const roomName = groupItemRef.current.querySelector('div');
+      const bgImg = groupItemRef.current.querySelector('img');
+      if (roomName && bgImg) {
+        const isOverflowing = roomName.scrollWidth > bgImg.scrollWidth;
+        setIsOverFlowText(isOverflowing);
       }
-    };
-    checkOverflow();
-    window.addEventListener('resize', checkOverflow);
-    return () => {
-      window.removeEventListener('resize', checkOverflow);
-    };
-  }, [isOverFlowText]);
+    }
+  };
+
+  const optimistcDelteAlarm = () => {
+    queryClient.setQueryData<TAlarm[]>([QUERY_KEY.alarmList], (prev) => {
+      if (prev) {
+        return prev.filter((el) => el.alarmId !== alarmId);
+      }
+      return prev;
+    });
+    deleteAlarmMutate(alarmId);
+  };
+
+  const handleClick = () => {
+    optimistcDelteAlarm();
+    handleDropdownClose();
+    handleProfileModalOpen();
+  };
 
   return (
-    <S.AlarmContent>
-      <S.AlarmImgBox ref={groupItemRef}>
-        <img src={theme.groupBg} alt="alarm" />
-        <S.GroupImgInName $isOverFlowText={isOverFlowText}>{group_name}</S.GroupImgInName>
-      </S.AlarmImgBox>
-      <S.AlarmTextBox>
-        <S.AlarmTitle>
-          <S.GroupName>{group_name}</S.GroupName>
-        </S.AlarmTitle>
-        <S.AlarmText>{`${group_name}에서 초대장을 보냈어요!`}</S.AlarmText>
-      </S.AlarmTextBox>
-    </S.AlarmContent>
+    <ProfileModalButton>
+      <S.AlarmContent onClick={handleClick}>
+        <S.AlarmImgBox ref={groupItemRef}>
+          <img src={theme.groupBg} alt="alarm" onLoad={checkOverflow} />
+          <S.GroupImgInName $isOverFlowText={isOverFlowText}>{title}</S.GroupImgInName>
+        </S.AlarmImgBox>
+        <S.AlarmTextBox>
+          <S.AlarmTitle>
+            <S.GroupName>{title}</S.GroupName>
+          </S.AlarmTitle>
+          <S.AlarmText>{`${title}에서 초대장을 보냈어요!`}</S.AlarmText>
+        </S.AlarmTextBox>
+      </S.AlarmContent>
+    </ProfileModalButton>
   );
 };
 
@@ -53,6 +72,7 @@ const S = {
   AlarmContent: styled.div`
     display: flex;
     align-items: start;
+    text-align: left;
     gap: 13px;
   `,
   AlarmImgBox: styled.div`

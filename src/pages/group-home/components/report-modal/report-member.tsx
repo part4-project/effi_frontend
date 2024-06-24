@@ -1,18 +1,28 @@
-import circleGray from '@assets/icons/circle-gray.svg';
-import { GROUP_MEMBER } from '@constants/mockdata';
-import styled, { useTheme } from 'styled-components';
+import { TGroupFetchMemberInfo } from '@api/group/group-request.type';
+import { TReportParticipant } from '@api/report/report-request.type';
+import { useGroupMemberQuery } from '@hooks/react-query/use-query-group';
+import { useGroupStore } from '@stores/group';
+import styled from 'styled-components';
 
-const ReportMember = () => {
-  const theme = useTheme();
+interface TReportMember {
+  participantList: TReportParticipant[];
+}
+const ReportMember = ({ participantList }: TReportMember) => {
+  const {
+    data: { memberList },
+  } = useGroupMemberQuery(useGroupStore((state) => state.groupId));
+  const memberDataList = participantList.map((participant: TReportParticipant) => {
+    return memberList.find((member: TGroupFetchMemberInfo) => participant.userId == member.id);
+  });
 
   return (
     <S.Container>
       <S.Participant>회의 참여자</S.Participant>
       <S.MemberLists>
-        {GROUP_MEMBER.member_list.map((member) => (
+        {memberDataList.map((member: TGroupFetchMemberInfo) => (
           <S.MemberList key={member.id}>
-            {member.is_admin ? <S.MemberIcon src={theme.circle} /> : <S.MemberIcon src={circleGray} />}
-            <S.MemberName>{member.name}</S.MemberName>
+            <S.MemberIcon src={member.profileImageUrl} $isAdmin={member.admin} />
+            <S.MemberName>{member.nickname}</S.MemberName>
           </S.MemberList>
         ))}
       </S.MemberLists>
@@ -62,9 +72,11 @@ const S = {
     font-weight: 700;
   `,
 
-  MemberIcon: styled.img`
+  MemberIcon: styled.img<{ $isAdmin: boolean }>`
     width: 20px;
     height: 20px;
+    border-radius: 20px;
+    border: 1px solid ${({ $isAdmin, theme }) => $isAdmin && theme.theme05};
   `,
 
   MemberName: styled.span`

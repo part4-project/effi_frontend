@@ -2,10 +2,15 @@ import { zIndex } from '@styles/z-index';
 import styled from 'styled-components';
 import AlarmList from './alarm-list';
 
-const AlarmPopOver = () => {
+interface AlarmPopOverProps {
+  handleDropdownClose: () => void;
+  handleProfileModalOpen: () => void;
+}
+
+const AlarmPopOver = ({ handleDropdownClose, handleProfileModalOpen }: AlarmPopOverProps) => {
   return (
     <S.PopOverWrap>
-      <AlarmList />
+      <AlarmList handleProfileModalOpen={handleProfileModalOpen} handleDropdownClose={handleDropdownClose} />
     </S.PopOverWrap>
   );
 };
