@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react';
-import ChattingList from '@components/meeting/chatting-list';
 import { SOCKET_TYPE } from '@constants/socket-type';
 import useChatSocket from '@hooks/socket/use-chat-socket';
 import styled from 'styled-components';
+import ChattingList from './chatting-list';
 import InputForm from './input-form';
 import useInputForm from '../hooks/use-input-form';
 import { TChatSocketType } from '../types';
@@ -32,7 +32,7 @@ const Chatting = ({ roomId }: TChattingProps) => {
       <S.ChattingWrap>
         <S.ChattingContainer ref={chatContainerRef}>
           {chatSocketList.map((chatSocket: TChatSocketType, idx) => (
-            <ChattingList key={idx} roomType="meeting-room" socket={chatSocket} />
+            <ChattingList key={idx} socket={chatSocket} />
           ))}
         </S.ChattingContainer>
       </S.ChattingWrap>

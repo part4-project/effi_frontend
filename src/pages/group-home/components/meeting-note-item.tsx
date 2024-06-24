@@ -14,7 +14,7 @@ const MeetingNoteItem = ({ note }: TMeetingNoteItemProps) => {
 
   return (
     <S.Container>
-      <ReportModalButton>
+      <ReportModalButton groupId={groupId} meetingId={meetingId}>
         <S.MeetingNotesList>
           <S.MeetingTitleAndTimeContainer>
             <S.NoteTitle>{note.title}</S.NoteTitle>
