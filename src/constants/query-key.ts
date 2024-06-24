@@ -7,4 +7,5 @@ export const QUERY_KEY = {
   meetingInfo: 'meetingInfo',
   reportList: 'reportList',
   reportInfo: 'reportInfo',
+  calendarMeetingList: 'calendarMeetingList',
 } as const;

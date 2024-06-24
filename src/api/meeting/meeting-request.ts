@@ -88,6 +88,25 @@ const meetingRequest = {
       return error;
     }
   },
+  fetchCalendarMeeting: async (startMonth: string, endMonth: string) => {
+    try {
+      const { data } = await axios.get(
+        `user/group/meeting/view/calendar?startMonth=${startMonth}&endMonth=${endMonth}`,
+      );
+      return data;
+    } catch (error) {
+      if (isAxiosError(error)) {
+        if (error.response) {
+          throw {
+            errorMessage: error.response.data.errorMessage || 'errorMessage',
+            errorCode: error.response.data.errorCode || 'UNKNOWN_ERROR',
+            statusCode: error.response.status,
+          };
+        }
+      }
+      return error;
+    }
+  },
 } as const;
 
 export default meetingRequest;
