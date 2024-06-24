@@ -28,10 +28,13 @@ export interface TMyScheduleItem {
 }
 
 export interface TNoteItem {
-  id: number;
-  title: string;
-  createdAt: string;
-  topic_list: Topic[];
+  groupId: number;
+  meetingId: number;
+  startDate: number;
+  expectedEndDate: number;
+  actualEndDate: null;
+  topiclist: Topic[];
+  participantList: { userId: number; roomId: number; profileImageUrl: string }[];
 }
 
 export interface TGroup {

@@ -1,22 +1,31 @@
 import { ChangeEvent, KeyboardEventHandler, useEffect, useState } from 'react';
+import { TReportInfo } from '@api/report/report-request.type';
 import EmptyNotice from '@components/empty-notice';
-import { NOTES_DATAS } from '@constants/mockdata';
-import { TNoteItem } from '@constants/mockdata.type';
+import { useReportListQuery } from '@hooks/react-query/use-query-report';
 import DateRangeCalendar from '@pages/group-home/components/date-range-calendar';
 import MeetingNoteItem from '@pages/group-home/components/meeting-note-item';
 import { filteredNotesBySearchQuery } from '@pages/group-home/utils/date-range-filter';
+import { useGroupStore } from '@stores/group';
 import { device } from '@styles/breakpoints';
 import styled, { useTheme } from 'styled-components';
+import MeetingNotesSkeleton from './skeleton/meeting-notes-skeleton';
+import { getCurrentMonthRange } from '../utils/get-current-month-range';
 
 const MeetingNotes = () => {
   const theme = useTheme();
+  const groupId = useGroupStore((state) => state.groupId);
+  const currentMonthRange = getCurrentMonthRange();
 
-  const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([null, null]);
+  const [dateRange, setDateRange] = useState<Date[]>(currentMonthRange);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [inputValue, setInputValue] = useState<string>('');
   const [isSearching, setIsSearching] = useState(false);
 
-  const filteredNotes = filteredNotesBySearchQuery(NOTES_DATAS, dateRange, searchQuery);
+  const startDate = dateRange[0]?.toISOString().split('T')[0];
+  const endDate = dateRange[1]?.toISOString().split('T')[0];
+
+  const { data: reportListData, isLoading, refetch } = useReportListQuery(groupId, startDate, endDate);
+  const filteredNotes = filteredNotesBySearchQuery(reportListData, searchQuery);
 
   const handleSearch: KeyboardEventHandler<HTMLInputElement> = (e) => {
     if (e.key === 'Enter') {
@@ -43,7 +52,12 @@ const MeetingNotes = () => {
   return (
     <S.Container>
       <S.MeetingNotesHeader>
-        <DateRangeCalendar dateRange={dateRange} setDateRange={setDateRange} />
+        <DateRangeCalendar
+          dateRange={dateRange}
+          setDateRange={setDateRange}
+          currentMonthRange={currentMonthRange}
+          refetch={refetch}
+        />
 
         <S.NotesSearchBarBox>
           <S.NotesSearchBar
@@ -59,23 +73,29 @@ const MeetingNotes = () => {
         </S.NotesSearchBarBox>
       </S.MeetingNotesHeader>
 
-      <S.MeetingNotesLists>
-        {filteredNotes.length === 0 ? (
-          <S.EmptyNoticeContaier>
-            <EmptyNotice>
-              {isSearching
-                ? '해당 조건의 리포트가 없습니다.'
-                : `회의 리포트가 없습니다.\n회의를 진행하고 기록을 남겨보세요!`}
-            </EmptyNotice>
-          </S.EmptyNoticeContaier>
-        ) : (
-          filteredNotes.map((note: TNoteItem) => (
-            <S.MeetingNoteItem key={note.id}>
-              <MeetingNoteItem note={note} />
-            </S.MeetingNoteItem>
-          ))
-        )}
-      </S.MeetingNotesLists>
+      {isLoading ? (
+        <MeetingNotesSkeleton />
+      ) : (
+        <S.MeetingNotesLists>
+          {filteredNotes?.length === 0 ? (
+            <S.EmptyNoticeContaier>
+              <EmptyNotice>
+                {isSearching
+                  ? '해당 조건의 리포트가 없습니다.'
+                  : `회의 리포트가 없습니다.\n회의를 진행하고 기록을 남겨보세요!`}
+              </EmptyNotice>
+            </S.EmptyNoticeContaier>
+          ) : (
+            filteredNotes
+              ?.sort((a: TReportInfo, b: TReportInfo) => b.meetingId - a.meetingId)
+              .map((report: TReportInfo) => (
+                <S.MeetingNoteItem key={report.meetingId}>
+                  <MeetingNoteItem report={report} groupId={groupId} />
+                </S.MeetingNoteItem>
+              ))
+          )}
+        </S.MeetingNotesLists>
+      )}
     </S.Container>
   );
 };
