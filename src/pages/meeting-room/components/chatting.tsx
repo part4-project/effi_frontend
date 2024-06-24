@@ -1,10 +1,8 @@
 import { useEffect, useRef } from 'react';
-import { SOCKET_TYPE } from '@constants/socket-type';
 import useChatSocket from '@hooks/socket/use-chat-socket';
 import styled from 'styled-components';
 import ChattingList from './chatting-list';
 import InputForm from './input-form';
-import useInputForm from '../hooks/use-input-form';
 import { TChatSocketType } from '../types';
 
 interface TChattingProps {
@@ -12,11 +10,6 @@ interface TChattingProps {
 }
 
 const Chatting = ({ roomId }: TChattingProps) => {
-  const handleSendMessage = () => {
-    sendMessage(SOCKET_TYPE.CHAT, inputValue);
-  };
-
-  const { inputValue, handleSubmit, handleInputValueChange } = useInputForm(handleSendMessage);
   const { sendMessage, chatSocketList } = useChatSocket(roomId);
   const chatContainerRef = useRef<HTMLUListElement>(null);
 
@@ -32,11 +25,17 @@ const Chatting = ({ roomId }: TChattingProps) => {
       <S.ChattingWrap>
         <S.ChattingContainer ref={chatContainerRef}>
           {chatSocketList.map((chatSocket: TChatSocketType, idx) => (
-            <ChattingList key={idx} socket={chatSocket} />
+            <ChattingList
+              key={idx}
+              socket={chatSocket}
+              prevSocket={idx >= 1 ? chatSocketList[idx - 1] : null}
+              currentIndex={idx}
+              chatSocketList={chatSocketList}
+            />
           ))}
         </S.ChattingContainer>
       </S.ChattingWrap>
-      <InputForm type="chatting" inputValue={inputValue} onSubmit={handleSubmit} onChange={handleInputValueChange} />
+      <InputForm type="chatting" sendMessage={sendMessage} />
     </S.Container>
   );
 };

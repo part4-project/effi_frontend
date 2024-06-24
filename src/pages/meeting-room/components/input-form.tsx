@@ -1,42 +1,53 @@
 /* eslint-disable no-unused-vars */
 import { useMemo } from 'react';
 import subTractIcon from '@assets/icons/subtract.svg';
+import { SOCKET_TYPE } from '@constants/socket-type';
 import styled from 'styled-components';
+import useInputForm from '../hooks/use-input-form';
 
 type MeetingRoomInputForm = 'topic' | 'chatting';
 
 interface InputFormProps {
   type: MeetingRoomInputForm;
-  inputValue: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  sendMessage: (type: string, message: string) => void;
 }
 
-const InputForm = ({ type, inputValue, onSubmit, onChange }: InputFormProps) => {
+const InputForm = ({ type, sendMessage }: InputFormProps) => {
+  const handleSendMessage = () => {
+    sendMessage(SOCKET_TYPE.CHAT, inputValue);
+  };
+
+  const { inputValue, handleSubmit, handleInputValueChange } = useInputForm(handleSendMessage);
+
   const CONTAINERS = useMemo(
     () => ({
       topic: (
         <>
           <S.Container>
-            <S.Input type="text" placeholder="안건 내용 작성하기" value={inputValue} onChange={onChange} />
+            <S.Input
+              type="text"
+              placeholder="안건 내용 작성하기"
+              value={inputValue}
+              onChange={handleInputValueChange}
+            />
           </S.Container>
           <S.TopicButton>추가</S.TopicButton>
         </>
       ),
       chatting: (
         <S.Container>
-          <S.Input type="text" placeholder="메시지 입력..." value={inputValue} onChange={onChange} />
+          <S.Input type="text" placeholder="메시지 입력..." value={inputValue} onChange={handleInputValueChange} />
           <S.ChattingButton>
             <img src={subTractIcon} alt="전송" />
           </S.ChattingButton>
         </S.Container>
       ),
     }),
-    [inputValue, onChange],
+    [inputValue, handleInputValueChange],
   );
 
   return (
-    <S.Form $type={type} onSubmit={onSubmit}>
+    <S.Form $type={type} onSubmit={handleSubmit}>
       {CONTAINERS[type]}
     </S.Form>
   );
