@@ -1,21 +1,40 @@
+import { useEffect } from 'react';
 import { device } from '@styles/breakpoints';
 import { ko } from 'date-fns/locale';
 import DatePicker from 'react-datepicker';
 import styled, { useTheme } from 'styled-components';
 
 interface TDateRangeCalendarProps {
-  dateRange: [Date | null, Date | null];
+  dateRange: Date[];
   // eslint-disable-next-line no-unused-vars
-  setDateRange: (dateRange: [Date | null, Date | null]) => void;
+  setDateRange: (dateRange: Date[]) => void;
+  currentMonthRange: Date[];
+  refetch: () => void;
 }
 
-const DateRangeCalendar = ({ dateRange, setDateRange }: TDateRangeCalendarProps) => {
+const DateRangeCalendar = ({ dateRange, setDateRange, currentMonthRange, refetch }: TDateRangeCalendarProps) => {
   const theme = useTheme();
 
   const [startDate, endDate] = dateRange;
 
+  useEffect(() => {
+    setTimeout(() => refetch(), 10);
+  }, [endDate, refetch]);
+
   const handleClickCalendarRefreshButton = () => {
-    setDateRange([null, null]);
+    setDateRange(currentMonthRange);
+    refetch();
+  };
+
+  const handleDateChange = (dates: Date[]) => {
+    const [start, end] = dates;
+    if (end) {
+      const endOfDay = new Date(end);
+      endOfDay.setHours(23, 59, 59, 999);
+      setDateRange([start, endOfDay]);
+    } else {
+      setDateRange([start, end]);
+    }
   };
 
   return (
@@ -29,9 +48,7 @@ const DateRangeCalendar = ({ dateRange, setDateRange }: TDateRangeCalendarProps)
           startDate={startDate}
           endDate={endDate}
           dateFormat="yy-MM-dd"
-          onChange={(date) => {
-            setDateRange(date as [Date | null, Date | null]);
-          }}
+          onChange={handleDateChange}
         />
         <S.CalendarIcon src={theme.calendar} />
         <S.ArrowIcon src={theme.arrowRight} />
