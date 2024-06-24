@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useAlarmQuery } from '@hooks/react-query/use-query-alarm';
 import { useUserNicknameUpdateMutation, useUserQuery } from '@hooks/react-query/use-query-user';
 import { device } from '@styles/breakpoints';
 import { navBarHeight } from '@styles/subsection-size';
@@ -15,6 +16,7 @@ const NavBar = () => {
   const theme = useTheme();
 
   const { data: userData, isLoading, isError, isSuccess } = useUserQuery();
+  const { isLoading: isAlarmLoading } = useAlarmQuery();
   const { mutateAsync } = useUserNicknameUpdateMutation();
 
   useEffect(() => {
@@ -37,7 +39,7 @@ const NavBar = () => {
         </S.FlexLeftBox>
         <S.FlexRightBox>
           <DarkModeButton />
-          {isLoading ? (
+          {isAlarmLoading && isLoading ? (
             <ProfileSkeleton />
           ) : (
             <>

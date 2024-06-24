@@ -1,28 +1,30 @@
+import { TAlarm } from '@api/alarm/alarm-request.type';
+import { QUERY_KEY } from '@constants/query-key';
+import { useQueryClient } from '@tanstack/react-query';
 import styled from 'styled-components';
 import AlarmEmpty from './alarm-empty';
 import AlarmInvite from './alarm-invite';
 
-type TAlarm = {
-  id: string;
-  message: string;
-  receiverId: number;
-  title: string;
-};
-
 interface AlarmListProps {
-  alarmSocketList: TAlarm[];
   handleDropdownClose: () => void;
+  handleProfileModalOpen: () => void;
 }
 
-const AlarmList = ({ alarmSocketList, handleDropdownClose }: AlarmListProps) => {
-  const isAlarmList = !!alarmSocketList.length;
+const AlarmList = ({ handleProfileModalOpen, handleDropdownClose }: AlarmListProps) => {
+  const alarmSocketList = useQueryClient().getQueryData<TAlarm[]>([QUERY_KEY.alarmList]);
+
+  const isAlarmList = !!alarmSocketList?.length;
   return (
     <S.AlarmListWrap $isAlarmList={isAlarmList}>
       <S.AlarmListContent $isAlarmList={isAlarmList}>
         {isAlarmList ? (
           alarmSocketList.map((alarmList, idx) => (
             <S.AlarmItemWrap key={idx}>
-              <AlarmInvite {...alarmList} handleDropdownClose={handleDropdownClose} />
+              <AlarmInvite
+                {...alarmList}
+                handleProfileModalOpen={handleProfileModalOpen}
+                handleDropdownClose={handleDropdownClose}
+              />
             </S.AlarmItemWrap>
           ))
         ) : (

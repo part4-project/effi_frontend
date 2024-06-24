@@ -1,18 +1,24 @@
 import { useRef, useState } from 'react';
+import { TAlarm } from '@api/alarm/alarm-request.type';
 import ProfileModalButton from '@components/modal/profile-modal/profile-modal-button';
+import { QUERY_KEY } from '@constants/query-key';
+import { useAlarmDeleteMutation } from '@hooks/react-query/use-query-alarm';
 import { device } from '@styles/breakpoints';
+import { useQueryClient } from '@tanstack/react-query';
 import styled, { useTheme } from 'styled-components';
 interface AlarmInviteProp {
-  id: string;
+  alarmId: string;
   message: string;
-  receiverId: number;
   title: string;
   handleDropdownClose: () => void;
+  handleProfileModalOpen: () => void;
 }
-const AlarmInvite = ({ title, handleDropdownClose }: AlarmInviteProp) => {
+const AlarmInvite = ({ title, alarmId, handleProfileModalOpen, handleDropdownClose }: AlarmInviteProp) => {
   const theme = useTheme();
   const groupItemRef = useRef<HTMLDivElement>(null);
   const [isOverFlowText, setIsOverFlowText] = useState<boolean>(false);
+  const queryClient = useQueryClient();
+  const { mutate: deleteAlarmMutate } = useAlarmDeleteMutation();
 
   const checkOverflow = () => {
     // 뒷배경보다 텍스트 길이가 긴지 체크
@@ -26,9 +32,25 @@ const AlarmInvite = ({ title, handleDropdownClose }: AlarmInviteProp) => {
     }
   };
 
+  const optimistcDelteAlarm = () => {
+    queryClient.setQueryData<TAlarm[]>([QUERY_KEY.alarmList], (prev) => {
+      if (prev) {
+        return prev.filter((el) => el.alarmId !== alarmId);
+      }
+      return prev;
+    });
+    deleteAlarmMutate(alarmId);
+  };
+
+  const handleClick = () => {
+    optimistcDelteAlarm();
+    handleDropdownClose();
+    handleProfileModalOpen();
+  };
+
   return (
     <ProfileModalButton>
-      <S.AlarmContent onClick={handleDropdownClose}>
+      <S.AlarmContent onClick={handleClick}>
         <S.AlarmImgBox ref={groupItemRef}>
           <img src={theme.groupBg} alt="alarm" onLoad={checkOverflow} />
           <S.GroupImgInName $isOverFlowText={isOverFlowText}>{title}</S.GroupImgInName>
@@ -50,6 +72,7 @@ const S = {
   AlarmContent: styled.div`
     display: flex;
     align-items: start;
+    text-align: left;
     gap: 13px;
   `,
   AlarmImgBox: styled.div`
