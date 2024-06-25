@@ -51,6 +51,33 @@ const DateRangeCalendar = ({ dateRange, setDateRange, currentMonthRange, refetch
           endDate={endDate}
           dateFormat="yy-MM-dd"
           onChange={handleDateChange}
+          renderCustomHeader={({
+            date,
+            decreaseMonth,
+            increaseMonth,
+            prevMonthButtonDisabled,
+            nextMonthButtonDisabled,
+          }) => (
+            <S.CustomHeaderContainer>
+              <S.CustomHeaderDate>{`${date.getFullYear()}년 ${date.getMonth() + 1}월`}</S.CustomHeaderDate>
+              <S.CustomHeaderButtonBox>
+                <button
+                  onClick={decreaseMonth}
+                  disabled={prevMonthButtonDisabled}
+                  className="react-datepicker__navigation react-datepicker__navigation--previous"
+                >
+                  <span className="react-datepicker__navigation-icon react-datepicker__navigation-icon--previous"></span>
+                </button>
+                <button
+                  onClick={increaseMonth}
+                  disabled={nextMonthButtonDisabled}
+                  className="react-datepicker__navigation react-datepicker__navigation--next"
+                >
+                  <span className="react-datepicker__navigation-icon react-datepicker__navigation-icon--next"></span>
+                </button>
+              </S.CustomHeaderButtonBox>
+            </S.CustomHeaderContainer>
+          )}
         />
         <S.CalendarIcon src={theme.calendar} />
         <S.ArrowIcon src={theme.arrowRight} />
@@ -63,6 +90,21 @@ const DateRangeCalendar = ({ dateRange, setDateRange, currentMonthRange, refetch
 export default DateRangeCalendar;
 
 const S = {
+  CustomHeaderContainer: styled.div`
+    display: flex;
+    justify-content: space-between;
+  `,
+  CustomHeaderDate: styled.div`
+    color: ${(props) => props.theme.scheduleText};
+    font-weight: 700;
+    font-size: 20px;
+    padding-inline: 5px;
+    display: flex;
+    align-items: center;
+  `,
+  CustomHeaderButtonBox: styled.div`
+    display: flex;
+  `,
   Container: styled.div`
     display: flex;
     align-items: center;

@@ -18,6 +18,7 @@ export const useGroupMemberQuery = (groupId: number) => {
   const query = useQuery({
     queryKey: [QUERY_KEY.groupInfo, groupId],
     queryFn: async () => await groupRequest.fetchGroupMember(groupId),
+    refetchInterval: 1000,
   });
   return query;
 };
