@@ -2,7 +2,7 @@
 
  🗓 개발기간 : 24년 5월 13일 ~ 
 
- 💬 [EFFI에서 회의하기](https://cli.effi.club/) (현재 치솟는 서버 크레딧으로 인해 서버를 닫은 상태입니다.)
+ 💬 [EFFI에서 회의하기](https://cli.effi.club/)
 
 [![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fpart4-project%2Feffi_frontend&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false)](https://hits.seeyoufarm.com)
 
