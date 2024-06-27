@@ -41,7 +41,7 @@
 <br><br>
 ✅ `그룹 홈` - 특정 그룹 홈 페이지에서는 회의 생성, 그룹 관리 외에 리포트 목록과 그룹 멤버들을 조회할 수 있습니다. 
 
-![그룹 홈](https://github.com/part4-project/effi_frontend/assets/75316998/25648d61-eda1-43b6-8b41-077c14703be6)
+<img src="https://github.com/part4-project/effi_frontend/assets/75316998/25648d61-eda1-43b6-8b41-077c14703be6" width="100%" height="100%"/>
 
 <br><br>
 ✅ `회의실` - 회의실에서는 접속한 멤버들끼리 webRTC 및 socket으로 구현된 화상채팅과 텍스트 채팅을 할 수 있습니다. 다른 멤버들이 체크하는 안건을 실시간으로 확인할 수 있고, 예상 종료 시간 이후에 회의실에 남아있는 멤버가 1명일 시 방이 5분 뒤 자동으로 종료됩니다.
