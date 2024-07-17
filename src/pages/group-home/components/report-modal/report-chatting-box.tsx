@@ -34,7 +34,6 @@ const ReportChattingBox = ({ chattingList }: TReportChattingBox) => {
     };
     return chatData;
   });
-  console.log(memberChatList);
   return (
     <S.Container>
       {memberChatList.length !== 0 ? (

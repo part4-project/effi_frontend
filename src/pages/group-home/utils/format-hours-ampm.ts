@@ -1,9 +1,10 @@
-export const formatHoursAmPm = (dateString: string) => {
+export const formatHoursAmPm = (dateString: string, format: 'KST' | 'UTC' = 'KST') => {
+  const changeTime = format == 'KST' ? 9 : -9;
   // ISO 형식의 날짜 문자열을 Date 객체로 변환
   const date = new Date(dateString);
 
   // 시간대를 조정
-  date.setHours(date.getHours() + 9);
+  date.setHours(date.getHours() + changeTime);
 
   // 시각과 분을 가져오기
   const hours = date.getHours();
