@@ -14,11 +14,15 @@ const Chatting = ({ roomId }: TChattingProps) => {
   const chatContainerRef = useRef<HTMLUListElement>(null);
 
   useEffect(() => {
+    const heartbeat = setInterval(() => {
+      sendMessage('CHAT', ''); // 하트비트
+    }, 5000);
     // 컴포넌트가 업데이트될 때마다 스크롤을 최하단으로 이동
     if (chatContainerRef.current) {
       chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
     }
-  }, [chatSocketList]);
+    return () => clearInterval(heartbeat);
+  }, [chatSocketList, sendMessage]);
 
   return (
     <S.Container>
