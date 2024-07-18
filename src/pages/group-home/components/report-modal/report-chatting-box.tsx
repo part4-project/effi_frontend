@@ -34,14 +34,15 @@ const ReportChattingBox = ({ chattingList }: TReportChattingBox) => {
     };
     return chatData;
   });
-  console.log(memberChatList);
   return (
     <S.Container>
       {memberChatList.length !== 0 ? (
         <S.ChattingLists>
-          {memberChatList.map((chat: TReportChatting, idx) => (
-            <ReportChattingList key={idx} {...chat} />
-          ))}
+          {memberChatList.map((chat: TReportChatting, idx) => {
+            if (chat.message) {
+              return <ReportChattingList key={idx} {...chat} />;
+            }
+          })}
         </S.ChattingLists>
       ) : (
         <S.NoChattingListComment>채팅 내역이 없습니다!</S.NoChattingListComment>
