@@ -29,7 +29,7 @@ const S = {
   `,
   Text: styled.span`
     width: 302px;
-    color: ${(props) => props.theme.text01};
+    color: ${(props) => props.theme.text04};
     text-align: center;
     font-size: 18px;
     font-weight: 700;

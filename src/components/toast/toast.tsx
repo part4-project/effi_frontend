@@ -10,7 +10,6 @@ interface TToastProps {
 }
 
 function Toast({ children, show, error }: TToastProps) {
-  console.log(error);
   useEffect(() => {
     if (error) {
       playSound('toastError');

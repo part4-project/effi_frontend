@@ -34,13 +34,18 @@ const ReportChattingBox = ({ chattingList }: TReportChattingBox) => {
     };
     return chatData;
   });
+  console.log(memberChatList);
   return (
     <S.Container>
-      <S.ChattingLists>
-        {memberChatList.map((chat: TReportChatting, idx) => (
-          <ReportChattingList key={idx} {...chat} />
-        ))}
-      </S.ChattingLists>
+      {memberChatList.length !== 0 ? (
+        <S.ChattingLists>
+          {memberChatList.map((chat: TReportChatting, idx) => (
+            <ReportChattingList key={idx} {...chat} />
+          ))}
+        </S.ChattingLists>
+      ) : (
+        <S.NoChattingListComment>채팅 내역이 없습니다!</S.NoChattingListComment>
+      )}
     </S.Container>
   );
 };
@@ -51,11 +56,16 @@ const S = {
   Container: styled.div`
     grid-area: chat;
     display: flex;
+    justify-content: center;
     padding: 15px;
     border: 2px solid ${(props) => props.theme.box};
     border-radius: 10px;
     height: 654px;
     background: ${(props) => props.theme.theme10};
+  `,
+  NoChattingListComment: styled.p`
+    padding-top: 280px;
+    color: var(--gray05);
   `,
   ChattingLists: styled.ul`
     display: flex;

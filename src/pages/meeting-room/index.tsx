@@ -1,6 +1,5 @@
 /* eslint-disable no-console */
 import { useEffect } from 'react';
-import { TOPIC } from '@constants/mockdata';
 import { useMeetingStore } from '@stores/meeting';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -37,7 +36,7 @@ const MeetingRoom = () => {
       </S.LeftSection>
 
       <S.RightSection>
-        <Topics topicList={TOPIC.topic_list} />
+        <Topics roomId={id} />
         <Chatting roomId={id} />
       </S.RightSection>
     </S.Container>

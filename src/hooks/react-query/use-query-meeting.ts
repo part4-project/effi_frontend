@@ -79,6 +79,13 @@ export const useCalendarMeetingQuery = (startMonth: string, endMonth: string) =>
   const query = useQuery<TCalendarMeetingFetchInfo[], Error>({
     queryKey: [QUERY_KEY.calendarMeetingList],
     queryFn: async () => await meetingRequest.fetchCalendarMeeting(startMonth, endMonth),
+    select: (data) => {
+      const currentDate = new Date();
+      return data.filter((meeting) => {
+        const meetingEndDate = new Date(meeting.expectedEndDate);
+        return meetingEndDate >= currentDate;
+      });
+    },
   });
   return query;
 };

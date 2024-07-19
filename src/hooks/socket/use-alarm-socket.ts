@@ -18,7 +18,6 @@ const useAlarmSocket = () => {
   const handleReceivedMessage = (message: IMessage) => {
     const msg = JSON.parse(message.body);
     toast(msg.message);
-    console.log('서버로부터 메시지 수신:', msg);
     queryClient.setQueryData<TAlarm[]>([QUERY_KEY.alarmList], (prev) => {
       if (prev) {
         return [...prev, msg];
