@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import ConfirmModal from '@components/modal/confirm-modal/confirm-modal';
 import Modal from '@components/modal/modal';
 import ModalButton from '@components/modal/modal-button';
-import { useExileGroupMemberMutation } from '@hooks/react-query/use-query-group';
+import { useCloseGroupMutation, useExileGroupMemberMutation } from '@hooks/react-query/use-query-group';
 import GroupInvite from '@pages/group-home/components/group-modal/group-invite';
 import GroupMemberList from '@pages/group-home/components/group-modal/group-member-list';
 import { useGroupStore } from '@stores/group';
@@ -22,6 +22,7 @@ interface GroupModalProps {
 const GroupModal = ({ isOpen, onGroupClose, onConfirmClose, onConfirmOpen }: GroupModalProps) => {
   const navigate = useNavigate();
   const { mutate: exileGroupMemberMutate } = useExileGroupMemberMutation(useGroupStore((state) => state.groupId));
+  const { mutate: closeGroupMutate } = useCloseGroupMutation(useGroupStore((state) => state.groupId));
   const [exileMemberList, setExileMemberList] = useState<number[]>([]);
 
   const handleAddExileMemberButtonClick = (id: number) => {
@@ -38,8 +39,7 @@ const GroupModal = ({ isOpen, onGroupClose, onConfirmClose, onConfirmOpen }: Gro
   };
 
   const handleDeleteButtonClick = () => {
-    //그룹 삭제 api 작성
-
+    closeGroupMutate();
     navigate('/');
   };
 

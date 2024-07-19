@@ -147,6 +147,23 @@ const groupRequest = {
       return error;
     }
   },
+  closeGroup: async (groupId: number) => {
+    try {
+      const response = await axios.delete(`user/group/close/${groupId}`);
+      return response.data;
+    } catch (error) {
+      if (isAxiosError(error)) {
+        if (error.response) {
+          throw {
+            errorMessage: error.response.data.errorMessage || 'errorMessage',
+            errorCode: error.response.data.errorCode || 'UNKNOWN_ERROR',
+            statusCode: error.response.status,
+          };
+        }
+      }
+      return error;
+    }
+  },
 } as const;
 
 export default groupRequest;
