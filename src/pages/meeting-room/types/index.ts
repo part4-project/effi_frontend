@@ -1,6 +1,6 @@
 import { TGroupFetchMemberInfo } from '@api/group/group-request.type';
 
-export type RoomButton = '카메라' | '마이크' | '나가기';
+export type RoomButton = '화면공유' | '카메라' | '마이크' | '나가기';
 
 export interface RoomButtonType {
   type: RoomButton;

@@ -31,6 +31,10 @@ const KurentoCameras = ({ roomId, startDate, endDate }: TKurentoCamerasProps) =>
 
   const [isVideo, setIsVideo] = useState(true);
   const [isAudio, setIsAudio] = useState(true);
+  const [cameraOptions, setCameraOptions] = useState([]);
+  const [audioOptions, setAudioOptions] = useState([]);
+  const [selectedCamera, setSelectedCamera] = useState(undefined);
+  const [selectedAudio, setSelectedAudio] = useState(undefined);
   const [cameraCount, setCameraCount] = useState(0);
 
   const navigate = useNavigate();
@@ -178,13 +182,13 @@ const KurentoCameras = ({ roomId, startDate, endDate }: TKurentoCamerasProps) =>
       },
     };
 
-    participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options, function (error) {
+    participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options, async function (error) {
       if (error) {
         return console.error(error);
       }
       this.generateOffer(participant.offerToReceiveVideo.bind(participant));
       // getDevices();
-      getMedia(selectedCamera, selectedAudio);
+      await getMedia(selectedCamera, selectedAudio);
     });
 
     msg.userIdList.forEach((item) => {
@@ -366,11 +370,7 @@ const KurentoCameras = ({ roomId, startDate, endDate }: TKurentoCamerasProps) =>
     leaveRoom();
   };
 
-  const [cameraOptions, setCameraOptions] = useState([]);
-  const [audioOptions, setAudioOptions] = useState([]);
-  const [selectedCamera, setSelectedCamera] = useState(undefined);
-  const [selectedAudio, setSelectedAudio] = useState(undefined);
-
+  // 카메라 / 오디오 변경
   useEffect(() => {
     async function fetchDevices() {
       try {
@@ -380,6 +380,14 @@ const KurentoCameras = ({ roomId, startDate, endDate }: TKurentoCamerasProps) =>
 
         setCameraOptions(videoInputs);
         setAudioOptions(audioInputs);
+
+        if (videoInputs.length > 0 && !selectedCamera) {
+          setSelectedCamera(videoInputs[0].deviceId);
+        }
+
+        if (audioInputs.length > 0 && !selectedAudio) {
+          setSelectedAudio(audioInputs[0].deviceId);
+        }
       } catch (e) {
         console.error(e);
       }
@@ -389,33 +397,32 @@ const KurentoCameras = ({ roomId, startDate, endDate }: TKurentoCamerasProps) =>
   }, []);
 
   useEffect(() => {
-    async function updateMediaStream() {
-      await getMedia(selectedCamera, selectedAudio);
+    if (selectedCamera || selectedAudio) {
+      getMedia(selectedCamera, selectedAudio);
     }
-
-    updateMediaStream();
   }, [selectedCamera, selectedAudio]);
 
   async function getMedia(cameraId, audioId) {
-    const initialConstrains = { audio: true, video: true };
-    const userSelectConstraints = {
-      audio: { deviceId: { exact: audioId } },
-      video: { deviceId: { exact: cameraId } },
-    };
-
     try {
-      const newStream = await navigator.mediaDevices.getUserMedia(
-        cameraId || audioId ? userSelectConstraints : initialConstrains,
-      );
+      const constraints = {
+        audio: { deviceId: { exact: audioId } },
+        video: { deviceId: { exact: cameraId }, width: 1280 },
+      };
+
+      const newStream = await navigator.mediaDevices.getUserMedia(constraints);
+
       if (participants.current[userId]) {
         const myVideoElement = participants.current[userId].getVideoElement();
         myVideoElement.srcObject = newStream;
+
+        // 카메라가 선택된 경우 좌우 반전 적용
+        myVideoElement.style.transform = 'scaleX(-1)';
 
         if (cameraId) {
           const videoTrack = newStream.getVideoTracks()[0];
           const videoSender = participants.current[userId].rtcPeer.peerConnection
             .getSenders()
-            .find((s) => s.track.kind === 'video');
+            .find((s) => s.track?.kind === 'video');
           if (videoSender) {
             videoSender.replaceTrack(videoTrack);
           }
@@ -425,7 +432,7 @@ const KurentoCameras = ({ roomId, startDate, endDate }: TKurentoCamerasProps) =>
           const audioTrack = newStream.getAudioTracks()[0];
           const audioSender = participants.current[userId].rtcPeer.peerConnection
             .getSenders()
-            .find((s) => s.track.kind === 'audio');
+            .find((s) => s.track?.kind === 'audio');
           if (audioSender) {
             audioSender.replaceTrack(audioTrack);
           }
@@ -433,6 +440,41 @@ const KurentoCameras = ({ roomId, startDate, endDate }: TKurentoCamerasProps) =>
       }
     } catch (e) {
       console.error(e);
+    }
+  }
+
+  // 화면 공유
+  async function fetchScreens() {
+    try {
+      const screens = await navigator.mediaDevices.getDisplayMedia({
+        audio: true,
+        video: { frameRate: 40 },
+      });
+
+      if (participants.current[userId]) {
+        const myVideoElement = participants.current[userId].getVideoElement();
+        myVideoElement.srcObject = screens;
+
+        myVideoElement.style.transform = 'none';
+
+        const videoTrack = screens.getVideoTracks()[0];
+        const videoSender = participants.current[userId].rtcPeer.peerConnection
+          .getSenders()
+          .find((s) => s.track?.kind === 'video');
+        if (videoSender) {
+          videoSender.replaceTrack(videoTrack);
+        }
+
+        const audioTrack = screens.getAudioTracks()[0];
+        const audioSender = participants.current[userId].rtcPeer.peerConnection
+          .getSenders()
+          .find((s) => s.track?.kind === 'audio');
+        if (audioSender) {
+          audioSender.replaceTrack(audioTrack);
+        }
+      }
+    } catch (error) {
+      console.error(error);
     }
   }
 
@@ -444,6 +486,10 @@ const KurentoCameras = ({ roomId, startDate, endDate }: TKurentoCamerasProps) =>
       </S.RoomCameraContainer>
 
       <S.RoomButtonContainer className="room-button-container">
+        <S.RoomButton onClick={fetchScreens} $isActive>
+          <S.Img src={ROOM_BUTTONS[0].initialImg} />
+        </S.RoomButton>
+
         <S.MediaButtonContainer>
           <S.Select onChange={(e) => setSelectedCamera(e.target.value)}>
             {cameraOptions.map((camera) => (
@@ -453,7 +499,7 @@ const KurentoCameras = ({ roomId, startDate, endDate }: TKurentoCamerasProps) =>
             ))}
           </S.Select>
           <S.RoomButton onClick={handleVideoButtonClick} $isActive={isVideo}>
-            <S.Img src={isVideo ? ROOM_BUTTONS[0].changedImg : ROOM_BUTTONS[0].initialImg} />
+            <S.Img src={isVideo ? ROOM_BUTTONS[1].changedImg : ROOM_BUTTONS[1].initialImg} />
           </S.RoomButton>
         </S.MediaButtonContainer>
 
@@ -466,12 +512,12 @@ const KurentoCameras = ({ roomId, startDate, endDate }: TKurentoCamerasProps) =>
             ))}
           </S.Select>
           <S.RoomButton onClick={localAudioToggle} $isActive={isAudio}>
-            <S.Img src={isAudio ? ROOM_BUTTONS[1].changedImg : ROOM_BUTTONS[1].initialImg} />
+            <S.Img src={isAudio ? ROOM_BUTTONS[2].changedImg : ROOM_BUTTONS[2].initialImg} />
           </S.RoomButton>
         </S.MediaButtonContainer>
 
         <S.LeaveRoomButton onClick={leaveRoom}>
-          <S.Img src={ROOM_BUTTONS[2].initialImg} />
+          <S.Img src={ROOM_BUTTONS[3].initialImg} />
         </S.LeaveRoomButton>
       </S.RoomButtonContainer>
     </>
@@ -506,6 +552,34 @@ const S = {
     position: absolute;
     bottom: 0;
     z-index: 10;
+  `,
+
+  MediaButtonContainer: styled.div`
+    position: relative;
+  `,
+
+  SelectContainer: styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  `,
+
+  Select: styled.select`
+    position: absolute;
+    right: -5px;
+    top: -5px;
+    width: 23px;
+    height: 23px;
+    padding: 5px;
+    border-radius: 50px;
+    border: 1px solid var(--gray01);
+    background-color: #fff;
+    font-size: 16px;
+    z-index: 9999;
+  `,
+
+  ScreenShareButton: styled.button`
+    background-color: white;
   `,
 
   MediaButtonContainer: styled.div`
