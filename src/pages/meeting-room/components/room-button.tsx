@@ -11,6 +11,9 @@ const RoomButton = ({ type, initialImg, changedImg }: RoomButtonProps) => {
 
   const HANDLE_BUTTON_CLICKS = useMemo(
     () => ({
+      화면공유: () => {
+        setBtnImg((prevImg) => (prevImg === initialImg ? changedImg! : initialImg));
+      },
       카메라: () => {
         setBtnImg((prevImg) => (prevImg === initialImg ? changedImg! : initialImg));
       },
