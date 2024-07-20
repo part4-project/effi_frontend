@@ -36,7 +36,9 @@ const useChatSocket = (meetingId: number) => {
   );
   const handleReceivedMessage = (message: IMessage) => {
     const msg = JSON.parse(message.body);
-    setChatSocketList((prevData) => [...prevData, msg]);
+    if (msg.message) {
+      setChatSocketList((prevData) => [...prevData, msg]);
+    }
   };
   useEffect(() => {
     if (isConnected && chatSocketClient.current) {
