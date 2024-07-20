@@ -139,7 +139,7 @@ const KurentoCameras = ({ roomId, startDate, endDate }: TKurentoCamerasProps) =>
     const constraints = {
       video: {
         width: 1280,
-        frameRate: 40,
+        frameRate: 20,
       },
       audio: {
         autoGainControl: true,
@@ -183,6 +183,8 @@ const KurentoCameras = ({ roomId, startDate, endDate }: TKurentoCamerasProps) =>
         return console.error(error);
       }
       this.generateOffer(participant.offerToReceiveVideo.bind(participant));
+      getDevices();
+      getMedia();
     });
 
     msg.userIdList.forEach((item) => {
@@ -364,6 +366,84 @@ const KurentoCameras = ({ roomId, startDate, endDate }: TKurentoCamerasProps) =>
     leaveRoom();
   };
 
+  async function getDevices() {
+    const cameras = document.getElementById('cameras');
+    const audios = document.getElementById('audios');
+
+    cameras.addEventListener('change', async (event) => {
+      const selectedCamera = event.target.value;
+      await getMedia(selectedCamera, undefined);
+    });
+
+    audios.addEventListener('change', async (event) => {
+      const selectedAudio = event.target.value;
+      await getMedia(undefined, selectedAudio);
+    });
+
+    try {
+      const devices = await navigator.mediaDevices.enumerateDevices();
+
+      const videoInputs = devices.filter((device) => device.kind === 'videoinput');
+      const audioInputs = devices.filter((device) => device.kind === 'audioinput');
+
+      videoInputs.forEach((camera) => {
+        const option = document.createElement('option');
+        option.value = camera.deviceId;
+        option.innerHTML = camera.label;
+
+        cameras?.appendChild(option);
+      });
+
+      audioInputs.forEach((audio) => {
+        const option = document.createElement('option');
+        option.value = audio.deviceId;
+        option.innerHTML = audio.label;
+
+        audios?.appendChild(option);
+      });
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  async function getMedia(cameraId, audioId) {
+    const initialConstrains = { audio: true, video: true };
+    const userSelectConstraints = {
+      audio: { deviceId: { exact: audioId } },
+      video: { deviceId: { exact: cameraId } },
+    };
+
+    try {
+      const newStream = await navigator.mediaDevices.getUserMedia(
+        cameraId || audioId ? userSelectConstraints : initialConstrains,
+      );
+      const myVideoElement = participants.current[userId].getVideoElement();
+      myVideoElement.srcObject = newStream;
+
+      if (cameraId) {
+        const videoTrack = newStream.getVideoTracks()[0];
+        const videoSender = participants.current[userId].rtcPeer.peerConnection
+          .getSenders()
+          .find((s) => s.track.kind === 'video');
+        if (videoSender) {
+          videoSender.replaceTrack(videoTrack);
+        }
+      }
+
+      if (audioId) {
+        const audioTrack = newStream.getAudioTracks()[0];
+        const audioSender = participants.current[userId].rtcPeer.peerConnection
+          .getSenders()
+          .find((s) => s.track.kind === 'audio');
+        if (audioSender) {
+          audioSender.replaceTrack(audioTrack);
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
   return (
     <>
       <S.RoomCameraContainer>
@@ -372,12 +452,20 @@ const KurentoCameras = ({ roomId, startDate, endDate }: TKurentoCamerasProps) =>
       </S.RoomCameraContainer>
 
       <S.RoomButtonContainer className="room-button-container">
-        <S.RoomButton onClick={handleVideoButtonClick} $isActive={isVideo}>
-          <S.Img src={isVideo ? ROOM_BUTTONS[0].changedImg : ROOM_BUTTONS[0].initialImg} />
-        </S.RoomButton>
-        <S.RoomButton onClick={localAudioToggle} $isActive={isAudio}>
-          <S.Img src={isAudio ? ROOM_BUTTONS[1].changedImg : ROOM_BUTTONS[1].initialImg} />
-        </S.RoomButton>
+        <S.MediaButtonContainer>
+          <S.Select id="cameras"></S.Select>
+          <S.RoomButton onClick={handleVideoButtonClick} $isActive={isVideo}>
+            <S.Img src={isVideo ? ROOM_BUTTONS[0].changedImg : ROOM_BUTTONS[0].initialImg} />
+          </S.RoomButton>
+        </S.MediaButtonContainer>
+
+        <S.MediaButtonContainer>
+          <S.Select id="audios"></S.Select>
+          <S.RoomButton onClick={localAudioToggle} $isActive={isAudio}>
+            <S.Img src={isAudio ? ROOM_BUTTONS[1].changedImg : ROOM_BUTTONS[1].initialImg} />
+          </S.RoomButton>
+        </S.MediaButtonContainer>
+
         <S.LeaveRoomButton onClick={leaveRoom}>
           <S.Img src={ROOM_BUTTONS[2].initialImg} />
         </S.LeaveRoomButton>
@@ -414,6 +502,30 @@ const S = {
     position: absolute;
     bottom: 0;
     z-index: 10;
+  `,
+
+  MediaButtonContainer: styled.div`
+    position: relative;
+  `,
+
+  SelectContainer: styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  `,
+
+  Select: styled.select`
+    position: absolute;
+    right: -5px;
+    top: -5px;
+    width: 23px;
+    height: 23px;
+    padding: 5px;
+    border-radius: 50px;
+    border: 1px solid var(--gray01);
+    background-color: #fff;
+    font-size: 16px;
+    z-index: 9999;
   `,
 
   RoomButton: styled.button<{ $isActive: boolean }>`

@@ -37,7 +37,7 @@ const MeetingDate = ({ selectedDate, onChange }: MeetingDateProps) => {
         dateFormat="yyyy/MM/dd - aa h:mm"
         onChange={onChange}
         showTimeSelect
-        timeIntervals={15}
+        timeIntervals={1}
         minDate={new Date()}
         minTime={minTime}
         maxTime={maxTime}
