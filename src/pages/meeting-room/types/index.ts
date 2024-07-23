@@ -6,6 +6,7 @@ export interface RoomButtonType {
   type: RoomButton;
   initialImg: string;
   changedImg: string | null;
+  changedWhiteImg: string | null;
 }
 
 export interface TChatSocketType {
