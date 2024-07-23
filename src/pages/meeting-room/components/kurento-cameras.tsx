@@ -37,6 +37,9 @@ const KurentoCameras = ({ roomId, startDate, endDate }: TKurentoCamerasProps) =>
   const [selectedAudio, setSelectedAudio] = useState(undefined);
   const [cameraCount, setCameraCount] = useState(0);
 
+  const hasVideo = !!selectedCamera;
+  const hasAudio = !!selectedAudio;
+
   const navigate = useNavigate();
   const userInfo = useQueryClient().getQueryData<TUserInfoRes>([QUERY_KEY.userInfo]);
   const groupInfo = useQueryClient().getQueryData<TGroupMemberFetchRes>([
@@ -265,6 +268,7 @@ const KurentoCameras = ({ roomId, startDate, endDate }: TKurentoCamerasProps) =>
   }
 
   function localVideoToggle() {
+    if (!hasVideo) return;
     const dummyContainer = document.getElementById(`dummy-${userInfo.id}`);
 
     const videoTrack = participants.current[userId].rtcPeer
@@ -300,6 +304,7 @@ const KurentoCameras = ({ roomId, startDate, endDate }: TKurentoCamerasProps) =>
   }
 
   function localAudioToggle() {
+    if (!hasAudio) return;
     const myMuteIcon = document.getElementById(`muteIcon-${userInfo.id}`);
 
     const audioTrack = participants.current[userId].rtcPeer
@@ -478,6 +483,28 @@ const KurentoCameras = ({ roomId, startDate, endDate }: TKurentoCamerasProps) =>
     }
   }
 
+  // 카메라 없을 시 default로 프로필 나오게 설정
+  useEffect(() => {
+    const observer = new MutationObserver((mutationsList) => {
+      for (const mutation of mutationsList) {
+        if (mutation.type === 'childList') {
+          const dummyContainer = document.getElementById(`dummy-${userInfo.id}`);
+          dummyContainer.style.opacity = hasVideo ? 0 : 1;
+        }
+      }
+    });
+
+    // 감지할 노드를 설정
+    const targetNode = document.querySelector('.participants');
+    if (targetNode) {
+      observer.observe(targetNode, { childList: true, subtree: true });
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [userInfo.id, hasVideo]);
+
   return (
     <>
       <S.RoomCameraContainer>
@@ -486,33 +513,49 @@ const KurentoCameras = ({ roomId, startDate, endDate }: TKurentoCamerasProps) =>
       </S.RoomCameraContainer>
 
       <S.RoomButtonContainer className="room-button-container">
-        <S.RoomButton onClick={fetchScreens} $isActive>
+        <S.ScreenShareButton onClick={fetchScreens}>
           <S.Img src={ROOM_BUTTONS[0].initialImg} />
-        </S.RoomButton>
+        </S.ScreenShareButton>
 
         <S.MediaButtonContainer>
-          <S.Select onChange={(e) => setSelectedCamera(e.target.value)}>
+          <S.Select onChange={(e) => setSelectedCamera(e.target.value)} $isActive={hasVideo}>
             {cameraOptions.map((camera) => (
               <option key={camera.deviceId} value={camera.deviceId}>
                 {camera.label}
               </option>
             ))}
           </S.Select>
-          <S.RoomButton onClick={handleVideoButtonClick} $isActive={isVideo}>
-            <S.Img src={isVideo ? ROOM_BUTTONS[1].changedImg : ROOM_BUTTONS[1].initialImg} />
+          <S.RoomButton onClick={handleVideoButtonClick} $isActive={isVideo} $hasMedia={hasVideo}>
+            <S.Img
+              src={
+                hasVideo
+                  ? isVideo
+                    ? ROOM_BUTTONS[1].changedImg
+                    : ROOM_BUTTONS[1].initialImg
+                  : ROOM_BUTTONS[1].changedWhiteImg
+              }
+            />
           </S.RoomButton>
         </S.MediaButtonContainer>
 
         <S.MediaButtonContainer>
-          <S.Select onChange={(e) => setSelectedAudio(e.target.value)}>
+          <S.Select onChange={(e) => setSelectedAudio(e.target.value)} $isActive={hasAudio}>
             {audioOptions.map((audio) => (
               <option key={audio.deviceId} value={audio.deviceId}>
                 {audio.label}
               </option>
             ))}
           </S.Select>
-          <S.RoomButton onClick={localAudioToggle} $isActive={isAudio}>
-            <S.Img src={isAudio ? ROOM_BUTTONS[2].changedImg : ROOM_BUTTONS[2].initialImg} />
+          <S.RoomButton onClick={localAudioToggle} $isActive={isAudio} $hasMedia={hasAudio}>
+            <S.Img
+              src={
+                hasAudio
+                  ? isAudio
+                    ? ROOM_BUTTONS[2].changedImg
+                    : ROOM_BUTTONS[2].initialImg
+                  : ROOM_BUTTONS[2].changedWhiteImg
+              }
+            />
           </S.RoomButton>
         </S.MediaButtonContainer>
 
@@ -556,6 +599,7 @@ const S = {
 
   MediaButtonContainer: styled.div`
     position: relative;
+    display: block;
   `,
 
   SelectContainer: styled.div`
@@ -564,7 +608,7 @@ const S = {
     gap: 10px;
   `,
 
-  Select: styled.select`
+  Select: styled.select<{ $isActive: boolean }>`
     position: absolute;
     right: -5px;
     top: -5px;
@@ -576,45 +620,29 @@ const S = {
     background-color: #fff;
     font-size: 16px;
     z-index: 9999;
+    display: ${(props) => (props.$isActive ? 'block' : 'none')};
   `,
 
   ScreenShareButton: styled.button`
-    background-color: white;
-  `,
-
-  MediaButtonContainer: styled.div`
-    position: relative;
-  `,
-
-  SelectContainer: styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  `,
-
-  Select: styled.select`
-    position: absolute;
-    right: -5px;
-    top: -5px;
-    width: 23px;
-    height: 23px;
-    padding: 5px;
-    border-radius: 50px;
-    border: 1px solid var(--gray01);
-    background-color: #fff;
-    font-size: 16px;
-    z-index: 9999;
-  `,
-
-  RoomButton: styled.button<{ $isActive: boolean }>`
     width: 60px;
     height: 60px;
-    background: ${(props) => (props.$isActive ? 'var(--white)' : '#4d4f4e')};
+    background: white;
     border-radius: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
   `,
+
+  RoomButton: styled.button<{ $isActive: boolean; $hasMedia: boolean }>`
+    width: 60px;
+    height: 60px;
+    background: ${(props) => (props.$hasMedia ? (props.$isActive ? 'var(--white)' : '#4d4f4e') : 'var(--red01)')};
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  `,
+
   Img: styled.img`
     width: 20px;
     height: 20px;
