@@ -487,32 +487,35 @@ const KurentoCameras = ({ roomId, startDate, endDate }: TKurentoCamerasProps) =>
   // 오디오 없을 시 default로 음소거 아이콘 나오게 설정
   useEffect(() => {
     const observer = new MutationObserver((mutationsList) => {
-      for (const mutation of mutationsList) {
+      mutationsList.forEach((mutation) => {
         if (mutation.type === 'childList') {
           const dummyContainer = document.getElementById(`dummy-${userInfo.id}`);
           const myMuteIcon = document.getElementById(`muteIcon-${userInfo.id}`);
-          dummyContainer.style.opacity = hasVideo ? 0 : 1;
-          myMuteIcon.style.opacity = hasAudio ? 0 : 1;
+          if (!hasVideo) {
+            dummyContainer.style.opacity = 1;
 
-          sendMessage({
-            id: 'handleDevice',
-            type: 'camera',
-            userId: userId,
-            roomId: roomId,
-            isOn: !!hasVideo,
-          });
+            sendMessage({
+              id: 'handleDevice',
+              type: 'camera',
+              userId: userId,
+              roomId: roomId,
+              isOn: false,
+            });
+          }
+          if (!hasAudio) {
+            myMuteIcon.style.opacity = 1;
 
-          sendMessage({
-            id: 'handleDevice',
-            type: 'mic',
-            userId: userId,
-            roomId: roomId,
-            isOn: !!hasAudio,
-          });
+            sendMessage({
+              id: 'handleDevice',
+              type: 'mic',
+              userId: userId,
+              roomId: roomId,
+              isOn: false,
+            });
+          }
         }
-      }
+      });
     });
-
     // 감지할 노드를 설정
     const targetNode = document.querySelector('.participants');
     if (targetNode) {
