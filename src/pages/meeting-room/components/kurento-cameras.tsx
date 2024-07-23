@@ -484,12 +484,31 @@ const KurentoCameras = ({ roomId, startDate, endDate }: TKurentoCamerasProps) =>
   }
 
   // 카메라 없을 시 default로 프로필 나오게 설정
+  // 오디오 없을 시 default로 음소거 아이콘 나오게 설정
   useEffect(() => {
     const observer = new MutationObserver((mutationsList) => {
       for (const mutation of mutationsList) {
         if (mutation.type === 'childList') {
           const dummyContainer = document.getElementById(`dummy-${userInfo.id}`);
+          const myMuteIcon = document.getElementById(`muteIcon-${userInfo.id}`);
           dummyContainer.style.opacity = hasVideo ? 0 : 1;
+          myMuteIcon.style.opacity = hasAudio ? 0 : 1;
+
+          sendMessage({
+            id: 'handleDevice',
+            type: 'camera',
+            userId: userId,
+            roomId: roomId,
+            isOn: !!hasVideo,
+          });
+
+          sendMessage({
+            id: 'handleDevice',
+            type: 'mic',
+            userId: userId,
+            roomId: roomId,
+            isOn: !!hasAudio,
+          });
         }
       }
     });
@@ -503,7 +522,7 @@ const KurentoCameras = ({ roomId, startDate, endDate }: TKurentoCamerasProps) =>
     return () => {
       observer.disconnect();
     };
-  }, [userInfo.id, hasVideo]);
+  }, [userInfo.id, hasVideo, hasAudio, roomId, userId]);
 
   return (
     <>
