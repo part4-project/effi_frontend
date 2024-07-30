@@ -1,5 +1,4 @@
-
-![bandicam_2024-07-30_23-02-39-773](https://github.com/user-attachments/assets/d4a9c247-7200-438a-9b3e-01c5ac99196e)
+<img src="https://github.com/user-attachments/assets/e931da3e-d250-49fe-b7d9-248ba55de89a" width="100%"/>
 
  🗓 개발기간 : 24년 5월 13일 ~ 
 
