@@ -66,7 +66,7 @@ const ChattingList = ({ chat, prevChat, currentIndex, chatSocketList, isMe }: Ch
         {!isSameUserChatting && <S.ChattingUserName $isMe={isMe}>{chat.nickname}</S.ChattingUserName>}
         <S.ChattingLog>{chat.message}</S.ChattingLog>
       </S.ChattingBox>
-      {isCurrentUserTime && <S.ChattingSentTime>{formatHoursAmPm(chat.timeStamp)}</S.ChattingSentTime>}
+      {isCurrentUserTime && <S.ChattingSentTime>{formatHoursAmPm(chat.timeStamp, 'KST')}</S.ChattingSentTime>}
     </S.ChattingList>
   );
 };

@@ -1,4 +1,4 @@
-![image](https://github.com/part4-project/effi_frontend/assets/75316998/9ef85757-e27e-4b22-aca5-5dce1c921f5e)
+<img src="https://github.com/user-attachments/assets/e931da3e-d250-49fe-b7d9-248ba55de89a" width="100%"/>
 
  🗓 개발기간 : 24년 5월 13일 ~ 
 

@@ -18,7 +18,7 @@ const ReportChattingList = ({ timeStamp, profileImageUrl, nickName, message, isM
         <S.ChattingUserName $isMe={isMe}>{nickName}</S.ChattingUserName>
         <S.ChattingLog>{message}</S.ChattingLog>
       </S.ChattingBox>
-      <S.ChattingSentTime>{formatHoursAmPm(timeStamp)}</S.ChattingSentTime>
+      <S.ChattingSentTime>{formatHoursAmPm(timeStamp, 'UTC')}</S.ChattingSentTime>
     </S.ChattingList>
   );
 };

@@ -93,6 +93,7 @@ const S = {
   CustomHeaderContainer: styled.div`
     display: flex;
     justify-content: space-between;
+    margin-bottom: 10px;
   `,
   CustomHeaderDate: styled.div`
     color: ${(props) => props.theme.scheduleText};
@@ -113,7 +114,6 @@ const S = {
 
   DatepickerWrapper: styled.div`
     position: relative;
-    // 달력 커스텀
   `,
 
   StyledDatePicker: styled(DatePicker)`
