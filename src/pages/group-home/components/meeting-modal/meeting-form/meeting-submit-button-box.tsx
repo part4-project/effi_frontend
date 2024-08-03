@@ -5,7 +5,7 @@ interface MeetingSubmitButtonBoxProps {
   isEditMode: boolean;
   isConfirm: boolean;
   onSubmit?: () => void;
-  onDelete: () => void;
+  onDelete?: () => void;
 }
 
 const MeetingSubmitButtonBox = ({ isEditMode, isConfirm, onSubmit, onDelete }: MeetingSubmitButtonBoxProps) => {

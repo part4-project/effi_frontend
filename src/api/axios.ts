@@ -1,4 +1,3 @@
-import { useGroupStore } from '@stores/group';
 import { getCookie } from '@utils/cookie';
 import axios from 'axios';
 
@@ -53,8 +52,6 @@ instance.interceptors.response.use(
     //서버 오류
     if (error.response.status === 404) {
       window.location.href = '/404';
-      const initGroupId = useGroupStore((state) => state.initGroupId);
-      initGroupId();
     }
     return Promise.reject(error);
   },
