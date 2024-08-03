@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react';
 import { TMeetingInfo } from '@api/meeting/meeting-request.type';
-import { useMeetingCreateMutation, useMeetingUpdateMutation } from '@hooks/react-query/use-query-meeting';
+import {
+  useMeetingCreateMutation,
+  useMeetingUpdateMutation,
+  useMeetingWithdrawMutation,
+} from '@hooks/react-query/use-query-meeting';
 import { calculateEndDate } from '@pages/group-home/utils/calculate-end-date';
 import { formatDateToISOStringWithOffset } from '@pages/group-home/utils/format-date-to-string';
 import roundTo15minutes from '@pages/group-home/utils/round-to-15minutes';
@@ -27,6 +31,7 @@ const MeetingForm = ({ data, onClose }: TMeetingFormProps) => {
   const groupId = useGroupStore((state) => state.groupId) || lobbyGroupId;
   const meetingCreate = useMeetingCreateMutation(groupId);
   const meetingUpdate = useMeetingUpdateMutation(groupId, data?.id);
+  const { mutate: withdrawMeetingMutate } = useMeetingWithdrawMutation(groupId, data?.id);
   const dateTime = data
     ? TimeString(TimeCalculate(new Date(data.startDate), new Date(data.expectedEndDate))).trim()
     : '회의 시간을 선택해 주세요!';
@@ -95,6 +100,11 @@ const MeetingForm = ({ data, onClose }: TMeetingFormProps) => {
     }
   };
 
+  const handleDeleteButtonClick = () => {
+    withdrawMeetingMutate();
+    onClose();
+  };
+
   useEffect(() => {
     if (data) {
       setTitle(data.meetingTitle || '');
@@ -122,7 +132,12 @@ const MeetingForm = ({ data, onClose }: TMeetingFormProps) => {
         onClick={handleAddTopicClick}
       />
       <MeetingTopicList topicList={topicList} setTopicList={setTopicList} />
-      <MeetingSubmitButtonBox isEditMode={isEditMode} isConfirm={isConfirm} onSubmit={handleSubmitButtonClick} />
+      <MeetingSubmitButtonBox
+        isEditMode={isEditMode}
+        isConfirm={isConfirm}
+        onSubmit={handleSubmitButtonClick}
+        onDelete={handleDeleteButtonClick}
+      />
     </S.Container>
   );
 };

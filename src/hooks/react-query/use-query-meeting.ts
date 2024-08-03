@@ -7,7 +7,6 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 export const useMeetingCreateMutation = (groupId: number) => {
   const { toast } = useToast();
-
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
@@ -22,9 +21,9 @@ export const useMeetingCreateMutation = (groupId: number) => {
 
   return mutation;
 };
+
 export const useMeetingUpdateMutation = (groupId: number, meetingId: number | undefined) => {
   const { toast } = useToast();
-
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
@@ -40,6 +39,24 @@ export const useMeetingUpdateMutation = (groupId: number, meetingId: number | un
 
   return mutation;
 };
+
+export const useMeetingWithdrawMutation = (groupId: number, meetingId: number | undefined) => {
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: async () => await meetingRequest.withdrawMeeting(groupId, meetingId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.meetingList, groupId] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.meetingInfo, meetingId] });
+      toast('회의가 삭제되었습니다');
+    },
+    onError: (error: TAxiosError) => toast(error.errorMessage, true),
+  });
+
+  return mutation;
+};
+
 export const useMeetingListQuery = (groupId: number) => {
   const query = useQuery({
     queryKey: [QUERY_KEY.meetingList, groupId],

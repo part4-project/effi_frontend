@@ -3,10 +3,12 @@ import Modal from '@components/modal/modal';
 import ModalButton from '@components/modal/modal-button';
 import InvitedList from '@components/modal/profile-modal/invited-list';
 import NicknameInput from '@components/modal/profile-modal/nickname-input';
+import { useWithdrawUserDataMutation } from '@hooks/react-query/use-query-user';
 import { deleteCookie } from '@utils/cookie';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import ProfileImageInput from './profile-image-input';
+
 interface ProfileModalProps {
   isOpen: {
     profile: boolean;
@@ -19,6 +21,7 @@ interface ProfileModalProps {
 
 const ProfileModal = ({ isOpen, onProfileClose, onConfirmClose, onConfirmOpen }: ProfileModalProps) => {
   const navigate = useNavigate();
+  const { mutate: withdrawUserMutate } = useWithdrawUserDataMutation();
 
   const handleLogoutClick = () => {
     deleteCookie('accessToken');
@@ -26,9 +29,7 @@ const ProfileModal = ({ isOpen, onProfileClose, onConfirmClose, onConfirmOpen }:
   };
 
   const handleDeleteButtonClick = () => {
-    //회원 탈퇴 api 작성
-
-    //일단 로그인 페이지로 이동하게 작성
+    withdrawUserMutate();
     navigate('/login');
   };
 

@@ -37,6 +37,22 @@ const meetingRequest = {
       return error;
     }
   },
+  withdrawMeeting: async (groupId: number, meetingId: number | undefined) => {
+    try {
+      await axios.delete(`user/group/${groupId}/meeting/${meetingId}/withdraw`);
+    } catch (error) {
+      if (isAxiosError(error)) {
+        if (error.response) {
+          throw {
+            errorMessage: error.response.data.errorMessage || 'errorMessage',
+            errorCode: error.response.data.errorCode || 'UNKNOWN_ERROR',
+            statusCode: error.response.status,
+          };
+        }
+      }
+      return error;
+    }
+  },
   fetchMeetingList: async (groupId: number) => {
     try {
       const { data } = await axios.get(`user/group/${groupId}/meeting/view/available`);
