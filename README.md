@@ -24,28 +24,29 @@
 ### 📝주요 기능
 ✅ `소셜 로그인 및 로그아웃` - google OAuth 를 사용하여 google 이메일을 통해 로그인 할 수 있습니다.
 
-<img src="https://github.com/part4-project/effi_frontend/assets/75316998/be1d02a7-84f8-46d4-9ad0-081a653971b2" width="100%" height="100%"/>
+<img src="https://github.com/part4-project/effi_frontend/assets/75316998/be1d02a7-84f8-46d4-9ad0-081a653971b2" width="80%" height="100%"/>
 
 <br><br>
 ✅ `Nav, Side 바` - nav, side 바는 회의실을 제외하고 모든 레이아웃에 fixed로 공통으로 존재합니다.
 - Nav 바에서는 다크모드를 설정할 수 있고, 알림 목록 및 내 프로필을 조회할 수 있습니다. 알림은 socket으로 구현되어 실시간으로 확인할 수 있습니다.
 - Side 바에서는 로비 페이지로 이동할 수 있는 버튼이 있고, 그룹 만들기 및 내가 만든 그룹 리스트들을 볼 수 있습니다.
 
-<img src="https://github.com/part4-project/effi_frontend/assets/75316998/e6d72f64-3c4b-4abf-aeda-7dc1554e403a" width="100%" height="100%"/>
+<img src="https://github.com/part4-project/effi_frontend/assets/75316998/e6d72f64-3c4b-4abf-aeda-7dc1554e403a" width="80%" height="100%"/>
 
 <br><br>
 ✅ `로비 페이지` - 로비 페이지에서는 예약된 회의 일정을 캘린더에서 확인할 수 있고, 퀵버튼을 통해 내 프로필을 보거나 내가 만든 그룹의 회의를 바로 생성할 수 있습니다.
   
-<img src="https://github.com/part4-project/effi_frontend/assets/75316998/ad17e943-3600-4654-adf1-e2d01264d7e9" width="100%" height="100%"/>
+<img src="https://github.com/part4-project/effi_frontend/assets/75316998/ad17e943-3600-4654-adf1-e2d01264d7e9" width="80%" height="100%"/>
 
 <br><br>
 ✅ `그룹 홈` - 특정 그룹 홈 페이지에서는 회의 생성, 그룹 관리 외에 리포트 목록과 그룹 멤버들을 조회할 수 있습니다. 
 
-<img src="https://github.com/part4-project/effi_frontend/assets/75316998/25648d61-eda1-43b6-8b41-077c14703be6" width="100%" height="100%"/>
+<img src="https://github.com/user-attachments/assets/8f5845c8-10aa-4b93-88a0-2ebb9da41e77" width="80%" height="100%"/>
 
 <br><br>
 ✅ `회의실` - 회의실에서는 접속한 멤버들끼리 webRTC 및 socket으로 구현된 화상채팅과 텍스트 채팅을 할 수 있습니다. 다른 멤버들이 체크하는 안건을 실시간으로 확인할 수 있고, 예상 종료 시간 이후에 회의실에 남아있는 멤버가 1명일 시 방이 5분 뒤 자동으로 종료됩니다.
 
+<img src="https://github.com/user-attachments/assets/965fe9c7-256f-4894-8d32-924f0497e842" width="80%" height="100%"/>
 
 
 # 🧑‍🤝‍🧑 멤버
