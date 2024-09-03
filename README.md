@@ -54,7 +54,7 @@
 
 <table>
   <tr>
-    <td height="160px" align="center"><a href="https://github.com/dali1999"><img src="https://avatars.githubusercontent.com/u/75316998?v=4" width="160px"/><br/>FE_황경수</a></td> 
+    <td height="160px" align="center"><a href="https://github.com/dali1999"><img src="https://avatars.githubusercontent.com/u/75316998?v=4" width="160px"/><br/>FE_황경수 🚩</a></td> 
     <td height="160px" align="center"><a href="https://github.com/bumpy1800"><img src="https://avatars.githubusercontent.com/u/51107943?v=4" width="160px"/><br/>FE_김재성</a></td> 
     <td height="160px" align="center"><a href="https://github.com/mynameJS"><img src="https://avatars.githubusercontent.com/u/128225030?v=4" width="160px"/><br/>FE_이재성</a></td> 
     <td height="160px" align="center"><a href="https://github.com/skoo1100"><img src="https://avatars.githubusercontent.com/u/55544307?v=4" width="160px"/><br/>FE_여승구</a></td> 
