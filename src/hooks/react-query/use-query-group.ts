@@ -152,3 +152,20 @@ export const useWithdrawGroupMutation = (groupId: number) => {
 
   return mutation;
 };
+
+export const useCloseGroupMutation = (groupId: number) => {
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: async () => await groupRequest.closeGroup(groupId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.groupInfo, groupId] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.groupList] });
+      toast('그룹이 삭제되었습니다.');
+    },
+    onError: (error: TAxiosError) => toast(error.errorMessage, true),
+  });
+
+  return mutation;
+};

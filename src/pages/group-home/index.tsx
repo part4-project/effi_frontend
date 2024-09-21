@@ -12,12 +12,14 @@ import { device } from '@styles/breakpoints';
 import { navBarHeight } from '@styles/subsection-size';
 import { zIndex } from '@styles/z-index';
 import { useQueryClient } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 import styled, { useTheme } from 'styled-components';
 import AdminHOC from './components/admin-hoc';
 import GroupHomeSidebarSkeleton from './components/skeleton/group-home-sidebar-skeleton';
 
 const GroupHome = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
   const { data: groupData, isError, isLoading } = useGroupMemberQuery(useGroupStore((state) => state.groupId));
   const userInfo = useQueryClient().getQueryData<TUserInfoRes>([QUERY_KEY.userInfo]);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -31,6 +33,9 @@ const GroupHome = () => {
   useEffect(() => {
     if (!isLoading) {
       const { id: adminId } = groupData.memberList.find((data: TGroupFetchMemberInfo) => data.admin);
+      if (!adminId) {
+        navigate(-1);
+      }
       setIsAdmin(adminId === userInfo?.id);
     }
   }, [isLoading, userInfo, groupData]);

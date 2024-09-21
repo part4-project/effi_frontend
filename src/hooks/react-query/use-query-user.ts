@@ -61,3 +61,19 @@ export const useUserProfileImgDefaultMutation = () => {
 
   return mutation;
 };
+
+export const useWithdrawUserDataMutation = () => {
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation({
+    mutationFn: async () => await userRequest.withdrawUserData(),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.userInfo] });
+      toast('회원 탈퇴가 완료되었습니다');
+    },
+    onError: (error: TAxiosError) => toast(error.errorMessage, true),
+  });
+
+  return mutation;
+};
