@@ -18,13 +18,17 @@ const useAlarmSocket = () => {
   const handleReceivedMessage = (message: IMessage) => {
     const msg = JSON.parse(message.body);
     toast(msg.message);
+    const previousAlarmList = queryClient.getQueryData<TAlarm[]>([QUERY_KEY.alarmList]);
     queryClient.setQueryData<TAlarm[]>([QUERY_KEY.alarmList], (prev) => {
       if (prev) {
         return [...prev, msg];
       }
       return [msg];
     });
-    queryClient.invalidateQueries({ queryKey: [QUERY_KEY.alarmList] });
+    queryClient.invalidateQueries({ queryKey: [QUERY_KEY.alarmList] }).catch((error) => {
+      queryClient.setQueryData([QUERY_KEY.alarmList], previousAlarmList);
+      console.error('알람 동기화 에러:', error);
+    });
   };
 
   useEffect(() => {
